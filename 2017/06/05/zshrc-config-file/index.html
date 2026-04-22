@@ -1,0 +1,843 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>自用的.zshrc配置文件 - 玟茵开源知识库</title>
+
+  
+    <meta name="description" content="偶然找到的，需要配置好 zsh 和 oh-my-zsh 方可使用。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自用的.zshrc配置文件">
+<meta property="og:url" content="https://wiki.wenyinos.com/2017/06/05/zshrc-config-file/">
+<meta property="og:site_name" content="玟茵开源知识库">
+<meta property="og:description" content="偶然找到的，需要配置好 zsh 和 oh-my-zsh 方可使用。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2017-06-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-22T08:39:56.128Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="zsh">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="linux,zsh">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2017-06-05T00:00:00+08:00","dateModified":"2026-04-22T16:39:56+08:00","datePublished":"2017-06-05T00:00:00+08:00","description":"","headline":"自用的.zshrc配置文件","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2017/06/05/zshrc-config-file/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2017/06/05/zshrc-config-file/","keywords":"linux, zsh","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/08/17/use-zram-generator-configure/"><span class="title">使用zram-generator配置zram</span></a><a class="item title" href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/"><span class="title">Linux(CentOS 7)下使用mono+ArchiSteamFarm挂卡</span></a><a class="item title" href="/2019/03/17/using-wifi-adapter-unas40/"><span class="title">在万由U-NAS 4.0中使用无线网卡</span></a><a class="item title" href="/2022/10/29/win8-81-virtual-pc-2007-install/"><span class="title">Win8/8.1安装和使用Virtual PC 2007虚拟机的方法以及注意事项（32位和64位）</span></a><a class="item title" href="/2022/08/25/windows-10-11-auto-login/"><span class="title">Windows 10/11自动登录设置</span></a><a class="item title" href="/2018/02/28/windows-server-2016-install-wsl-archlinux/"><span class="title">为Windows Server 2016正式版移植WSL组件并将其替换为Arch Linux</span></a><a class="item title" href="/2019/03/17/windows-server-2019-intel-i211-driver/"><span class="title">Windows Server 2019安装Intel I211网卡驱动</span></a><a class="item title" href="/2018/02/28/windows10-ltsb-deploy-microsoft-store/"><span class="title">在Windows 10 企业版长期服务计划版本部署应用商店</span></a><a class="item title" href="/2017/03/04/worship-toad-the-neglected-festival-of-the-mid-autumn-festival/"><span class="title">崇拜蟾蜍：被人忽视的中秋节习俗</span></a><a class="item title" href="/2018/12/18/x86-arch-enter-your-iphone/"><span class="title">x86架构进入你的iPhone</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/documents/">documents</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/documents/note/">note</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2017-06-04T16:00:00.000Z">2017-06-05</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-04-22T08:39:56.128Z">2026-04-22</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>自用的.zshrc配置文件</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p>偶然找到的，需要配置好 zsh 和 oh-my-zsh 方可使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#color&#123;&#123;&#123;</span></span><br><span class="line"><span class="built_in">autoload</span> colors</span><br><span class="line">colors</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> color <span class="keyword">in</span> RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; <span class="keyword">do</span></span><br><span class="line"><span class="built_in">eval</span> _<span class="variable">$color</span>=<span class="string">&#x27;%&#123;$terminfo[bold]$fg[$&#123;(L)color&#125;]%&#125;&#x27;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="variable">$color</span>=<span class="string">&#x27;%&#123;$fg[$&#123;(L)color&#125;]%&#125;&#x27;</span></span><br><span class="line">(( count = <span class="variable">$count</span> + <span class="number">1</span> ))</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">FINISH=<span class="string">&quot;%&#123;<span class="variable">$terminfo</span>[sgr0]%&#125;&quot;</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#命令提示符</span></span><br><span class="line">RPROMPT=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$RED</span>%D %T<span class="variable">$FINISH</span>&quot;</span>)</span><br><span class="line">PROMPT=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$CYAN</span>%n@<span class="variable">$YELLOW</span>%M:<span class="variable">$GREEN</span>%/<span class="variable">$_YELLOW</span>&gt;<span class="variable">$FINISH</span> &quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#PROMPT=$(echo &quot;$BLUE%M$GREEN%/</span></span><br><span class="line"><span class="comment">#$CYAN%n@$BLUE%M:$GREEN%/$_YELLOW&gt;&gt;&gt;$FINISH &quot;)</span></span><br><span class="line"><span class="comment">#标题栏、任务栏样式&#123;&#123;&#123;</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$TERM</span> <span class="keyword">in</span> (*xterm*|*rxvt*|(dt|k|E)term)</span><br><span class="line"><span class="function"><span class="title">precmd</span></span> () &#123; <span class="built_in">print</span> -Pn <span class="string">&quot;\e]0;%n@%M//%/\a&quot;</span> &#125;</span><br><span class="line"><span class="function"><span class="title">preexec</span></span> () &#123; <span class="built_in">print</span> -Pn <span class="string">&quot;\e]0;%n@%M//%/\ <span class="variable">$1</span>\a&quot;</span> &#125;</span><br><span class="line">;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#编辑器</span></span><br><span class="line"><span class="built_in">export</span> EDITOR=vim</span><br><span class="line"><span class="comment">#输入法</span></span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">&quot;@im=ibus&quot;</span></span><br><span class="line"><span class="built_in">export</span> QT_MODULE=ibus</span><br><span class="line"><span class="built_in">export</span> GTK_MODULE=ibus</span><br><span class="line"><span class="comment">#关于历史纪录的配置 &#123;&#123;&#123;</span></span><br><span class="line"><span class="comment">#历史纪录条目数量</span></span><br><span class="line"><span class="built_in">export</span> HISTSIZE=10000</span><br><span class="line"><span class="comment">#注销后保存的历史纪录条目数量</span></span><br><span class="line"><span class="built_in">export</span> SAVEHIST=10000</span><br><span class="line"><span class="comment">#历史纪录文件</span></span><br><span class="line"><span class="built_in">export</span> HISTFILE=~/.zhistory</span><br><span class="line"><span class="comment">#以附加的方式写入历史纪录</span></span><br><span class="line"><span class="built_in">setopt</span> INC_APPEND_HISTORY</span><br><span class="line"><span class="comment">#如果连续输入的命令相同，历史纪录中只保留一个</span></span><br><span class="line"><span class="built_in">setopt</span> HIST_IGNORE_DUPS</span><br><span class="line"><span class="comment">#为历史纪录中的命令添加时间戳</span></span><br><span class="line"><span class="built_in">setopt</span> EXTENDED_HISTORY      </span><br><span class="line"> </span><br><span class="line"><span class="comment">#启用 cd 命令的历史纪录，cd -[TAB]进入历史路径</span></span><br><span class="line"><span class="built_in">setopt</span> AUTO_PUSHD</span><br><span class="line"><span class="comment">#相同的历史路径只保留一个</span></span><br><span class="line"><span class="built_in">setopt</span> PUSHD_IGNORE_DUPS</span><br><span class="line"> </span><br><span class="line"><span class="comment">#在命令前添加空格，不将此命令添加到纪录文件中</span></span><br><span class="line"><span class="comment">#setopt HIST_IGNORE_SPACE</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#每个目录使用独立的历史纪录&#123;&#123;&#123;</span></span><br><span class="line"><span class="function"><span class="title">cd</span></span>() &#123;</span><br><span class="line"><span class="built_in">builtin</span> <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span>                             <span class="comment"># do actual cd</span></span><br><span class="line"><span class="built_in">fc</span> -W                                       <span class="comment"># write current history  file</span></span><br><span class="line"><span class="built_in">local</span> HISTDIR=<span class="string">&quot;<span class="variable">$HOME</span>/.zsh_history<span class="variable">$PWD</span>&quot;</span>      <span class="comment"># use nested folders for history</span></span><br><span class="line"><span class="keyword">if</span>  [ ! -d <span class="string">&quot;<span class="variable">$HISTDIR</span>&quot;</span> ] ; <span class="keyword">then</span>          <span class="comment"># create folder if needed</span></span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$HISTDIR</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">export</span> HISTFILE=<span class="string">&quot;<span class="variable">$HISTDIR</span>/zhistory&quot;</span>     <span class="comment"># set new history file</span></span><br><span class="line"><span class="built_in">touch</span> <span class="variable">$HISTFILE</span></span><br><span class="line"><span class="built_in">local</span> ohistsize=<span class="variable">$HISTSIZE</span></span><br><span class="line">HISTSIZE=0                              <span class="comment"># Discard previous dir&#x27;s history</span></span><br><span class="line">HISTSIZE=<span class="variable">$ohistsize</span>                     <span class="comment"># Prepare for new dir&#x27;s history</span></span><br><span class="line"><span class="built_in">fc</span> -R                                       <span class="comment">#read from current histfile</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$HOME</span>/.zsh_history<span class="variable">$PWD</span></span><br><span class="line"><span class="built_in">export</span> HISTFILE=<span class="string">&quot;<span class="variable">$HOME</span>/.zsh_history<span class="variable">$PWD</span>/zhistory&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">function</span> allhistory &#123; <span class="built_in">cat</span> $(find <span class="variable">$HOME</span>/.zsh_history -name zhistory) &#125;</span><br><span class="line"><span class="keyword">function</span> convhistory &#123;</span><br><span class="line"><span class="built_in">sort</span> <span class="variable">$1</span> | <span class="built_in">uniq</span> |</span><br><span class="line">sed <span class="string">&#x27;s/^:\([ 0-9]*\):[0-9]*;\(.*\)/\1::::::\2/&#x27;</span> |</span><br><span class="line">awk -F<span class="string">&quot;::::::&quot;</span> <span class="string">&#x27;&#123; $1=strftime(&quot;%Y-%m-%d %T&quot;,$1) &quot;|&quot;; print &#125;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#使用 histall 命令查看全部历史纪录</span></span><br><span class="line"><span class="keyword">function</span> histall &#123; convhistory =(allhistory) |</span><br><span class="line">sed <span class="string">&#x27;/^.\&#123;20\&#125; *cd/i\\&#x27;</span> &#125;</span><br><span class="line"><span class="comment">#使用 hist 查看当前目录历史纪录</span></span><br><span class="line"><span class="keyword">function</span> hist &#123; convhistory <span class="variable">$HISTFILE</span> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">#全部历史纪录 top50</span></span><br><span class="line"><span class="keyword">function</span> top50 &#123; allhistory | awk -F<span class="string">&#x27;:[ 0-9]*:[0-9]*;&#x27;</span> <span class="string">&#x27;&#123; $1=&quot;&quot; ; print &#125;&#x27;</span> | sed <span class="string">&#x27;s/ /\n/g&#x27;</span> | sed <span class="string">&#x27;/^$/d&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -nr | <span class="built_in">head</span> -n 50 &#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#杂项 &#123;&#123;&#123;</span></span><br><span class="line"><span class="comment">#允许在交互模式中使用注释  例如：</span></span><br><span class="line"><span class="comment">#cmd #这是注释</span></span><br><span class="line"><span class="built_in">setopt</span> INTERACTIVE_COMMENTS      </span><br><span class="line"> </span><br><span class="line"><span class="comment">#启用自动 cd，输入目录名回车进入目录</span></span><br><span class="line"><span class="comment">#稍微有点混乱，不如 cd 补全实用</span></span><br><span class="line"><span class="built_in">setopt</span> AUTO_CD</span><br><span class="line"> </span><br><span class="line"><span class="comment">#扩展路径</span></span><br><span class="line"><span class="comment">#/v/c/p/p =&gt; /var/cache/pacman/pkg</span></span><br><span class="line"><span class="built_in">setopt</span> complete_in_word</span><br><span class="line"> </span><br><span class="line"><span class="comment">#禁用 core dumps</span></span><br><span class="line"><span class="built_in">limit</span> coredumpsize 0</span><br><span class="line"> </span><br><span class="line"><span class="comment">#Emacs风格 键绑定</span></span><br><span class="line"><span class="built_in">bindkey</span> -e</span><br><span class="line"><span class="comment">#bindkey -v</span></span><br><span class="line"><span class="comment">#设置 [DEL]键 为向后删除</span></span><br><span class="line"><span class="comment">#bindkey &quot;\e[3~&quot; delete-char</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#以下字符视为单词的一部分</span></span><br><span class="line">WORDCHARS=<span class="string">&#x27;*?_-[]~=&amp;;!#$%^()&#123;&#125;&lt;&gt;&#x27;</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#自动补全功能 &#123;&#123;&#123;</span></span><br><span class="line"><span class="built_in">setopt</span> AUTO_LIST</span><br><span class="line"><span class="built_in">setopt</span> AUTO_MENU</span><br><span class="line"><span class="comment">#开启此选项，补全时会直接选中菜单项</span></span><br><span class="line"><span class="comment">#setopt MENU_COMPLETE</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">autoload</span> -U compinit</span><br><span class="line">compinit</span><br><span class="line"> </span><br><span class="line"><span class="comment">#自动补全缓存</span></span><br><span class="line"><span class="comment">#zstyle &#x27;:completion::complete:*&#x27; use-cache on</span></span><br><span class="line"><span class="comment">#zstyle &#x27;:completion::complete:*&#x27; cache-path .zcache</span></span><br><span class="line"><span class="comment">#zstyle &#x27;:completion:*:cd:*&#x27; ignore-parents parent pwd</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#自动补全选项</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> verbose <span class="built_in">yes</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> menu <span class="keyword">select</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:*:default&#x27;</span> force-list always</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> select-prompt <span class="string">&#x27;%SSelect:  lines: %L  matches: %M  [%p]&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:match:*&#x27;</span> original only</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion::prefix-1:*&#x27;</span> completer _complete</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:predict:*&#x27;</span> completer _complete</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:incremental:*&#x27;</span> completer _complete _correct</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> completer _complete _prefix _correct _prefix _match _approximate</span><br><span class="line"> </span><br><span class="line"><span class="comment">#路径补全</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> <span class="built_in">expand</span> <span class="string">&#x27;yes&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> squeeze-shlashes <span class="string">&#x27;yes&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion::complete:*&#x27;</span> <span class="string">&#x27;\\&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#彩色补全菜单</span></span><br><span class="line"><span class="built_in">eval</span> $(<span class="built_in">dircolors</span> -b)</span><br><span class="line"><span class="built_in">export</span> ZLSCOLORS=<span class="string">&quot;<span class="variable">$&#123;LS_COLORS&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">zmodload</span> zsh/complist</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> list-colors <span class="variable">$&#123;(s.:.)LS_COLORS&#125;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:*:kill:*:processes&#x27;</span> list-colors <span class="string">&#x27;=(#b) #([0-9]#)*=0=01;31&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#修正大小写</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> matcher-list <span class="string">&#x27;&#x27;</span> <span class="string">&#x27;m:&#123;a-zA-Z&#125;=&#123;A-Za-z&#125;&#x27;</span></span><br><span class="line"><span class="comment">#错误校正</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> completer _complete _match _approximate</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:match:*&#x27;</span> original only</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:approximate:*&#x27;</span> max-errors 1 numeric</span><br><span class="line"> </span><br><span class="line"><span class="comment">#kill 命令补全</span></span><br><span class="line">compdef pkill=<span class="built_in">kill</span></span><br><span class="line">compdef pkill=killall</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:*:kill:*&#x27;</span> menu <span class="built_in">yes</span> <span class="keyword">select</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:*:*:*:processes&#x27;</span> force-list always</span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:processes&#x27;</span> <span class="built_in">command</span> <span class="string">&#x27;ps -au$USER&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#补全类型提示分组</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:matches&#x27;</span> group <span class="string">&#x27;yes&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> group-name <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:options&#x27;</span> description <span class="string">&#x27;yes&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:options&#x27;</span> auto-description <span class="string">&#x27;%d&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:descriptions&#x27;</span> format $<span class="string">&#x27;\e[01;33m -- %d --\e[0m&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:messages&#x27;</span> format $<span class="string">&#x27;\e[01;35m -- %d --\e[0m&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:warnings&#x27;</span> format $<span class="string">&#x27;\e[01;31m -- No Matches Found --\e[0m&#x27;</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:corrections&#x27;</span> format $<span class="string">&#x27;\e[01;32m -- %d (errors: %e) --\e[0m&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># cd ~ 补全顺序</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:-tilde-:*&#x27;</span> group-order <span class="string">&#x27;named-directories&#x27;</span> <span class="string">&#x27;path-directories&#x27;</span> <span class="string">&#x27;users&#x27;</span> <span class="string">&#x27;expand&#x27;</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">##行编辑高亮模式 &#123;&#123;&#123;</span></span><br><span class="line"><span class="comment"># Ctrl+@ 设置标记，标记和光标点之间为 region</span></span><br><span class="line">zle_highlight=(region:<span class="built_in">bg</span>=magenta <span class="comment">#选中区域</span></span><br><span class="line">special:bold      <span class="comment">#特殊字符</span></span><br><span class="line">isearch:underline)#搜索时使用的关键字</span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">##空行(光标在行首)补全 &quot;cd &quot; &#123;&#123;&#123;</span></span><br><span class="line">user-<span class="function"><span class="title">complete</span></span>()&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$BUFFER</span> <span class="keyword">in</span></span><br><span class="line"><span class="string">&quot;&quot;</span> )                       <span class="comment"># 空行填入 &quot;cd &quot;</span></span><br><span class="line">BUFFER=<span class="string">&quot;cd &quot;</span></span><br><span class="line"><span class="built_in">zle</span> end-of-line</span><br><span class="line"><span class="built_in">zle</span> expand-or-complete</span><br><span class="line">;;</span><br><span class="line"><span class="string">&quot;cd --&quot;</span> )                  <span class="comment"># &quot;cd --&quot; 替换为 &quot;cd +&quot;</span></span><br><span class="line">BUFFER=<span class="string">&quot;cd +&quot;</span></span><br><span class="line"><span class="built_in">zle</span> end-of-line</span><br><span class="line"><span class="built_in">zle</span> expand-or-complete</span><br><span class="line">;;</span><br><span class="line"><span class="string">&quot;cd +-&quot;</span> )                  <span class="comment"># &quot;cd +-&quot; 替换为 &quot;cd -&quot;</span></span><br><span class="line">BUFFER=<span class="string">&quot;cd -&quot;</span></span><br><span class="line"><span class="built_in">zle</span> end-of-line</span><br><span class="line"><span class="built_in">zle</span> expand-or-complete</span><br><span class="line">;;</span><br><span class="line">* )</span><br><span class="line"><span class="built_in">zle</span> expand-or-complete</span><br><span class="line">;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">zle</span> -N user-complete</span><br><span class="line"><span class="built_in">bindkey</span> <span class="string">&quot;\t&quot;</span> user-complete</span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">##在命令前插入 sudo &#123;&#123;&#123;</span></span><br><span class="line"><span class="comment">#定义功能</span></span><br><span class="line">sudo-command-<span class="function"><span class="title">line</span></span>() &#123;</span><br><span class="line">[[ -z <span class="variable">$BUFFER</span> ]] &amp;&amp; <span class="built_in">zle</span> up-history</span><br><span class="line">[[ <span class="variable">$BUFFER</span> != <span class="built_in">sudo</span>\ * ]] &amp;&amp; BUFFER=<span class="string">&quot;sudo <span class="variable">$BUFFER</span>&quot;</span></span><br><span class="line"><span class="built_in">zle</span> end-of-line                 <span class="comment">#光标移动到行末</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">zle</span> -N sudo-command-line</span><br><span class="line"><span class="comment">#定义快捷键为： [Esc] [Esc]</span></span><br><span class="line"><span class="built_in">bindkey</span> <span class="string">&quot;\e\e&quot;</span> sudo-command-line</span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#命令别名 &#123;&#123;&#123;</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">cp</span>=<span class="string">&#x27;cp -i&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">mv</span>=<span class="string">&#x27;mv -i&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">rm</span>=<span class="string">&#x27;rm -i&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">ls</span>=<span class="string">&#x27;ls -F --color=auto&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> ll=<span class="string">&#x27;ls -al&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> grep=<span class="string">&#x27;grep --color=auto&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> la=<span class="string">&#x27;ls -a&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> pacman=<span class="string">&#x27;sudo pacman-color&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> p=<span class="string">&#x27;sudo pacman-color&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> y=<span class="string">&#x27;yaourt&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> h=<span class="string">&#x27;htop&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> vim=<span class="string">&#x27;sudo vim&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#[Esc][h] man 当前命令时，显示简短说明</span></span><br><span class="line"><span class="built_in">alias</span> run-help &gt;&amp;/dev/null &amp;&amp; <span class="built_in">unalias</span> run-help</span><br><span class="line"><span class="built_in">autoload</span> run-help</span><br><span class="line"> </span><br><span class="line"><span class="comment">#历史命令 top10</span></span><br><span class="line"><span class="built_in">alias</span> top10=<span class="string">&#x27;print -l  $&#123;(o)history%% *&#125; | uniq -c | sort -nr | head -n 10&#x27;</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#路径别名 &#123;&#123;&#123;</span></span><br><span class="line"><span class="comment">#进入相应的路径时只要 cd ~xxx</span></span><br><span class="line"><span class="built_in">hash</span> -d A=<span class="string">&quot;/media/ayu/dearest&quot;</span></span><br><span class="line"><span class="built_in">hash</span> -d H=<span class="string">&quot;/media/data/backup/ayu&quot;</span></span><br><span class="line"><span class="built_in">hash</span> -d E=<span class="string">&quot;/etc/&quot;</span></span><br><span class="line"><span class="built_in">hash</span> -d D=<span class="string">&quot;/home/ayumi/Documents&quot;</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">##for Emacs &#123;&#123;&#123;</span></span><br><span class="line"><span class="comment">#在 Emacs终端 中使用 Zsh 的一些设置 不推荐在 Emacs 中使用它</span></span><br><span class="line"><span class="comment">#if [[ &quot;$TERM&quot; == &quot;dumb&quot; ]]; then</span></span><br><span class="line"><span class="comment">#setopt No_zle</span></span><br><span class="line"><span class="comment">#PROMPT=&#x27;%n@%M %/</span></span><br><span class="line"><span class="comment">#&gt;&gt;&#x27;</span></span><br><span class="line"><span class="comment">#alias ls=&#x27;ls -F&#x27;</span></span><br><span class="line"><span class="comment">#fi</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#&#123;&#123;&#123;自定义补全</span></span><br><span class="line"><span class="comment">#补全 ping</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*:ping:*&#x27;</span> hosts 192.168.1.&#123;1,50,51,100,101&#125; www.google.com</span><br><span class="line"> </span><br><span class="line"><span class="comment">#补全 ssh scp sftp 等</span></span><br><span class="line"><span class="comment">#zstyle -e &#x27;:completion::*:*:*:hosts&#x27; hosts &#x27;reply=($&#123;=$&#123;$&#123;(f)&quot;$(cat &#123;/etc/ssh_,~/.ssh/known_&#125;hosts(|2)(N) /dev/null)&quot;&#125;%%[# ]*&#125;//,/ &#125;)&#x27;</span></span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#&#123;&#123;&#123; F1 计算器</span></span><br><span class="line">arith-eval-<span class="function"><span class="title">echo</span></span>() &#123;</span><br><span class="line">LBUFFER=<span class="string">&quot;<span class="variable">$&#123;LBUFFER&#125;</span>echo \$(( &quot;</span></span><br><span class="line">RBUFFER=<span class="string">&quot; ))<span class="variable">$RBUFFER</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">zle</span> -N arith-eval-echo</span><br><span class="line"><span class="built_in">bindkey</span> <span class="string">&quot;^[[11~&quot;</span> arith-eval-echo</span><br><span class="line"><span class="comment">#&#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">####&#123;&#123;&#123;</span></span><br><span class="line"><span class="keyword">function</span> timeconv &#123; <span class="built_in">date</span> -d @<span class="variable">$1</span> +<span class="string">&quot;%Y-%m-%d %T&quot;</span> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># &#125;&#125;&#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">zmodload</span> zsh/mathfunc</span><br><span class="line"><span class="built_in">autoload</span> -U zsh-mime-setup</span><br><span class="line">zsh-mime-setup</span><br><span class="line"><span class="built_in">setopt</span> EXTENDED_GLOB</span><br><span class="line"><span class="comment">#autoload -U promptinit</span></span><br><span class="line"><span class="comment">#promptinit</span></span><br><span class="line"><span class="comment">#prompt redhat</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">setopt</span> correctall</span><br><span class="line"><span class="built_in">autoload</span> compinstall</span><br><span class="line"> </span><br><span class="line"><span class="comment">#漂亮又实用的命令高亮界面</span></span><br><span class="line"><span class="built_in">setopt</span> extended_glob</span><br><span class="line"> TOKENS_FOLLOWED_BY_COMMANDS=(<span class="string">&#x27;|&#x27;</span> <span class="string">&#x27;||&#x27;</span> <span class="string">&#x27;;&#x27;</span> <span class="string">&#x27;&amp;&#x27;</span> <span class="string">&#x27;&amp;&amp;&#x27;</span> <span class="string">&#x27;sudo&#x27;</span> <span class="string">&#x27;do&#x27;</span> <span class="string">&#x27;time&#x27;</span> <span class="string">&#x27;strace&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"> recolor-<span class="function"><span class="title">cmd</span></span>() &#123;</span><br><span class="line">     region_highlight=()</span><br><span class="line">     colorize=<span class="literal">true</span></span><br><span class="line">     start_pos=0</span><br><span class="line">     <span class="keyword">for</span> arg <span class="keyword">in</span> <span class="variable">$&#123;(z)BUFFER&#125;</span>; <span class="keyword">do</span></span><br><span class="line">         ((start_pos+=<span class="variable">$&#123;#BUFFER[$start_pos+1,-1]&#125;</span>-<span class="variable">$&#123;#<span class="variable">$&#123;BUFFER[$start_pos+1,-1]## #&#125;</span>&#125;</span>))</span><br><span class="line">         ((end_pos=<span class="variable">$start_pos</span>+<span class="variable">$&#123;#arg&#125;</span>))</span><br><span class="line">         <span class="keyword">if</span> <span class="variable">$colorize</span>; <span class="keyword">then</span></span><br><span class="line">             colorize=<span class="literal">false</span></span><br><span class="line">             res=$(LC_ALL=C <span class="built_in">builtin</span> <span class="built_in">type</span> <span class="variable">$arg</span> 2&gt;/dev/null)</span><br><span class="line">             <span class="keyword">case</span> <span class="variable">$res</span> <span class="keyword">in</span></span><br><span class="line">                 *<span class="string">&#x27;reserved word&#x27;</span>*)   style=<span class="string">&quot;fg=magenta,bold&quot;</span>;;</span><br><span class="line">                 *<span class="string">&#x27;alias for&#x27;</span>*)       style=<span class="string">&quot;fg=cyan,bold&quot;</span>;;</span><br><span class="line">                 *<span class="string">&#x27;shell builtin&#x27;</span>*)   style=<span class="string">&quot;fg=yellow,bold&quot;</span>;;</span><br><span class="line">                 *<span class="string">&#x27;shell function&#x27;</span>*)  style=<span class="string">&#x27;fg=green,bold&#x27;</span>;;</span><br><span class="line">                 *<span class="string">&quot;<span class="variable">$arg</span> is&quot;</span>*)</span><br><span class="line">                     [[ <span class="variable">$arg</span> = <span class="string">&#x27;sudo&#x27;</span> ]] &amp;&amp; style=<span class="string">&quot;fg=red,bold&quot;</span> || style=<span class="string">&quot;fg=blue,bold&quot;</span>;;</span><br><span class="line">                 *)                   style=<span class="string">&#x27;none,bold&#x27;</span>;;</span><br><span class="line">             <span class="keyword">esac</span></span><br><span class="line">             region_highlight+=(<span class="string">&quot;<span class="variable">$start_pos</span> <span class="variable">$end_pos</span> <span class="variable">$style</span>&quot;</span>)</span><br><span class="line">         <span class="keyword">fi</span></span><br><span class="line">         [[ <span class="variable">$&#123;<span class="variable">$&#123;TOKENS_FOLLOWED_BY_COMMANDS[(r)<span class="variable">$&#123;arg//|/\|&#125;</span>]&#125;</span>:+yes&#125;</span> = <span class="string">&#x27;yes&#x27;</span> ]] &amp;&amp; colorize=<span class="literal">true</span></span><br><span class="line">         start_pos=<span class="variable">$end_pos</span></span><br><span class="line">     <span class="keyword">done</span></span><br><span class="line"> &#125;</span><br><span class="line">check-cmd-self-<span class="function"><span class="title">insert</span></span>() &#123; <span class="built_in">zle</span> .self-insert &amp;&amp; recolor-cmd &#125;</span><br><span class="line"> check-cmd-backward-delete-<span class="function"><span class="title">char</span></span>() &#123; <span class="built_in">zle</span> .backward-delete-char &amp;&amp; recolor-cmd &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="built_in">zle</span> -N self-insert check-cmd-self-insert</span><br><span class="line"> <span class="built_in">zle</span> -N backward-delete-char check-cmd-backward-delete-char</span><br></pre></td></tr></table></figure>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2017/06/05/neofetch-config-file/">neofetch常用的配置文件</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2017/03/17/fedora-centos-configure-shadowsocks-on-commandline-mode/">Fedora/CentOS下命令行配置Shadowsocks全局代理</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2018/02/28/centos-7-yum-lnmp/" title="CentOS 7 YUM 10分钟快速安装 LNMP 环境"><span class="title">CentOS 7 YUM 10分钟快速安装 LNMP 环境</span></a><a class="item" href="/2018/03/02/apply-for-ibm-mainframe-trial/" title="免费申请120天的IBM PowerPC s390x大型机VPS试用"><span class="title">免费申请120天的IBM PowerPC s390x大型机VPS试用</span></a><a class="item" href="/2017/03/17/fedora-centos-configure-shadowsocks-on-commandline-mode/" title="Fedora/CentOS下命令行配置Shadowsocks全局代理"><span class="title">Fedora/CentOS下命令行配置Shadowsocks全局代理</span></a><a class="item" href="/2017/03/04/girls-learn-linuxs-hard-disk-partition/" title="女孩子学Linux之硬盘分区篇"><span class="title">女孩子学Linux之硬盘分区篇</span></a><a class="item" href="/2025/08/18/create-moon-server-zerotier/" title="架设moon服务器加快zerotier的访问速度"><span class="title">架设moon服务器加快zerotier的访问速度</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签</span></div><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 14px;" class="tag -0">agent</a> <a href="/tags/aliyun/" style="font-size: 14px;" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 14px;" class="tag -0">android</a> <a href="/tags/arc/" style="font-size: 14px;" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 14px;" class="tag -0">arch</a> <a href="/tags/asf/" style="font-size: 14px;" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 14px;" class="tag -0">asus</a> <a href="/tags/bbr/" style="font-size: 17.5px;" class="tag -3">bbr</a> <a href="/tags/centos/" style="font-size: 14px;" class="tag -0">centos</a> <a href="/tags/cheat/" style="font-size: 14px;" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 14px;" class="tag -0">colab</a> <a href="/tags/cpp/" style="font-size: 14px;" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 17.5px;" class="tag -3">cpu</a> <a href="/tags/curl/" style="font-size: 14px;" class="tag -0">curl</a> <a href="/tags/dnf/" style="font-size: 14px;" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14px;" class="tag -0">docker</a> <a href="/tags/entware/" style="font-size: 14px;" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 17.5px;" class="tag -3">epel</a> <a href="/tags/fcitx/" style="font-size: 14px;" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 24.5px;" class="tag -8">fedora</a> <a href="/tags/firewalld/" style="font-size: 14px;" class="tag -0">firewalld</a> <a href="/tags/fuchsia/" style="font-size: 14px;" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 14px;" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 14px;" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 17.5px;" class="tag -3">github</a> <a href="/tags/grub/" style="font-size: 14px;" class="tag -0">grub</a> <a href="/tags/grubby/" style="font-size: 14px;" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 14px;" class="tag -0">hi1620</a> <a href="/tags/huawei/" style="font-size: 14px;" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 14px;" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 14px;" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 14px;" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 21px;" class="tag -5">intel</a> <a href="/tags/ip/" style="font-size: 14px;" class="tag -0">ip</a> <a href="/tags/kde/" style="font-size: 14px;" class="tag -0">kde</a> <a href="/tags/kernel/" style="font-size: 14px;" class="tag -0">kernel</a> <a href="/tags/kvm/" style="font-size: 17.5px;" class="tag -3">kvm</a> <a href="/tags/lcd/" style="font-size: 14px;" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 14px;" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 28px;" class="tag -10">linux</a> <a href="/tags/lnmp/" style="font-size: 14px;" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 14px;" class="tag -0">magisk</a> <a href="/tags/mediatek/" style="font-size: 17.5px;" class="tag -3">mediatek</a> <a href="/tags/merlin/" style="font-size: 14px;" class="tag -0">merlin</a> <a href="/tags/modem/" style="font-size: 14px;" class="tag -0">modem</a> <a href="/tags/n1/" style="font-size: 14px;" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 17.5px;" class="tag -3">nas</a> <a href="/tags/novelai/" style="font-size: 14px;" class="tag -0">novelai</a> <a href="/tags/openvz/" style="font-size: 14px;" class="tag -0">openvz</a> <a href="/tags/packagekit/" style="font-size: 14px;" class="tag -0">packagekit</a> <a href="/tags/power/" style="font-size: 14px;" class="tag -0">power</a> <a href="/tags/redhat/" style="font-size: 14px;" class="tag -0">redhat</a> <a href="/tags/rpm/" style="font-size: 14px;" class="tag -0">rpm</a> <a href="/tags/shadowsocks/" style="font-size: 14px;" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 14px;" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 17.5px;" class="tag -3">ssh</a> <a href="/tags/steam/" style="font-size: 14px;" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 14px;" class="tag -0">synology</a> <a href="/tags/systemd/" style="font-size: 14px;" class="tag -0">systemd</a> <a href="/tags/ubuntu/" style="font-size: 17.5px;" class="tag -3">ubuntu</a> <a href="/tags/virt-manager/" style="font-size: 14px;" class="tag -0">virt-manager</a> <a href="/tags/vista/" style="font-size: 17.5px;" class="tag -3">vista</a> <a href="/tags/vmware/" style="font-size: 14px;" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 14px;" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 24.5px;" class="tag -8">vps</a> <a href="/tags/windows-server/" style="font-size: 14px;" class="tag -0">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.5px;" class="tag -3">windows10</a> <a href="/tags/x86/" style="font-size: 14px;" class="tag -0">x86</a> <a href="/tags/zerotier/" style="font-size: 14px;" class="tag -0">zerotier</a> <a href="/tags/zsh/" style="font-size: 14px;" class="tag -0">zsh</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 17.5px;" class="tag -3">代理</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 14px;" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 14px;" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 14px;" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 14px;" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 14px;" class="tag -0">开源社区</a> <a href="/tags/%E6%8C%82%E5%8D%A1/" style="font-size: 14px;" class="tag -0">挂卡</a> <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 14px;" class="tag -0">树莓派</a> <a href="/tags/%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA/" style="font-size: 14px;" class="tag -0">硬盘分区</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 14px;" class="tag -0">编译</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 14px;" class="tag -0">腾讯云</a> <a href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" style="font-size: 14px;" class="tag -0">路由器</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%8C%85/" style="font-size: 14px;" class="tag -0">软件包</a> <a href="/tags/%E9%87%8E%E5%85%BD%E5%85%88%E8%BE%88/" style="font-size: 14px;" class="tag -0">野兽先辈</a> <a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" style="font-size: 14px;" class="tag -0">防火墙</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 14px;" class="tag -0">项目管理</a> <a href="/tags/%E9%A9%B1%E5%8A%A8/" style="font-size: 14px;" class="tag -0">驱动</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>

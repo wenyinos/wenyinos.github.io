@@ -1,0 +1,902 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>浅谈开源社区之建设与项目管理 - 玟茵开源知识库</title>
+
+  
+    <meta name="description" content="摘要： 笔者作为玟茵开源社区联合创始人，在现代开源社区建设及项目管理的方面有一定心得体会，希望与大家进行分享。 （重要提示：本文仅适用于纯兴趣爱好性质的开源社区，商业性质组织请建立自己的规章制度。） 首先介绍一下我们玟茵开源社区的概况。首先本社区主要参与者和服务用户为女生，同时开发技术上并不十分成熟，也易于进行一些情绪化动作。当然成员基本没有太多空闲时间，也许是比较懒。我们并没有把这个当做一项事业">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈开源社区之建设与项目管理">
+<meta property="og:url" content="https://wiki.wenyinos.com/2017/03/04/construction-and-project-management-of-open-source-community/">
+<meta property="og:site_name" content="玟茵开源知识库">
+<meta property="og:description" content="摘要： 笔者作为玟茵开源社区联合创始人，在现代开源社区建设及项目管理的方面有一定心得体会，希望与大家进行分享。 （重要提示：本文仅适用于纯兴趣爱好性质的开源社区，商业性质组织请建立自己的规章制度。） 首先介绍一下我们玟茵开源社区的概况。首先本社区主要参与者和服务用户为女生，同时开发技术上并不十分成熟，也易于进行一些情绪化动作。当然成员基本没有太多空闲时间，也许是比较懒。我们并没有把这个当做一项事业">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2017-03-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-22T08:39:56.125Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="开源社区">
+<meta property="article:tag" content="项目管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="开源社区,项目管理">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2017-03-04T00:00:00+08:00","dateModified":"2026-04-22T16:39:56+08:00","datePublished":"2017-03-04T00:00:00+08:00","description":"","headline":"浅谈开源社区之建设与项目管理","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2017/03/04/construction-and-project-management-of-open-source-community/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2017/03/04/construction-and-project-management-of-open-source-community/","keywords":"开源社区, 项目管理","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/08/17/use-zram-generator-configure/"><span class="title">使用zram-generator配置zram</span></a><a class="item title" href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/"><span class="title">Linux(CentOS 7)下使用mono+ArchiSteamFarm挂卡</span></a><a class="item title" href="/2019/03/17/using-wifi-adapter-unas40/"><span class="title">在万由U-NAS 4.0中使用无线网卡</span></a><a class="item title" href="/2022/10/29/win8-81-virtual-pc-2007-install/"><span class="title">Win8/8.1安装和使用Virtual PC 2007虚拟机的方法以及注意事项（32位和64位）</span></a><a class="item title" href="/2022/08/25/windows-10-11-auto-login/"><span class="title">Windows 10/11自动登录设置</span></a><a class="item title" href="/2018/02/28/windows-server-2016-install-wsl-archlinux/"><span class="title">为Windows Server 2016正式版移植WSL组件并将其替换为Arch Linux</span></a><a class="item title" href="/2019/03/17/windows-server-2019-intel-i211-driver/"><span class="title">Windows Server 2019安装Intel I211网卡驱动</span></a><a class="item title" href="/2018/02/28/windows10-ltsb-deploy-microsoft-store/"><span class="title">在Windows 10 企业版长期服务计划版本部署应用商店</span></a><a class="item title" href="/2017/03/04/worship-toad-the-neglected-festival-of-the-mid-autumn-festival/"><span class="title">崇拜蟾蜍：被人忽视的中秋节习俗</span></a><a class="item title" href="/2018/12/18/x86-arch-enter-your-iphone/"><span class="title">x86架构进入你的iPhone</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/thought/">thought</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2017-03-03T16:00:00.000Z">2017-03-04</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-04-22T08:39:56.125Z">2026-04-22</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>浅谈开源社区之建设与项目管理</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p>摘要：</p>
+<p>笔者作为玟茵开源社区联合创始人，在现代开源社区建设及项目管理的方面有一定心得体会，希望与大家进行分享。</p>
+<p>（重要提示：本文仅适用于纯兴趣爱好性质的开源社区，商业性质组织请建立自己的规章制度。）</p>
+<p>首先介绍一下我们玟茵开源社区的概况。首先本社区主要参与者和服务用户为女生，同时开发技术上并不十分成熟，也易于进行一些情绪化动作。当然成员基本没有太多空闲时间，也许是比较懒。我们并没有把这个当做一项事业来做，单纯为了爱好，并不考虑任何利益。</p>
+<p>第一部分：开源社区的建设</p>
+<p>1.闲聊灌水问题</p>
+<p>开源社区并不是非常严肃的事情，一些志同道合的开源软件爱好者聚集在一起，做非盈利性质软硬件开发项目而已。所以我并不赞成一些开源社区管理者所做的，严格控制灌水的做法。大家闲聊是一种自由。当然闲聊不是无限制的，开源社区最好建立独立的灌水QQ群或者是IRC频道，在不影响正常开发交流进度的情况下，可以适当交流一些娱乐话题（huang duan zi），来提升气氛。不过应该注意的是某些限制性话题请勿接触，社区不应该是一个谈论政治性话题的地方。社区的气氛有赖于大家一起维护成长，理想的状态是不沉闷也不过分活跃。</p>
+<p>社区不应该是一个只谈论枯燥的技术的地方，最好能建设成为一个开源爱好者共同的家园。也可以适当接收并不懂开源技术的用户加入。在一些开发的事情上，外行人往往比内行人更看得广阔，同时开源社区的推广也少不了大众的参与。作为一个负责人，我想对大家说，不仅仅是写代码重要，例如美工设计，用户体验等方面更加需要重视。尤其是对于规模较大的项目。</p>
+<p>2.社区成员之间的沟通</p>
+<p>作为一个开源社区负责人或者是管理者，一定要与所有新加入的社区成员进行一对一充分沟通和交流，了解他们的实际能力和自身的兴趣爱好。实际开发中，可以仿行敏捷项目管理中的站立会议方式，不一定是每天开会，但需要到特定时间期限进行整个社区的充分沟通讨论，以确定下一步的工作努力方向和进度。</p>
+<p>敏捷开发它只写有必要的文档，或尽量少写文档，敏捷开发注重的是人与人之间，面对面的交流，所以它强调以人为核心。在开源社区中也是如此，不需要堆砌wiki和邮件列表，人与人的沟通远远比这些文档要有用得多。</p>
+<p>3.性别问题</p>
+<p>开源社区不应该存在对女性爱好者的性别歧视问题。这种歧视常常表现在，对程序媛的成果过分吹捧，或者是把程序媛当作“镇社之宝”什么的。言下之意就是，女性的实际能力都有问题，凭脸还是卖萌在这里混的一样。这会很让程序媛们寒心的。（本人也是程序媛一枚╮（﹀＿﹀）╭）我的想法是，社区内应对男性和女性成员一视同仁，最起码不应该有太多差别，工作量做到基本平衡（不过根据情况也是可以进行适当照顾滴～）</p>
+<p>4.喷子的处置</p>
+<p>喷子，键盘侠，一种有天朝特色的东西。其特点是不管你在做什么他总能找出吐槽点进行吐槽→_→，还用各种不堪入目的语言非要逼你和他打口水战。对于混入社区内部的喷子应该采取果断清除出去的做法，懒得和他们费口水，毕竟这是我们的地盘，容不得你在这里撒野。如果实在社区外的公众交流平台上，成员应该坚决果断地维护社区的名誉和利益，坚决和这些人做斗争。</p>
+<p>二.开源社区的项目管理</p>
+<p>1.基于过程的全流程敏捷项目管理综述</p>
+<p>对于当下的开源社区，国外通行的方式个人感觉并不适合，造成了大量拖延症患者存在，影响开发进度以及项目迭代。大多数开源社区的项目管理往往是基于issue（事务）形式，为每一个事务打上“未完成”，“已开始”，“进行中”，“已完成”，“已终结” 类似的标签，对于软件开发中的缺陷管理也是采用类似的方式。这种方法看似简洁，实际上存在一定隐患。只注重结果而不注重过程的管理方式，往往造成代码质量逐渐下降，拖延症问题日益严重。一定需要项目全流程敏捷开发管理，从只注重结果到过程与结果并重。由于开源社区往往所有者处在不同的时空之下，有必要使用在线的项目全流程管理工具。现在常用的项目全流程管理工具有Redmine，Jira，ZentaoPMS之类。本文中后续部分将基于ZentaoPMS（禅道项目管理软件）进行简要叙述。采用本套软件，主要是因为其搭建方便，可直接利用常见的PHP+MySQL网站环境进行搭建（Redmine和Jira分别需要Ruby和Java ME运行时）功能也比较全面，基本上可以做到开箱即用。</p>
+<p>我们要理解，敏捷开发不是一门技术，它是一种开发方法，也就是一种软件开发的流程，它会指导我们用规定的环节去一步一步完成项目的开发；而这种开发方式的主要驱动核心是人；它采用的是迭代式开发，这里采用的是Scrum方式。</p>
+<p>什么是Scrum？</p>
+<p>Scrum的英文意思是橄榄球运动的一个专业术语，表示“争球”的动作；把一个开发流程的名字取名为Scrum，我想大家一定能想象出一个开发团队在开发一个项目时，大家像打橄榄球一样迅速、富有战斗激情、人人你争我抢地完成它，每个成员一定会感到非常兴奋的。</p>
+<p>2.项目迭代</p>
+<p>迭代是指把一个复杂且开发周期很长的开发任务，分解为很多小周期可完成的任务，这样的一个周期就是一次迭代的过程；同时每一次迭代都可以生产或开发出一个可以交付的软件产品。</p>
+<p>在社区的开发中，我们不可能做到商业化管理的严格细致程度，但Scrum的一些手段还是值得采用的。在此着重叙述一下社区开发中易于被忽略的部分：</p>
+<p>（1）需求提交与整理</p>
+<p>开源社区的软件作品，大多并无商业利益的关联。同时大多数开源项目参与度也并非很高，提出的需求大部分来自社区成员内部和爱好者的日常使用。从这点看来，我们既是开发成员又是客户，虽然是自己给自己提需求，这一步也是绝对不能省略的，在脑海中时常会显示灵光一现的想法，最好能及时做记录，分类后提交到项目管理系统的需求管理处，方便日后开发时整理。提需求时可以参考如下格式：</p>
+<p>{我是xx样的用户&#x2F;开发者}；</p>
+<p>{需要加入yy的功能}；</p>
+<p>{这项功能可以起到zz的效果}。</p>
+<p>………</p>
+<p><img src="/images/v2-26a0335e522e784a599ce60b67bc8011_b.png"><img src="/images/v2-b7863536148e3ae92c2480e757124164_b.jpeg"></p>
+<p>如上图，第一个画面为社区成员提出的需求，第二个画面为爱好者对玟茵系统提出的一些意见，这里也暂时整理为需求。不过融入产品迭代中。这类型需求还需要进行细分。</p>
+<p>（2）关于开发中的Sprint方法</p>
+<p>何为Sprint？</p>
+<p>Sprint是短距离赛跑的意思，这里面指的是一次迭代，而一次迭代的周期是1个月时间（笔者注：开源社区中这个周期可以更短一些，以能完成一项有意义的任务为准），也就是我们要把一次迭代的开发内容以最快的速度完成它，这个过程我们称它为Sprint。</p>
+<p>Sprint简单的说就是版本更新。考虑到社区的实际情况，例如我们现在做的是GNU&#x2F;Linux distribution这种比较大型的项目，可以把某系统组件的更新或者是某开发模块也算作一次Sprint。这里会用到上文（1）中的需求列表，根据优先级排列，交给所有参与此项目的Team成员进行一次Sprint计划会议，研究讨论，根据优先级选出一个Story作为本次Sprint的目标。还要共同确定一个迭代周期，一般不要太长时间，以刚好能做完为准。</p>
+<p>接下来，要做的就是Story的分解，即需求细分。需求细分建议由社区的总负责人来完成，负责人必须高度熟悉这个项目的工作流程，善于领导成员完成自己应有的目标。创建这个Sprint Backlog后，到此，每个参与成员可以根据需求细分的结果来确定自己的task（每个任务在短时间内完成）这里要重点注意：每个成员接受任务应根据自己实际能力。创建的任务应该在选择好期限内完成，尽量不要拖延，否则会影响整个项目的开发。</p>
+<p><img src="/images/v2-6e3352b916f97332efafc1681fb9168f_b.png"><img src="/images/v2-ed4bb72b61873ca9e1df08837cb49da2_b.png"></p>
+<p>上图我们看到了，存在一些长期性质任务，也要合理设置执行期限，尽快完成，防止过度拖延出现意料之外的后果，</p>
+<p>（3）开发的总结过程</p>
+<p>Scrum中的每日站立会议（Daily Scrum Meeting），在社区的实际情况中，可以做一定简化。每天只更新进度表和燃尽图，定期进行开发成员之间的交流。Daily-Build可以根据社区实际情况确定是否执行。</p>
+<p>当一个阶段性目标Story完成，也就是一个Sprint Backlog被完成，也就表示一次Sprint完成，这时，我们要进行 Srpint Review Meeting（演示会议），每一个参与开发的成员和社区负责人都要参加，需求的提出者则必须参加。每一个成员都要演示一下自己本阶段完成的产品，互相提出意见，做记录融入到下一轮Sprint中（这个会议非常重要，一定不能取消）。</p>
+<p>每个较大模块开发完成后，我们要进行Sprint Retrospective Meeting（回顾会议），也称为总结会议，大家在一起总结并讨论改进的地方，放入下一轮Sprint的产品需求中。</p>
+<p>（4）巧用任务管理列表和燃尽图</p>
+<p>在禅道系统中，可以清晰显示出每位成员的工作进度和任务完成情况。如果有某位成员的工作进度图常处于停滞状态，社区负责人或者是其他伙伴们应该和这位成员做主动和及时地沟通，了解一下具体是什么情况，适当为这位成员的工作做出合理调整。</p>
+<p>3.测试及缺陷管理</p>
+<p>开源社区的开发当中，一般并不重视测试环节。大部分开源软件采取被动测试方式，即不稳定版本交给用户去测试，然后根据用户反馈粗略确定当下产品质量。这种做法实际上也是不合理的，软件开发者的工作为什么要推给用户完成？应做到开发与测试并重。</p>
+<p>（1）Bug的全流程跟踪</p>
+<p>每当用户或开发者反馈回一个Bug，跟踪机制应该立即定位出现在哪一个Sprint阶段，对应Story是什么，这个Task当时是由哪位成员负责的，等等。最好能做到责任到人。一定要详细记录这个Bug的重现步骤，出现结果以及用户期望。这并不是为了单纯追究责任，而是把这个问题融入到下一轮迭代开发中，以后尽量不要再犯类似错误。如果这个Bug是由上游某开源软件引起的，那么务必记录此软件的详细版本号，以及构建日期。同时要rollback到前一个能正常运行的版本。等到该软件发行下一个修正版本时进行相同测试（可作为一个长期任务）。</p>
+<p><img src="/images/v2-98adafa39f45f0266adc878c38268760_b.png"></p>
+<p>如上图，表示出一个Bug从提出到解决的完整步骤。</p>
+<p>（2）测试用例及文档管理</p>
+<p>可以记录一些常见模块测试的方法，作为测试用例，以后可以不断补充内容。</p>
+<p>开发中的文档，是社区内部的重要资料。其中包括产品的需求文档，或者是开发中用到的wiki等资料，还有各种项目的开源许可证。这些一定要分门别类保存，作为日后开发的重要参考依据。</p>
+<p><img src="/images/v2-51c765296dbeec40dec97b8244033cb9_b.png"></p>
+<p>3.产品计划的建立</p>
+<p>尽量为自己的产品发布做出一个合理的计划安排，比如多长时间发行一个版本，每个版本的迭代周期确定一个合理的程度，并力争按时完成，尽量不要跳票。（如下图）</p>
+<p><img src="/images/v2-782eff373b671c1f961b5c609fe31d33_b.png"></p>
+<p>尽量在规定时间内做完一样事情，不要养成拖延的习惯。</p>
+<p>总结：</p>
+<p>作为开源社区的创始人和主要维护者，我们反对过度民主的做法。那样会把大量时间浪费在争论上，最终什么事都做不成。社区也需要一个负责人，最终说了算的人。及时调节矛盾，让大家在祥和的气氛之下进行技术交流，为开源软件事业做出自己应有的贡献。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2017/03/17/fedora-centos-configure-shadowsocks-on-commandline-mode/">Fedora/CentOS下命令行配置Shadowsocks全局代理</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2017/03/04/girls-learn-linuxs-hard-disk-partition/">女孩子学Linux之硬盘分区篇</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2017/03/04/girls-learn-linuxs-hard-disk-partition/" title="女孩子学Linux之硬盘分区篇"><span class="title">女孩子学Linux之硬盘分区篇</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签</span></div><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 14px;" class="tag -0">agent</a> <a href="/tags/aliyun/" style="font-size: 14px;" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 14px;" class="tag -0">android</a> <a href="/tags/arc/" style="font-size: 14px;" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 14px;" class="tag -0">arch</a> <a href="/tags/asf/" style="font-size: 14px;" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 14px;" class="tag -0">asus</a> <a href="/tags/bbr/" style="font-size: 17.5px;" class="tag -3">bbr</a> <a href="/tags/centos/" style="font-size: 14px;" class="tag -0">centos</a> <a href="/tags/cheat/" style="font-size: 14px;" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 14px;" class="tag -0">colab</a> <a href="/tags/cpp/" style="font-size: 14px;" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 17.5px;" class="tag -3">cpu</a> <a href="/tags/curl/" style="font-size: 14px;" class="tag -0">curl</a> <a href="/tags/dnf/" style="font-size: 14px;" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14px;" class="tag -0">docker</a> <a href="/tags/entware/" style="font-size: 14px;" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 17.5px;" class="tag -3">epel</a> <a href="/tags/fcitx/" style="font-size: 14px;" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 24.5px;" class="tag -8">fedora</a> <a href="/tags/firewalld/" style="font-size: 14px;" class="tag -0">firewalld</a> <a href="/tags/fuchsia/" style="font-size: 14px;" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 14px;" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 14px;" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 17.5px;" class="tag -3">github</a> <a href="/tags/grub/" style="font-size: 14px;" class="tag -0">grub</a> <a href="/tags/grubby/" style="font-size: 14px;" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 14px;" class="tag -0">hi1620</a> <a href="/tags/huawei/" style="font-size: 14px;" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 14px;" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 14px;" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 14px;" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 21px;" class="tag -5">intel</a> <a href="/tags/ip/" style="font-size: 14px;" class="tag -0">ip</a> <a href="/tags/kde/" style="font-size: 14px;" class="tag -0">kde</a> <a href="/tags/kernel/" style="font-size: 14px;" class="tag -0">kernel</a> <a href="/tags/kvm/" style="font-size: 17.5px;" class="tag -3">kvm</a> <a href="/tags/lcd/" style="font-size: 14px;" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 14px;" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 28px;" class="tag -10">linux</a> <a href="/tags/lnmp/" style="font-size: 14px;" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 14px;" class="tag -0">magisk</a> <a href="/tags/mediatek/" style="font-size: 17.5px;" class="tag -3">mediatek</a> <a href="/tags/merlin/" style="font-size: 14px;" class="tag -0">merlin</a> <a href="/tags/modem/" style="font-size: 14px;" class="tag -0">modem</a> <a href="/tags/n1/" style="font-size: 14px;" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 17.5px;" class="tag -3">nas</a> <a href="/tags/novelai/" style="font-size: 14px;" class="tag -0">novelai</a> <a href="/tags/openvz/" style="font-size: 14px;" class="tag -0">openvz</a> <a href="/tags/packagekit/" style="font-size: 14px;" class="tag -0">packagekit</a> <a href="/tags/power/" style="font-size: 14px;" class="tag -0">power</a> <a href="/tags/redhat/" style="font-size: 14px;" class="tag -0">redhat</a> <a href="/tags/rpm/" style="font-size: 14px;" class="tag -0">rpm</a> <a href="/tags/shadowsocks/" style="font-size: 14px;" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 14px;" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 17.5px;" class="tag -3">ssh</a> <a href="/tags/steam/" style="font-size: 14px;" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 14px;" class="tag -0">synology</a> <a href="/tags/systemd/" style="font-size: 14px;" class="tag -0">systemd</a> <a href="/tags/ubuntu/" style="font-size: 17.5px;" class="tag -3">ubuntu</a> <a href="/tags/virt-manager/" style="font-size: 14px;" class="tag -0">virt-manager</a> <a href="/tags/vista/" style="font-size: 17.5px;" class="tag -3">vista</a> <a href="/tags/vmware/" style="font-size: 14px;" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 14px;" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 24.5px;" class="tag -8">vps</a> <a href="/tags/windows-server/" style="font-size: 14px;" class="tag -0">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.5px;" class="tag -3">windows10</a> <a href="/tags/x86/" style="font-size: 14px;" class="tag -0">x86</a> <a href="/tags/zerotier/" style="font-size: 14px;" class="tag -0">zerotier</a> <a href="/tags/zsh/" style="font-size: 14px;" class="tag -0">zsh</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 17.5px;" class="tag -3">代理</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 14px;" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 14px;" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 14px;" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 14px;" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 14px;" class="tag -0">开源社区</a> <a href="/tags/%E6%8C%82%E5%8D%A1/" style="font-size: 14px;" class="tag -0">挂卡</a> <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 14px;" class="tag -0">树莓派</a> <a href="/tags/%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA/" style="font-size: 14px;" class="tag -0">硬盘分区</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 14px;" class="tag -0">编译</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E4%BA%91/" style="font-size: 14px;" class="tag -0">腾讯云</a> <a href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" style="font-size: 14px;" class="tag -0">路由器</a> <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%8C%85/" style="font-size: 14px;" class="tag -0">软件包</a> <a href="/tags/%E9%87%8E%E5%85%BD%E5%85%88%E8%BE%88/" style="font-size: 14px;" class="tag -0">野兽先辈</a> <a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" style="font-size: 14px;" class="tag -0">防火墙</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" style="font-size: 14px;" class="tag -0">项目管理</a> <a href="/tags/%E9%A9%B1%E5%8A%A8/" style="font-size: 14px;" class="tag -0">驱动</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
