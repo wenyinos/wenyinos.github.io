@@ -1,6 +1,7 @@
 /* WenYin homepage palette override; layout and content stay unchanged. */
 :root,
 :root[data-theme="light"] {
+  --side-content-width: 252px;
   --hue: 263deg;
   --sat: 48%;
   --light: 51%;
@@ -45,6 +46,24 @@ body>.sitebg {
 .md-text.content h2:not([class]),
 .md-text.content h3:not([class]) {
   color: #4a2c82;
+}
+.logo-wrap {
+  min-height: 60px;
+}
+.logo-wrap a.avatar {
+  width: 56px;
+  height: 56px;
+  margin-right: 1.1rem;
+}
+.logo-wrap a.title {
+  line-height: 1.18;
+}
+.logo-wrap a.title .main {
+  font-size: 1.36rem;
+  white-space: nowrap;
+}
+.logo-wrap a.title .sub {
+  font-size: 0.9rem;
 }
 :root[data-theme="light"] .post-list .post-card,
 :root:not([data-theme]) .post-list .post-card {
@@ -105,4 +124,40 @@ body>.sitebg {
     top: 12px;
     right: 12px;
   }
+  .logo-wrap {
+    min-height: 54px;
+  }
+  .logo-wrap a.avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 0.85rem;
+  }
+  .logo-wrap a.title .main {
+    font-size: 1.05rem;
+  }
+  .logo-wrap a.title .sub {
+    font-size: 0.82rem;
+  }
+}
+.widget-wrapper.markdown .widget-body [id="快捷导航"] {
+  margin-bottom: 0.35rem;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.widget-wrapper.markdown .widget-body [id="快捷导航"] + p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  margin: 0.25rem 0 0;
+  line-height: 1.2;
+}
+.widget-wrapper.markdown .widget-body [id="快捷导航"] + p br {
+  display: none;
+}
+.widget-wrapper.markdown .widget-body [id="快捷导航"] + p a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0;
+  font-size: 0.92rem !important;
+  white-space: nowrap;
 }
