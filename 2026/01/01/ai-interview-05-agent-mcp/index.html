@@ -1,0 +1,999 @@
+
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>AI面试题 - MCP 协议与工具治理 - 玟茵开源社区知识库</title>
+
+  
+    <meta name="description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 【你如何用一句话解释 MCP 解决的核心问题？】面试官为什么问这个问题：这个问题不是在考协议定义，而是在判断候选人是否真正理解 MCP 出现的”工程背景”。如果回答停留在”统一接口””标准协议”，通常意味着只看过文档，没有真实用过。面试官希望听到的是：为什么不用 MCP，Agent 在企业环境里会失控。 参考口语化回答：我通常一句">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI面试题 - MCP 协议与工具治理">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-mcp/">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 【你如何用一句话解释 MCP 解决的核心问题？】面试官为什么问这个问题：这个问题不是在考协议定义，而是在判断候选人是否真正理解 MCP 出现的”工程背景”。如果回答停留在”统一接口””标准协议”，通常意味着只看过文档，没有真实用过。面试官希望听到的是：为什么不用 MCP，Agent 在企业环境里会失控。 参考口语化回答：我通常一句">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="agent">
+<meta property="article:tag" content="interview">
+<meta property="article:tag" content="mcp">
+<meta property="article:tag" content="tool-calling">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="interview,agent,mcp,tool-calling">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2026-01-01T00:00:00+08:00","dateModified":"2026-01-01T00:00:00+08:00","datePublished":"2026-01-01T00:00:00+08:00","description":"","headline":"AI面试题 - MCP 协议与工具治理","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-mcp/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-mcp/","keywords":"interview, agent, mcp, tool-calling","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源社区知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/05/08/home-space-migration-fstab-adjustment/"><span class="title">/home 空间迁移与 fstab 调整记录</span></a><a class="item title" href="/2026/04/28/disable-intel-dg1-discrete-gpu/"><span class="title">彻底禁用 DG1 独立显卡</span></a><a class="item title" href="/2026/04/17/clean-vscode/"><span class="title">清理 VS Code</span></a><a class="item title" href="/2026/04/04/fedora-rebuild-grub-config/"><span class="title">在 Fedora 下重建 GRUB 配置文件</span></a><a class="item title" href="/2026/03/27/systemd-user-session-exit-service-stop/"><span class="title">用户会话退出导致的级联服务停止</span></a><a class="item title" href="/2026/03/14/aur-submit-guide/"><span class="title">AUR 提交指南</span></a><a class="item title" href="/2026/03/03/clean-cargo-cache-and-build-artifacts/"><span class="title">清理 Cargo 缓存和构建产物</span></a><a class="item title" href="/2026/02/19/powershell-command-line-proxy/"><span class="title">PowerShell 配置命令行代理</span></a><a class="item title" href="/2026/02/06/npm-pnpm-clean-cache/"><span class="title">npm 和 pnpm 清理缓存</span></a><a class="item title" href="/2026/01/29/freebsd-pkg-autoremove-dependencies/"><span class="title">FreeBSD pkg 自动卸载安装依赖</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/">AI工程师面试题</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>AI面试题 - MCP 协议与工具治理</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-【你如何用一句话解释-MCP-解决的核心问题？】"><a href="#Q1-【你如何用一句话解释-MCP-解决的核心问题？】" class="headerlink" title="Q1. 【你如何用一句话解释 MCP 解决的核心问题？】"></a>Q1. 【你如何用一句话解释 MCP 解决的核心问题？】</h3><p>面试官为什么问这个问题：<br>这个问题不是在考协议定义，而是在判断候选人是否真正理解 MCP 出现的”工程背景”。<br>如果回答停留在”统一接口””标准协议”，通常意味着只看过文档，没有真实用过。<br>面试官希望听到的是：为什么不用 MCP，Agent 在企业环境里会失控。</p>
+<p>参考口语化回答：<br>我通常一句话概括：MCP 不是让 Agent”多会调用工具”，而是让 Agent 的工具能力被明确描述、被限制、被审计。<br>在没有 MCP 之前，Agent 调工具本质上是”模型临时决定 + 程序兜底”，但一旦工具多、系统杂，就很难知道它能做什么、不能做什么、做过什么。<br>MCP 把工具和上下文变成一个可治理的协议层对象，这是我认为它真正解决的问题。</p>
+<h3 id="Q2-【MCP-和传统-Tool-Calling-Function-Calling-的本质区别是什么？】"><a href="#Q2-【MCP-和传统-Tool-Calling-Function-Calling-的本质区别是什么？】" class="headerlink" title="Q2. 【MCP 和传统 Tool Calling &#x2F; Function Calling 的本质区别是什么？】"></a>Q2. 【MCP 和传统 Tool Calling &#x2F; Function Calling 的本质区别是什么？】</h3><p>面试官为什么问这个问题：<br>很多候选人”会用 Function Calling”，但并不理解为什么企业会引入 MCP。<br>这个问题在区分：你是把 MCP 当成”新写法”，还是理解它是”治理层”。</p>
+<p>参考口语化回答：<br>Function Calling 更像是”模型能不能调用这个函数”，而 MCP 关心的是：<br>这个工具是谁提供的、权限是什么、上下文边界在哪里、调用是否可追溯。<br>在工程里，Function Calling 通常是”代码级能力”，而 MCP 是平台级契约。<br>前者解决调用，后者解决责任、边界和风险，这在生产环境里差别非常大。</p>
+<h3 id="Q3-【为什么企业级-Agent-一定会走向-MCP-或类似协议？】"><a href="#Q3-【为什么企业级-Agent-一定会走向-MCP-或类似协议？】" class="headerlink" title="Q3. 【为什么企业级 Agent 一定会走向 MCP 或类似协议？】"></a>Q3. 【为什么企业级 Agent 一定会走向 MCP 或类似协议？】</h3><p>面试官为什么问这个问题：<br>这是在考候选人的系统视角，而不是 API 使用能力。<br>面试官想确认你是否见过 Agent 从 Demo 走向生产后的”失控阶段”。</p>
+<p>参考口语化回答：<br>因为一旦 Agent 真正接入企业系统，问题就不再是”能不能做”，而是”谁允许它做、出事谁负责”。<br>工具一多、系统一杂，如果没有统一协议去约束能力，Agent 本质上就是一个”不可控的自动化脚本”。<br>MCP 这类协议的出现，是企业在为 Agent 补上治理、审计和合规这一层基础设施。</p>
+<h3 id="Q4-【在整体-Agent-架构中，你如何定位-MCP？】"><a href="#Q4-【在整体-Agent-架构中，你如何定位-MCP？】" class="headerlink" title="Q4. 【在整体 Agent 架构中，你如何定位 MCP？】"></a>Q4. 【在整体 Agent 架构中，你如何定位 MCP？】</h3><p>面试官为什么问这个问题：<br>这个问题用来区分”框架使用者”和”架构理解者”。<br>如果把 MCP 说成是 LangChain、LlamaIndex 的替代，基本可以判定理解偏差。</p>
+<p>参考口语化回答：<br>我一直把 MCP 放在协议层和治理层，而不是 Agent 框架层。<br>LangChain、LangGraph 解决的是”Agent 怎么思考、怎么编排流程”，<br>MCP 解决的是”Agent 被允许接触什么世界”。<br>它更像是 API Gateway + 权限系统，而不是推理框架。</p>
+<h3 id="Q5-【你如何理解”工具与上下文的标准化治理”这句话？】"><a href="#Q5-【你如何理解”工具与上下文的标准化治理”这句话？】" class="headerlink" title="Q5. 【你如何理解”工具与上下文的标准化治理”这句话？】"></a>Q5. 【你如何理解”工具与上下文的标准化治理”这句话？】</h3><p>面试官为什么问这个问题：<br>这是一个抽象问题，但非常关键。<br>能不能说清楚，直接反映候选人是否真正用 MCP 管过能力边界。</p>
+<p>参考口语化回答：<br>标准化治理的核心不是格式统一，而是行为可预期。<br>我希望在 MCP 层就能明确：这个 Agent 能访问哪些资源、能做哪些操作、返回的数据边界在哪里。<br>这样即使模型输出有波动，工具层依然是”关在笼子里的”，不会因为一句 Prompt 就越权。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】"><a href="#第二层：核心技术能力（How）【8-题】" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q6-【在你理解中，MCP-Server-和-Client-的职责边界是什么？】"><a href="#Q6-【在你理解中，MCP-Server-和-Client-的职责边界是什么？】" class="headerlink" title="Q6. 【在你理解中，MCP Server 和 Client 的职责边界是什么？】"></a>Q6. 【在你理解中，MCP Server 和 Client 的职责边界是什么？】</h3><p>面试官为什么问这个问题：<br>很多候选人会写 MCP Server Demo，但对职责划分并不清晰。<br>这个问题在考：你有没有在多 Agent、多工具场景下踩过坑。</p>
+<p>参考口语化回答：<br>我一般把 MCP Server 当成能力与边界的拥有者，Client 只是使用者。<br>Server 决定”有哪些工具、参数怎么校验、权限怎么控制”，<br>Client 只负责在合适的时机发起请求。<br>如果把校验逻辑放到 Client，本质上就回到了”谁都能乱调”。</p>
+<h3 id="Q7-【你如何理解-MCP-中-Tool、Resource、Prompt-这三类抽象？】"><a href="#Q7-【你如何理解-MCP-中-Tool、Resource、Prompt-这三类抽象？】" class="headerlink" title="Q7. 【你如何理解 MCP 中 Tool、Resource、Prompt 这三类抽象？】"></a>Q7. 【你如何理解 MCP 中 Tool、Resource、Prompt 这三类抽象？】</h3><p>面试官为什么问这个问题：<br>这是在看候选人是否真正理解 MCP 的设计意图，而不是只会照字段填。</p>
+<p>参考口语化回答：<br>在我看来，Tool 是”可执行能力”，Resource 是”可被读取或引用的上下文”，Prompt 更像是”受控引导”。<br>把它们拆开，本质上是为了防止 Agent 把读权限、写权限、执行权限混在一起。<br>这样在工程上就能明确限制：哪些是只读的，哪些是高风险操作。</p>
+<h3 id="Q8-【MCP-是如何描述工具能力并限制其使用方式的？】"><a href="#Q8-【MCP-是如何描述工具能力并限制其使用方式的？】" class="headerlink" title="Q8. 【MCP 是如何描述工具能力并限制其使用方式的？】"></a>Q8. 【MCP 是如何描述工具能力并限制其使用方式的？】</h3><p>面试官为什么问这个问题：<br>这个问题不关心字段细节，而是关心设计思路。</p>
+<p>参考口语化回答：<br>我关注的不是”描述得多详细”，而是”描述是否足够收敛”。<br>在 MCP 里，我会刻意把工具能力拆小，把参数范围写死，<br>宁可让 Agent 多走几步，也不让它一次调用做太多事。<br>这是我在生产环境里防误操作的基本原则。</p>
+<h3 id="Q9-【MCP-在-Agent-的决策与执行链路中，处在什么位置？】"><a href="#Q9-【MCP-在-Agent-的决策与执行链路中，处在什么位置？】" class="headerlink" title="Q9. 【MCP 在 Agent 的决策与执行链路中，处在什么位置？】"></a>Q9. 【MCP 在 Agent 的决策与执行链路中，处在什么位置？】</h3><p>面试官为什么问这个问题：<br>用来判断候选人是否真正理解 MCP 对 Agent 行为的”约束点”。</p>
+<p>参考口语化回答：<br>MCP 不参与 Agent 的思考，但它是执行前的最后一道闸门。<br>模型可以产生很多想法，但真正落到系统执行时，<br>只有符合 MCP 描述和权限的调用才能通过。<br>这也是为什么我说 MCP 是”工程上的刹车系统”。</p>
+<h3 id="Q10-【多-MCP-Server-共存时，你是如何做路由和选择的？】"><a href="#Q10-【多-MCP-Server-共存时，你是如何做路由和选择的？】" class="headerlink" title="Q10. 【多 MCP Server 共存时，你是如何做路由和选择的？】"></a>Q10. 【多 MCP Server 共存时，你是如何做路由和选择的？】</h3><p>面试官为什么问这个问题：<br>这是一个明显偏真实项目的问题，单 Demo 场景很难遇到。</p>
+<p>参考口语化回答：<br>我不会让 Agent 自由选择 Server。<br>通常是按业务域提前做分组，比如数据分析类、操作类、外部接口类。<br>Agent 只能在当前任务允许的 MCP Server 集合里调用，<br>路由逻辑由平台或 Workflow 决定，而不是模型临场发挥。</p>
+<h3 id="Q11-【MCP-接入-RAG-时，你最关注的设计点是什么？】"><a href="#Q11-【MCP-接入-RAG-时，你最关注的设计点是什么？】" class="headerlink" title="Q11. 【MCP 接入 RAG 时，你最关注的设计点是什么？】"></a>Q11. 【MCP 接入 RAG 时，你最关注的设计点是什么？】</h3><p>面试官为什么问这个问题：<br>很多人会回答”向量检索”，但这不是面试官想听的。</p>
+<p>参考口语化回答：<br>我最关注的是：检索结果是不是可解释、可限制、可审计。<br>通过 MCP 接入 RAG，我会限制返回条数、文档范围，<br>避免 Agent 拿到”超出业务需要”的上下文。<br>否则 RAG 很容易变成另一种形式的数据泄露。</p>
+<h3 id="Q12-【你如何防止-Agent-通过-MCP-滥用工具能力？】"><a href="#Q12-【你如何防止-Agent-通过-MCP-滥用工具能力？】" class="headerlink" title="Q12. 【你如何防止 Agent 通过 MCP 滥用工具能力？】"></a>Q12. 【你如何防止 Agent 通过 MCP 滥用工具能力？】</h3><p>面试官为什么问这个问题：<br>这是 MCP 方向的核心问题之一，几乎是必考题。</p>
+<p>参考口语化回答：<br>核心思路只有一个：能力最小化 + 强校验。<br>工具拆小、参数校验、只读优先、危险操作强制二次确认。<br>我不指望模型”自觉”，而是默认它一定会尝试越界。</p>
+<h3 id="Q13-【你如何看待-MCP-与-LangChain-LangGraph-的关系？】"><a href="#Q13-【你如何看待-MCP-与-LangChain-LangGraph-的关系？】" class="headerlink" title="Q13. 【你如何看待 MCP 与 LangChain &#x2F; LangGraph 的关系？】"></a>Q13. 【你如何看待 MCP 与 LangChain &#x2F; LangGraph 的关系？】</h3><p>面试官为什么问这个问题：<br>这是在考候选人的技术边界感，而不是站队。</p>
+<p>参考口语化回答：<br>我一般把 LangGraph 当成”流程控制器”，<br>MCP 当成”能力白名单”。<br>Graph 决定什么时候调用，MCP 决定能不能调用。<br>两者分清，系统才可维护。</p>
+<h2 id="第三层：工程化与系统能力【8-题】"><a href="#第三层：工程化与系统能力【8-题】" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q14-【MCP-Server-在生产环境中通常如何部署？】"><a href="#Q14-【MCP-Server-在生产环境中通常如何部署？】" class="headerlink" title="Q14. 【MCP Server 在生产环境中通常如何部署？】"></a>Q14. 【MCP Server 在生产环境中通常如何部署？】</h3><p>面试官为什么问这个问题：<br>判断候选人是否真的上线过，而不是本地跑过。</p>
+<p>参考口语化回答：<br>我一般会把 MCP Server 当成独立服务，用容器隔离。<br>不同风险等级的 Server 甚至会分不同节点或网络域。<br>核心原则是：不要让 Agent 的能力和业务系统跑在同一进程里。</p>
+<h3 id="Q15-【你如何设计-MCP-的权限控制？】"><a href="#Q15-【你如何设计-MCP-的权限控制？】" class="headerlink" title="Q15. 【你如何设计 MCP 的权限控制？】"></a>Q15. 【你如何设计 MCP 的权限控制？】</h3><p>面试官为什么问这个问题：<br>这是企业非常关心的问题。</p>
+<p>参考口语化回答：<br>权限不是给 Agent 的，而是给Agent 身份 + 场景的。<br>同一个 Agent，在不同业务流程里能用的工具是不一样的。<br>权限策略我更倾向于写死在配置层，而不是 Prompt 里。</p>
+<h3 id="Q16-【当-MCP-工具调用失败或超时时，你通常怎么处理？】"><a href="#Q16-【当-MCP-工具调用失败或超时时，你通常怎么处理？】" class="headerlink" title="Q16. 【当 MCP 工具调用失败或超时时，你通常怎么处理？】"></a>Q16. 【当 MCP 工具调用失败或超时时，你通常怎么处理？】</h3><p>面试官为什么问这个问题：<br>这是典型的生产环境问题。</p>
+<p>参考口语化回答：<br>我不会让失败直接暴露给模型。<br>通常会在 MCP 层做标准化错误返回，<br>区分”可重试”和”不可重试”，<br>避免 Agent 因为异常反复调用同一个危险工具。</p>
+<h3 id="Q17-【你如何做-MCP-调用的日志与审计？】"><a href="#Q17-【你如何做-MCP-调用的日志与审计？】" class="headerlink" title="Q17. 【你如何做 MCP 调用的日志与审计？】"></a>Q17. 【你如何做 MCP 调用的日志与审计？】</h3><p>面试官为什么问这个问题：<br>这直接关系到合规和事后追责。</p>
+<p>参考口语化回答：<br>每一次 MCP 调用我都会记录：Agent、工具、参数摘要、结果摘要、时间。<br>不是为了 Debug，而是为了事后能还原决策链路。<br>在医疗和金融场景，这一点尤其重要。</p>
+<h3 id="Q18-【MCP-在性能和安全之间你如何权衡？】"><a href="#Q18-【MCP-在性能和安全之间你如何权衡？】" class="headerlink" title="Q18. 【MCP 在性能和安全之间你如何权衡？】"></a>Q18. 【MCP 在性能和安全之间你如何权衡？】</h3><p>面试官为什么问这个问题：<br>考察工程取舍能力。</p>
+<p>参考口语化回答：<br>我会优先保证安全和可控。<br>Agent 调用慢一点没关系，但越权一次代价非常高。<br>真正的优化，通常发生在调用频率和缓存策略上，而不是绕过校验。</p>
+<h3 id="Q19-【MCP-如何与-API-Gateway-或内网系统结合？】"><a href="#Q19-【MCP-如何与-API-Gateway-或内网系统结合？】" class="headerlink" title="Q19. 【MCP 如何与 API Gateway 或内网系统结合？】"></a>Q19. 【MCP 如何与 API Gateway 或内网系统结合？】</h3><p>面试官为什么问一个问题：<br>这是典型的企业架构问题。</p>
+<p>参考口语化回答：<br>我不会让 MCP 直接暴露内网系统。<br>通常 MCP Server 后面再接 Gateway，由 Gateway 控制流量和鉴权。<br>MCP 更多是”语义和能力层”，不是安全边界的唯一防线。</p>
+<h3 id="Q20-【你是否遇到过-MCP-设计不当导致的事故？】"><a href="#Q20-【你是否遇到过-MCP-设计不当导致的事故？】" class="headerlink" title="Q20. 【你是否遇到过 MCP 设计不当导致的事故？】"></a>Q20. 【你是否遇到过 MCP 设计不当导致的事故？】</h3><p>面试官为什么问这个问题：<br>这是一个心理博弈问题，看你是否真正踩过坑。</p>
+<p>参考口语化回答：<br>遇到过。<br>早期工具粒度太大，Agent 一次调用做了过多操作。<br>后来我们拆分工具、加二次确认，这个问题才真正解决。<br>这类坑不踩一次，很难意识到 MCP 的重要性。</p>
+<h3 id="Q21-【你如何评估一个-MCP-Server-是否”设计得足够安全”？】"><a href="#Q21-【你如何评估一个-MCP-Server-是否”设计得足够安全”？】" class="headerlink" title="Q21. 【你如何评估一个 MCP Server 是否”设计得足够安全”？】"></a>Q21. 【你如何评估一个 MCP Server 是否”设计得足够安全”？】</h3><p>面试官为什么问这个问题：<br>这是在考方法论，而不是经验数量。</p>
+<p>参考口语化回答：<br>我会反向思考：如果模型输出完全失控，它能造成多大破坏。<br>如果答案是”影响有限、可追溯、可回滚”，<br>那我认为这个 MCP Server 是合格的。</p>
+<h2 id="第四层：真实项目与业务场景能力【6-题】"><a href="#第四层：真实项目与业务场景能力【6-题】" class="headerlink" title="第四层：真实项目与业务场景能力【6 题】"></a>第四层：真实项目与业务场景能力【6 题】</h2><h3 id="Q22-【在医疗场景中，你如何用-MCP-控制-Agent-行为？】"><a href="#Q22-【在医疗场景中，你如何用-MCP-控制-Agent-行为？】" class="headerlink" title="Q22. 【在医疗场景中，你如何用 MCP 控制 Agent 行为？】"></a>Q22. 【在医疗场景中，你如何用 MCP 控制 Agent 行为？】</h3><p>面试官为什么问这个问题：<br>医疗是 MCP 价值最容易体现的场景之一。</p>
+<p>参考口语化回答：<br>我会严格区分只读分析和操作建议。<br>Agent 只能通过 MCP 读取数据，不能直接下指令。<br>所有可能影响患者的动作，都必须有人确认。</p>
+<h3 id="Q23-【在金融场景中，MCP-的核心价值体现在哪里？】"><a href="#Q23-【在金融场景中，MCP-的核心价值体现在哪里？】" class="headerlink" title="Q23. 【在金融场景中，MCP 的核心价值体现在哪里？】"></a>Q23. 【在金融场景中，MCP 的核心价值体现在哪里？】</h3><p>面试官为什么问这个问题：<br>考察行业理解。</p>
+<p>参考口语化回答：<br>金融场景里，我更关注风险隔离。<br>Agent 只能做分析，不能执行交易。<br>MCP 是用来限制它只能”看”和”算”，而不是”动”。</p>
+<h3 id="Q24-【企业内部系统众多时，你如何评估是否需要-MCP？】"><a href="#Q24-【企业内部系统众多时，你如何评估是否需要-MCP？】" class="headerlink" title="Q24. 【企业内部系统众多时，你如何评估是否需要 MCP？】"></a>Q24. 【企业内部系统众多时，你如何评估是否需要 MCP？】</h3><p>面试官为什么问这个问题：<br>不是所有项目都需要 MCP。</p>
+<p>参考口语化回答：<br>如果 Agent 只是做信息整理，我可能不会上 MCP。<br>但一旦涉及多个系统、跨权限、可写操作，<br>我会优先引入 MCP，把风险前移到协议层。</p>
+<h3 id="Q25-【你如何用-MCP-降低-Agent-误操作风险？】"><a href="#Q25-【你如何用-MCP-降低-Agent-误操作风险？】" class="headerlink" title="Q25. 【你如何用 MCP 降低 Agent 误操作风险？】"></a>Q25. 【你如何用 MCP 降低 Agent 误操作风险？】</h3><p>面试官为什么问这个问题：<br>这是 MCP 的核心应用价值之一。</p>
+<p>参考口语化回答：<br>核心就是三点：<br>能力拆分、权限前置、关键操作人工确认。<br>MCP 让我不用依赖 Prompt 去”提醒模型别犯错”。</p>
+<h3 id="Q26-【你是否遇到过业务方反对-MCP-的情况？如何说服？】"><a href="#Q26-【你是否遇到过业务方反对-MCP-的情况？如何说服？】" class="headerlink" title="Q26. 【你是否遇到过业务方反对 MCP 的情况？如何说服？】"></a>Q26. 【你是否遇到过业务方反对 MCP 的情况？如何说服？】</h3><p>面试官为什么问这个问题：<br>考察沟通与认知能力。</p>
+<p>参考口语化回答：<br>遇到过。<br>我通常不谈协议，而是谈责任划分和风险兜底。<br>当业务意识到 MCP 能保护他们，而不是限制他们，态度会很快转变。</p>
+<h3 id="Q27-【什么情况下你会明确拒绝给-Agent-接-MCP？】"><a href="#Q27-【什么情况下你会明确拒绝给-Agent-接-MCP？】" class="headerlink" title="Q27. 【什么情况下你会明确拒绝给 Agent 接 MCP？】"></a>Q27. 【什么情况下你会明确拒绝给 Agent 接 MCP？】</h3><p>面试官为什么问这个问题：<br>这是一个反向判断题。</p>
+<p>参考口语化回答：<br>当业务目标不清晰、权限边界没想明白时，我会拒绝。<br>因为 MCP 一旦接上，就意味着”能力被正式授权”，<br>这一步不能草率。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】"><a href="#第五层：进阶与加分项（架构-视野）【3-题】" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q28-【在多-Agent-系统中，MCP-的角色会发生变化吗？】"><a href="#Q28-【在多-Agent-系统中，MCP-的角色会发生变化吗？】" class="headerlink" title="Q28. 【在多 Agent 系统中，MCP 的角色会发生变化吗？】"></a>Q28. 【在多 Agent 系统中，MCP 的角色会发生变化吗？】</h3><p>面试官为什么问这个问题：<br>区分单点使用者和平台设计者。</p>
+<p>参考口语化回答：<br>会的。<br>在多 Agent 场景中，MCP 更像是公共基础设施。<br>它不再服务某一个 Agent，而是服务整个系统的能力边界。</p>
+<h3 id="Q29-【你如何将-MCP-与-LangGraph-的-Workflow-结合？】"><a href="#Q29-【你如何将-MCP-与-LangGraph-的-Workflow-结合？】" class="headerlink" title="Q29. 【你如何将 MCP 与 LangGraph 的 Workflow 结合？】"></a>Q29. 【你如何将 MCP 与 LangGraph 的 Workflow 结合？】</h3><p>面试官为什么问这个问题：<br>考察工程组合能力。</p>
+<p>参考口语化回答：<br>我会在 Graph 层控制流程，在 MCP 层控制权限。<br>Graph 决定”走不走这一步”，<br>MCP 决定”这一步能不能执行”。<br>两层分清，系统才可演进。</p>
+<h3 id="Q30-【你如何判断一个候选人是否具备”平台级-MCP-能力”？】"><a href="#Q30-【你如何判断一个候选人是否具备”平台级-MCP-能力”？】" class="headerlink" title="Q30. 【你如何判断一个候选人是否具备”平台级 MCP 能力”？】"></a>Q30. 【你如何判断一个候选人是否具备”平台级 MCP 能力”？】</h3><p>面试官为什么问这个问题：<br>这是终极区分题。</p>
+<p>参考口语化回答：<br>我会看他是否主动谈到：<br>能力边界、风险、审计、责任划分。<br>如果他关注的是”怎么多接工具”，那还停留在 Agent 阶段；<br>如果关注的是”怎么防止出事”，那才是平台思维。</p>
+<hr>
+<h2 id="第一层：基础认知（Why-What）【5-题】-1"><a href="#第一层：基础认知（Why-What）【5-题】-1" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q31-【你如何判断一个-Agent-项目”是否已经到了必须引入-MCP-的阶段”？】"><a href="#Q31-【你如何判断一个-Agent-项目”是否已经到了必须引入-MCP-的阶段”？】" class="headerlink" title="Q31. 【你如何判断一个 Agent 项目”是否已经到了必须引入 MCP 的阶段”？】"></a>Q31. 【你如何判断一个 Agent 项目”是否已经到了必须引入 MCP 的阶段”？】</h3><p>面试官为什么问这个问题：<br>这个问题在考察候选人是否具备”不过度设计”的判断力。<br>真正用过 MCP 的人，往往知道它不是一开始就要上的。</p>
+<p>参考口语化回答：<br>我一般看三件事：<br>第一，Agent 是否开始接入多个系统；<br>第二，是否出现”不同工具权限不一致”的情况；<br>第三，业务是否开始关心”出问题怎么追责”。<br>只要这三点出现两点，我就会考虑引入 MCP，而不是继续靠 Prompt 和代码约束。</p>
+<h3 id="Q32-【为什么说-MCP-本质上是”制度化”的，而不是”技术炫技”？】"><a href="#Q32-【为什么说-MCP-本质上是”制度化”的，而不是”技术炫技”？】" class="headerlink" title="Q32. 【为什么说 MCP 本质上是”制度化”的，而不是”技术炫技”？】"></a>Q32. 【为什么说 MCP 本质上是”制度化”的，而不是”技术炫技”？】</h3><p>面试官为什么问这个问题：<br>这是一个认知深度问题，用来区分工程思维和工具崇拜。</p>
+<p>参考口语化回答：<br>因为 MCP 的很多设计，其实都是在把”人类组织里的制度”搬进系统。<br>比如权限分级、职责边界、审计留痕，这些都不是模型能力，而是治理能力。<br>如果把 MCP 当成新技术，很快就会觉得”麻烦”；<br>但站在企业视角，它是在帮你提前兜底风险。</p>
+<h3 id="Q33-【你如何向非技术管理者解释-MCP-的价值？】"><a href="#Q33-【你如何向非技术管理者解释-MCP-的价值？】" class="headerlink" title="Q33. 【你如何向非技术管理者解释 MCP 的价值？】"></a>Q33. 【你如何向非技术管理者解释 MCP 的价值？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否具备跨角色沟通能力。</p>
+<p>参考口语化回答：<br>我通常不会讲协议。<br>我会直接说：MCP 是用来保证”AI 不会越权操作，也能事后说清楚它做过什么”。<br>对管理者来说，这比”Agent 更聪明”重要得多。</p>
+<h3 id="Q34-【MCP-是否会限制-Agent-的能力发挥？你怎么看？】"><a href="#Q34-【MCP-是否会限制-Agent-的能力发挥？你怎么看？】" class="headerlink" title="Q34. 【MCP 是否会限制 Agent 的能力发挥？你怎么看？】"></a>Q34. 【MCP 是否会限制 Agent 的能力发挥？你怎么看？】</h3><p>面试官为什么问这个问题：<br>这是一个典型的反对意见，面试官想看你的立场和逻辑。</p>
+<p>参考口语化回答：<br>短期看会限制，但长期看是解放。<br>如果没有 MCP，很多高风险能力根本不敢给 Agent。<br>有了 MCP，能力虽然被约束，但至少可以”合法上线”。</p>
+<h3 id="Q35-【如果没有-MCP，你认为-Agent-最容易在哪些地方失控？】"><a href="#Q35-【如果没有-MCP，你认为-Agent-最容易在哪些地方失控？】" class="headerlink" title="Q35. 【如果没有 MCP，你认为 Agent 最容易在哪些地方失控？】"></a>Q35. 【如果没有 MCP，你认为 Agent 最容易在哪些地方失控？】</h3><p>面试官为什么问这个问题：<br>这是在考察你是否真正理解”失控”的具体形态。</p>
+<p>参考口语化回答：<br>最常见的是三种：<br>一是工具越权调用；<br>二是上下文拿得太多；<br>三是出问题没人知道发生了什么。<br>MCP 主要就是在补这三块。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】-1"><a href="#第二层：核心技术能力（How）【8-题】-1" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q36-【你在设计-MCP-Tool-时，如何控制参数的”表达能力”？】"><a href="#Q36-【你在设计-MCP-Tool-时，如何控制参数的”表达能力”？】" class="headerlink" title="Q36. 【你在设计 MCP Tool 时，如何控制参数的”表达能力”？】"></a>Q36. 【你在设计 MCP Tool 时，如何控制参数的”表达能力”？】</h3><p>面试官为什么问这个问题：<br>这是一个细节问题，但非常能体现工程经验。</p>
+<p>参考口语化回答：<br>我会刻意压缩参数自由度。<br>比如能枚举就不让自由输入，<br>能用 ID 就不让传原始文本。<br>参数越自由，模型越容易”发挥过头”。</p>
+<h3 id="Q37-【你如何避免-MCP-Tool-被模型”组合滥用”？】"><a href="#Q37-【你如何避免-MCP-Tool-被模型”组合滥用”？】" class="headerlink" title="Q37. 【你如何避免 MCP Tool 被模型”组合滥用”？】"></a>Q37. 【你如何避免 MCP Tool 被模型”组合滥用”？】</h3><p>面试官为什么问这个问题：<br>这是 Demo 里看不到，但生产环境常见的问题。</p>
+<p>参考口语化回答：<br>我不会假设工具之间是”天然安全的”。<br>在 MCP 层，我会限制调用频率和调用顺序，<br>有些工具只能在特定状态下被调用，<br>而不是模型想怎么拼就怎么拼。</p>
+<h3 id="Q38-【你如何设计-MCP-Resource-的生命周期？】"><a href="#Q38-【你如何设计-MCP-Resource-的生命周期？】" class="headerlink" title="Q38. 【你如何设计 MCP Resource 的生命周期？】"></a>Q38. 【你如何设计 MCP Resource 的生命周期？】</h3><p>面试官为什么问这个问题：<br>这是在考察你是否真正理解上下文治理。</p>
+<p>参考口语化回答：<br>我会明确 Resource 是一次性的、会过期的。<br>不会让 Agent 长期持有敏感上下文。<br>否则 Resource 就会变成隐形缓存，风险很大。</p>
+<h3 id="Q39-【MCP-是否应该感知-Agent-的”意图”？】"><a href="#Q39-【MCP-是否应该感知-Agent-的”意图”？】" class="headerlink" title="Q39. 【MCP 是否应该感知 Agent 的”意图”？】"></a>Q39. 【MCP 是否应该感知 Agent 的”意图”？】</h3><p>面试官为什么问这个问题：<br>这是一个设计边界问题。</p>
+<p>参考口语化回答：<br>我个人倾向于：不感知。<br>MCP 只关心”你能不能调用这个能力”，<br>不关心”你为什么想调用”。<br>意图判断放在 Agent 或 Workflow 层更合适。</p>
+<h3 id="Q40-【你如何看待-MCP-Prompt-的作用？】"><a href="#Q40-【你如何看待-MCP-Prompt-的作用？】" class="headerlink" title="Q40. 【你如何看待 MCP Prompt 的作用？】"></a>Q40. 【你如何看待 MCP Prompt 的作用？】</h3><p>面试官为什么问这个问题：<br>很多人会忽视 MCP Prompt 的设计价值。</p>
+<p>参考口语化回答：<br>我把 MCP Prompt 当成”安全提示模板”，<br>它不是用来教模型思考，而是告诉模型”边界在哪”。<br>真正的安全感来自 Tool 和权限，而不是 Prompt。</p>
+<h3 id="Q41-【MCP-是否适合直接暴露给第三方-Agent？】"><a href="#Q41-【MCP-是否适合直接暴露给第三方-Agent？】" class="headerlink" title="Q41. 【MCP 是否适合直接暴露给第三方 Agent？】"></a>Q41. 【MCP 是否适合直接暴露给第三方 Agent？】</h3><p>面试官为什么问这个问题：<br>这是一个非常现实的平台问题。</p>
+<p>参考口语化回答：<br>原则上不适合。<br>我会在 MCP 外再包一层策略或代理，<br>不把核心能力直接暴露出去。<br>MCP 更适合内部治理，而不是公网协议。</p>
+<h3 id="Q42-【你如何处理-MCP-Server-的版本演进？】"><a href="#Q42-【你如何处理-MCP-Server-的版本演进？】" class="headerlink" title="Q42. 【你如何处理 MCP Server 的版本演进？】"></a>Q42. 【你如何处理 MCP Server 的版本演进？】</h3><p>面试官为什么问这个问题：<br>考察系统演进意识。</p>
+<p>参考口语化回答：<br>我会尽量保持向后兼容。<br>工具一旦被 Agent 使用，就相当于 API 契约。<br>轻易破坏，只会让系统变得不可控。</p>
+<h3 id="Q43-【你是否会让-MCP-Server-动态生成-Tool？】"><a href="#Q43-【你是否会让-MCP-Server-动态生成-Tool？】" class="headerlink" title="Q43. 【你是否会让 MCP Server 动态生成 Tool？】"></a>Q43. 【你是否会让 MCP Server 动态生成 Tool？】</h3><p>面试官为什么问这个问题：<br>这是一个高阶设计问题。</p>
+<p>参考口语化回答：<br>一般不会。<br>动态生成 Tool 意味着边界在变化，<br>而 MCP 的价值恰恰在于”边界清晰”。<br>除非有非常强的审计和隔离能力，否则我会避免。</p>
+<h2 id="第三层：工程化与系统能力【8-题】-1"><a href="#第三层：工程化与系统能力【8-题】-1" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q44-【你如何限制-MCP-Server-的资源消耗？】"><a href="#Q44-【你如何限制-MCP-Server-的资源消耗？】" class="headerlink" title="Q44. 【你如何限制 MCP Server 的资源消耗？】"></a>Q44. 【你如何限制 MCP Server 的资源消耗？】</h3><p>面试官为什么问这个问题：<br>考察你是否考虑过资源滥用风险。</p>
+<p>参考口语化回答：<br>我会在容器层和应用层双重限制。<br>包括 CPU、内存、并发数。<br>Agent 不应该因为一次异常推理拖垮后端系统。</p>
+<h3 id="Q45-【你是否会为不同风险等级的工具拆分-MCP-Server？】"><a href="#Q45-【你是否会为不同风险等级的工具拆分-MCP-Server？】" class="headerlink" title="Q45. 【你是否会为不同风险等级的工具拆分 MCP Server？】"></a>Q45. 【你是否会为不同风险等级的工具拆分 MCP Server？】</h3><p>面试官为什么问这个问题：<br>这是一个典型的架构决策点。</p>
+<p>参考口语化回答：<br>会的。<br>高风险操作我会单独 Server，<br>甚至单独网络隔离。<br>这样即使出问题，影响面也有限。</p>
+<h3 id="Q46-【你如何在-MCP-层实现”只读保证”？】"><a href="#Q46-【你如何在-MCP-层实现”只读保证”？】" class="headerlink" title="Q46. 【你如何在 MCP 层实现”只读保证”？】"></a>Q46. 【你如何在 MCP 层实现”只读保证”？】</h3><p>面试官为什么问这个问题：<br>这是金融、医疗场景的高频问题。</p>
+<p>参考口语化回答：<br>只读不是靠文档声明，而是靠技术手段。<br>比如只暴露查询接口、<br>屏蔽写操作、<br>甚至在数据库层用只读账号。<br>MCP 只是第一道约束。</p>
+<h3 id="Q47-【MCP-调用是否应该支持人工审批？】"><a href="#Q47-【MCP-调用是否应该支持人工审批？】" class="headerlink" title="Q47. 【MCP 调用是否应该支持人工审批？】"></a>Q47. 【MCP 调用是否应该支持人工审批？】</h3><p>面试官为什么问这个问题：<br>考察你是否理解人机协同。</p>
+<p>参考口语化回答：<br>在高风险场景，我认为是必须的。<br>MCP 可以把调用请求标准化，<br>人工只需要做”是否放行”的决策，<br>而不是理解复杂上下文。</p>
+<h3 id="Q48-【你如何看待-MCP-与审计系统的关系？】"><a href="#Q48-【你如何看待-MCP-与审计系统的关系？】" class="headerlink" title="Q48. 【你如何看待 MCP 与审计系统的关系？】"></a>Q48. 【你如何看待 MCP 与审计系统的关系？】</h3><p>面试官为什么问这个问题：<br>这是平台级思维问题。</p>
+<p>参考口语化回答：<br>MCP 本身不等于审计系统，<br>但它是审计系统最好的数据来源。<br>如果没有 MCP，很多行为根本无法结构化记录。</p>
+<h3 id="Q49-【MCP-是否会成为系统瓶颈？你如何应对？】"><a href="#Q49-【MCP-是否会成为系统瓶颈？你如何应对？】" class="headerlink" title="Q49. 【MCP 是否会成为系统瓶颈？你如何应对？】"></a>Q49. 【MCP 是否会成为系统瓶颈？你如何应对？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否具备性能意识。</p>
+<p>参考口语化回答：<br>如果设计得当，一般不会。<br>真正的瓶颈通常在后端系统。<br>MCP 层我更关注稳定和限流，而不是极致性能。</p>
+<h3 id="Q50-【你是否会在-MCP-层做缓存？】"><a href="#Q50-【你是否会在-MCP-层做缓存？】" class="headerlink" title="Q50. 【你是否会在 MCP 层做缓存？】"></a>Q50. 【你是否会在 MCP 层做缓存？】</h3><p>面试官为什么问这个问题：<br>这是一个容易踩坑的问题。</p>
+<p>参考口语化回答：<br>会，但非常谨慎。<br>只缓存低风险、只读结果。<br>绝不会缓存涉及权限判断或状态变化的结果。</p>
+<h3 id="Q51-【你如何测试-MCP-Server-的安全性？】"><a href="#Q51-【你如何测试-MCP-Server-的安全性？】" class="headerlink" title="Q51. 【你如何测试 MCP Server 的安全性？】"></a>Q51. 【你如何测试 MCP Server 的安全性？】</h3><p>面试官为什么问这个问题：<br>考察你是否有”对抗性思维”。</p>
+<p>参考口语化回答：<br>我会假设模型是恶意的。<br>尝试越权参数、异常顺序调用、频繁重试。<br>如果这些都被挡住，我才会放心上线。</p>
+<h2 id="第四层：真实项目与业务场景能力【6-题】-1"><a href="#第四层：真实项目与业务场景能力【6-题】-1" class="headerlink" title="第四层：真实项目与业务场景能力【6 题】"></a>第四层：真实项目与业务场景能力【6 题】</h2><h3 id="Q52-【在政务或公共服务场景中，MCP-的关注点是什么？】"><a href="#Q52-【在政务或公共服务场景中，MCP-的关注点是什么？】" class="headerlink" title="Q52. 【在政务或公共服务场景中，MCP 的关注点是什么？】"></a>Q52. 【在政务或公共服务场景中，MCP 的关注点是什么？】</h3><p>面试官为什么问这个问题：<br>考察行业适配能力。</p>
+<p>参考口语化回答：<br>我会重点关注可追溯和责任边界。<br>Agent 只能做辅助，不能直接决策。<br>MCP 的作用是把”辅助”和”决策”严格隔开。</p>
+<h3 id="Q53-【在数据敏感行业，MCP-如何防止”无意泄露”？】"><a href="#Q53-【在数据敏感行业，MCP-如何防止”无意泄露”？】" class="headerlink" title="Q53. 【在数据敏感行业，MCP 如何防止”无意泄露”？】"></a>Q53. 【在数据敏感行业，MCP 如何防止”无意泄露”？】</h3><p>面试官为什么问这个问题：<br>这是很多事故的真实来源。</p>
+<p>参考口语化回答：<br>通过限制 Resource 范围和返回粒度。<br>不给全量数据，只给必要摘要。<br>MCP 让这种限制变成制度，而不是约定。</p>
+<h3 id="Q54-【你是否遇到过业务要求”给-Agent-更大权限”？如何应对？】"><a href="#Q54-【你是否遇到过业务要求”给-Agent-更大权限”？如何应对？】" class="headerlink" title="Q54. 【你是否遇到过业务要求”给 Agent 更大权限”？如何应对？】"></a>Q54. 【你是否遇到过业务要求”给 Agent 更大权限”？如何应对？】</h3><p>面试官为什么问这个问题：<br>这是一个真实的博弈场景。</p>
+<p>参考口语化回答：<br>我会要求业务明确承担风险。<br>如果权限放开，就必须接受更严格审计和审批。<br>很多时候，业务会重新权衡。</p>
+<h3 id="Q55-【你如何评估-MCP-接入后的收益？】"><a href="#Q55-【你如何评估-MCP-接入后的收益？】" class="headerlink" title="Q55. 【你如何评估 MCP 接入后的收益？】"></a>Q55. 【你如何评估 MCP 接入后的收益？】</h3><p>面试官为什么问这个问题：<br>考察你是否有结果导向。</p>
+<p>参考口语化回答：<br>我不会只看效率提升，<br>更看事故减少、权限争议减少。<br>这些”没发生的事故”，才是 MCP 的真实收益。</p>
+<h3 id="Q56-【你是否会为不同部门定制-MCP-能力集？】"><a href="#Q56-【你是否会为不同部门定制-MCP-能力集？】" class="headerlink" title="Q56. 【你是否会为不同部门定制 MCP 能力集？】"></a>Q56. 【你是否会为不同部门定制 MCP 能力集？】</h3><p>面试官为什么问这个问题：<br>考察平台化意识。</p>
+<p>参考口语化回答：<br>会。<br>不同部门的风险承受能力不同。<br>MCP 能力集本身就是一种”组织结构的技术映射”。</p>
+<h3 id="Q57-【在多租户场景下，MCP-如何避免相互影响？】"><a href="#Q57-【在多租户场景下，MCP-如何避免相互影响？】" class="headerlink" title="Q57. 【在多租户场景下，MCP 如何避免相互影响？】"></a>Q57. 【在多租户场景下，MCP 如何避免相互影响？】</h3><p>面试官为什么问这个问题：<br>这是平台级系统常见问题。</p>
+<p>参考口语化回答：<br>核心是隔离。<br>Server、权限、日志都要隔离。<br>不能只靠 Agent ID 来区分，这是不够的。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】-1"><a href="#第五层：进阶与加分项（架构-视野）【3-题】-1" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q58-【你认为-MCP-是否会成为-Agent-平台的”标配能力”？】"><a href="#Q58-【你认为-MCP-是否会成为-Agent-平台的”标配能力”？】" class="headerlink" title="Q58. 【你认为 MCP 是否会成为 Agent 平台的”标配能力”？】"></a>Q58. 【你认为 MCP 是否会成为 Agent 平台的”标配能力”？】</h3><p>面试官为什么问这个问题：<br>考察行业判断力。</p>
+<p>参考口语化回答：<br>我认为会。<br>不是 MCP 这个名字，而是它代表的治理思想。<br>只要 Agent 进入企业，类似机制一定会出现。</p>
+<h3 id="Q59-【如果让你从零设计一个-MCP-平台，你最先做什么？】"><a href="#Q59-【如果让你从零设计一个-MCP-平台，你最先做什么？】" class="headerlink" title="Q59. 【如果让你从零设计一个 MCP 平台，你最先做什么？】"></a>Q59. 【如果让你从零设计一个 MCP 平台，你最先做什么？】</h3><p>面试官为什么问这个问题：<br>考察架构优先级判断。</p>
+<p>参考口语化回答：<br>我会先做权限和审计，而不是工具数量。<br>没有治理，工具越多风险越大。<br>这是我踩过坑后的结论。</p>
+<h3 id="Q60-【你理想中的-MCP-Agent-平台最终形态是什么？】"><a href="#Q60-【你理想中的-MCP-Agent-平台最终形态是什么？】" class="headerlink" title="Q60. 【你理想中的 MCP + Agent 平台最终形态是什么？】"></a>Q60. 【你理想中的 MCP + Agent 平台最终形态是什么？】</h3><p>面试官为什么问问题：<br>这是终极视野题。</p>
+<p>参考口语化回答：<br>Agent 专注思考和协作，<br>MCP 负责边界和规则，<br>平台负责治理和演进。<br>每一层各司其职，系统才能长期跑下去。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/01/01/ai-interview-05-agent-llamaindex/">AI面试题 - LlamaIndex 数据框架</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/01/01/ai-interview-05-agent-multi/">AI面试题 - 多智能体系统设计</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2026/01/01/ai-interview-05-agent-langchain/" title="AI面试题 - LangChain 智能体开发"><span class="title">AI面试题 - LangChain 智能体开发</span></a><a class="item" href="/2026/01/01/ai-interview-05-agent-langgraph/" title="AI面试题 - LangGraph 工作流编排"><span class="title">AI面试题 - LangGraph 工作流编排</span></a><a class="item" href="/2026/01/01/ai-interview-05-agent-multi/" title="AI面试题 - 多智能体系统设计"><span class="title">AI面试题 - 多智能体系统设计</span></a><a class="item" href="/2026/01/01/ai-interview-00-ai-engineer/" title="AI面试题 - AI应用开发工程师综合题"><span class="title">AI面试题 - AI应用开发工程师综合题</span></a><a class="item" href="/2026/01/01/ai-interview-01-python/" title="AI面试题 - Python 基础与工程实践"><span class="title">AI面试题 - Python 基础与工程实践</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E7%9F%A5%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91"><span class="toc-text">第一层：基础认知（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%94%A8%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%A7%A3%E9%87%8A-MCP-%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q1. 【你如何用一句话解释 MCP 解决的核心问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E3%80%90MCP-%E5%92%8C%E4%BC%A0%E7%BB%9F-Tool-Calling-Function-Calling-%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q2. 【MCP 和传统 Tool Calling &#x2F; Function Calling 的本质区别是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E3%80%90%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%81%E4%B8%9A%E7%BA%A7-Agent-%E4%B8%80%E5%AE%9A%E4%BC%9A%E8%B5%B0%E5%90%91-MCP-%E6%88%96%E7%B1%BB%E4%BC%BC%E5%8D%8F%E8%AE%AE%EF%BC%9F%E3%80%91"><span class="toc-text">Q3. 【为什么企业级 Agent 一定会走向 MCP 或类似协议？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E3%80%90%E5%9C%A8%E6%95%B4%E4%BD%93-Agent-%E6%9E%B6%E6%9E%84%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D-MCP%EF%BC%9F%E3%80%91"><span class="toc-text">Q4. 【在整体 Agent 架构中，你如何定位 MCP？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E2%80%9D%E5%B7%A5%E5%85%B7%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E7%9A%84%E6%A0%87%E5%87%86%E5%8C%96%E6%B2%BB%E7%90%86%E2%80%9D%E8%BF%99%E5%8F%A5%E8%AF%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q5. 【你如何理解”工具与上下文的标准化治理”这句话？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E3%80%90%E5%9C%A8%E4%BD%A0%E7%90%86%E8%A7%A3%E4%B8%AD%EF%BC%8CMCP-Server-%E5%92%8C-Client-%E7%9A%84%E8%81%8C%E8%B4%A3%E8%BE%B9%E7%95%8C%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q6. 【在你理解中，MCP Server 和 Client 的职责边界是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-MCP-%E4%B8%AD-Tool%E3%80%81Resource%E3%80%81Prompt-%E8%BF%99%E4%B8%89%E7%B1%BB%E6%8A%BD%E8%B1%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q7. 【你如何理解 MCP 中 Tool、Resource、Prompt 这三类抽象？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E3%80%90MCP-%E6%98%AF%E5%A6%82%E4%BD%95%E6%8F%8F%E8%BF%B0%E5%B7%A5%E5%85%B7%E8%83%BD%E5%8A%9B%E5%B9%B6%E9%99%90%E5%88%B6%E5%85%B6%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q8. 【MCP 是如何描述工具能力并限制其使用方式的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9-%E3%80%90MCP-%E5%9C%A8-Agent-%E7%9A%84%E5%86%B3%E7%AD%96%E4%B8%8E%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF%E4%B8%AD%EF%BC%8C%E5%A4%84%E5%9C%A8%E4%BB%80%E4%B9%88%E4%BD%8D%E7%BD%AE%EF%BC%9F%E3%80%91"><span class="toc-text">Q9. 【MCP 在 Agent 的决策与执行链路中，处在什么位置？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10-%E3%80%90%E5%A4%9A-MCP-Server-%E5%85%B1%E5%AD%98%E6%97%B6%EF%BC%8C%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%81%9A%E8%B7%AF%E7%94%B1%E5%92%8C%E9%80%89%E6%8B%A9%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q10. 【多 MCP Server 共存时，你是如何做路由和选择的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q11-%E3%80%90MCP-%E6%8E%A5%E5%85%A5-RAG-%E6%97%B6%EF%BC%8C%E4%BD%A0%E6%9C%80%E5%85%B3%E6%B3%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q11. 【MCP 接入 RAG 时，你最关注的设计点是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q12-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2-Agent-%E9%80%9A%E8%BF%87-MCP-%E6%BB%A5%E7%94%A8%E5%B7%A5%E5%85%B7%E8%83%BD%E5%8A%9B%EF%BC%9F%E3%80%91"><span class="toc-text">Q12. 【你如何防止 Agent 通过 MCP 滥用工具能力？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q13-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-MCP-%E4%B8%8E-LangChain-LangGraph-%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9F%E3%80%91"><span class="toc-text">Q13. 【你如何看待 MCP 与 LangChain &#x2F; LangGraph 的关系？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q14-%E3%80%90MCP-Server-%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E9%80%9A%E5%B8%B8%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%EF%BC%9F%E3%80%91"><span class="toc-text">Q14. 【MCP Server 在生产环境中通常如何部署？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q15-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1-MCP-%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%EF%BC%9F%E3%80%91"><span class="toc-text">Q15. 【你如何设计 MCP 的权限控制？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q16-%E3%80%90%E5%BD%93-MCP-%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%A4%B1%E8%B4%A5%E6%88%96%E8%B6%85%E6%97%B6%E6%97%B6%EF%BC%8C%E4%BD%A0%E9%80%9A%E5%B8%B8%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%EF%BC%9F%E3%80%91"><span class="toc-text">Q16. 【当 MCP 工具调用失败或超时时，你通常怎么处理？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%81%9A-MCP-%E8%B0%83%E7%94%A8%E7%9A%84%E6%97%A5%E5%BF%97%E4%B8%8E%E5%AE%A1%E8%AE%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q17. 【你如何做 MCP 调用的日志与审计？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q18-%E3%80%90MCP-%E5%9C%A8%E6%80%A7%E8%83%BD%E5%92%8C%E5%AE%89%E5%85%A8%E4%B9%8B%E9%97%B4%E4%BD%A0%E5%A6%82%E4%BD%95%E6%9D%83%E8%A1%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q18. 【MCP 在性能和安全之间你如何权衡？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q19-%E3%80%90MCP-%E5%A6%82%E4%BD%95%E4%B8%8E-API-Gateway-%E6%88%96%E5%86%85%E7%BD%91%E7%B3%BB%E7%BB%9F%E7%BB%93%E5%90%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q19. 【MCP 如何与 API Gateway 或内网系统结合？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q20-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87-MCP-%E8%AE%BE%E8%AE%A1%E4%B8%8D%E5%BD%93%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BA%8B%E6%95%85%EF%BC%9F%E3%80%91"><span class="toc-text">Q20. 【你是否遇到过 MCP 设计不当导致的事故？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q21-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E4%B8%80%E4%B8%AA-MCP-Server-%E6%98%AF%E5%90%A6%E2%80%9D%E8%AE%BE%E8%AE%A1%E5%BE%97%E8%B6%B3%E5%A4%9F%E5%AE%89%E5%85%A8%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q21. 【你如何评估一个 MCP Server 是否”设计得足够安全”？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91"><span class="toc-text">第四层：真实项目与业务场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q22-%E3%80%90%E5%9C%A8%E5%8C%BB%E7%96%97%E5%9C%BA%E6%99%AF%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E7%94%A8-MCP-%E6%8E%A7%E5%88%B6-Agent-%E8%A1%8C%E4%B8%BA%EF%BC%9F%E3%80%91"><span class="toc-text">Q22. 【在医疗场景中，你如何用 MCP 控制 Agent 行为？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q23-%E3%80%90%E5%9C%A8%E9%87%91%E8%9E%8D%E5%9C%BA%E6%99%AF%E4%B8%AD%EF%BC%8CMCP-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC%E4%BD%93%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F%E3%80%91"><span class="toc-text">Q23. 【在金融场景中，MCP 的核心价值体现在哪里？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q24-%E3%80%90%E4%BC%81%E4%B8%9A%E5%86%85%E9%83%A8%E7%B3%BB%E7%BB%9F%E4%BC%97%E5%A4%9A%E6%97%B6%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81-MCP%EF%BC%9F%E3%80%91"><span class="toc-text">Q24. 【企业内部系统众多时，你如何评估是否需要 MCP？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q25-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%94%A8-MCP-%E9%99%8D%E4%BD%8E-Agent-%E8%AF%AF%E6%93%8D%E4%BD%9C%E9%A3%8E%E9%99%A9%EF%BC%9F%E3%80%91"><span class="toc-text">Q25. 【你如何用 MCP 降低 Agent 误操作风险？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q26-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87%E4%B8%9A%E5%8A%A1%E6%96%B9%E5%8F%8D%E5%AF%B9-MCP-%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F%E5%A6%82%E4%BD%95%E8%AF%B4%E6%9C%8D%EF%BC%9F%E3%80%91"><span class="toc-text">Q26. 【你是否遇到过业务方反对 MCP 的情况？如何说服？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q27-%E3%80%90%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BD%A0%E4%BC%9A%E6%98%8E%E7%A1%AE%E6%8B%92%E7%BB%9D%E7%BB%99-Agent-%E6%8E%A5-MCP%EF%BC%9F%E3%80%91"><span class="toc-text">Q27. 【什么情况下你会明确拒绝给 Agent 接 MCP？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q28-%E3%80%90%E5%9C%A8%E5%A4%9A-Agent-%E7%B3%BB%E7%BB%9F%E4%B8%AD%EF%BC%8CMCP-%E7%9A%84%E8%A7%92%E8%89%B2%E4%BC%9A%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E5%90%97%EF%BC%9F%E3%80%91"><span class="toc-text">Q28. 【在多 Agent 系统中，MCP 的角色会发生变化吗？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q29-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%B0%86-MCP-%E4%B8%8E-LangGraph-%E7%9A%84-Workflow-%E7%BB%93%E5%90%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q29. 【你如何将 MCP 与 LangGraph 的 Workflow 结合？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%80%99%E9%80%89%E4%BA%BA%E6%98%AF%E5%90%A6%E5%85%B7%E5%A4%87%E2%80%9D%E5%B9%B3%E5%8F%B0%E7%BA%A7-MCP-%E8%83%BD%E5%8A%9B%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q30. 【你如何判断一个候选人是否具备”平台级 MCP 能力”？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E7%9F%A5%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91-1"><span class="toc-text">第一层：基础认知（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q31-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA-Agent-%E9%A1%B9%E7%9B%AE%E2%80%9D%E6%98%AF%E5%90%A6%E5%B7%B2%E7%BB%8F%E5%88%B0%E4%BA%86%E5%BF%85%E9%A1%BB%E5%BC%95%E5%85%A5-MCP-%E7%9A%84%E9%98%B6%E6%AE%B5%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q31. 【你如何判断一个 Agent 项目”是否已经到了必须引入 MCP 的阶段”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q32-%E3%80%90%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4-MCP-%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E2%80%9D%E5%88%B6%E5%BA%A6%E5%8C%96%E2%80%9D%E7%9A%84%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E2%80%9D%E6%8A%80%E6%9C%AF%E7%82%AB%E6%8A%80%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q32. 【为什么说 MCP 本质上是”制度化”的，而不是”技术炫技”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q33-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%90%91%E9%9D%9E%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86%E8%80%85%E8%A7%A3%E9%87%8A-MCP-%E7%9A%84%E4%BB%B7%E5%80%BC%EF%BC%9F%E3%80%91"><span class="toc-text">Q33. 【你如何向非技术管理者解释 MCP 的价值？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q34-%E3%80%90MCP-%E6%98%AF%E5%90%A6%E4%BC%9A%E9%99%90%E5%88%B6-Agent-%E7%9A%84%E8%83%BD%E5%8A%9B%E5%8F%91%E6%8C%A5%EF%BC%9F%E4%BD%A0%E6%80%8E%E4%B9%88%E7%9C%8B%EF%BC%9F%E3%80%91"><span class="toc-text">Q34. 【MCP 是否会限制 Agent 的能力发挥？你怎么看？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q35-%E3%80%90%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89-MCP%EF%BC%8C%E4%BD%A0%E8%AE%A4%E4%B8%BA-Agent-%E6%9C%80%E5%AE%B9%E6%98%93%E5%9C%A8%E5%93%AA%E4%BA%9B%E5%9C%B0%E6%96%B9%E5%A4%B1%E6%8E%A7%EF%BC%9F%E3%80%91"><span class="toc-text">Q35. 【如果没有 MCP，你认为 Agent 最容易在哪些地方失控？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q36-%E3%80%90%E4%BD%A0%E5%9C%A8%E8%AE%BE%E8%AE%A1-MCP-Tool-%E6%97%B6%EF%BC%8C%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E5%8F%82%E6%95%B0%E7%9A%84%E2%80%9D%E8%A1%A8%E8%BE%BE%E8%83%BD%E5%8A%9B%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q36. 【你在设计 MCP Tool 时，如何控制参数的”表达能力”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q37-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D-MCP-Tool-%E8%A2%AB%E6%A8%A1%E5%9E%8B%E2%80%9D%E7%BB%84%E5%90%88%E6%BB%A5%E7%94%A8%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q37. 【你如何避免 MCP Tool 被模型”组合滥用”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q38-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1-MCP-Resource-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F%E3%80%91"><span class="toc-text">Q38. 【你如何设计 MCP Resource 的生命周期？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q39-%E3%80%90MCP-%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E6%84%9F%E7%9F%A5-Agent-%E7%9A%84%E2%80%9D%E6%84%8F%E5%9B%BE%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q39. 【MCP 是否应该感知 Agent 的”意图”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q40-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-MCP-Prompt-%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9F%E3%80%91"><span class="toc-text">Q40. 【你如何看待 MCP Prompt 的作用？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q41-%E3%80%90MCP-%E6%98%AF%E5%90%A6%E9%80%82%E5%90%88%E7%9B%B4%E6%8E%A5%E6%9A%B4%E9%9C%B2%E7%BB%99%E7%AC%AC%E4%B8%89%E6%96%B9-Agent%EF%BC%9F%E3%80%91"><span class="toc-text">Q41. 【MCP 是否适合直接暴露给第三方 Agent？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q42-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-MCP-Server-%E7%9A%84%E7%89%88%E6%9C%AC%E6%BC%94%E8%BF%9B%EF%BC%9F%E3%80%91"><span class="toc-text">Q42. 【你如何处理 MCP Server 的版本演进？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E4%BC%9A%E8%AE%A9-MCP-Server-%E5%8A%A8%E6%80%81%E7%94%9F%E6%88%90-Tool%EF%BC%9F%E3%80%91"><span class="toc-text">Q43. 【你是否会让 MCP Server 动态生成 Tool？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q44-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%99%90%E5%88%B6-MCP-Server-%E7%9A%84%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%EF%BC%9F%E3%80%91"><span class="toc-text">Q44. 【你如何限制 MCP Server 的资源消耗？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q45-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E4%BC%9A%E4%B8%BA%E4%B8%8D%E5%90%8C%E9%A3%8E%E9%99%A9%E7%AD%89%E7%BA%A7%E7%9A%84%E5%B7%A5%E5%85%B7%E6%8B%86%E5%88%86-MCP-Server%EF%BC%9F%E3%80%91"><span class="toc-text">Q45. 【你是否会为不同风险等级的工具拆分 MCP Server？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q46-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-MCP-%E5%B1%82%E5%AE%9E%E7%8E%B0%E2%80%9D%E5%8F%AA%E8%AF%BB%E4%BF%9D%E8%AF%81%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q46. 【你如何在 MCP 层实现”只读保证”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q47-%E3%80%90MCP-%E8%B0%83%E7%94%A8%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E6%94%AF%E6%8C%81%E4%BA%BA%E5%B7%A5%E5%AE%A1%E6%89%B9%EF%BC%9F%E3%80%91"><span class="toc-text">Q47. 【MCP 调用是否应该支持人工审批？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q48-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-MCP-%E4%B8%8E%E5%AE%A1%E8%AE%A1%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9F%E3%80%91"><span class="toc-text">Q48. 【你如何看待 MCP 与审计系统的关系？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q49-%E3%80%90MCP-%E6%98%AF%E5%90%A6%E4%BC%9A%E6%88%90%E4%B8%BA%E7%B3%BB%E7%BB%9F%E7%93%B6%E9%A2%88%EF%BC%9F%E4%BD%A0%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%EF%BC%9F%E3%80%91"><span class="toc-text">Q49. 【MCP 是否会成为系统瓶颈？你如何应对？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q50-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E4%BC%9A%E5%9C%A8-MCP-%E5%B1%82%E5%81%9A%E7%BC%93%E5%AD%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q50. 【你是否会在 MCP 层做缓存？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q51-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E6%B5%8B%E8%AF%95-MCP-Server-%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F%E3%80%91"><span class="toc-text">Q51. 【你如何测试 MCP Server 的安全性？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91-1"><span class="toc-text">第四层：真实项目与业务场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q52-%E3%80%90%E5%9C%A8%E6%94%BF%E5%8A%A1%E6%88%96%E5%85%AC%E5%85%B1%E6%9C%8D%E5%8A%A1%E5%9C%BA%E6%99%AF%E4%B8%AD%EF%BC%8CMCP-%E7%9A%84%E5%85%B3%E6%B3%A8%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q52. 【在政务或公共服务场景中，MCP 的关注点是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q53-%E3%80%90%E5%9C%A8%E6%95%B0%E6%8D%AE%E6%95%8F%E6%84%9F%E8%A1%8C%E4%B8%9A%EF%BC%8CMCP-%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E2%80%9D%E6%97%A0%E6%84%8F%E6%B3%84%E9%9C%B2%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q53. 【在数据敏感行业，MCP 如何防止”无意泄露”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q54-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87%E4%B8%9A%E5%8A%A1%E8%A6%81%E6%B1%82%E2%80%9D%E7%BB%99-Agent-%E6%9B%B4%E5%A4%A7%E6%9D%83%E9%99%90%E2%80%9D%EF%BC%9F%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%EF%BC%9F%E3%80%91"><span class="toc-text">Q54. 【你是否遇到过业务要求”给 Agent 更大权限”？如何应对？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q55-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0-MCP-%E6%8E%A5%E5%85%A5%E5%90%8E%E7%9A%84%E6%94%B6%E7%9B%8A%EF%BC%9F%E3%80%91"><span class="toc-text">Q55. 【你如何评估 MCP 接入后的收益？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q56-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E4%BC%9A%E4%B8%BA%E4%B8%8D%E5%90%8C%E9%83%A8%E9%97%A8%E5%AE%9A%E5%88%B6-MCP-%E8%83%BD%E5%8A%9B%E9%9B%86%EF%BC%9F%E3%80%91"><span class="toc-text">Q56. 【你是否会为不同部门定制 MCP 能力集？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q57-%E3%80%90%E5%9C%A8%E5%A4%9A%E7%A7%9F%E6%88%B7%E5%9C%BA%E6%99%AF%E4%B8%8B%EF%BC%8CMCP-%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E7%9B%B8%E4%BA%92%E5%BD%B1%E5%93%8D%EF%BC%9F%E3%80%91"><span class="toc-text">Q57. 【在多租户场景下，MCP 如何避免相互影响？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91-1"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q58-%E3%80%90%E4%BD%A0%E8%AE%A4%E4%B8%BA-MCP-%E6%98%AF%E5%90%A6%E4%BC%9A%E6%88%90%E4%B8%BA-Agent-%E5%B9%B3%E5%8F%B0%E7%9A%84%E2%80%9D%E6%A0%87%E9%85%8D%E8%83%BD%E5%8A%9B%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q58. 【你认为 MCP 是否会成为 Agent 平台的”标配能力”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q59-%E3%80%90%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%BD%A0%E4%BB%8E%E9%9B%B6%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA-MCP-%E5%B9%B3%E5%8F%B0%EF%BC%8C%E4%BD%A0%E6%9C%80%E5%85%88%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q59. 【如果让你从零设计一个 MCP 平台，你最先做什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q60-%E3%80%90%E4%BD%A0%E7%90%86%E6%83%B3%E4%B8%AD%E7%9A%84-MCP-Agent-%E5%B9%B3%E5%8F%B0%E6%9C%80%E7%BB%88%E5%BD%A2%E6%80%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q60. 【你理想中的 MCP + Agent 平台最终形态是什么？】</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper markdown"><div class="widget-body fs14"><h3 id="快捷导航"><a href="#快捷导航" class="headerlink" title="快捷导航"></a>快捷导航</h3><p><a href="/categories/" style="font-size:1.2em;">🗂️ 分类索引</a><br><a href="/tags/" style="font-size:1.2em;">🔖 标签索引</a><br><a href="/archives/" style="font-size:1.2em;">🕘 文章归档</a><br><a target="_blank" rel="noopener" href="https://wenyinos.com/" style="font-size:1.2em;">📚 社区主页</a><br><a target="_blank" rel="noopener" href="https://dev.wenyinos.com/my/" style="font-size:1.2em;">📰 项目管理</a><br><a target="_blank" rel="noopener" href="https://forum.wenyinos.com/" style="font-size:1.2em;">🏷️ 论坛交流</a></p>
+</div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 16.27px; color: #694ab0" class="tag -4">agent</a> <a href="/tags/ai-engineer/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ai-engineer</a> <a href="/tags/aliyun/" style="font-size: 13px; color: #2563eb" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 13px; color: #2563eb" class="tag -0">android</a> <a href="/tags/apt/" style="font-size: 13px; color: #2563eb" class="tag -0">apt</a> <a href="/tags/arc/" style="font-size: 13px; color: #2563eb" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 13.82px; color: #365ddc" class="tag -1">arch</a> <a href="/tags/arch-linux/" style="font-size: 13px; color: #2563eb" class="tag -0">arch-linux</a> <a href="/tags/asf/" style="font-size: 13px; color: #2563eb" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 13px; color: #2563eb" class="tag -0">asus</a> <a href="/tags/async/" style="font-size: 13px; color: #2563eb" class="tag -0">async</a> <a href="/tags/attention-mechanism/" style="font-size: 13px; color: #2563eb" class="tag -0">attention-mechanism</a> <a href="/tags/aur/" style="font-size: 13px; color: #2563eb" class="tag -0">aur</a> <a href="/tags/bbr/" style="font-size: 13.82px; color: #365ddc" class="tag -1">bbr</a> <a href="/tags/benchmark/" style="font-size: 13px; color: #2563eb" class="tag -0">benchmark</a> <a href="/tags/cache/" style="font-size: 14.64px; color: #4756cd" class="tag -2">cache</a> <a href="/tags/career/" style="font-size: 13px; color: #2563eb" class="tag -0">career</a> <a href="/tags/cargo/" style="font-size: 13.82px; color: #365ddc" class="tag -1">cargo</a> <a href="/tags/centos/" style="font-size: 14.64px; color: #4756cd" class="tag -2">centos</a> <a href="/tags/cheat/" style="font-size: 13px; color: #2563eb" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 13px; color: #2563eb" class="tag -0">colab</a> <a href="/tags/command-line/" style="font-size: 13px; color: #2563eb" class="tag -0">command-line</a> <a href="/tags/cpp/" style="font-size: 13px; color: #2563eb" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 16.27px; color: #694ab0" class="tag -4">cpu</a> <a href="/tags/curl/" style="font-size: 13px; color: #2563eb" class="tag -0">curl</a> <a href="/tags/data-framework/" style="font-size: 13px; color: #2563eb" class="tag -0">data-framework</a> <a href="/tags/debian/" style="font-size: 13px; color: #2563eb" class="tag -0">debian</a> <a href="/tags/deep-learning/" style="font-size: 13px; color: #2563eb" class="tag -0">deep-learning</a> <a href="/tags/deployment/" style="font-size: 13px; color: #2563eb" class="tag -0">deployment</a> <a href="/tags/dg1/" style="font-size: 13px; color: #2563eb" class="tag -0">dg1</a> <a href="/tags/dnf/" style="font-size: 13px; color: #2563eb" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14.64px; color: #4756cd" class="tag -2">docker</a> <a href="/tags/edk2/" style="font-size: 13px; color: #2563eb" class="tag -0">edk2</a> <a href="/tags/entware/" style="font-size: 13px; color: #2563eb" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 13.82px; color: #365ddc" class="tag -1">epel</a> <a href="/tags/fcitx/" style="font-size: 13px; color: #2563eb" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 17.91px; color: #8c3d92" class="tag -5">fedora</a> <a href="/tags/firewalld/" style="font-size: 13px; color: #2563eb" class="tag -0">firewalld</a> <a href="/tags/freebsd/" style="font-size: 13px; color: #2563eb" class="tag -0">freebsd</a> <a href="/tags/fstab/" style="font-size: 13px; color: #2563eb" class="tag -0">fstab</a> <a href="/tags/fuchsia/" style="font-size: 13px; color: #2563eb" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 13px; color: #2563eb" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 13px; color: #2563eb" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 14.64px; color: #4756cd" class="tag -2">github</a> <a href="/tags/gpu/" style="font-size: 13px; color: #2563eb" class="tag -0">gpu</a> <a href="/tags/graphics/" style="font-size: 16.27px; color: #694ab0" class="tag -4">graphics</a> <a href="/tags/grub/" style="font-size: 15.45px; color: #5850bf" class="tag -3">grub</a> <a href="/tags/grubby/" style="font-size: 13px; color: #2563eb" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 13px; color: #2563eb" class="tag -0">hi1620</a> <a href="/tags/hr-screening/" style="font-size: 13px; color: #2563eb" class="tag -0">hr-screening</a> <a href="/tags/huawei/" style="font-size: 13px; color: #2563eb" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 13px; color: #2563eb" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 13px; color: #2563eb" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 13px; color: #2563eb" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 18.73px; color: #9d3683" class="tag -6">intel</a> <a href="/tags/interview/" style="font-size: 21.18px; color: #d02357" class="tag -9">interview</a> <a href="/tags/interview-tips/" style="font-size: 13px; color: #2563eb" class="tag -0">interview-tips</a> <a href="/tags/ip/" style="font-size: 13px; color: #2563eb" class="tag -0">ip</a> <a href="/tags/ipex-llm/" style="font-size: 13px; color: #2563eb" class="tag -0">ipex-llm</a> <a href="/tags/kde/" style="font-size: 15.45px; color: #5850bf" class="tag -3">kde</a> <a href="/tags/kernel/" style="font-size: 16.27px; color: #694ab0" class="tag -4">kernel</a> <a href="/tags/kvm/" style="font-size: 13.82px; color: #365ddc" class="tag -1">kvm</a> <a href="/tags/langchain/" style="font-size: 13px; color: #2563eb" class="tag -0">langchain</a> <a href="/tags/langgraph/" style="font-size: 13px; color: #2563eb" class="tag -0">langgraph</a> <a href="/tags/lcd/" style="font-size: 13px; color: #2563eb" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 13px; color: #2563eb" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 22px; color: #e11d48" class="tag -10">linux</a> <a href="/tags/llamaindex/" style="font-size: 13px; color: #2563eb" class="tag -0">llamaindex</a> <a href="/tags/llm/" style="font-size: 15.45px; color: #5850bf" class="tag -3">llm</a> <a href="/tags/lnmp/" style="font-size: 13px; color: #2563eb" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 13px; color: #2563eb" class="tag -0">magisk</a> <a href="/tags/mcp/" style="font-size: 13px; color: #2563eb" class="tag -0">mcp</a> <a href="/tags/mediatek/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mediatek</a> <a href="/tags/merlin/" style="font-size: 13px; color: #2563eb" class="tag -0">merlin</a> <a href="/tags/mlops/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mlops</a> <a href="/tags/modem/" style="font-size: 13px; color: #2563eb" class="tag -0">modem</a> <a href="/tags/monitoring/" style="font-size: 13px; color: #2563eb" class="tag -0">monitoring</a> <a href="/tags/multi-agent/" style="font-size: 13px; color: #2563eb" class="tag -0">multi-agent</a> <a href="/tags/multimodal/" style="font-size: 13px; color: #2563eb" class="tag -0">multimodal</a> <a href="/tags/mysql/" style="font-size: 13px; color: #2563eb" class="tag -0">mysql</a> <a href="/tags/n1/" style="font-size: 13px; color: #2563eb" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 13.82px; color: #365ddc" class="tag -1">nas</a> <a href="/tags/novelai/" style="font-size: 13px; color: #2563eb" class="tag -0">novelai</a> <a href="/tags/npm/" style="font-size: 13px; color: #2563eb" class="tag -0">npm</a> <a href="/tags/observability/" style="font-size: 13px; color: #2563eb" class="tag -0">observability</a> <a href="/tags/openai/" style="font-size: 13px; color: #2563eb" class="tag -0">openai</a> <a href="/tags/opencl/" style="font-size: 13px; color: #2563eb" class="tag -0">opencl</a> <a href="/tags/openvz/" style="font-size: 13px; color: #2563eb" class="tag -0">openvz</a> <a href="/tags/openwrt/" style="font-size: 13px; color: #2563eb" class="tag -0">openwrt</a> <a href="/tags/package-management/" style="font-size: 19.55px; color: #ae3074" class="tag -7">package-management</a> <a href="/tags/packagekit/" style="font-size: 13px; color: #2563eb" class="tag -0">packagekit</a> <a href="/tags/packaging/" style="font-size: 13.82px; color: #365ddc" class="tag -1">packaging</a> <a href="/tags/pkg/" style="font-size: 13px; color: #2563eb" class="tag -0">pkg</a> <a href="/tags/pnpm/" style="font-size: 13px; color: #2563eb" class="tag -0">pnpm</a> <a href="/tags/podman/" style="font-size: 13px; color: #2563eb" class="tag -0">podman</a> <a href="/tags/power/" style="font-size: 13px; color: #2563eb" class="tag -0">power</a> <a href="/tags/powershell/" style="font-size: 13px; color: #2563eb" class="tag -0">powershell</a> <a href="/tags/proxy/" style="font-size: 14.64px; color: #4756cd" class="tag -2">proxy</a> <a href="/tags/python/" style="font-size: 13px; color: #2563eb" class="tag -0">python</a> <a href="/tags/pytorch/" style="font-size: 13px; color: #2563eb" class="tag -0">pytorch</a> <a href="/tags/qchatgpt/" style="font-size: 13px; color: #2563eb" class="tag -0">qchatgpt</a> <a href="/tags/qemu/" style="font-size: 13px; color: #2563eb" class="tag -0">qemu</a> <a href="/tags/rag/" style="font-size: 13px; color: #2563eb" class="tag -0">rag</a> <a href="/tags/raspberry-pi/" style="font-size: 15.45px; color: #5850bf" class="tag -3">raspberry-pi</a> <a href="/tags/redhat/" style="font-size: 15.45px; color: #5850bf" class="tag -3">redhat</a> <a href="/tags/rhel/" style="font-size: 14.64px; color: #4756cd" class="tag -2">rhel</a> <a href="/tags/rk3588/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rk3588</a> <a href="/tags/rpm/" style="font-size: 13px; color: #2563eb" class="tag -0">rpm</a> <a href="/tags/rust/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rust</a> <a href="/tags/selinux/" style="font-size: 13px; color: #2563eb" class="tag -0">selinux</a> <a href="/tags/service/" style="font-size: 13px; color: #2563eb" class="tag -0">service</a> <a href="/tags/shadowsocks/" style="font-size: 13px; color: #2563eb" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 13px; color: #2563eb" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 14.64px; color: #4756cd" class="tag -2">ssh</a> <a href="/tags/steam/" style="font-size: 13px; color: #2563eb" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 13px; color: #2563eb" class="tag -0">synology</a> <a href="/tags/system-design/" style="font-size: 13.82px; color: #365ddc" class="tag -1">system-design</a> <a href="/tags/systemd/" style="font-size: 15.45px; color: #5850bf" class="tag -3">systemd</a> <a href="/tags/tool-calling/" style="font-size: 13px; color: #2563eb" class="tag -0">tool-calling</a> <a href="/tags/transformer/" style="font-size: 13px; color: #2563eb" class="tag -0">transformer</a> <a href="/tags/ubuntu/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ubuntu</a> <a href="/tags/uefi/" style="font-size: 13px; color: #2563eb" class="tag -0">uefi</a> <a href="/tags/virt-manager/" style="font-size: 13px; color: #2563eb" class="tag -0">virt-manager</a> <a href="/tags/vision-language-model/" style="font-size: 13px; color: #2563eb" class="tag -0">vision-language-model</a> <a href="/tags/vista/" style="font-size: 13.82px; color: #365ddc" class="tag -1">vista</a> <a href="/tags/vmware/" style="font-size: 13px; color: #2563eb" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 13px; color: #2563eb" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 15.45px; color: #5850bf" class="tag -3">vps</a> <a href="/tags/vscode/" style="font-size: 13px; color: #2563eb" class="tag -0">vscode</a> <a href="/tags/wayland/" style="font-size: 13px; color: #2563eb" class="tag -0">wayland</a> <a href="/tags/windows/" style="font-size: 20.36px; color: #bf2a66" class="tag -8">windows</a> <a href="/tags/windows-server/" style="font-size: 15.45px; color: #5850bf" class="tag -3">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.09px; color: #7a43a1" class="tag -5">windows10</a> <a href="/tags/workflow/" style="font-size: 13px; color: #2563eb" class="tag -0">workflow</a> <a href="/tags/wsl/" style="font-size: 13px; color: #2563eb" class="tag -0">wsl</a> <a href="/tags/x86/" style="font-size: 13px; color: #2563eb" class="tag -0">x86</a> <a href="/tags/xfs/" style="font-size: 13px; color: #2563eb" class="tag -0">xfs</a> <a href="/tags/xwayland/" style="font-size: 13px; color: #2563eb" class="tag -0">xwayland</a> <a href="/tags/yum/" style="font-size: 13px; color: #2563eb" class="tag -0">yum</a> <a href="/tags/zerotier/" style="font-size: 13px; color: #2563eb" class="tag -0">zerotier</a> <a href="/tags/zram/" style="font-size: 13px; color: #2563eb" class="tag -0">zram</a> <a href="/tags/zsh/" style="font-size: 13.82px; color: #365ddc" class="tag -1">zsh</a> <a href="/tags/%E4%B8%AD%E7%A7%8B%E8%8A%82/" style="font-size: 13px; color: #2563eb" class="tag -0">中秋节</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 14.64px; color: #4756cd" class="tag -2">代理</a> <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/" style="font-size: 13px; color: #2563eb" class="tag -0">传统文化</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 13px; color: #2563eb" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 13px; color: #2563eb" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">开源社区</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<button class="theme-toggle" type="button" aria-label="切换夜间模式" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+  <span class="theme-toggle-text">夜间</span>
+</button>
+<script>
+  (() => {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+    const label = button.querySelector('.theme-toggle-text');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentMode = () => document.documentElement.getAttribute('data-theme') || (media.matches ? 'dark' : 'light');
+    const syncButton = () => {
+      const dark = currentMode() === 'dark';
+      button.dataset.mode = dark ? 'dark' : 'light';
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? '切换到日间模式' : '切换到夜间模式');
+      if (label) label.textContent = dark ? '日间' : '夜间';
+    };
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      window.localStorage.setItem('Stellar.theme', theme);
+      if (window.utils && utils.dark) {
+        utils.dark.mode = theme;
+        utils.dark.method?.toggle?.start?.();
+      }
+      syncButton();
+    };
+    button.addEventListener('click', () => setTheme(currentMode() === 'dark' ? 'light' : 'dark'));
+    media.addEventListener?.('change', syncButton);
+    syncButton();
+  })();
+</script>
+
+</div></body></html>

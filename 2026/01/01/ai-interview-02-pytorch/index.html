@@ -1,0 +1,999 @@
+
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>AI面试题 - PyTorch 深度学习框架 - 玟茵开源社区知识库</title>
+
+  
+    <meta name="description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 为什么在深度学习工程中，你更倾向使用 PyTorch 而不是其他框架？面试官为什么问这个问题：这题不是让你对比 API，而是考你是否理解 PyTorch 的工程定位，以及它为什么在工业界被广泛采用。 参考口语化回答：我更倾向 PyTorch，主要是因为它的计算图是动态的，调试体验非常接近原生 Python。在真实工程里，模型结构经">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI面试题 - PyTorch 深度学习框架">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/01/ai-interview-02-pytorch/">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 为什么在深度学习工程中，你更倾向使用 PyTorch 而不是其他框架？面试官为什么问这个问题：这题不是让你对比 API，而是考你是否理解 PyTorch 的工程定位，以及它为什么在工业界被广泛采用。 参考口语化回答：我更倾向 PyTorch，主要是因为它的计算图是动态的，调试体验非常接近原生 Python。在真实工程里，模型结构经">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="deep-learning">
+<meta property="article:tag" content="gpu">
+<meta property="article:tag" content="interview">
+<meta property="article:tag" content="pytorch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="interview,pytorch,deep-learning,gpu">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2026-01-01T00:00:00+08:00","dateModified":"2026-01-01T00:00:00+08:00","datePublished":"2026-01-01T00:00:00+08:00","description":"","headline":"AI面试题 - PyTorch 深度学习框架","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2026/01/01/ai-interview-02-pytorch/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2026/01/01/ai-interview-02-pytorch/","keywords":"interview, pytorch, deep-learning, gpu","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源社区知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/05/08/home-space-migration-fstab-adjustment/"><span class="title">/home 空间迁移与 fstab 调整记录</span></a><a class="item title" href="/2026/04/28/disable-intel-dg1-discrete-gpu/"><span class="title">彻底禁用 DG1 独立显卡</span></a><a class="item title" href="/2026/04/17/clean-vscode/"><span class="title">清理 VS Code</span></a><a class="item title" href="/2026/04/04/fedora-rebuild-grub-config/"><span class="title">在 Fedora 下重建 GRUB 配置文件</span></a><a class="item title" href="/2026/03/27/systemd-user-session-exit-service-stop/"><span class="title">用户会话退出导致的级联服务停止</span></a><a class="item title" href="/2026/03/14/aur-submit-guide/"><span class="title">AUR 提交指南</span></a><a class="item title" href="/2026/03/03/clean-cargo-cache-and-build-artifacts/"><span class="title">清理 Cargo 缓存和构建产物</span></a><a class="item title" href="/2026/02/19/powershell-command-line-proxy/"><span class="title">PowerShell 配置命令行代理</span></a><a class="item title" href="/2026/02/06/npm-pnpm-clean-cache/"><span class="title">npm 和 pnpm 清理缓存</span></a><a class="item title" href="/2026/01/29/freebsd-pkg-autoremove-dependencies/"><span class="title">FreeBSD pkg 自动卸载安装依赖</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/">AI工程师面试题</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>AI面试题 - PyTorch 深度学习框架</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-为什么在深度学习工程中，你更倾向使用-PyTorch-而不是其他框架？"><a href="#Q1-为什么在深度学习工程中，你更倾向使用-PyTorch-而不是其他框架？" class="headerlink" title="Q1. 为什么在深度学习工程中，你更倾向使用 PyTorch 而不是其他框架？"></a>Q1. 为什么在深度学习工程中，你更倾向使用 PyTorch 而不是其他框架？</h3><p>面试官为什么问这个问题：<br>这题不是让你对比 API，而是考你是否理解 PyTorch 的工程定位，以及它为什么在工业界被广泛采用。</p>
+<p>参考口语化回答：<br>我更倾向 PyTorch，主要是因为它的计算图是动态的，调试体验非常接近原生 Python。<br>在真实工程里，模型结构经常调整，动态计算图能让我快速定位问题，而不是反复重建静态图。<br>对工程效率来说，这一点非常关键。</p>
+<h3 id="Q2-你如何理解-PyTorch-中”张量就是核心抽象”这件事？"><a href="#Q2-你如何理解-PyTorch-中”张量就是核心抽象”这件事？" class="headerlink" title="Q2. 你如何理解 PyTorch 中”张量就是核心抽象”这件事？"></a>Q2. 你如何理解 PyTorch 中”张量就是核心抽象”这件事？</h3><p>面试官为什么问这个问题：<br>这是在考你是否真正理解 PyTorch 的底层思维，而不是只会调用 API。</p>
+<p>参考口语化回答：<br>在 PyTorch 里，一切几乎都围绕 Tensor。<br>模型参数是 Tensor，输入输出是 Tensor，梯度本质上也是 Tensor。<br>只要理解了 Tensor 的行为，很多模型问题其实都能拆解清楚。</p>
+<h3 id="Q3-在-PyTorch-中，你如何区分”模型定义”和”模型执行”？"><a href="#Q3-在-PyTorch-中，你如何区分”模型定义”和”模型执行”？" class="headerlink" title="Q3. 在 PyTorch 中，你如何区分”模型定义”和”模型执行”？"></a>Q3. 在 PyTorch 中，你如何区分”模型定义”和”模型执行”？</h3><p>面试官为什么问这个问题：<br>这是区分新手和有工程经验候选人的基础问题。</p>
+<p>参考口语化回答：<br>模型定义更多是结构描述，比如 <code>nn.Module</code> 里有哪些层；<br>模型执行才是真正的数据流动，比如前向传播和反向传播。<br>定义不等于执行，这一点在调试和复用模型时非常重要。</p>
+<h3 id="Q4-你怎么看-PyTorch-在”科研”和”工程落地”之间的平衡？"><a href="#Q4-你怎么看-PyTorch-在”科研”和”工程落地”之间的平衡？" class="headerlink" title="Q4. 你怎么看 PyTorch 在”科研”和”工程落地”之间的平衡？"></a>Q4. 你怎么看 PyTorch 在”科研”和”工程落地”之间的平衡？</h3><p>面试官为什么问这个问题：<br>考察你是否理解 PyTorch 被工业界接受的原因。</p>
+<p>参考口语化回答：<br>PyTorch 一开始偏科研，但现在工程能力已经很成熟。<br>像分布式训练、模型部署、混合精度这些都已经是工程级能力。<br>它不是只适合写论文，也能支撑长期系统。</p>
+<h3 id="Q5-在你看来，PyTorch-项目中最容易被忽视的基础问题是什么？"><a href="#Q5-在你看来，PyTorch-项目中最容易被忽视的基础问题是什么？" class="headerlink" title="Q5. 在你看来，PyTorch 项目中最容易被忽视的基础问题是什么？"></a>Q5. 在你看来，PyTorch 项目中最容易被忽视的基础问题是什么？</h3><p>面试官为什么问这个问题：<br>这题在考你是否踩过真实的工程坑。</p>
+<p>参考口语化回答：<br>最容易被忽视的是设备和 dtype。<br>模型在 CPU 还是 GPU、float32 还是 float16，<br>这些问题一开始不注意，后面很容易出隐性 Bug。</p>
+<h2 id="第二层：核心机制理解（How）【8-题】"><a href="#第二层：核心机制理解（How）【8-题】" class="headerlink" title="第二层：核心机制理解（How）【8 题】"></a>第二层：核心机制理解（How）【8 题】</h2><h3 id="Q6-PyTorch-的自动求导机制你是怎么理解的？"><a href="#Q6-PyTorch-的自动求导机制你是怎么理解的？" class="headerlink" title="Q6. PyTorch 的自动求导机制你是怎么理解的？"></a>Q6. PyTorch 的自动求导机制你是怎么理解的？</h3><p>面试官为什么问这个问题：<br>这是深度学习工程师的必考题，考察底层理解。</p>
+<p>参考口语化回答：<br>我理解 autograd 是在前向传播时动态构建计算图，<br>反向传播时按图回溯计算梯度。<br>所以只要 Tensor 开了 <code>requires_grad</code>，梯度链路就会被追踪。</p>
+<h3 id="Q7-你在什么情况下会使用-torch-no-grad-？"><a href="#Q7-你在什么情况下会使用-torch-no-grad-？" class="headerlink" title="Q7. 你在什么情况下会使用 torch.no_grad()？"></a>Q7. 你在什么情况下会使用 <code>torch.no_grad()</code>？</h3><p>面试官为什么问这个问题：<br>考察你是否有性能和内存意识。</p>
+<p>参考口语化回答：<br>在推理或验证阶段我一定会用。<br>不需要梯度却还构建计算图，会浪费显存和计算。<br>这是非常基础但很重要的优化点。</p>
+<h3 id="Q8-你如何区分-model-train-和-model-eval-的作用？"><a href="#Q8-你如何区分-model-train-和-model-eval-的作用？" class="headerlink" title="Q8. 你如何区分 model.train() 和 model.eval() 的作用？"></a>Q8. 你如何区分 <code>model.train()</code> 和 <code>model.eval()</code> 的作用？</h3><p>面试官为什么问这个问题：<br>这是一个常见但非常容易被低估的问题。</p>
+<p>参考口语化回答：<br>它们主要影响 Dropout、BatchNorm 这些层的行为。<br>如果忘了切换模式，模型表现可能会非常不稳定。<br>很多”效果突然变差”的问题，其实都出在这里。</p>
+<h3 id="Q9-PyTorch-中-nn-Module-的设计思想你是怎么理解的？"><a href="#Q9-PyTorch-中-nn-Module-的设计思想你是怎么理解的？" class="headerlink" title="Q9. PyTorch 中 nn.Module 的设计思想你是怎么理解的？"></a>Q9. PyTorch 中 <code>nn.Module</code> 的设计思想你是怎么理解的？</h3><p>面试官为什么问这个问题：<br>考察你是否真正理解模块化建模。</p>
+<p>参考口语化回答：<br><code>nn.Module</code> 本质上是一个可组合的计算单元。<br>它负责管理参数、子模块和前向逻辑。<br>模块化是 PyTorch 能写出复杂模型但仍可维护的关键。</p>
+<h3 id="Q10-你如何在-PyTorch-中控制梯度的传播？"><a href="#Q10-你如何在-PyTorch-中控制梯度的传播？" class="headerlink" title="Q10. 你如何在 PyTorch 中控制梯度的传播？"></a>Q10. 你如何在 PyTorch 中控制梯度的传播？</h3><p>面试官为什么问这个问题：<br>这是模型调试和优化中非常重要的能力。</p>
+<p>参考口语化回答：<br>我会通过 <code>detach()</code>、<code>requires_grad=False</code> 或自定义 forward 控制梯度流。<br>在复杂模型中，有些部分只作为特征提取器，不需要反传。<br>不控制梯度，训练很容易失控。</p>
+<h3 id="Q11-你怎么看待-PyTorch-的-in-place-操作？"><a href="#Q11-你怎么看待-PyTorch-的-in-place-操作？" class="headerlink" title="Q11. 你怎么看待 PyTorch 的 in-place 操作？"></a>Q11. 你怎么看待 PyTorch 的 in-place 操作？</h3><p>面试官为什么问这个问题：<br>这是一个隐藏坑点，考察你是否踩过雷。</p>
+<p>参考口语化回答：<br>in-place 操作可以省内存，但很容易破坏计算图。<br>如果不确定，我一般不用。<br>训练中遇到奇怪的梯度问题，第一反应就是检查 in-place。</p>
+<h3 id="Q12-你如何理解-PyTorch-的参数注册机制？"><a href="#Q12-你如何理解-PyTorch-的参数注册机制？" class="headerlink" title="Q12. 你如何理解 PyTorch 的参数注册机制？"></a>Q12. 你如何理解 PyTorch 的参数注册机制？</h3><p>面试官为什么问这个问题：<br>考察你是否理解模型参数管理。</p>
+<p>参考口语化回答：<br>只要是 <code>nn.Parameter</code>，并且挂在 <code>Module</code> 上，就会被自动注册。<br>这样优化器才能找到它们。<br>如果参数没被注册，训练基本是白跑。</p>
+<h3 id="Q13-PyTorch-中你如何实现自定义-loss？"><a href="#Q13-PyTorch-中你如何实现自定义-loss？" class="headerlink" title="Q13. PyTorch 中你如何实现自定义 loss？"></a>Q13. PyTorch 中你如何实现自定义 loss？</h3><p>面试官为什么问这个问题：<br>这是工程中非常常见的需求。</p>
+<p>参考口语化回答：<br>我一般直接用 Tensor 运算写 loss，<br>只要是可微操作，autograd 都能自动算梯度。<br>不需要额外处理反向，反而更灵活。</p>
+<h2 id="第三层：训练与工程实践【8-题】"><a href="#第三层：训练与工程实践【8-题】" class="headerlink" title="第三层：训练与工程实践【8 题】"></a>第三层：训练与工程实践【8 题】</h2><h3 id="Q14-你如何组织一个标准的-PyTorch-训练流程？"><a href="#Q14-你如何组织一个标准的-PyTorch-训练流程？" class="headerlink" title="Q14. 你如何组织一个标准的 PyTorch 训练流程？"></a>Q14. 你如何组织一个标准的 PyTorch 训练流程？</h3><p>面试官为什么问这个问题：<br>考察你是否具备规范训练经验。</p>
+<p>参考口语化回答：<br>一般是数据加载、模型前向、loss 计算、反向传播、参数更新。<br>每一步我都会明确职责，避免逻辑混在一起。<br>流程清晰，问题才好排查。</p>
+<h3 id="Q15-你如何处理-PyTorch-训练中的显存不足问题？"><a href="#Q15-你如何处理-PyTorch-训练中的显存不足问题？" class="headerlink" title="Q15. 你如何处理 PyTorch 训练中的显存不足问题？"></a>Q15. 你如何处理 PyTorch 训练中的显存不足问题？</h3><p>面试官为什么问这个问题：<br>这是非常现实的工程问题。</p>
+<p>参考口语化回答：<br>我会从 batch size、模型结构、混合精度入手。<br>必要时用梯度累积。<br>不是一上来就换更大的 GPU。</p>
+<h3 id="Q16-你在-PyTorch-中是如何实现混合精度训练的？"><a href="#Q16-你在-PyTorch-中是如何实现混合精度训练的？" class="headerlink" title="Q16. 你在 PyTorch 中是如何实现混合精度训练的？"></a>Q16. 你在 PyTorch 中是如何实现混合精度训练的？</h3><p>面试官为什么问这个问题：<br>这是中高级工程能力的体现。</p>
+<p>参考口语化回答：<br>我会使用官方的 AMP。<br>通过自动缩放梯度，既能加速，又能控制数值稳定性。<br>现在基本是大模型训练的标配。</p>
+<h3 id="Q17-PyTorch-训练中-loss-不下降，你通常怎么排查？"><a href="#Q17-PyTorch-训练中-loss-不下降，你通常怎么排查？" class="headerlink" title="Q17. PyTorch 训练中 loss 不下降，你通常怎么排查？"></a>Q17. PyTorch 训练中 loss 不下降，你通常怎么排查？</h3><p>面试官为什么问这个问题：<br>这是典型实战排错题。</p>
+<p>参考口语化回答：<br>我会先看数据和标签是否正确。<br>再检查学习率、梯度是否为零或爆炸。<br>模型问题往往排在后面。</p>
+<h3 id="Q18-你如何在-PyTorch-中实现断点续训？"><a href="#Q18-你如何在-PyTorch-中实现断点续训？" class="headerlink" title="Q18. 你如何在 PyTorch 中实现断点续训？"></a>Q18. 你如何在 PyTorch 中实现断点续训？</h3><p>面试官为什么问这个问题：<br>这是工程健壮性问题。</p>
+<p>参考口语化回答：<br>我会保存模型参数、优化器状态和训练步数。<br>恢复时一起加载。<br>否则恢复后的训练行为会发生偏移。</p>
+<h3 id="Q19-PyTorch-中你如何保证训练的可复现性？"><a href="#Q19-PyTorch-中你如何保证训练的可复现性？" class="headerlink" title="Q19. PyTorch 中你如何保证训练的可复现性？"></a>Q19. PyTorch 中你如何保证训练的可复现性？</h3><p>面试官为什么问这个问题：<br>这是科研和工程都很重要的问题。</p>
+<p>参考口语化回答：<br>我会固定随机种子，<br>同时注意 CUDA 的非确定性操作。<br>完全复现很难，但至少要做到结果可控。</p>
+<h3 id="Q20-你如何看待-PyTorch-的-DataLoader-设计？"><a href="#Q20-你如何看待-PyTorch-的-DataLoader-设计？" class="headerlink" title="Q20. 你如何看待 PyTorch 的 DataLoader 设计？"></a>Q20. 你如何看待 PyTorch 的 DataLoader 设计？</h3><p>面试官为什么问这个问题：<br>考察你是否理解数据对训练的影响。</p>
+<p>参考口语化回答：<br>DataLoader 把数据读取和训练解耦得很清楚。<br>多进程加载对性能提升很明显。<br>数据跟不上，模型再快也没用。</p>
+<h3 id="Q21-你如何在-PyTorch-中监控训练过程？"><a href="#Q21-你如何在-PyTorch-中监控训练过程？" class="headerlink" title="Q21. 你如何在 PyTorch 中监控训练过程？"></a>Q21. 你如何在 PyTorch 中监控训练过程？</h3><p>面试官为什么问这个问题：<br>这是工程成熟度问题。</p>
+<p>参考口语化回答：<br>我会记录 loss、指标、学习率。<br>必要时可视化梯度或中间输出。<br>训练过程是用来观察的，不是黑盒。</p>
+<h2 id="第四层：模型设计与调优实战【6-题】"><a href="#第四层：模型设计与调优实战【6-题】" class="headerlink" title="第四层：模型设计与调优实战【6 题】"></a>第四层：模型设计与调优实战【6 题】</h2><h3 id="Q22-你如何判断一个模型是”欠拟合”还是”过拟合”？"><a href="#Q22-你如何判断一个模型是”欠拟合”还是”过拟合”？" class="headerlink" title="Q22. 你如何判断一个模型是”欠拟合”还是”过拟合”？"></a>Q22. 你如何判断一个模型是”欠拟合”还是”过拟合”？</h3><p>面试官为什么问这个问题：<br>这是基础但非常重要的判断能力。</p>
+<p>参考口语化回答：<br>我会对比训练集和验证集表现。<br>两边都差是欠拟合，<br>训练好、验证差就是过拟合。</p>
+<h3 id="Q23-在-PyTorch-中你如何做正则化？"><a href="#Q23-在-PyTorch-中你如何做正则化？" class="headerlink" title="Q23. 在 PyTorch 中你如何做正则化？"></a>Q23. 在 PyTorch 中你如何做正则化？</h3><p>面试官为什么问这个问题：<br>考察你是否理解模型泛化。</p>
+<p>参考口语化回答：<br>常见方式包括 Dropout、权重衰减、数据增强。<br>具体用哪种，要看任务和模型规模。<br>正则化不是越多越好。</p>
+<h3 id="Q24-你如何在-PyTorch-中快速验证一个模型想法？"><a href="#Q24-你如何在-PyTorch-中快速验证一个模型想法？" class="headerlink" title="Q24. 你如何在 PyTorch 中快速验证一个模型想法？"></a>Q24. 你如何在 PyTorch 中快速验证一个模型想法？</h3><p>面试官为什么问这个问题：<br>这是效率意识问题。</p>
+<p>参考口语化回答：<br>我会先用小数据集、少量 epoch。<br>验证趋势是否正确，再扩大规模。<br>避免一开始就跑大实验。</p>
+<h3 id="Q25-你如何看待-PyTorch-中的预训练模型？"><a href="#Q25-你如何看待-PyTorch-中的预训练模型？" class="headerlink" title="Q25. 你如何看待 PyTorch 中的预训练模型？"></a>Q25. 你如何看待 PyTorch 中的预训练模型？</h3><p>面试官为什么问这个问题：<br>考察你对迁移学习的理解。</p>
+<p>参考口语化回答：<br>预训练模型是非常重要的起点。<br>我会优先利用已有能力，而不是从零开始。<br>关键在于怎么微调，而不是用不用。</p>
+<h3 id="Q26-你如何在-PyTorch-中冻结或解冻部分参数？"><a href="#Q26-你如何在-PyTorch-中冻结或解冻部分参数？" class="headerlink" title="Q26. 你如何在 PyTorch 中冻结或解冻部分参数？"></a>Q26. 你如何在 PyTorch 中冻结或解冻部分参数？</h3><p>面试官为什么问这个问题：<br>这是迁移学习中的常见操作。</p>
+<p>参考口语化回答：<br>我会通过控制 <code>requires_grad</code>。<br>先冻结底层特征，再逐步解冻。<br>这样训练更稳定。</p>
+<h3 id="Q27-你如何在-PyTorch-中处理梯度爆炸或消失？"><a href="#Q27-你如何在-PyTorch-中处理梯度爆炸或消失？" class="headerlink" title="Q27. 你如何在 PyTorch 中处理梯度爆炸或消失？"></a>Q27. 你如何在 PyTorch 中处理梯度爆炸或消失？</h3><p>面试官为什么问这个问题：<br>这是模型稳定性问题。</p>
+<p>参考口语化回答：<br>我会通过梯度裁剪、调整初始化或学习率。<br>必要时重新设计网络结构。<br>这是结构问题，不只是参数问题。</p>
+<h2 id="第五层：进阶与工程视野【3-题】"><a href="#第五层：进阶与工程视野【3-题】" class="headerlink" title="第五层：进阶与工程视野【3 题】"></a>第五层：进阶与工程视野【3 题】</h2><h3 id="Q28-你如何看待-PyTorch-在大模型时代的角色？"><a href="#Q28-你如何看待-PyTorch-在大模型时代的角色？" class="headerlink" title="Q28. 你如何看待 PyTorch 在大模型时代的角色？"></a>Q28. 你如何看待 PyTorch 在大模型时代的角色？</h3><p>面试官为什么问这个问题：<br>这是视野与趋势判断题。</p>
+<p>参考口语化回答：<br>PyTorch 已经是大模型事实标准之一。<br>它在灵活性和工程能力之间找到了平衡。<br>短期内地位很难被撼动。</p>
+<h3 id="Q29-你认为-PyTorch-工程师的”高级能力”体现在哪？"><a href="#Q29-你认为-PyTorch-工程师的”高级能力”体现在哪？" class="headerlink" title="Q29. 你认为 PyTorch 工程师的”高级能力”体现在哪？"></a>Q29. 你认为 PyTorch 工程师的”高级能力”体现在哪？</h3><p>面试官为什么问这个问题：<br>这是潜力判断题。</p>
+<p>参考口语化回答：<br>不在写更复杂的模型，<br>而在能稳定训练、快速排错、控制成本。<br>模型能长期跑，比一次跑通更重要。</p>
+<h3 id="Q30-面试官如何通过-PyTorch-问题判断你是否”值得培养”？"><a href="#Q30-面试官如何通过-PyTorch-问题判断你是否”值得培养”？" class="headerlink" title="Q30. 面试官如何通过 PyTorch 问题判断你是否”值得培养”？"></a>Q30. 面试官如何通过 PyTorch 问题判断你是否”值得培养”？</h3><p>面试官为什么问这个问题：<br>这是终极综合判断题。</p>
+<p>参考口语化回答：<br>我觉得关键在于是否理解原理，又不迷信技巧。<br>遇到问题先拆解，而不是盲目调参。<br>这种工程心态，比会多少 API 更重要。</p>
+<hr>
+<h2 id="第一层：PyTorch-基础理解进阶（Why-What）【5-题】"><a href="#第一层：PyTorch-基础理解进阶（Why-What）【5-题】" class="headerlink" title="第一层：PyTorch 基础理解进阶（Why &#x2F; What）【5 题】"></a>第一层：PyTorch 基础理解进阶（Why &#x2F; What）【5 题】</h2><h3 id="Q1-在-PyTorch-中，你如何理解”前向是业务逻辑，反向是系统能力”这句话？"><a href="#Q1-在-PyTorch-中，你如何理解”前向是业务逻辑，反向是系统能力”这句话？" class="headerlink" title="Q1. 在 PyTorch 中，你如何理解”前向是业务逻辑，反向是系统能力”这句话？"></a>Q1. 在 PyTorch 中，你如何理解”前向是业务逻辑，反向是系统能力”这句话？</h3><p>面试官为什么问这个问题：<br>这题在考你是否把反向传播当成”黑盒”，还是理解它在工程中的角色。</p>
+<p>参考口语化回答：<br>我理解前向传播是我们主动设计的业务逻辑，<br>而反向传播更多是框架帮我们自动完成的系统能力。<br>工程上我会重点关注前向是否合理、数值是否稳定，<br>反向更多是验证有没有被正确触发，而不是手写。</p>
+<h3 id="Q2-你如何理解-PyTorch-的”动态图”对模型设计自由度的影响？"><a href="#Q2-你如何理解-PyTorch-的”动态图”对模型设计自由度的影响？" class="headerlink" title="Q2. 你如何理解 PyTorch 的”动态图”对模型设计自由度的影响？"></a>Q2. 你如何理解 PyTorch 的”动态图”对模型设计自由度的影响？</h3><p>面试官为什么问这个问题：<br>这是在考 PyTorch 区别于静态图框架的核心优势。</p>
+<p>参考口语化回答：<br>动态图让我可以像写普通 Python 一样写模型逻辑。<br>条件分支、循环、动态结构都很好处理。<br>这在复杂模型或实验阶段，效率提升非常明显。</p>
+<h3 id="Q3-在-PyTorch-项目中，你如何区分”实验代码”和”可复用模型代码”？"><a href="#Q3-在-PyTorch-项目中，你如何区分”实验代码”和”可复用模型代码”？" class="headerlink" title="Q3. 在 PyTorch 项目中，你如何区分”实验代码”和”可复用模型代码”？"></a>Q3. 在 PyTorch 项目中，你如何区分”实验代码”和”可复用模型代码”？</h3><p>面试官为什么问这个问题：<br>考察你是否具备工程分层意识。</p>
+<p>参考口语化回答：<br>实验代码允许快速验证想法，可以不那么优雅；<br>但可复用模型代码一定要结构清晰、接口稳定。<br>我会尽早把验证过的逻辑抽成独立模块。</p>
+<h3 id="Q4-你怎么看-PyTorch-对-Python-特性的高度依赖？"><a href="#Q4-你怎么看-PyTorch-对-Python-特性的高度依赖？" class="headerlink" title="Q4. 你怎么看 PyTorch 对 Python 特性的高度依赖？"></a>Q4. 你怎么看 PyTorch 对 Python 特性的高度依赖？</h3><p>面试官为什么问这个问题：<br>这题在考你是否意识到 PyTorch 的边界。</p>
+<p>参考口语化回答：<br>PyTorch 很依赖 Python，这让它非常灵活。<br>但也意味着单线程性能有限。<br>工程上我会让 Python 负责调度，而不是承担重计算。</p>
+<h3 id="Q5-在你看来，PyTorch-新手最容易形成的错误认知是什么？"><a href="#Q5-在你看来，PyTorch-新手最容易形成的错误认知是什么？" class="headerlink" title="Q5. 在你看来，PyTorch 新手最容易形成的错误认知是什么？"></a>Q5. 在你看来，PyTorch 新手最容易形成的错误认知是什么？</h3><p>面试官为什么问这个问题：<br>这是经验题，区分是否带过新人。</p>
+<p>参考口语化回答：<br>最常见的是把 loss 下降等同于模型一定变好。<br>忽略了数据问题、验证集表现和过拟合。<br>PyTorch 用得熟，不代表训练思路就对。</p>
+<h2 id="第二层：Tensor-与计算图细节【8-题】"><a href="#第二层：Tensor-与计算图细节【8-题】" class="headerlink" title="第二层：Tensor 与计算图细节【8 题】"></a>第二层：Tensor 与计算图细节【8 题】</h2><h3 id="Q6-你如何理解-PyTorch-中-Tensor-的”视图（view）”和”拷贝”的区别？"><a href="#Q6-你如何理解-PyTorch-中-Tensor-的”视图（view）”和”拷贝”的区别？" class="headerlink" title="Q6. 你如何理解 PyTorch 中 Tensor 的”视图（view）”和”拷贝”的区别？"></a>Q6. 你如何理解 PyTorch 中 Tensor 的”视图（view）”和”拷贝”的区别？</h3><p>面试官为什么问这个问题：<br>这是内存和性能相关的关键点。</p>
+<p>参考口语化回答：<br>view 只是换了形状，本质还是同一块内存；<br>拷贝才是真正新建数据。<br>如果不了解这一点，很容易出现意外的数值修改。</p>
+<h3 id="Q7-你在什么场景下会主动使用-clone-？"><a href="#Q7-你在什么场景下会主动使用-clone-？" class="headerlink" title="Q7. 你在什么场景下会主动使用 clone()？"></a>Q7. 你在什么场景下会主动使用 <code>clone()</code>？</h3><p>面试官为什么问这个问题：<br>考察你是否真正理解 Tensor 的共享机制。</p>
+<p>参考口语化回答：<br>当我需要保留某一步的中间结果，<br>但后续操作可能会原地修改 Tensor 时，<br>我会用 <code>clone()</code> 明确隔离数据。</p>
+<h3 id="Q8-PyTorch-中计算图是如何被释放的？你踩过什么坑？"><a href="#Q8-PyTorch-中计算图是如何被释放的？你踩过什么坑？" class="headerlink" title="Q8. PyTorch 中计算图是如何被释放的？你踩过什么坑？"></a>Q8. PyTorch 中计算图是如何被释放的？你踩过什么坑？</h3><p>面试官为什么问这个问题：<br>这是显存泄漏高频问题。</p>
+<p>参考口语化回答：<br>反向传播后计算图默认会被释放。<br>如果我把 loss 或中间 Tensor 存起来，<br>就可能意外保留整张计算图，导致显存不断上涨。</p>
+<h3 id="Q9-你如何理解-PyTorch-中的”叶子节点-Tensor”？"><a href="#Q9-你如何理解-PyTorch-中的”叶子节点-Tensor”？" class="headerlink" title="Q9. 你如何理解 PyTorch 中的”叶子节点 Tensor”？"></a>Q9. 你如何理解 PyTorch 中的”叶子节点 Tensor”？</h3><p>面试官为什么问这个问题：<br>这是 autograd 理解深度的体现。</p>
+<p>参考口语化回答：<br>叶子节点通常是模型参数或直接创建的 Tensor。<br>只有叶子节点才会保留 <code>.grad</code>。<br>如果搞不清楚，很容易以为梯度”丢了”。</p>
+<h3 id="Q10-PyTorch-中你如何判断一个-Tensor-是否在计算图中？"><a href="#Q10-PyTorch-中你如何判断一个-Tensor-是否在计算图中？" class="headerlink" title="Q10. PyTorch 中你如何判断一个 Tensor 是否在计算图中？"></a>Q10. PyTorch 中你如何判断一个 Tensor 是否在计算图中？</h3><p>面试官为什么问这个问题：<br>考察你对调试能力的理解。</p>
+<p>参考口语化回答：<br>我会看 <code>requires_grad</code> 和 <code>grad_fn</code>。<br>有 <code>grad_fn</code> 说明它是计算图的一部分。<br>这是定位梯度问题时非常实用的手段。</p>
+<h3 id="Q11-你如何看待-PyTorch-中对标量-loss-使用-item-？"><a href="#Q11-你如何看待-PyTorch-中对标量-loss-使用-item-？" class="headerlink" title="Q11. 你如何看待 PyTorch 中对标量 loss 使用 item()？"></a>Q11. 你如何看待 PyTorch 中对标量 loss 使用 <code>item()</code>？</h3><p>面试官为什么问这个问题：<br>这是一个小细节，但很容易出问题。</p>
+<p>参考口语化回答：<br><code>item()</code> 会把 Tensor 变成 Python 数值。<br>一旦用了，就和计算图彻底断开。<br>所以我只在记录日志时用，不会参与计算。</p>
+<h3 id="Q12-你在-PyTorch-中是如何避免”无意中构建计算图”的？"><a href="#Q12-你在-PyTorch-中是如何避免”无意中构建计算图”的？" class="headerlink" title="Q12. 你在 PyTorch 中是如何避免”无意中构建计算图”的？"></a>Q12. 你在 PyTorch 中是如何避免”无意中构建计算图”的？</h3><p>面试官为什么问这个问题：<br>这是性能和显存意识问题。</p>
+<p>参考口语化回答：<br>我会在推理、评估、数据处理阶段明确使用 <code>no_grad()</code>。<br>否则哪怕不反传，也可能构建不必要的图。<br>这是很隐蔽但代价不小的问题。</p>
+<h3 id="Q13-PyTorch-中你如何处理-Tensor-的-device-不一致问题？"><a href="#Q13-PyTorch-中你如何处理-Tensor-的-device-不一致问题？" class="headerlink" title="Q13. PyTorch 中你如何处理 Tensor 的 device 不一致问题？"></a>Q13. PyTorch 中你如何处理 Tensor 的 device 不一致问题？</h3><p>面试官为什么问这个问题：<br>这是新手和中级工程师都会遇到的坑。</p>
+<p>参考口语化回答：<br>我会统一在入口处管理 device。<br>模型和数据必须在同一设备上。<br>不要在中途随意 <code>.to()</code>，否则很难排查。</p>
+<h2 id="第三层：训练流程与优化细节【8-题】"><a href="#第三层：训练流程与优化细节【8-题】" class="headerlink" title="第三层：训练流程与优化细节【8 题】"></a>第三层：训练流程与优化细节【8 题】</h2><h3 id="Q14-你如何在-PyTorch-中实现梯度累积？适合什么场景？"><a href="#Q14-你如何在-PyTorch-中实现梯度累积？适合什么场景？" class="headerlink" title="Q14. 你如何在 PyTorch 中实现梯度累积？适合什么场景？"></a>Q14. 你如何在 PyTorch 中实现梯度累积？适合什么场景？</h3><p>面试官为什么问这个问题：<br>这是显存受限场景的常见方案。</p>
+<p>参考口语化回答：<br>我会多次 forward + backward，<br>但只在累积到一定步数后才 <code>optimizer.step()</code>。<br>适合 batch size 受限但又想稳定训练的场景。</p>
+<h3 id="Q15-你如何理解学习率在-PyTorch-训练中的”第一优先级”？"><a href="#Q15-你如何理解学习率在-PyTorch-训练中的”第一优先级”？" class="headerlink" title="Q15. 你如何理解学习率在 PyTorch 训练中的”第一优先级”？"></a>Q15. 你如何理解学习率在 PyTorch 训练中的”第一优先级”？</h3><p>面试官为什么问这个问题：<br>这是调参经验题。</p>
+<p>参考口语化回答：<br>很多训练问题，根源其实是学习率不合适。<br>太大容易震荡，太小学不动。<br>我通常优先调学习率，而不是模型结构。</p>
+<h3 id="Q16-PyTorch-中你如何使用学习率调度器？"><a href="#Q16-PyTorch-中你如何使用学习率调度器？" class="headerlink" title="Q16. PyTorch 中你如何使用学习率调度器？"></a>Q16. PyTorch 中你如何使用学习率调度器？</h3><p>面试官为什么问这个问题：<br>考察你是否有系统训练经验。</p>
+<p>参考口语化回答：<br>我会根据训练阶段调整学习率。<br>比如前期大一点，后期逐步下降。<br>调度器能明显提升收敛稳定性。</p>
+<h3 id="Q17-你如何在-PyTorch-中定位”梯度为零”的问题？"><a href="#Q17-你如何在-PyTorch-中定位”梯度为零”的问题？" class="headerlink" title="Q17. 你如何在 PyTorch 中定位”梯度为零”的问题？"></a>Q17. 你如何在 PyTorch 中定位”梯度为零”的问题？</h3><p>面试官为什么问这个问题：<br>这是深度模型常见问题。</p>
+<p>参考口语化回答：<br>我会检查激活函数、初始化方式。<br>同时打印梯度统计，确认是否在某一层消失。<br>梯度问题通常不是偶然。</p>
+<h3 id="Q18-PyTorch-中你如何做参数初始化？为什么重要？"><a href="#Q18-PyTorch-中你如何做参数初始化？为什么重要？" class="headerlink" title="Q18. PyTorch 中你如何做参数初始化？为什么重要？"></a>Q18. PyTorch 中你如何做参数初始化？为什么重要？</h3><p>面试官为什么问这个问题：<br>考察你对训练稳定性的理解。</p>
+<p>参考口语化回答：<br>合理初始化能让训练更快、更稳定。<br>默认初始化有时不适合深层网络。<br>我会根据激活函数选择合适策略。</p>
+<h3 id="Q19-你如何在-PyTorch-中实现多卡训练的基本思路？"><a href="#Q19-你如何在-PyTorch-中实现多卡训练的基本思路？" class="headerlink" title="Q19. 你如何在 PyTorch 中实现多卡训练的基本思路？"></a>Q19. 你如何在 PyTorch 中实现多卡训练的基本思路？</h3><p>面试官为什么问这个问题：<br>这是规模化训练的基础认知。</p>
+<p>参考口语化回答：<br>核心思路是数据并行。<br>每张卡算一部分数据，<br>再同步梯度更新参数。<br>框架已经帮我们封装了大部分细节。</p>
+<h3 id="Q20-PyTorch-训练过程中，你如何发现”训练假收敛”？"><a href="#Q20-PyTorch-训练过程中，你如何发现”训练假收敛”？" class="headerlink" title="Q20. PyTorch 训练过程中，你如何发现”训练假收敛”？"></a>Q20. PyTorch 训练过程中，你如何发现”训练假收敛”？</h3><p>面试官为什么问这个问题：<br>这是高级调试能力题。</p>
+<p>参考口语化回答：<br>loss 看似稳定，但验证指标不提升。<br>或者模型对输入变化不敏感。<br>这通常说明模型学到的是捷径，而不是有效特征。</p>
+<h3 id="Q21-你如何在-PyTorch-中评估一次训练”是否值得继续跑”？"><a href="#Q21-你如何在-PyTorch-中评估一次训练”是否值得继续跑”？" class="headerlink" title="Q21. 你如何在 PyTorch 中评估一次训练”是否值得继续跑”？"></a>Q21. 你如何在 PyTorch 中评估一次训练”是否值得继续跑”？</h3><p>面试官为什么问这个问题：<br>考察你是否具备成本意识。</p>
+<p>参考口语化回答：<br>我会看前几个 epoch 的趋势。<br>如果方向明显不对，会尽早停掉。<br>算力也是成本，不是免费资源。</p>
+<h2 id="第四层：模型结构与数值稳定性【6-题】"><a href="#第四层：模型结构与数值稳定性【6-题】" class="headerlink" title="第四层：模型结构与数值稳定性【6 题】"></a>第四层：模型结构与数值稳定性【6 题】</h2><h3 id="Q22-你如何在-PyTorch-中避免数值不稳定问题？"><a href="#Q22-你如何在-PyTorch-中避免数值不稳定问题？" class="headerlink" title="Q22. 你如何在 PyTorch 中避免数值不稳定问题？"></a>Q22. 你如何在 PyTorch 中避免数值不稳定问题？</h3><p>面试官为什么问这个问题：<br>这是工程级模型训练的关键问题。</p>
+<p>参考口语化回答：<br>我会注意归一化、初始化、学习率。<br>必要时用梯度裁剪或混合精度。<br>数值稳定性往往决定模型能不能训下去。</p>
+<h3 id="Q23-PyTorch-中你如何处理-loss-为-NaN-的情况？"><a href="#Q23-PyTorch-中你如何处理-loss-为-NaN-的情况？" class="headerlink" title="Q23. PyTorch 中你如何处理 loss 为 NaN 的情况？"></a>Q23. PyTorch 中你如何处理 loss 为 NaN 的情况？</h3><p>面试官为什么问这个问题：<br>这是非常真实的训练事故。</p>
+<p>参考口语化回答：<br>我会先停止训练，<br>检查输入数据、loss 计算和梯度。<br>NaN 通常不是偶然出现的。</p>
+<h3 id="Q24-你如何在-PyTorch-中实现模型的模块化复用？"><a href="#Q24-你如何在-PyTorch-中实现模型的模块化复用？" class="headerlink" title="Q24. 你如何在 PyTorch 中实现模型的模块化复用？"></a>Q24. 你如何在 PyTorch 中实现模型的模块化复用？</h3><p>面试官为什么问这个问题：<br>考察你是否具备架构意识。</p>
+<p>参考口语化回答：<br>我会把通用结构封装成独立 Module。<br>输入输出清晰，内部细节隐藏。<br>这样模型才能不断演进。</p>
+<h3 id="Q25-你如何看待-PyTorch-中的残差连接设计？"><a href="#Q25-你如何看待-PyTorch-中的残差连接设计？" class="headerlink" title="Q25. 你如何看待 PyTorch 中的残差连接设计？"></a>Q25. 你如何看待 PyTorch 中的残差连接设计？</h3><p>面试官为什么问这个问题：<br>这是结构理解题。</p>
+<p>参考口语化回答：<br>残差连接能缓解梯度问题。<br>在深层模型中几乎是必需的。<br>它让训练更稳定，而不是更复杂。</p>
+<h3 id="Q26-PyTorch-中你如何调试模型中间层输出？"><a href="#Q26-PyTorch-中你如何调试模型中间层输出？" class="headerlink" title="Q26. PyTorch 中你如何调试模型中间层输出？"></a>Q26. PyTorch 中你如何调试模型中间层输出？</h3><p>面试官为什么问这个问题：<br>考察你是否会”拆模型”。</p>
+<p>参考口语化回答：<br>我会在 forward 中打印或暂存中间结果。<br>必要时单独跑某一层。<br>模型不是黑盒，是可以被逐层检查的。</p>
+<h3 id="Q27-你如何判断模型结构本身是否”过度复杂”？"><a href="#Q27-你如何判断模型结构本身是否”过度复杂”？" class="headerlink" title="Q27. 你如何判断模型结构本身是否”过度复杂”？"></a>Q27. 你如何判断模型结构本身是否”过度复杂”？</h3><p>面试官为什么问这个问题：<br>这是工程取舍问题。</p>
+<p>参考口语化回答：<br>如果模型很复杂，但性能提升有限，<br>或者训练极其不稳定，<br>我会考虑是否该简化结构。</p>
+<h2 id="第五层：进阶视角与工程成熟度【3-题】"><a href="#第五层：进阶视角与工程成熟度【3-题】" class="headerlink" title="第五层：进阶视角与工程成熟度【3 题】"></a>第五层：进阶视角与工程成熟度【3 题】</h2><h3 id="Q28-你如何看待-PyTorch-在”实验速度”和”工程稳定性”之间的取舍？"><a href="#Q28-你如何看待-PyTorch-在”实验速度”和”工程稳定性”之间的取舍？" class="headerlink" title="Q28. 你如何看待 PyTorch 在”实验速度”和”工程稳定性”之间的取舍？"></a>Q28. 你如何看待 PyTorch 在”实验速度”和”工程稳定性”之间的取舍？</h3><p>面试官为什么问这个问题：<br>这是高级工程师视角。</p>
+<p>参考口语化回答：<br>PyTorch 天然偏实验友好。<br>工程上需要额外约束和规范。<br>不是框架问题，而是使用方式问题。</p>
+<h3 id="Q29-你认为-PyTorch-深度学习工程师最核心的能力是什么？"><a href="#Q29-你认为-PyTorch-深度学习工程师最核心的能力是什么？" class="headerlink" title="Q29. 你认为 PyTorch 深度学习工程师最核心的能力是什么？"></a>Q29. 你认为 PyTorch 深度学习工程师最核心的能力是什么？</h3><p>面试官为什么问这个问题：<br>这是综合判断题。</p>
+<p>参考口语化回答：<br>我觉得是能把不稳定的训练过程，<br>一步步变成可控、可复现的系统。<br>这比写出复杂模型更难。</p>
+<h3 id="Q30-面试官通过-PyTorch-训练问题，最想判断你什么能力？"><a href="#Q30-面试官通过-PyTorch-训练问题，最想判断你什么能力？" class="headerlink" title="Q30. 面试官通过 PyTorch 训练问题，最想判断你什么能力？"></a>Q30. 面试官通过 PyTorch 训练问题，最想判断你什么能力？</h3><p>面试官为什么问这个问题：<br>这是心理博弈题。</p>
+<p>参考口语化回答：<br>不是你会不会 API，<br>而是你遇到问题时，<br>有没有系统拆解和持续优化的能力。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/01/01/ai-interview-01-python/">AI面试题 - Python 基础与工程实践</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/01/01/ai-interview-03-transformer/">AI面试题 - Transformer 架构原理</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2026/01/01/ai-interview-00-ai-engineer/" title="AI面试题 - AI应用开发工程师综合题"><span class="title">AI面试题 - AI应用开发工程师综合题</span></a><a class="item" href="/2026/01/01/ai-interview-01-python/" title="AI面试题 - Python 基础与工程实践"><span class="title">AI面试题 - Python 基础与工程实践</span></a><a class="item" href="/2026/01/01/ai-interview-03-transformer/" title="AI面试题 - Transformer 架构原理"><span class="title">AI面试题 - Transformer 架构原理</span></a><a class="item" href="/2026/01/01/ai-interview-04-multimodal/" title="AI面试题 - 多模态 AI 应用"><span class="title">AI面试题 - 多模态 AI 应用</span></a><a class="item" href="/2026/01/01/ai-interview-05-agent-langchain/" title="AI面试题 - LangChain 智能体开发"><span class="title">AI面试题 - LangChain 智能体开发</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E7%9F%A5%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91"><span class="toc-text">第一层：基础认知（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B7%A5%E7%A8%8B%E4%B8%AD%EF%BC%8C%E4%BD%A0%E6%9B%B4%E5%80%BE%E5%90%91%E4%BD%BF%E7%94%A8-PyTorch-%E8%80%8C%E4%B8%8D%E6%98%AF%E5%85%B6%E4%BB%96%E6%A1%86%E6%9E%B6%EF%BC%9F"><span class="toc-text">Q1. 为什么在深度学习工程中，你更倾向使用 PyTorch 而不是其他框架？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-PyTorch-%E4%B8%AD%E2%80%9D%E5%BC%A0%E9%87%8F%E5%B0%B1%E6%98%AF%E6%A0%B8%E5%BF%83%E6%8A%BD%E8%B1%A1%E2%80%9D%E8%BF%99%E4%BB%B6%E4%BA%8B%EF%BC%9F"><span class="toc-text">Q2. 你如何理解 PyTorch 中”张量就是核心抽象”这件事？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E5%9C%A8-PyTorch-%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%E2%80%9D%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E2%80%9D%E5%92%8C%E2%80%9D%E6%A8%A1%E5%9E%8B%E6%89%A7%E8%A1%8C%E2%80%9D%EF%BC%9F"><span class="toc-text">Q3. 在 PyTorch 中，你如何区分”模型定义”和”模型执行”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E4%BD%A0%E6%80%8E%E4%B9%88%E7%9C%8B-PyTorch-%E5%9C%A8%E2%80%9D%E7%A7%91%E7%A0%94%E2%80%9D%E5%92%8C%E2%80%9D%E5%B7%A5%E7%A8%8B%E8%90%BD%E5%9C%B0%E2%80%9D%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B9%B3%E8%A1%A1%EF%BC%9F"><span class="toc-text">Q4. 你怎么看 PyTorch 在”科研”和”工程落地”之间的平衡？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E5%9C%A8%E4%BD%A0%E7%9C%8B%E6%9D%A5%EF%BC%8CPyTorch-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%9C%80%E5%AE%B9%E6%98%93%E8%A2%AB%E5%BF%BD%E8%A7%86%E7%9A%84%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q5. 在你看来，PyTorch 项目中最容易被忽视的基础问题是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%E7%90%86%E8%A7%A3%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第二层：核心机制理解（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-PyTorch-%E7%9A%84%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC%E6%9C%BA%E5%88%B6%E4%BD%A0%E6%98%AF%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3%E7%9A%84%EF%BC%9F"><span class="toc-text">Q6. PyTorch 的自动求导机制你是怎么理解的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E4%BD%A0%E5%9C%A8%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E4%BD%BF%E7%94%A8-torch-no-grad-%EF%BC%9F"><span class="toc-text">Q7. 你在什么情况下会使用 torch.no_grad()？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86-model-train-%E5%92%8C-model-eval-%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="toc-text">Q8. 你如何区分 model.train() 和 model.eval() 的作用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9-PyTorch-%E4%B8%AD-nn-Module-%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%E4%BD%A0%E6%98%AF%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3%E7%9A%84%EF%BC%9F"><span class="toc-text">Q9. PyTorch 中 nn.Module 的设计思想你是怎么理解的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E6%8E%A7%E5%88%B6%E6%A2%AF%E5%BA%A6%E7%9A%84%E4%BC%A0%E6%92%AD%EF%BC%9F"><span class="toc-text">Q10. 你如何在 PyTorch 中控制梯度的传播？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q11-%E4%BD%A0%E6%80%8E%E4%B9%88%E7%9C%8B%E5%BE%85-PyTorch-%E7%9A%84-in-place-%E6%93%8D%E4%BD%9C%EF%BC%9F"><span class="toc-text">Q11. 你怎么看待 PyTorch 的 in-place 操作？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q12-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-PyTorch-%E7%9A%84%E5%8F%82%E6%95%B0%E6%B3%A8%E5%86%8C%E6%9C%BA%E5%88%B6%EF%BC%9F"><span class="toc-text">Q12. 你如何理解 PyTorch 的参数注册机制？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q13-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89-loss%EF%BC%9F"><span class="toc-text">Q13. PyTorch 中你如何实现自定义 loss？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第三层：训练与工程实践【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q14-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87%E4%B8%80%E4%B8%AA%E6%A0%87%E5%87%86%E7%9A%84-PyTorch-%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%EF%BC%9F"><span class="toc-text">Q14. 你如何组织一个标准的 PyTorch 训练流程？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q15-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-PyTorch-%E8%AE%AD%E7%BB%83%E4%B8%AD%E7%9A%84%E6%98%BE%E5%AD%98%E4%B8%8D%E8%B6%B3%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">Q15. 你如何处理 PyTorch 训练中的显存不足问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q16-%E4%BD%A0%E5%9C%A8-PyTorch-%E4%B8%AD%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%B7%B7%E5%90%88%E7%B2%BE%E5%BA%A6%E8%AE%AD%E7%BB%83%E7%9A%84%EF%BC%9F"><span class="toc-text">Q16. 你在 PyTorch 中是如何实现混合精度训练的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17-PyTorch-%E8%AE%AD%E7%BB%83%E4%B8%AD-loss-%E4%B8%8D%E4%B8%8B%E9%99%8D%EF%BC%8C%E4%BD%A0%E9%80%9A%E5%B8%B8%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5%EF%BC%9F"><span class="toc-text">Q17. PyTorch 训练中 loss 不下降，你通常怎么排查？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q18-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%96%AD%E7%82%B9%E7%BB%AD%E8%AE%AD%EF%BC%9F"><span class="toc-text">Q18. 你如何在 PyTorch 中实现断点续训？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q19-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E8%AE%AD%E7%BB%83%E7%9A%84%E5%8F%AF%E5%A4%8D%E7%8E%B0%E6%80%A7%EF%BC%9F"><span class="toc-text">Q19. PyTorch 中你如何保证训练的可复现性？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q20-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-PyTorch-%E7%9A%84-DataLoader-%E8%AE%BE%E8%AE%A1%EF%BC%9F"><span class="toc-text">Q20. 你如何看待 PyTorch 的 DataLoader 设计？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q21-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E7%9B%91%E6%8E%A7%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%EF%BC%9F"><span class="toc-text">Q21. 你如何在 PyTorch 中监控训练过程？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%B0%83%E4%BC%98%E5%AE%9E%E6%88%98%E3%80%906-%E9%A2%98%E3%80%91"><span class="toc-text">第四层：模型设计与调优实战【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q22-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9E%8B%E6%98%AF%E2%80%9D%E6%AC%A0%E6%8B%9F%E5%90%88%E2%80%9D%E8%BF%98%E6%98%AF%E2%80%9D%E8%BF%87%E6%8B%9F%E5%90%88%E2%80%9D%EF%BC%9F"><span class="toc-text">Q22. 你如何判断一个模型是”欠拟合”还是”过拟合”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q23-%E5%9C%A8-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E5%81%9A%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%9F"><span class="toc-text">Q23. 在 PyTorch 中你如何做正则化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q24-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%BF%AB%E9%80%9F%E9%AA%8C%E8%AF%81%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9E%8B%E6%83%B3%E6%B3%95%EF%BC%9F"><span class="toc-text">Q24. 你如何在 PyTorch 中快速验证一个模型想法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q25-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-PyTorch-%E4%B8%AD%E7%9A%84%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%EF%BC%9F"><span class="toc-text">Q25. 你如何看待 PyTorch 中的预训练模型？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q26-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%86%BB%E7%BB%93%E6%88%96%E8%A7%A3%E5%86%BB%E9%83%A8%E5%88%86%E5%8F%82%E6%95%B0%EF%BC%9F"><span class="toc-text">Q26. 你如何在 PyTorch 中冻结或解冻部分参数？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q27-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%A4%84%E7%90%86%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8%E6%88%96%E6%B6%88%E5%A4%B1%EF%BC%9F"><span class="toc-text">Q27. 你如何在 PyTorch 中处理梯度爆炸或消失？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%B7%A5%E7%A8%8B%E8%A7%86%E9%87%8E%E3%80%903-%E9%A2%98%E3%80%91"><span class="toc-text">第五层：进阶与工程视野【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q28-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-PyTorch-%E5%9C%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%97%B6%E4%BB%A3%E7%9A%84%E8%A7%92%E8%89%B2%EF%BC%9F"><span class="toc-text">Q28. 你如何看待 PyTorch 在大模型时代的角色？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q29-%E4%BD%A0%E8%AE%A4%E4%B8%BA-PyTorch-%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E2%80%9D%E9%AB%98%E7%BA%A7%E8%83%BD%E5%8A%9B%E2%80%9D%E4%BD%93%E7%8E%B0%E5%9C%A8%E5%93%AA%EF%BC%9F"><span class="toc-text">Q29. 你认为 PyTorch 工程师的”高级能力”体现在哪？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87-PyTorch-%E9%97%AE%E9%A2%98%E5%88%A4%E6%96%AD%E4%BD%A0%E6%98%AF%E5%90%A6%E2%80%9D%E5%80%BC%E5%BE%97%E5%9F%B9%E5%85%BB%E2%80%9D%EF%BC%9F"><span class="toc-text">Q30. 面试官如何通过 PyTorch 问题判断你是否”值得培养”？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9APyTorch-%E5%9F%BA%E7%A1%80%E7%90%86%E8%A7%A3%E8%BF%9B%E9%98%B6%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91"><span class="toc-text">第一层：PyTorch 基础理解进阶（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E5%9C%A8-PyTorch-%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E2%80%9D%E5%89%8D%E5%90%91%E6%98%AF%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%EF%BC%8C%E5%8F%8D%E5%90%91%E6%98%AF%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E2%80%9D%E8%BF%99%E5%8F%A5%E8%AF%9D%EF%BC%9F"><span class="toc-text">Q1. 在 PyTorch 中，你如何理解”前向是业务逻辑，反向是系统能力”这句话？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-PyTorch-%E7%9A%84%E2%80%9D%E5%8A%A8%E6%80%81%E5%9B%BE%E2%80%9D%E5%AF%B9%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1%E8%87%AA%E7%94%B1%E5%BA%A6%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%9F"><span class="toc-text">Q2. 你如何理解 PyTorch 的”动态图”对模型设计自由度的影响？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E5%9C%A8-PyTorch-%E9%A1%B9%E7%9B%AE%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%E2%80%9D%E5%AE%9E%E9%AA%8C%E4%BB%A3%E7%A0%81%E2%80%9D%E5%92%8C%E2%80%9D%E5%8F%AF%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B%E4%BB%A3%E7%A0%81%E2%80%9D%EF%BC%9F"><span class="toc-text">Q3. 在 PyTorch 项目中，你如何区分”实验代码”和”可复用模型代码”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E4%BD%A0%E6%80%8E%E4%B9%88%E7%9C%8B-PyTorch-%E5%AF%B9-Python-%E7%89%B9%E6%80%A7%E7%9A%84%E9%AB%98%E5%BA%A6%E4%BE%9D%E8%B5%96%EF%BC%9F"><span class="toc-text">Q4. 你怎么看 PyTorch 对 Python 特性的高度依赖？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E5%9C%A8%E4%BD%A0%E7%9C%8B%E6%9D%A5%EF%BC%8CPyTorch-%E6%96%B0%E6%89%8B%E6%9C%80%E5%AE%B9%E6%98%93%E5%BD%A2%E6%88%90%E7%9A%84%E9%94%99%E8%AF%AF%E8%AE%A4%E7%9F%A5%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q5. 在你看来，PyTorch 新手最容易形成的错误认知是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9ATensor-%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%9B%BE%E7%BB%86%E8%8A%82%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第二层：Tensor 与计算图细节【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-PyTorch-%E4%B8%AD-Tensor-%E7%9A%84%E2%80%9D%E8%A7%86%E5%9B%BE%EF%BC%88view%EF%BC%89%E2%80%9D%E5%92%8C%E2%80%9D%E6%8B%B7%E8%B4%9D%E2%80%9D%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">Q6. 你如何理解 PyTorch 中 Tensor 的”视图（view）”和”拷贝”的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E4%BD%A0%E5%9C%A8%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%BC%9A%E4%B8%BB%E5%8A%A8%E4%BD%BF%E7%94%A8-clone-%EF%BC%9F"><span class="toc-text">Q7. 你在什么场景下会主动使用 clone()？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-PyTorch-%E4%B8%AD%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%98%AF%E5%A6%82%E4%BD%95%E8%A2%AB%E9%87%8A%E6%94%BE%E7%9A%84%EF%BC%9F%E4%BD%A0%E8%B8%A9%E8%BF%87%E4%BB%80%E4%B9%88%E5%9D%91%EF%BC%9F"><span class="toc-text">Q8. PyTorch 中计算图是如何被释放的？你踩过什么坑？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-PyTorch-%E4%B8%AD%E7%9A%84%E2%80%9D%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9-Tensor%E2%80%9D%EF%BC%9F"><span class="toc-text">Q9. 你如何理解 PyTorch 中的”叶子节点 Tensor”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA-Tensor-%E6%98%AF%E5%90%A6%E5%9C%A8%E8%AE%A1%E7%AE%97%E5%9B%BE%E4%B8%AD%EF%BC%9F"><span class="toc-text">Q10. PyTorch 中你如何判断一个 Tensor 是否在计算图中？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q11-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-PyTorch-%E4%B8%AD%E5%AF%B9%E6%A0%87%E9%87%8F-loss-%E4%BD%BF%E7%94%A8-item-%EF%BC%9F"><span class="toc-text">Q11. 你如何看待 PyTorch 中对标量 loss 使用 item()？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q12-%E4%BD%A0%E5%9C%A8-PyTorch-%E4%B8%AD%E6%98%AF%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E2%80%9D%E6%97%A0%E6%84%8F%E4%B8%AD%E6%9E%84%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%9B%BE%E2%80%9D%E7%9A%84%EF%BC%9F"><span class="toc-text">Q12. 你在 PyTorch 中是如何避免”无意中构建计算图”的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q13-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-Tensor-%E7%9A%84-device-%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">Q13. PyTorch 中你如何处理 Tensor 的 device 不一致问题？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E4%B8%8E%E4%BC%98%E5%8C%96%E7%BB%86%E8%8A%82%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第三层：训练流程与优化细节【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q14-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%A2%AF%E5%BA%A6%E7%B4%AF%E7%A7%AF%EF%BC%9F%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="toc-text">Q14. 你如何在 PyTorch 中实现梯度累积？适合什么场景？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q15-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%AD%A6%E4%B9%A0%E7%8E%87%E5%9C%A8-PyTorch-%E8%AE%AD%E7%BB%83%E4%B8%AD%E7%9A%84%E2%80%9D%E7%AC%AC%E4%B8%80%E4%BC%98%E5%85%88%E7%BA%A7%E2%80%9D%EF%BC%9F"><span class="toc-text">Q15. 你如何理解学习率在 PyTorch 训练中的”第一优先级”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q16-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%B0%83%E5%BA%A6%E5%99%A8%EF%BC%9F"><span class="toc-text">Q16. PyTorch 中你如何使用学习率调度器？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%AE%9A%E4%BD%8D%E2%80%9D%E6%A2%AF%E5%BA%A6%E4%B8%BA%E9%9B%B6%E2%80%9D%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">Q17. 你如何在 PyTorch 中定位”梯度为零”的问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q18-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E5%81%9A%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="toc-text">Q18. PyTorch 中你如何做参数初始化？为什么重要？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q19-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%8D%A1%E8%AE%AD%E7%BB%83%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF%EF%BC%9F"><span class="toc-text">Q19. 你如何在 PyTorch 中实现多卡训练的基本思路？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q20-PyTorch-%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%8F%91%E7%8E%B0%E2%80%9D%E8%AE%AD%E7%BB%83%E5%81%87%E6%94%B6%E6%95%9B%E2%80%9D%EF%BC%9F"><span class="toc-text">Q20. PyTorch 训练过程中，你如何发现”训练假收敛”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q21-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E8%AF%84%E4%BC%B0%E4%B8%80%E6%AC%A1%E8%AE%AD%E7%BB%83%E2%80%9D%E6%98%AF%E5%90%A6%E5%80%BC%E5%BE%97%E7%BB%A7%E7%BB%AD%E8%B7%91%E2%80%9D%EF%BC%9F"><span class="toc-text">Q21. 你如何在 PyTorch 中评估一次训练”是否值得继续跑”？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E5%80%BC%E7%A8%B3%E5%AE%9A%E6%80%A7%E3%80%906-%E9%A2%98%E3%80%91"><span class="toc-text">第四层：模型结构与数值稳定性【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q22-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E9%81%BF%E5%85%8D%E6%95%B0%E5%80%BC%E4%B8%8D%E7%A8%B3%E5%AE%9A%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">Q22. 你如何在 PyTorch 中避免数值不稳定问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q23-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-loss-%E4%B8%BA-NaN-%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F"><span class="toc-text">Q23. PyTorch 中你如何处理 loss 为 NaN 的情况？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q24-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-PyTorch-%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96%E5%A4%8D%E7%94%A8%EF%BC%9F"><span class="toc-text">Q24. 你如何在 PyTorch 中实现模型的模块化复用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q25-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-PyTorch-%E4%B8%AD%E7%9A%84%E6%AE%8B%E5%B7%AE%E8%BF%9E%E6%8E%A5%E8%AE%BE%E8%AE%A1%EF%BC%9F"><span class="toc-text">Q25. 你如何看待 PyTorch 中的残差连接设计？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q26-PyTorch-%E4%B8%AD%E4%BD%A0%E5%A6%82%E4%BD%95%E8%B0%83%E8%AF%95%E6%A8%A1%E5%9E%8B%E4%B8%AD%E9%97%B4%E5%B1%82%E8%BE%93%E5%87%BA%EF%BC%9F"><span class="toc-text">Q26. PyTorch 中你如何调试模型中间层输出？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q27-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84%E6%9C%AC%E8%BA%AB%E6%98%AF%E5%90%A6%E2%80%9D%E8%BF%87%E5%BA%A6%E5%A4%8D%E6%9D%82%E2%80%9D%EF%BC%9F"><span class="toc-text">Q27. 你如何判断模型结构本身是否”过度复杂”？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E8%A7%86%E8%A7%92%E4%B8%8E%E5%B7%A5%E7%A8%8B%E6%88%90%E7%86%9F%E5%BA%A6%E3%80%903-%E9%A2%98%E3%80%91"><span class="toc-text">第五层：进阶视角与工程成熟度【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q28-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-PyTorch-%E5%9C%A8%E2%80%9D%E5%AE%9E%E9%AA%8C%E9%80%9F%E5%BA%A6%E2%80%9D%E5%92%8C%E2%80%9D%E5%B7%A5%E7%A8%8B%E7%A8%B3%E5%AE%9A%E6%80%A7%E2%80%9D%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8F%96%E8%88%8D%EF%BC%9F"><span class="toc-text">Q28. 你如何看待 PyTorch 在”实验速度”和”工程稳定性”之间的取舍？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q29-%E4%BD%A0%E8%AE%A4%E4%B8%BA-PyTorch-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%9C%80%E6%A0%B8%E5%BF%83%E7%9A%84%E8%83%BD%E5%8A%9B%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q29. 你认为 PyTorch 深度学习工程师最核心的能力是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30-%E9%9D%A2%E8%AF%95%E5%AE%98%E9%80%9A%E8%BF%87-PyTorch-%E8%AE%AD%E7%BB%83%E9%97%AE%E9%A2%98%EF%BC%8C%E6%9C%80%E6%83%B3%E5%88%A4%E6%96%AD%E4%BD%A0%E4%BB%80%E4%B9%88%E8%83%BD%E5%8A%9B%EF%BC%9F"><span class="toc-text">Q30. 面试官通过 PyTorch 训练问题，最想判断你什么能力？</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper markdown"><div class="widget-body fs14"><h3 id="快捷导航"><a href="#快捷导航" class="headerlink" title="快捷导航"></a>快捷导航</h3><p><a href="/categories/" style="font-size:1.2em;">🗂️ 分类索引</a><br><a href="/tags/" style="font-size:1.2em;">🔖 标签索引</a><br><a href="/archives/" style="font-size:1.2em;">🕘 文章归档</a><br><a target="_blank" rel="noopener" href="https://wenyinos.com/" style="font-size:1.2em;">📚 社区主页</a><br><a target="_blank" rel="noopener" href="https://dev.wenyinos.com/my/" style="font-size:1.2em;">📰 项目管理</a><br><a target="_blank" rel="noopener" href="https://forum.wenyinos.com/" style="font-size:1.2em;">🏷️ 论坛交流</a></p>
+</div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 16.27px; color: #694ab0" class="tag -4">agent</a> <a href="/tags/ai-engineer/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ai-engineer</a> <a href="/tags/aliyun/" style="font-size: 13px; color: #2563eb" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 13px; color: #2563eb" class="tag -0">android</a> <a href="/tags/apt/" style="font-size: 13px; color: #2563eb" class="tag -0">apt</a> <a href="/tags/arc/" style="font-size: 13px; color: #2563eb" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 13.82px; color: #365ddc" class="tag -1">arch</a> <a href="/tags/arch-linux/" style="font-size: 13px; color: #2563eb" class="tag -0">arch-linux</a> <a href="/tags/asf/" style="font-size: 13px; color: #2563eb" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 13px; color: #2563eb" class="tag -0">asus</a> <a href="/tags/async/" style="font-size: 13px; color: #2563eb" class="tag -0">async</a> <a href="/tags/attention-mechanism/" style="font-size: 13px; color: #2563eb" class="tag -0">attention-mechanism</a> <a href="/tags/aur/" style="font-size: 13px; color: #2563eb" class="tag -0">aur</a> <a href="/tags/bbr/" style="font-size: 13.82px; color: #365ddc" class="tag -1">bbr</a> <a href="/tags/benchmark/" style="font-size: 13px; color: #2563eb" class="tag -0">benchmark</a> <a href="/tags/cache/" style="font-size: 14.64px; color: #4756cd" class="tag -2">cache</a> <a href="/tags/career/" style="font-size: 13px; color: #2563eb" class="tag -0">career</a> <a href="/tags/cargo/" style="font-size: 13.82px; color: #365ddc" class="tag -1">cargo</a> <a href="/tags/centos/" style="font-size: 14.64px; color: #4756cd" class="tag -2">centos</a> <a href="/tags/cheat/" style="font-size: 13px; color: #2563eb" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 13px; color: #2563eb" class="tag -0">colab</a> <a href="/tags/command-line/" style="font-size: 13px; color: #2563eb" class="tag -0">command-line</a> <a href="/tags/cpp/" style="font-size: 13px; color: #2563eb" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 16.27px; color: #694ab0" class="tag -4">cpu</a> <a href="/tags/curl/" style="font-size: 13px; color: #2563eb" class="tag -0">curl</a> <a href="/tags/data-framework/" style="font-size: 13px; color: #2563eb" class="tag -0">data-framework</a> <a href="/tags/debian/" style="font-size: 13px; color: #2563eb" class="tag -0">debian</a> <a href="/tags/deep-learning/" style="font-size: 13px; color: #2563eb" class="tag -0">deep-learning</a> <a href="/tags/deployment/" style="font-size: 13px; color: #2563eb" class="tag -0">deployment</a> <a href="/tags/dg1/" style="font-size: 13px; color: #2563eb" class="tag -0">dg1</a> <a href="/tags/dnf/" style="font-size: 13px; color: #2563eb" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14.64px; color: #4756cd" class="tag -2">docker</a> <a href="/tags/edk2/" style="font-size: 13px; color: #2563eb" class="tag -0">edk2</a> <a href="/tags/entware/" style="font-size: 13px; color: #2563eb" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 13.82px; color: #365ddc" class="tag -1">epel</a> <a href="/tags/fcitx/" style="font-size: 13px; color: #2563eb" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 17.91px; color: #8c3d92" class="tag -5">fedora</a> <a href="/tags/firewalld/" style="font-size: 13px; color: #2563eb" class="tag -0">firewalld</a> <a href="/tags/freebsd/" style="font-size: 13px; color: #2563eb" class="tag -0">freebsd</a> <a href="/tags/fstab/" style="font-size: 13px; color: #2563eb" class="tag -0">fstab</a> <a href="/tags/fuchsia/" style="font-size: 13px; color: #2563eb" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 13px; color: #2563eb" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 13px; color: #2563eb" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 14.64px; color: #4756cd" class="tag -2">github</a> <a href="/tags/gpu/" style="font-size: 13px; color: #2563eb" class="tag -0">gpu</a> <a href="/tags/graphics/" style="font-size: 16.27px; color: #694ab0" class="tag -4">graphics</a> <a href="/tags/grub/" style="font-size: 15.45px; color: #5850bf" class="tag -3">grub</a> <a href="/tags/grubby/" style="font-size: 13px; color: #2563eb" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 13px; color: #2563eb" class="tag -0">hi1620</a> <a href="/tags/hr-screening/" style="font-size: 13px; color: #2563eb" class="tag -0">hr-screening</a> <a href="/tags/huawei/" style="font-size: 13px; color: #2563eb" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 13px; color: #2563eb" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 13px; color: #2563eb" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 13px; color: #2563eb" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 18.73px; color: #9d3683" class="tag -6">intel</a> <a href="/tags/interview/" style="font-size: 21.18px; color: #d02357" class="tag -9">interview</a> <a href="/tags/interview-tips/" style="font-size: 13px; color: #2563eb" class="tag -0">interview-tips</a> <a href="/tags/ip/" style="font-size: 13px; color: #2563eb" class="tag -0">ip</a> <a href="/tags/ipex-llm/" style="font-size: 13px; color: #2563eb" class="tag -0">ipex-llm</a> <a href="/tags/kde/" style="font-size: 15.45px; color: #5850bf" class="tag -3">kde</a> <a href="/tags/kernel/" style="font-size: 16.27px; color: #694ab0" class="tag -4">kernel</a> <a href="/tags/kvm/" style="font-size: 13.82px; color: #365ddc" class="tag -1">kvm</a> <a href="/tags/langchain/" style="font-size: 13px; color: #2563eb" class="tag -0">langchain</a> <a href="/tags/langgraph/" style="font-size: 13px; color: #2563eb" class="tag -0">langgraph</a> <a href="/tags/lcd/" style="font-size: 13px; color: #2563eb" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 13px; color: #2563eb" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 22px; color: #e11d48" class="tag -10">linux</a> <a href="/tags/llamaindex/" style="font-size: 13px; color: #2563eb" class="tag -0">llamaindex</a> <a href="/tags/llm/" style="font-size: 15.45px; color: #5850bf" class="tag -3">llm</a> <a href="/tags/lnmp/" style="font-size: 13px; color: #2563eb" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 13px; color: #2563eb" class="tag -0">magisk</a> <a href="/tags/mcp/" style="font-size: 13px; color: #2563eb" class="tag -0">mcp</a> <a href="/tags/mediatek/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mediatek</a> <a href="/tags/merlin/" style="font-size: 13px; color: #2563eb" class="tag -0">merlin</a> <a href="/tags/mlops/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mlops</a> <a href="/tags/modem/" style="font-size: 13px; color: #2563eb" class="tag -0">modem</a> <a href="/tags/monitoring/" style="font-size: 13px; color: #2563eb" class="tag -0">monitoring</a> <a href="/tags/multi-agent/" style="font-size: 13px; color: #2563eb" class="tag -0">multi-agent</a> <a href="/tags/multimodal/" style="font-size: 13px; color: #2563eb" class="tag -0">multimodal</a> <a href="/tags/mysql/" style="font-size: 13px; color: #2563eb" class="tag -0">mysql</a> <a href="/tags/n1/" style="font-size: 13px; color: #2563eb" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 13.82px; color: #365ddc" class="tag -1">nas</a> <a href="/tags/novelai/" style="font-size: 13px; color: #2563eb" class="tag -0">novelai</a> <a href="/tags/npm/" style="font-size: 13px; color: #2563eb" class="tag -0">npm</a> <a href="/tags/observability/" style="font-size: 13px; color: #2563eb" class="tag -0">observability</a> <a href="/tags/openai/" style="font-size: 13px; color: #2563eb" class="tag -0">openai</a> <a href="/tags/opencl/" style="font-size: 13px; color: #2563eb" class="tag -0">opencl</a> <a href="/tags/openvz/" style="font-size: 13px; color: #2563eb" class="tag -0">openvz</a> <a href="/tags/openwrt/" style="font-size: 13px; color: #2563eb" class="tag -0">openwrt</a> <a href="/tags/package-management/" style="font-size: 19.55px; color: #ae3074" class="tag -7">package-management</a> <a href="/tags/packagekit/" style="font-size: 13px; color: #2563eb" class="tag -0">packagekit</a> <a href="/tags/packaging/" style="font-size: 13.82px; color: #365ddc" class="tag -1">packaging</a> <a href="/tags/pkg/" style="font-size: 13px; color: #2563eb" class="tag -0">pkg</a> <a href="/tags/pnpm/" style="font-size: 13px; color: #2563eb" class="tag -0">pnpm</a> <a href="/tags/podman/" style="font-size: 13px; color: #2563eb" class="tag -0">podman</a> <a href="/tags/power/" style="font-size: 13px; color: #2563eb" class="tag -0">power</a> <a href="/tags/powershell/" style="font-size: 13px; color: #2563eb" class="tag -0">powershell</a> <a href="/tags/proxy/" style="font-size: 14.64px; color: #4756cd" class="tag -2">proxy</a> <a href="/tags/python/" style="font-size: 13px; color: #2563eb" class="tag -0">python</a> <a href="/tags/pytorch/" style="font-size: 13px; color: #2563eb" class="tag -0">pytorch</a> <a href="/tags/qchatgpt/" style="font-size: 13px; color: #2563eb" class="tag -0">qchatgpt</a> <a href="/tags/qemu/" style="font-size: 13px; color: #2563eb" class="tag -0">qemu</a> <a href="/tags/rag/" style="font-size: 13px; color: #2563eb" class="tag -0">rag</a> <a href="/tags/raspberry-pi/" style="font-size: 15.45px; color: #5850bf" class="tag -3">raspberry-pi</a> <a href="/tags/redhat/" style="font-size: 15.45px; color: #5850bf" class="tag -3">redhat</a> <a href="/tags/rhel/" style="font-size: 14.64px; color: #4756cd" class="tag -2">rhel</a> <a href="/tags/rk3588/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rk3588</a> <a href="/tags/rpm/" style="font-size: 13px; color: #2563eb" class="tag -0">rpm</a> <a href="/tags/rust/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rust</a> <a href="/tags/selinux/" style="font-size: 13px; color: #2563eb" class="tag -0">selinux</a> <a href="/tags/service/" style="font-size: 13px; color: #2563eb" class="tag -0">service</a> <a href="/tags/shadowsocks/" style="font-size: 13px; color: #2563eb" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 13px; color: #2563eb" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 14.64px; color: #4756cd" class="tag -2">ssh</a> <a href="/tags/steam/" style="font-size: 13px; color: #2563eb" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 13px; color: #2563eb" class="tag -0">synology</a> <a href="/tags/system-design/" style="font-size: 13.82px; color: #365ddc" class="tag -1">system-design</a> <a href="/tags/systemd/" style="font-size: 15.45px; color: #5850bf" class="tag -3">systemd</a> <a href="/tags/tool-calling/" style="font-size: 13px; color: #2563eb" class="tag -0">tool-calling</a> <a href="/tags/transformer/" style="font-size: 13px; color: #2563eb" class="tag -0">transformer</a> <a href="/tags/ubuntu/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ubuntu</a> <a href="/tags/uefi/" style="font-size: 13px; color: #2563eb" class="tag -0">uefi</a> <a href="/tags/virt-manager/" style="font-size: 13px; color: #2563eb" class="tag -0">virt-manager</a> <a href="/tags/vision-language-model/" style="font-size: 13px; color: #2563eb" class="tag -0">vision-language-model</a> <a href="/tags/vista/" style="font-size: 13.82px; color: #365ddc" class="tag -1">vista</a> <a href="/tags/vmware/" style="font-size: 13px; color: #2563eb" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 13px; color: #2563eb" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 15.45px; color: #5850bf" class="tag -3">vps</a> <a href="/tags/vscode/" style="font-size: 13px; color: #2563eb" class="tag -0">vscode</a> <a href="/tags/wayland/" style="font-size: 13px; color: #2563eb" class="tag -0">wayland</a> <a href="/tags/windows/" style="font-size: 20.36px; color: #bf2a66" class="tag -8">windows</a> <a href="/tags/windows-server/" style="font-size: 15.45px; color: #5850bf" class="tag -3">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.09px; color: #7a43a1" class="tag -5">windows10</a> <a href="/tags/workflow/" style="font-size: 13px; color: #2563eb" class="tag -0">workflow</a> <a href="/tags/wsl/" style="font-size: 13px; color: #2563eb" class="tag -0">wsl</a> <a href="/tags/x86/" style="font-size: 13px; color: #2563eb" class="tag -0">x86</a> <a href="/tags/xfs/" style="font-size: 13px; color: #2563eb" class="tag -0">xfs</a> <a href="/tags/xwayland/" style="font-size: 13px; color: #2563eb" class="tag -0">xwayland</a> <a href="/tags/yum/" style="font-size: 13px; color: #2563eb" class="tag -0">yum</a> <a href="/tags/zerotier/" style="font-size: 13px; color: #2563eb" class="tag -0">zerotier</a> <a href="/tags/zram/" style="font-size: 13px; color: #2563eb" class="tag -0">zram</a> <a href="/tags/zsh/" style="font-size: 13.82px; color: #365ddc" class="tag -1">zsh</a> <a href="/tags/%E4%B8%AD%E7%A7%8B%E8%8A%82/" style="font-size: 13px; color: #2563eb" class="tag -0">中秋节</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 14.64px; color: #4756cd" class="tag -2">代理</a> <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/" style="font-size: 13px; color: #2563eb" class="tag -0">传统文化</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 13px; color: #2563eb" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 13px; color: #2563eb" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">开源社区</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<button class="theme-toggle" type="button" aria-label="切换夜间模式" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+  <span class="theme-toggle-text">夜间</span>
+</button>
+<script>
+  (() => {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+    const label = button.querySelector('.theme-toggle-text');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentMode = () => document.documentElement.getAttribute('data-theme') || (media.matches ? 'dark' : 'light');
+    const syncButton = () => {
+      const dark = currentMode() === 'dark';
+      button.dataset.mode = dark ? 'dark' : 'light';
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? '切换到日间模式' : '切换到夜间模式');
+      if (label) label.textContent = dark ? '日间' : '夜间';
+    };
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      window.localStorage.setItem('Stellar.theme', theme);
+      if (window.utils && utils.dark) {
+        utils.dark.mode = theme;
+        utils.dark.method?.toggle?.start?.();
+      }
+      syncButton();
+    };
+    button.addEventListener('click', () => setTheme(currentMode() === 'dark' ? 'light' : 'dark'));
+    media.addEventListener?.('change', syncButton);
+    syncButton();
+  })();
+</script>
+
+</div></body></html>

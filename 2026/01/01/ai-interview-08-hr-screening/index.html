@@ -1,0 +1,935 @@
+
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>AI面试题 - HR 初筛面试指南 - 玟茵开源社区知识库</title>
+
+  
+    <meta name="description" content="面试开场与规则（建议 25–35 分钟）隐性评分的 5 个目标 1    做过真项目还是停在概念&#x2F;Demo 2    是否能从业务问题出发理解 AI 3    是否理解 AI 是系统工程，而不是单点模型 4    是否具备工程型岗位的成长潜力 5    是否值得占用一次昂贵的技术面名额建议评分方式每个维度 0–4 分，总分 24 分。 •    0：空泛，无法落到真实场景与细节 •">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI面试题 - HR 初筛面试指南">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/01/ai-interview-08-hr-screening/">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="面试开场与规则（建议 25–35 分钟）隐性评分的 5 个目标 1    做过真项目还是停在概念&#x2F;Demo 2    是否能从业务问题出发理解 AI 3    是否理解 AI 是系统工程，而不是单点模型 4    是否具备工程型岗位的成长潜力 5    是否值得占用一次昂贵的技术面名额建议评分方式每个维度 0–4 分，总分 24 分。 •    0：空泛，无法落到真实场景与细节 •">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="career">
+<meta property="article:tag" content="hr-screening">
+<meta property="article:tag" content="interview">
+<meta property="article:tag" content="interview-tips">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="interview,hr-screening,interview-tips,career">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2026-01-01T00:00:00+08:00","dateModified":"2026-01-01T00:00:00+08:00","datePublished":"2026-01-01T00:00:00+08:00","description":"","headline":"AI面试题 - HR 初筛面试指南","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2026/01/01/ai-interview-08-hr-screening/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2026/01/01/ai-interview-08-hr-screening/","keywords":"interview, hr-screening, interview-tips, career","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源社区知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/05/08/home-space-migration-fstab-adjustment/"><span class="title">/home 空间迁移与 fstab 调整记录</span></a><a class="item title" href="/2026/04/28/disable-intel-dg1-discrete-gpu/"><span class="title">彻底禁用 DG1 独立显卡</span></a><a class="item title" href="/2026/04/17/clean-vscode/"><span class="title">清理 VS Code</span></a><a class="item title" href="/2026/04/04/fedora-rebuild-grub-config/"><span class="title">在 Fedora 下重建 GRUB 配置文件</span></a><a class="item title" href="/2026/03/27/systemd-user-session-exit-service-stop/"><span class="title">用户会话退出导致的级联服务停止</span></a><a class="item title" href="/2026/03/14/aur-submit-guide/"><span class="title">AUR 提交指南</span></a><a class="item title" href="/2026/03/03/clean-cargo-cache-and-build-artifacts/"><span class="title">清理 Cargo 缓存和构建产物</span></a><a class="item title" href="/2026/02/19/powershell-command-line-proxy/"><span class="title">PowerShell 配置命令行代理</span></a><a class="item title" href="/2026/02/06/npm-pnpm-clean-cache/"><span class="title">npm 和 pnpm 清理缓存</span></a><a class="item title" href="/2026/01/29/freebsd-pkg-autoremove-dependencies/"><span class="title">FreeBSD pkg 自动卸载安装依赖</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/">AI工程师面试题</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>AI面试题 - HR 初筛面试指南</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><ol start="0">
+<li>面试开场与规则（建议 25–35 分钟）<br>隐性评分的 5 个目标<br> 1    做过真项目还是停在概念&#x2F;Demo<br> 2    是否能从业务问题出发理解 AI<br> 3    是否理解 AI 是系统工程，而不是单点模型<br> 4    是否具备工程型岗位的成长潜力<br> 5    是否值得占用一次昂贵的技术面名额<br>建议评分方式每个维度 0–4 分，总分 24 分。<br> •    0：空泛，无法落到真实场景与细节<br> •    1：做过一点，但参与浅、讲不清边界与取舍<br> •    2：做过项目，能讲过程，但缺系统性与复盘<br> •    3：能讲清业务目标、工程方案、权衡与结果，有证据感<br> •    4：有负责人视角，讲得出机制化方法（评估、治理、迭代），可带团队演进</li>
+</ol>
+<ol>
+<li><p>维度一：岗位动机与角色认知<br>1维度目标<br>判断候选人是否清楚 AI 应用开发岗的真实工作形态（需求、数据、工程、上线、运营），动机是否稳定且与岗位匹配，是否有”从交付到负责”的成长意愿。<br>2主问题<br>你为什么想做 AI 应用开发？你希望在这个岗位上解决什么问题、承担什么角色？<br>3深挖追问<br> •    你最理想的工作产出是什么？是模型效果、功能上线、还是业务指标？为什么？<br> •    你过去最享受的一次交付是什么？如果让我问你”你在里面到底负责啥”，你会怎么说？<br> •    如果入职 3 个月发现大量时间在做数据清洗、评估、打磨产品细节，而不是”调模型”，你能接受吗？你会怎么安排优先级？<br>4风险信号<br> •    动机停留在”风口&#x2F;好找工作&#x2F;喜欢大模型很酷”，没有岗位现实感<br> •    把工作理解为”接个 API 写个聊天框”，对落地成本与工程链路无感<br> •    说不清”自己想成为什么样的人”（工程交付者、Owner、架构方向等）<br> •    对脏活累活（数据、评估、上线后维护）明显排斥<br>5高质量口语化回答示例<br>我想做 AI 应用开发是因为我更擅长把能力变成可交付的产品，而不是停留在”模型好不好看”。我做项目时最看重的是：能不能真的上线、能不能稳定跑、能不能让业务愿意持续用。我对这个岗位的理解是，它更像”AI 产品工程负责人”的路径：从业务目标出发，把数据、检索、工具调用、权限、成本、监控这些串起来，最后对效果和体验负责。如果入职后大量工作在数据清理、评估、提示词迭代、灰度和运维，我是接受的，因为这些决定了系统能不能长期稳定。我的目标不是把 Demo 做出来，而是把可运营的系统交付出去，并且能持续迭代。</p>
+</li>
+<li><p>维度二：AI 项目真实性与参与深度<br>1维度目标<br>验证”真做过”而非”看过&#x2F;抄过&#x2F;拼过”。重点看：是否讲得出项目背景、约束、关键决策、上线链路、问题与复盘；是否能明确自己的贡献边界。<br>2主问题<br>挑一个你最能代表你能力的 AI 应用项目，按”背景-目标-你做了什么-结果”讲清楚。不要讲技术名词堆砌，我想听你怎么把它做成的。<br>3深挖追问<br> •    这个项目如果没有你，会卡在哪里？你解决的”最关键的一个卡点”是什么？<br> •    你们怎么验收的？谁说了算？上线后怎么判断”真的有效”？<br> •    项目里最难的一次事故&#x2F;翻车是什么？你怎么定位、怎么止损、怎么复盘避免再发生？<br> •    你做了哪些”文档&#x2F;机制”让项目能交接、可维护？（比如评估报告、上线 checklist、监控告警规则、回滚预案）<br>4风险信号<br> •    只讲”用了什么框架&#x2F;模型”，讲不出业务目标、约束、验收方式<br> •    说不清自己负责的边界，一追问就”我们团队做的”<br> •    没有失败案例或复盘，或者把失败全甩给”模型不行&#x2F;数据不行”<br> •    上线链路含糊：没有灰度、没有监控、没有回滚、没有成本意识<br>5高质量口语化回答示例（60–90 秒）<br>我讲一个内部知识问答项目。背景是客服和售后同事每天被重复问题打断，知识散在文档、群消息和工单里，回答质量不一致。目标不是”做个聊天机器人”，而是把高频问题的处理时间降下来，并且回答要可追溯。我负责的是从 0 到 1 的落地链路：先把业务问题拆成”检索命中率、回答准确性、可追溯”三个验收点；再把数据源统一到一个可维护的知识库，定义更新流程；最后把线上流程做成可观测的：每次回答都能看到引用来源、命中情况和用户反馈。上线后我们用两周做灰度，核心结果是高频问题的平均处理时间明显下降，同时我也把失败案例沉淀成”不可回答就转人工”的规则，避免模型瞎编带来风险。</p>
+</li>
+<li><p>维度三：业务理解与问题抽象能力<br>1维度目标<br>看候选人是否能把”业务痛点”转成”可实现、可验收、可迭代”的问题定义；是否懂指标、懂角色、懂流程；是否能区分”要不要用 AI”以及”用 AI 解决哪一段”。<br>2主问题<br>你做项目时，业务方往往会说”我们想要一个 AI 助手”。你通常怎么把这个需求拆清楚？你会先问哪些问题？<br>3深挖追问<br> •    你怎么定义成功？是节省时间、提升转化、降低错误率，还是提升满意度？哪个最关键，为什么？<br> •    你如何判断”这事不该用大模型”，或者”先不用 Agent”？你给过业务方否定意见吗？<br> •    你怎么处理业务方”既要又要还要”的需求？你怎么做 MVP 和迭代路线？<br>4风险信号<br> •    把业务理解等同于”写提示词让模型回答更像人”<br> •    讲不出业务角色、流程节点、边界条件、验收指标<br> •    不敢说”不”，一味迎合业务，缺少产品与工程判断<br> •    只讲功能，不讲成本、风险与组织协作<br>5高质量口语化回答示例（60–90 秒）<br>业务说”要一个 AI 助手”时，我通常先把它拉回到三个问题：第一，你最想减少哪类成本，是时间、错误还是人力？第二，谁在什么场景用，它接在流程的哪一步？第三，失败了怎么办，能不能接受不确定性。 我会把需求拆成可验收的东西，比如”Top50 高频问题命中率””回答可追溯比例””需要人工兜底的触发条件”。如果发现数据不稳定、风险高，或者流程本身没理清，我会建议先做”检索+标准答案推荐”而不是一步到位做全自动。 我的习惯是用 MVP 先验证一段闭环：让业务先用起来，收反馈，再逐步增加自动化程度和覆盖面，而不是一上来追求”全能助手”。</p>
+</li>
+<li><p>维度四：工程意识与系统思维（核心维度）<br>1维度目标<br>确认候选人是否真正理解 AI 应用落地的工程复杂度：数据链路、评估、稳定性、成本、权限、安全、可观测、灰度与回滚；是否具备系统化思维而非”拼模型”。<br>2主问题<br>你认为一个 AI 应用从”能跑”到”能上线长期用”，中间最大的差别是什么？你会优先补哪三件事？<br>3深挖追问<br> •    你怎么做”效果评估”与”线上反馈闭环”？如果业务说”感觉还行”，你怎么把它变成可量化？<br> •    你如何控制成本与延迟？当并发上来后你会怎么处理？<br> •    你们怎么做可观测？至少要能回答哪些线上问题？（例如：为什么这次回答错了、引用了什么、耗时在哪里、失败率多少）<br> •    如果模型输出出现”胡编”或越权信息，你设计过什么兜底机制？<br>4风险信号<br> •    把”上线”理解为”部署一下服务”，对监控、灰度、回滚、权限、成本没有概念<br> •    一谈不确定性就回避：只会说”多调参&#x2F;换大模型”<br> •    缺少工程妥协意识：想要完美，不会做边界与兜底<br> •    对安全合规无感：不考虑数据权限、日志留痕、敏感信息<br>5高质量口语化回答示例（60–90 秒）<br>我觉得”能跑”和”能长期上线”差别不在模型，而在系统是否可控。AI 有不确定性，所以必须把它关进可治理的流程里。我通常会优先补三件事：第一是评估与反馈闭环，至少要有可量化的指标和样本集，不然迭代没方向；第二是可观测和兜底机制，线上要能追溯每次回答用了什么依据，失败了能降级到规则或人工；第三是成本与稳定性控制，比如并发上来后的限流、缓存、队列化，以及对高成本请求做分层处理。我不追求”永远正确”，我追求”错得可控、可解释、可快速修复”，这样系统才敢放到真实业务里用。</p>
+</li>
+</ol>
+<p>主问题很多 LLM 的部署和应用流程网上都能查到，听起来大家都差不多。那你到底有什么优势和价值？你有什么创新？<br>深挖追问<br>	•	你说的”优势”能举一个你亲手做过的例子吗？没有例子我不太敢信。<br>	•	你所谓”创新”是技术炫技，还是让业务更稳定、更省钱、更可控？你怎么证明？<br>	•	如果我们给你同样的模型和同样的流程，你怎么做到比别人交付质量更高？<br>高质量口语化回答示例（60–90 秒）我同意基础流程大家都能查到，但真正拉开差距的是把流程做成”可复制的交付能力”。我的优势不在于知道步骤，而在于知道哪些地方会翻车、怎么提前把风险压下去。举个例子，在一个知识问答项目里，大家一开始都能把检索和生成跑起来，但上线后最大的问题是”错误不可控、业务不敢用”。我做的关键改进不是换模型，而是把回答变成”可追溯、可拒答、可回滚”：每次输出必须带来源依据；命中不足就触发拒答或转人工；同时把失败样本沉淀成评估集，形成周更的迭代节奏。所谓创新，对我来说不是花哨功能，而是把 AI 变成可治理的系统能力，让它在真实业务里稳定、省钱、可控地跑起来。</p>
+<ol start="5">
+<li><p>维度五：学习方式与成长路径<br>1维度目标<br>判断候选人是否具备持续学习与工程化成长的能力：能否形成自己的方法论、能否复盘、能否把学习转化为可交付产出；是否具备向 Owner&#x2F;架构方向成长的迹象。<br>2主问题<br>过去 6 个月你学得最有用的一件事是什么？你是怎么学的，最后怎么用到项目里？<br>3深挖追问<br> •    你遇到不确定问题时，怎么验证假设？你会怎么做小实验或对比？<br> •    你有没有做过复盘沉淀？沉淀成了什么（文档、规范、模板、指标、组件）？<br> •    你如何跟上变化很快的 LLM 生态，但又不被”新工具焦虑”带跑偏？<br>4风险信号<br> •    学习方式只剩”刷教程、看博主”，没有产出与验证<br> •    没有复盘沉淀意识，知识停留在个人脑子里<br> •    对新东西盲目崇拜，缺少选择标准<br> •    只谈”学了什么技术”，不谈”解决了什么问题”<br>5高质量口语化回答示例<br>我最近半年最有用的学习是把”效果问题”拆成可验证的链路，而不是靠感觉调。我的学习方法一般是：先用真实业务样本定义评估集和指标，然后做最小对比实验，明确提升来自哪里。我不追热点式学习，更多是带着项目问题去学，比如线上延迟高、回答不稳定，我就会去补并发、缓存、降级和可观测相关的实践。学完以后会沉淀成团队能复用的东西，比如上线 checklist、评估模板、失败样本归档流程，这样下一次同类项目能更快更稳。我希望自己的成长路径是从交付工程师到模块负责人，再到能对系统架构和治理负责的人。</p>
+</li>
+<li><p>维度六：表达能力与风险意识<br>1维度目标<br>评估候选人的表达是否结构化、可信、有证据感；是否具备风险意识（安全、合规、错误成本、组织协作）；是否能在压力追问下保持一致性与清晰度。<br>2主问题<br>你能用 1 分钟解释清楚你做过的一个 AI 项目，让一个非技术的业务负责人也听懂并愿意继续投入吗？<br>3深挖追问<br> •    你怎么处理”模型说错了导致业务损失”的责任边界？你提前怎么设计？<br> •    你有没有遇到过跨部门扯皮？你怎么推动落地？<br> •    你怎么看待数据合规与权限？在项目里你做过哪些约束？<br>4风险信号<br> •    表达散、跳跃、全是名词，听不出逻辑主线<br> •    遇到追问前后矛盾，可信度下降<br> •    风险意识弱：对越权、泄露、胡编、审计留痕不敏感<br> •    把问题归因给外部，不承担、不复盘<br>5高质量口语化回答示例（60–90 秒）<br>我会用业务能听懂的方式说：这个项目不是做”会聊天的 AI”，而是把某一类重复工作变成半自动或自动，并且保证出错可控。我们先选了最有价值、最标准化的一段流程做试点，用明确的指标验收，比如处理时长、错误率、需要人工介入比例。风险上我一直强调两点：第一，AI 的输出必须可追溯，不能给出没有依据的结论；第二，必须有兜底机制，遇到低置信或敏感内容就降级到人工或规则。我做项目时会把这些要求写进交付标准和上线流程里，这样业务方用得安心，团队也能持续迭代，而不是靠个人英雄主义撑着。</p>
+</li>
+</ol>
+<hr>
+<p>一、能力维度 1：岗位动机与角色认知</p>
+<p>1维度目标（HR 内部视角）<br>判断候选人是否：<br>	•	对 AI 应用岗位有清晰认知<br>	•	离职原因是否理性、可控、非情绪化<br>	•	职业规划是否现实且可落地<br>	•	是否存在频繁跳槽或方向摇摆风险</p>
+<p>2主问题（HR 会怎么问）<br>你先说说，为什么会考虑离开上一家公司？</p>
+<p>3深挖追问<br>	•	你当时有没有尝试在原公司内部调整方向？<br>	•	如果从现在回头看，你觉得前公司最大的优点和局限分别是什么？<br>	•	你希望下一家公司，和上一家最核心的不同点是什么？</p>
+<p>4风险信号（HR 红旗）<br>	•	把离职原因全部归结为：领导、同事、环境<br>	•	评价前公司只有情绪，没有结构<br>	•	职业规划停留在「想更深入」「想提升自己」</p>
+<p>5高质量口语化回答示例（60–90 秒）<br>核心还是方向匹配的问题。在上一家公司，我参与了一些 AI 相关的工作，但整体更多偏向局部优化和支持性角色，而不是完整的应用闭环。公司本身很稳，流程也成熟，这是优点，但对我来说，试错空间和成长速度有限。我有和主管沟通过是否能承担更多 AI 应用相关的职责，但现实条件不太支持，所以才开始系统性地看机会。未来 2–3 年，我希望自己能在 AI 应用层面形成可复用的能力，而不是只做某一个点。</p>
+<p>二、能力维度 2：AI 项目真实性与参与深度</p>
+<p>1维度目标<br>判断候选人是否：<br>	•	真的参与过 AI 应用项目<br>	•	在项目中承担过有判断力的角色<br>	•	能说清楚自己的不可替代价值</p>
+<p>2主问题<br>你过往做过的 AI 项目里，你最核心的贡献是什么？</p>
+<p>3深挖追问<br>	•	如果你不在，这个项目最可能卡在哪里？<br>	•	哪一部分是你自己判断和推动的，而不是被分配的？<br>	•	现在回看，你觉得当时哪一步最容易出问题？</p>
+<p>4风险信号<br>	•	描述项目只停留在”我们做了什么”<br>	•	把价值等同于”用过哪些技术”<br>	•	无法说清失败点或妥协点</p>
+<p>5高质量回答示例<br>我的优势不在于某个模型本身，而是在把问题拆清楚。 比如在某个项目里，最开始大家都在纠结模型效果，但我发现真正影响结果的是数据边界和使用方式。 我当时推动把问题拆成两个阶段：先保证稳定可用，再追求效果提升。 这让项目能先跑起来，而不是一直停留在优化阶段。</p>
+<p>三、能力维度 3：业务理解与问题抽象能力</p>
+<p>1维度目标<br>判断候选人是否：<br>	•	从业务目标而非技术出发<br>	•	能解释「为什么这样做」<br>	•	理解 AI 应用的商业价值边界</p>
+<p>2主问题<br>你怎么理解 AI 应用开发这个岗位，和纯技术岗位的区别？</p>
+<p>3深挖追问<br>	•	如果业务方对 AI 预期过高，你通常怎么处理？<br>	•	你做过哪些主动帮业务降预期或改方案的情况？</p>
+<p>4风险信号<br>	•	把 AI 当”魔法”<br>	•	一味强调能力，不谈约束<br>	•	避谈失败和不确定性</p>
+<p>5高质量回答示例<br>我理解 AI 应用开发更像是一个系统工程角色。它不是把模型接上就结束，而是要考虑业务流程、失败兜底、效果评估和长期维护。我能胜任这个岗位，是因为我不太容易被”模型效果”带偏，更关注是否真的解决了问题。这在很多项目里，其实比技术本身更关键。</p>
+<p>四、能力维度 4：工程意识与系统思维</p>
+<p>1维度目标<br>判断候选人是否：<br>	•	具备工程负责人潜质<br>	•	理解协作与分工<br>	•	不以”个人英雄主义”为中心</p>
+<p>2主问题<br>如果让你负责一个 AI 应用小团队，你会从哪几件事开始？</p>
+<p>3深挖追问<br>	•	你会优先招什么样的人？<br>	•	技术债和进度冲突时，你怎么取舍？</p>
+<p>4风险信号<br>	•	一切围绕自己<br>	•	忽略非技术角色<br>	•	不考虑长期维护</p>
+<p>5高质量回答示例<br>我会先明确目标和边界，而不是先堆人。团队里一定要有人能对业务负责，有人能对工程稳定性负责。初期我会尽量让系统简单可控，避免一开始就复杂化。因为 AI 项目最怕的是跑不起来，而不是不够先进。</p>
+<p>五、能力维度 5：学习方式与成长路径</p>
+<p>1维度目标<br>判断候选人是否：<br>	•	对自己有清醒认知<br>	•	有可改进的短板<br>	•	不自我包装</p>
+<p>2主问题<br>你觉得自己目前最大的不足是什么？</p>
+<p>3深挖追问<br>	•	你是怎么意识到这个问题的？<br>	•	最近一年你做了哪些调整？</p>
+<p>4风险信号<br>	•	把缺点包装成优点<br>	•	空泛自省<br>	•	无改进动作</p>
+<p>5高质量回答示例<br>我之前有一个问题是对结果要求过高，容易在细节上投入过多时间。后来我意识到在 AI 项目中，”阶段性可用”比”一次做到最好”更重要。现在我会更刻意控制节奏，把精力放在关键决策点上。</p>
+<p>六、能力维度 6：表达能力与风险意识</p>
+<p>1维度目标<br>判断候选人是否：<br>	•	抗压但不极端<br>	•	具备团队适配能力<br>	•	沟通方式成熟</p>
+<p>2主问题<br>你怎么看待工作时间和工作强度？</p>
+<p>3深挖追问<br>	•	高强度持续一段时间，你怎么自我调节？<br>	•	新团队中你通常如何建立信任？</p>
+<p>4风险信号<br>	•	绝对化立场<br>	•	情绪化表达<br>	•	抵触沟通</p>
+<p>5高质量回答示例<br>我能接受在关键阶段有强度，但更看重是否有明确目标和节奏。融入团队上，我通常会先理解现有做法，而不是急着改变。通过把事情做好、沟通清楚，信任会自然建立。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/01/01/ai-interview-07-monitoring/">AI面试题 - 监控与可观测性</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/11/18/rk3588-update-uefi-edk2/">RK3588设备更新UEFI edk2固件</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2026/01/01/ai-interview-00-ai-engineer/" title="AI面试题 - AI应用开发工程师综合题"><span class="title">AI面试题 - AI应用开发工程师综合题</span></a><a class="item" href="/2026/01/01/ai-interview-01-python/" title="AI面试题 - Python 基础与工程实践"><span class="title">AI面试题 - Python 基础与工程实践</span></a><a class="item" href="/2026/01/01/ai-interview-02-pytorch/" title="AI面试题 - PyTorch 深度学习框架"><span class="title">AI面试题 - PyTorch 深度学习框架</span></a><a class="item" href="/2026/01/01/ai-interview-03-transformer/" title="AI面试题 - Transformer 架构原理"><span class="title">AI面试题 - Transformer 架构原理</span></a><a class="item" href="/2026/01/01/ai-interview-04-multimodal/" title="AI面试题 - 多模态 AI 应用"><span class="title">AI面试题 - 多模态 AI 应用</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper markdown"><div class="widget-body fs14"><h3 id="快捷导航"><a href="#快捷导航" class="headerlink" title="快捷导航"></a>快捷导航</h3><p><a href="/categories/" style="font-size:1.2em;">🗂️ 分类索引</a><br><a href="/tags/" style="font-size:1.2em;">🔖 标签索引</a><br><a href="/archives/" style="font-size:1.2em;">🕘 文章归档</a><br><a target="_blank" rel="noopener" href="https://wenyinos.com/" style="font-size:1.2em;">📚 社区主页</a><br><a target="_blank" rel="noopener" href="https://dev.wenyinos.com/my/" style="font-size:1.2em;">📰 项目管理</a><br><a target="_blank" rel="noopener" href="https://forum.wenyinos.com/" style="font-size:1.2em;">🏷️ 论坛交流</a></p>
+</div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 16.27px; color: #694ab0" class="tag -4">agent</a> <a href="/tags/ai-engineer/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ai-engineer</a> <a href="/tags/aliyun/" style="font-size: 13px; color: #2563eb" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 13px; color: #2563eb" class="tag -0">android</a> <a href="/tags/apt/" style="font-size: 13px; color: #2563eb" class="tag -0">apt</a> <a href="/tags/arc/" style="font-size: 13px; color: #2563eb" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 13.82px; color: #365ddc" class="tag -1">arch</a> <a href="/tags/arch-linux/" style="font-size: 13px; color: #2563eb" class="tag -0">arch-linux</a> <a href="/tags/asf/" style="font-size: 13px; color: #2563eb" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 13px; color: #2563eb" class="tag -0">asus</a> <a href="/tags/async/" style="font-size: 13px; color: #2563eb" class="tag -0">async</a> <a href="/tags/attention-mechanism/" style="font-size: 13px; color: #2563eb" class="tag -0">attention-mechanism</a> <a href="/tags/aur/" style="font-size: 13px; color: #2563eb" class="tag -0">aur</a> <a href="/tags/bbr/" style="font-size: 13.82px; color: #365ddc" class="tag -1">bbr</a> <a href="/tags/benchmark/" style="font-size: 13px; color: #2563eb" class="tag -0">benchmark</a> <a href="/tags/cache/" style="font-size: 14.64px; color: #4756cd" class="tag -2">cache</a> <a href="/tags/career/" style="font-size: 13px; color: #2563eb" class="tag -0">career</a> <a href="/tags/cargo/" style="font-size: 13.82px; color: #365ddc" class="tag -1">cargo</a> <a href="/tags/centos/" style="font-size: 14.64px; color: #4756cd" class="tag -2">centos</a> <a href="/tags/cheat/" style="font-size: 13px; color: #2563eb" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 13px; color: #2563eb" class="tag -0">colab</a> <a href="/tags/command-line/" style="font-size: 13px; color: #2563eb" class="tag -0">command-line</a> <a href="/tags/cpp/" style="font-size: 13px; color: #2563eb" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 16.27px; color: #694ab0" class="tag -4">cpu</a> <a href="/tags/curl/" style="font-size: 13px; color: #2563eb" class="tag -0">curl</a> <a href="/tags/data-framework/" style="font-size: 13px; color: #2563eb" class="tag -0">data-framework</a> <a href="/tags/debian/" style="font-size: 13px; color: #2563eb" class="tag -0">debian</a> <a href="/tags/deep-learning/" style="font-size: 13px; color: #2563eb" class="tag -0">deep-learning</a> <a href="/tags/deployment/" style="font-size: 13px; color: #2563eb" class="tag -0">deployment</a> <a href="/tags/dg1/" style="font-size: 13px; color: #2563eb" class="tag -0">dg1</a> <a href="/tags/dnf/" style="font-size: 13px; color: #2563eb" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14.64px; color: #4756cd" class="tag -2">docker</a> <a href="/tags/edk2/" style="font-size: 13px; color: #2563eb" class="tag -0">edk2</a> <a href="/tags/entware/" style="font-size: 13px; color: #2563eb" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 13.82px; color: #365ddc" class="tag -1">epel</a> <a href="/tags/fcitx/" style="font-size: 13px; color: #2563eb" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 17.91px; color: #8c3d92" class="tag -5">fedora</a> <a href="/tags/firewalld/" style="font-size: 13px; color: #2563eb" class="tag -0">firewalld</a> <a href="/tags/freebsd/" style="font-size: 13px; color: #2563eb" class="tag -0">freebsd</a> <a href="/tags/fstab/" style="font-size: 13px; color: #2563eb" class="tag -0">fstab</a> <a href="/tags/fuchsia/" style="font-size: 13px; color: #2563eb" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 13px; color: #2563eb" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 13px; color: #2563eb" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 14.64px; color: #4756cd" class="tag -2">github</a> <a href="/tags/gpu/" style="font-size: 13px; color: #2563eb" class="tag -0">gpu</a> <a href="/tags/graphics/" style="font-size: 16.27px; color: #694ab0" class="tag -4">graphics</a> <a href="/tags/grub/" style="font-size: 15.45px; color: #5850bf" class="tag -3">grub</a> <a href="/tags/grubby/" style="font-size: 13px; color: #2563eb" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 13px; color: #2563eb" class="tag -0">hi1620</a> <a href="/tags/hr-screening/" style="font-size: 13px; color: #2563eb" class="tag -0">hr-screening</a> <a href="/tags/huawei/" style="font-size: 13px; color: #2563eb" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 13px; color: #2563eb" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 13px; color: #2563eb" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 13px; color: #2563eb" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 18.73px; color: #9d3683" class="tag -6">intel</a> <a href="/tags/interview/" style="font-size: 21.18px; color: #d02357" class="tag -9">interview</a> <a href="/tags/interview-tips/" style="font-size: 13px; color: #2563eb" class="tag -0">interview-tips</a> <a href="/tags/ip/" style="font-size: 13px; color: #2563eb" class="tag -0">ip</a> <a href="/tags/ipex-llm/" style="font-size: 13px; color: #2563eb" class="tag -0">ipex-llm</a> <a href="/tags/kde/" style="font-size: 15.45px; color: #5850bf" class="tag -3">kde</a> <a href="/tags/kernel/" style="font-size: 16.27px; color: #694ab0" class="tag -4">kernel</a> <a href="/tags/kvm/" style="font-size: 13.82px; color: #365ddc" class="tag -1">kvm</a> <a href="/tags/langchain/" style="font-size: 13px; color: #2563eb" class="tag -0">langchain</a> <a href="/tags/langgraph/" style="font-size: 13px; color: #2563eb" class="tag -0">langgraph</a> <a href="/tags/lcd/" style="font-size: 13px; color: #2563eb" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 13px; color: #2563eb" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 22px; color: #e11d48" class="tag -10">linux</a> <a href="/tags/llamaindex/" style="font-size: 13px; color: #2563eb" class="tag -0">llamaindex</a> <a href="/tags/llm/" style="font-size: 15.45px; color: #5850bf" class="tag -3">llm</a> <a href="/tags/lnmp/" style="font-size: 13px; color: #2563eb" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 13px; color: #2563eb" class="tag -0">magisk</a> <a href="/tags/mcp/" style="font-size: 13px; color: #2563eb" class="tag -0">mcp</a> <a href="/tags/mediatek/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mediatek</a> <a href="/tags/merlin/" style="font-size: 13px; color: #2563eb" class="tag -0">merlin</a> <a href="/tags/mlops/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mlops</a> <a href="/tags/modem/" style="font-size: 13px; color: #2563eb" class="tag -0">modem</a> <a href="/tags/monitoring/" style="font-size: 13px; color: #2563eb" class="tag -0">monitoring</a> <a href="/tags/multi-agent/" style="font-size: 13px; color: #2563eb" class="tag -0">multi-agent</a> <a href="/tags/multimodal/" style="font-size: 13px; color: #2563eb" class="tag -0">multimodal</a> <a href="/tags/mysql/" style="font-size: 13px; color: #2563eb" class="tag -0">mysql</a> <a href="/tags/n1/" style="font-size: 13px; color: #2563eb" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 13.82px; color: #365ddc" class="tag -1">nas</a> <a href="/tags/novelai/" style="font-size: 13px; color: #2563eb" class="tag -0">novelai</a> <a href="/tags/npm/" style="font-size: 13px; color: #2563eb" class="tag -0">npm</a> <a href="/tags/observability/" style="font-size: 13px; color: #2563eb" class="tag -0">observability</a> <a href="/tags/openai/" style="font-size: 13px; color: #2563eb" class="tag -0">openai</a> <a href="/tags/opencl/" style="font-size: 13px; color: #2563eb" class="tag -0">opencl</a> <a href="/tags/openvz/" style="font-size: 13px; color: #2563eb" class="tag -0">openvz</a> <a href="/tags/openwrt/" style="font-size: 13px; color: #2563eb" class="tag -0">openwrt</a> <a href="/tags/package-management/" style="font-size: 19.55px; color: #ae3074" class="tag -7">package-management</a> <a href="/tags/packagekit/" style="font-size: 13px; color: #2563eb" class="tag -0">packagekit</a> <a href="/tags/packaging/" style="font-size: 13.82px; color: #365ddc" class="tag -1">packaging</a> <a href="/tags/pkg/" style="font-size: 13px; color: #2563eb" class="tag -0">pkg</a> <a href="/tags/pnpm/" style="font-size: 13px; color: #2563eb" class="tag -0">pnpm</a> <a href="/tags/podman/" style="font-size: 13px; color: #2563eb" class="tag -0">podman</a> <a href="/tags/power/" style="font-size: 13px; color: #2563eb" class="tag -0">power</a> <a href="/tags/powershell/" style="font-size: 13px; color: #2563eb" class="tag -0">powershell</a> <a href="/tags/proxy/" style="font-size: 14.64px; color: #4756cd" class="tag -2">proxy</a> <a href="/tags/python/" style="font-size: 13px; color: #2563eb" class="tag -0">python</a> <a href="/tags/pytorch/" style="font-size: 13px; color: #2563eb" class="tag -0">pytorch</a> <a href="/tags/qchatgpt/" style="font-size: 13px; color: #2563eb" class="tag -0">qchatgpt</a> <a href="/tags/qemu/" style="font-size: 13px; color: #2563eb" class="tag -0">qemu</a> <a href="/tags/rag/" style="font-size: 13px; color: #2563eb" class="tag -0">rag</a> <a href="/tags/raspberry-pi/" style="font-size: 15.45px; color: #5850bf" class="tag -3">raspberry-pi</a> <a href="/tags/redhat/" style="font-size: 15.45px; color: #5850bf" class="tag -3">redhat</a> <a href="/tags/rhel/" style="font-size: 14.64px; color: #4756cd" class="tag -2">rhel</a> <a href="/tags/rk3588/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rk3588</a> <a href="/tags/rpm/" style="font-size: 13px; color: #2563eb" class="tag -0">rpm</a> <a href="/tags/rust/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rust</a> <a href="/tags/selinux/" style="font-size: 13px; color: #2563eb" class="tag -0">selinux</a> <a href="/tags/service/" style="font-size: 13px; color: #2563eb" class="tag -0">service</a> <a href="/tags/shadowsocks/" style="font-size: 13px; color: #2563eb" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 13px; color: #2563eb" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 14.64px; color: #4756cd" class="tag -2">ssh</a> <a href="/tags/steam/" style="font-size: 13px; color: #2563eb" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 13px; color: #2563eb" class="tag -0">synology</a> <a href="/tags/system-design/" style="font-size: 13.82px; color: #365ddc" class="tag -1">system-design</a> <a href="/tags/systemd/" style="font-size: 15.45px; color: #5850bf" class="tag -3">systemd</a> <a href="/tags/tool-calling/" style="font-size: 13px; color: #2563eb" class="tag -0">tool-calling</a> <a href="/tags/transformer/" style="font-size: 13px; color: #2563eb" class="tag -0">transformer</a> <a href="/tags/ubuntu/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ubuntu</a> <a href="/tags/uefi/" style="font-size: 13px; color: #2563eb" class="tag -0">uefi</a> <a href="/tags/virt-manager/" style="font-size: 13px; color: #2563eb" class="tag -0">virt-manager</a> <a href="/tags/vision-language-model/" style="font-size: 13px; color: #2563eb" class="tag -0">vision-language-model</a> <a href="/tags/vista/" style="font-size: 13.82px; color: #365ddc" class="tag -1">vista</a> <a href="/tags/vmware/" style="font-size: 13px; color: #2563eb" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 13px; color: #2563eb" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 15.45px; color: #5850bf" class="tag -3">vps</a> <a href="/tags/vscode/" style="font-size: 13px; color: #2563eb" class="tag -0">vscode</a> <a href="/tags/wayland/" style="font-size: 13px; color: #2563eb" class="tag -0">wayland</a> <a href="/tags/windows/" style="font-size: 20.36px; color: #bf2a66" class="tag -8">windows</a> <a href="/tags/windows-server/" style="font-size: 15.45px; color: #5850bf" class="tag -3">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.09px; color: #7a43a1" class="tag -5">windows10</a> <a href="/tags/workflow/" style="font-size: 13px; color: #2563eb" class="tag -0">workflow</a> <a href="/tags/wsl/" style="font-size: 13px; color: #2563eb" class="tag -0">wsl</a> <a href="/tags/x86/" style="font-size: 13px; color: #2563eb" class="tag -0">x86</a> <a href="/tags/xfs/" style="font-size: 13px; color: #2563eb" class="tag -0">xfs</a> <a href="/tags/xwayland/" style="font-size: 13px; color: #2563eb" class="tag -0">xwayland</a> <a href="/tags/yum/" style="font-size: 13px; color: #2563eb" class="tag -0">yum</a> <a href="/tags/zerotier/" style="font-size: 13px; color: #2563eb" class="tag -0">zerotier</a> <a href="/tags/zram/" style="font-size: 13px; color: #2563eb" class="tag -0">zram</a> <a href="/tags/zsh/" style="font-size: 13.82px; color: #365ddc" class="tag -1">zsh</a> <a href="/tags/%E4%B8%AD%E7%A7%8B%E8%8A%82/" style="font-size: 13px; color: #2563eb" class="tag -0">中秋节</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 14.64px; color: #4756cd" class="tag -2">代理</a> <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/" style="font-size: 13px; color: #2563eb" class="tag -0">传统文化</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 13px; color: #2563eb" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 13px; color: #2563eb" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">开源社区</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<button class="theme-toggle" type="button" aria-label="切换夜间模式" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+  <span class="theme-toggle-text">夜间</span>
+</button>
+<script>
+  (() => {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+    const label = button.querySelector('.theme-toggle-text');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentMode = () => document.documentElement.getAttribute('data-theme') || (media.matches ? 'dark' : 'light');
+    const syncButton = () => {
+      const dark = currentMode() === 'dark';
+      button.dataset.mode = dark ? 'dark' : 'light';
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? '切换到日间模式' : '切换到夜间模式');
+      if (label) label.textContent = dark ? '日间' : '夜间';
+    };
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      window.localStorage.setItem('Stellar.theme', theme);
+      if (window.utils && utils.dark) {
+        utils.dark.mode = theme;
+        utils.dark.method?.toggle?.start?.();
+      }
+      syncButton();
+    };
+    button.addEventListener('click', () => setTheme(currentMode() === 'dark' ? 'light' : 'dark'));
+    media.addEventListener?.('change', syncButton);
+    syncButton();
+  })();
+</script>
+
+</div></body></html>

@@ -1,0 +1,999 @@
+
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>AI面试题 - AI应用开发工程师综合题 - 玟茵开源社区知识库</title>
+
+  
+    <meta name="description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 你怎么理解”AI 应用开发工程师”这个岗位？和算法工程师有什么本质区别？面试官为什么问这个问题：这道题不是考你会不会用模型，而是看你有没有”岗位自我认知”。很多候选人会把 AI 应用开发说成”调模型、写 Prompt”，这是明显不够的。面试官想确认你是不是工程导向、交付导向的人。 参考口语化回答：如果我来回答，我会说 AI 应用开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI面试题 - AI应用开发工程师综合题">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/01/ai-interview-00-ai-engineer/">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 你怎么理解”AI 应用开发工程师”这个岗位？和算法工程师有什么本质区别？面试官为什么问这个问题：这道题不是考你会不会用模型，而是看你有没有”岗位自我认知”。很多候选人会把 AI 应用开发说成”调模型、写 Prompt”，这是明显不够的。面试官想确认你是不是工程导向、交付导向的人。 参考口语化回答：如果我来回答，我会说 AI 应用开">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="ai-engineer">
+<meta property="article:tag" content="interview">
+<meta property="article:tag" content="llm">
+<meta property="article:tag" content="system-design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="ai-engineer,llm,interview,system-design">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2026-01-01T00:00:00+08:00","dateModified":"2026-01-01T00:00:00+08:00","datePublished":"2026-01-01T00:00:00+08:00","description":"","headline":"AI面试题 - AI应用开发工程师综合题","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2026/01/01/ai-interview-00-ai-engineer/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2026/01/01/ai-interview-00-ai-engineer/","keywords":"ai-engineer, llm, interview, system-design","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源社区知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/05/08/home-space-migration-fstab-adjustment/"><span class="title">/home 空间迁移与 fstab 调整记录</span></a><a class="item title" href="/2026/04/28/disable-intel-dg1-discrete-gpu/"><span class="title">彻底禁用 DG1 独立显卡</span></a><a class="item title" href="/2026/04/17/clean-vscode/"><span class="title">清理 VS Code</span></a><a class="item title" href="/2026/04/04/fedora-rebuild-grub-config/"><span class="title">在 Fedora 下重建 GRUB 配置文件</span></a><a class="item title" href="/2026/03/27/systemd-user-session-exit-service-stop/"><span class="title">用户会话退出导致的级联服务停止</span></a><a class="item title" href="/2026/03/14/aur-submit-guide/"><span class="title">AUR 提交指南</span></a><a class="item title" href="/2026/03/03/clean-cargo-cache-and-build-artifacts/"><span class="title">清理 Cargo 缓存和构建产物</span></a><a class="item title" href="/2026/02/19/powershell-command-line-proxy/"><span class="title">PowerShell 配置命令行代理</span></a><a class="item title" href="/2026/02/06/npm-pnpm-clean-cache/"><span class="title">npm 和 pnpm 清理缓存</span></a><a class="item title" href="/2026/01/29/freebsd-pkg-autoremove-dependencies/"><span class="title">FreeBSD pkg 自动卸载安装依赖</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/">AI工程师面试题</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>AI面试题 - AI应用开发工程师综合题</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-你怎么理解”AI-应用开发工程师”这个岗位？和算法工程师有什么本质区别？"><a href="#Q1-你怎么理解”AI-应用开发工程师”这个岗位？和算法工程师有什么本质区别？" class="headerlink" title="Q1. 你怎么理解”AI 应用开发工程师”这个岗位？和算法工程师有什么本质区别？"></a>Q1. 你怎么理解”AI 应用开发工程师”这个岗位？和算法工程师有什么本质区别？</h3><p>面试官为什么问这个问题：<br>这道题不是考你会不会用模型，而是看你有没有”岗位自我认知”。很多候选人会把 AI 应用开发说成”调模型、写 Prompt”，这是明显不够的。面试官想确认你是不是工程导向、交付导向的人。</p>
+<p>参考口语化回答：<br>如果我来回答，我会说 AI 应用开发工程师本质上是做”产品级 AI 能力交付”的。<br>算法工程师更关注模型本身，比如训练、微调、指标；而 AI 应用开发更关心的是：模型怎么被业务用起来、怎么稳定运行、怎么控制成本和风险。<br>我更多是在模型之上，做系统设计、Prompt、RAG、Agent、接口、监控这些，把 AI 变成一个真正能用、敢用、可维护的系统。</p>
+<h3 id="Q2-在你看来，”模型””算法””AI-应用””AI-系统”之间是什么关系？"><a href="#Q2-在你看来，”模型””算法””AI-应用””AI-系统”之间是什么关系？" class="headerlink" title="Q2. 在你看来，”模型””算法””AI 应用””AI 系统”之间是什么关系？"></a>Q2. 在你看来，”模型””算法””AI 应用””AI 系统”之间是什么关系？</h3><p>面试官为什么问这个问题：<br>这是一个典型的”认知分层题”。如果候选人回答混在一起，说明认知还停留在概念阶段。面试官希望你能清楚分层，而不是把所有问题都甩给模型。</p>
+<p>参考口语化回答：<br>我一般会把它们分成四层。<br>最底层是模型和算法，这是能力来源；<br>往上一层是 AI 应用，比如一个问答、总结、推荐能力；<br>再往上是 AI 系统，它会包含权限、流程、日志、监控、兜底规则；<br>最上面才是业务场景。<br>真正上线跑的是系统，而不是模型本身，模型只是其中一个可替换的组件。</p>
+<h3 id="Q3-你觉得企业真正需要的是”更强的模型”还是”更好的-AI-应用”？"><a href="#Q3-你觉得企业真正需要的是”更强的模型”还是”更好的-AI-应用”？" class="headerlink" title="Q3. 你觉得企业真正需要的是”更强的模型”还是”更好的 AI 应用”？"></a>Q3. 你觉得企业真正需要的是”更强的模型”还是”更好的 AI 应用”？</h3><p>面试官为什么问这个问题：<br>这道题在考你的工程价值观。很多初级候选人会下意识说”更强的模型”，但真实企业环境下，这往往不是瓶颈。</p>
+<p>参考口语化回答：<br>在我参与过的项目里，大多数时候瓶颈不在模型，而在应用设计。<br>模型能力到一定程度后，效果差异更多来自 Prompt、上下文、数据、流程控制。<br>企业更需要的是一个”可控、稳定、成本可接受”的 AI 应用，而不是实验室里最强的模型。</p>
+<h3 id="Q4-你怎么判断一个-AI-功能是不是”能上线”的状态？"><a href="#Q4-你怎么判断一个-AI-功能是不是”能上线”的状态？" class="headerlink" title="Q4. 你怎么判断一个 AI 功能是不是”能上线”的状态？"></a>Q4. 你怎么判断一个 AI 功能是不是”能上线”的状态？</h3><p>面试官为什么问这个问题：<br>这是一个很现实的问题，用来区分”Demo 选手”和”工程选手”。面试官想听到的不只是效果好不好，而是上线标准。</p>
+<p>参考口语化回答：<br>我一般会从四个维度判断：<br>第一是效果稳定性，同样的问题不会忽好忽坏；<br>第二是可控性，知道什么时候会出错、怎么兜底；<br>第三是成本，调用次数和 Token 消耗是否可接受；<br>第四是可观测性，日志、异常、用户行为是不是能看清楚。<br>只看效果，很容易踩坑。</p>
+<h3 id="Q5-你觉得-AI-应用开发中，最容易被新人忽视的点是什么？"><a href="#Q5-你觉得-AI-应用开发中，最容易被新人忽视的点是什么？" class="headerlink" title="Q5. 你觉得 AI 应用开发中，最容易被新人忽视的点是什么？"></a>Q5. 你觉得 AI 应用开发中，最容易被新人忽视的点是什么？</h3><p>面试官为什么问这个问题：<br>这题在考你有没有”踩过坑”。如果回答得很抽象，通常经验不足。</p>
+<p>参考口语化回答：<br>我觉得最容易被忽视的是”非正常输入”和”异常场景”。<br>比如用户乱输、Prompt 被注入、模型超时、接口失败。<br>很多 Demo 看起来很好，但一到真实用户环境，就开始不可控，这往往不是模型问题，而是工程没兜住。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】"><a href="#第二层：核心技术能力（How）【8-题】" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q6-你在实际项目中是怎么写-Prompt-的？有没有方法论？"><a href="#Q6-你在实际项目中是怎么写-Prompt-的？有没有方法论？" class="headerlink" title="Q6. 你在实际项目中是怎么写 Prompt 的？有没有方法论？"></a>Q6. 你在实际项目中是怎么写 Prompt 的？有没有方法论？</h3><p>面试官为什么问这个问题：<br>Prompt 是 AI 应用开发的核心能力之一。面试官不关心你背了多少技巧，而关心你是不是有工程化思维。</p>
+<p>参考口语化回答：<br>我不会把 Prompt 当成一句话，而是当成配置。<br>一般会拆成角色、任务、约束、输出格式四块，尽量结构化。<br>而且 Prompt 一定要可迭代，能通过日志不断调，而不是一次写死。</p>
+<h3 id="Q7-你是怎么控制大模型”胡说八道”的？"><a href="#Q7-你是怎么控制大模型”胡说八道”的？" class="headerlink" title="Q7. 你是怎么控制大模型”胡说八道”的？"></a>Q7. 你是怎么控制大模型”胡说八道”的？</h3><p>面试官为什么问这个问题：<br>幻觉是企业最关心的问题之一。这题直接考你有没有真实项目经验。</p>
+<p>参考口语化回答：<br>我一般不会指望模型自己”别胡说”。<br>工程上会通过 RAG 提供确定性上下文，通过 Prompt 明确”只基于给定内容回答”，<br>同时在输出后加规则校验，必要时直接拒答。<br>幻觉不是靠一句 Prompt 解决的，是系统设计问题。</p>
+<h3 id="Q8-你怎么理解-RAG？它解决的核心问题是什么？"><a href="#Q8-你怎么理解-RAG？它解决的核心问题是什么？" class="headerlink" title="Q8. 你怎么理解 RAG？它解决的核心问题是什么？"></a>Q8. 你怎么理解 RAG？它解决的核心问题是什么？</h3><p>面试官为什么问这个问题：<br>RAG 是基础能力，但很多人理解停留在”向量检索 + LLM”。</p>
+<p>参考口语化回答：<br>我理解 RAG 的核心不是”查资料”，而是给模型一个受控的信息边界。<br>它解决的是模型不知道、记不住、不能实时更新的问题。<br>真正难的不是接不接向量库，而是数据切分、召回质量和上下文控制。</p>
+<h3 id="Q9-在-RAG-项目中，你觉得最容易影响效果的环节是哪一步？"><a href="#Q9-在-RAG-项目中，你觉得最容易影响效果的环节是哪一步？" class="headerlink" title="Q9. 在 RAG 项目中，你觉得最容易影响效果的环节是哪一步？"></a>Q9. 在 RAG 项目中，你觉得最容易影响效果的环节是哪一步？</h3><p>面试官为什么问这个问题：<br>这是一个经验题，能明显区分有没有实操。</p>
+<p>参考口语化回答：<br>我觉得是数据切分和召回策略。<br>切得太大，模型吃不下；切得太小，又丢上下文。<br>而且不是所有问题都适合向量召回，很多时候要加关键词、规则甚至人工标签。</p>
+<h3 id="Q10-你是怎么理解-Agent-的？什么时候该用，什么时候不该用？"><a href="#Q10-你是怎么理解-Agent-的？什么时候该用，什么时候不该用？" class="headerlink" title="Q10. 你是怎么理解 Agent 的？什么时候该用，什么时候不该用？"></a>Q10. 你是怎么理解 Agent 的？什么时候该用，什么时候不该用？</h3><p>面试官为什么问这个问题：<br>Agent 很火，但容易被滥用。面试官想看你的判断力。</p>
+<p>参考口语化回答：<br>我把 Agent 理解成”带状态和决策能力的 AI 流程”。<br>如果只是单轮问答，其实不需要 Agent；<br>当任务需要拆解、多步执行、调用工具、反思修正时，Agent 才有价值。<br>否则只会增加复杂度和不稳定性。</p>
+<h3 id="Q11-在工具调用或函数调用中，你最关注哪些风险？"><a href="#Q11-在工具调用或函数调用中，你最关注哪些风险？" class="headerlink" title="Q11. 在工具调用或函数调用中，你最关注哪些风险？"></a>Q11. 在工具调用或函数调用中，你最关注哪些风险？</h3><p>面试官为什么问这个问题：<br>这题在考你有没有把 AI 当成”不可信组件”。</p>
+<p>参考口语化回答：<br>我最关注的是误调用和参数不合法。<br>所以一般不会让模型直接执行真实操作，而是先生成结构化意图，再由程序校验。<br>模型负责”想”，系统负责”做”，这条边界一定要清楚。</p>
+<h3 id="Q12-你是如何管理上下文长度和-Token-成本的？"><a href="#Q12-你是如何管理上下文长度和-Token-成本的？" class="headerlink" title="Q12. 你是如何管理上下文长度和 Token 成本的？"></a>Q12. 你是如何管理上下文长度和 Token 成本的？</h3><p>面试官为什么问这个问题：<br>这是非常现实的工程问题，尤其在企业环境。</p>
+<p>参考口语化回答：<br>我会优先做上下文裁剪，只保留当前问题真正需要的信息。<br>历史对话不会全塞进去，而是做摘要或状态提取。<br>另外会区分高价值和低价值请求，不同请求用不同模型或参数。</p>
+<h3 id="Q13-你如何评估一个-Prompt-或-RAG-改动”是不是真的变好了”？"><a href="#Q13-你如何评估一个-Prompt-或-RAG-改动”是不是真的变好了”？" class="headerlink" title="Q13. 你如何评估一个 Prompt 或 RAG 改动”是不是真的变好了”？"></a>Q13. 你如何评估一个 Prompt 或 RAG 改动”是不是真的变好了”？</h3><p>面试官为什么问这个问题：<br>这题考你是否有”评估意识”，而不是凭感觉调参。</p>
+<p>参考口语化回答：<br>我会准备一组固定测试用例，覆盖正常和极端场景。<br>每次改动只改一个变量，看整体通过率和失败类型。<br>如果不能量化，就很容易越调越乱。</p>
+<h2 id="第三层：工程化与系统能力【8-题】"><a href="#第三层：工程化与系统能力【8-题】" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q14-一个典型的-AI-应用后端架构，你会怎么设计？"><a href="#Q14-一个典型的-AI-应用后端架构，你会怎么设计？" class="headerlink" title="Q14. 一个典型的 AI 应用后端架构，你会怎么设计？"></a>Q14. 一个典型的 AI 应用后端架构，你会怎么设计？</h3><p>面试官为什么问这个问题：<br>这是在考系统观，而不是代码细节。</p>
+<p>参考口语化回答：<br>我一般会拆成 API 层、AI 编排层、模型&#x2F;工具层、基础设施层。<br>AI 编排层负责 Prompt、RAG、Agent 流程；<br>模型层可替换；<br>基础设施包括缓存、日志、监控。<br>这样后续模型升级或策略调整成本比较低。</p>
+<h3 id="Q15-AI-应用中，性能瓶颈通常出现在哪？"><a href="#Q15-AI-应用中，性能瓶颈通常出现在哪？" class="headerlink" title="Q15. AI 应用中，性能瓶颈通常出现在哪？"></a>Q15. AI 应用中，性能瓶颈通常出现在哪？</h3><p>面试官为什么问这个问题：<br>考你有没有真实跑过系统，而不是只写过 Demo。</p>
+<p>参考口语化回答：<br>最常见的是模型响应时间和串行流程。<br>Agent 一多，调用就容易堆起来。<br>所以我会尽量减少不必要的 LLM 调用，能规则解决的就不用模型。</p>
+<h3 id="Q16-你是如何做-AI-应用的日志和监控的？"><a href="#Q16-你是如何做-AI-应用的日志和监控的？" class="headerlink" title="Q16. 你是如何做 AI 应用的日志和监控的？"></a>Q16. 你是如何做 AI 应用的日志和监控的？</h3><p>面试官为什么问这个问题：<br>没有可观测性，AI 系统就是黑盒。</p>
+<p>参考口语化回答：<br>我会记录每次请求的 Prompt、上下文摘要、模型版本、耗时和 Token。<br>异常单独打标，方便回放问题。<br>这样线上效果下降时，能快速定位是数据、Prompt 还是模型问题。</p>
+<h3 id="Q17-AI-应用如何做异常处理和兜底？"><a href="#Q17-AI-应用如何做异常处理和兜底？" class="headerlink" title="Q17. AI 应用如何做异常处理和兜底？"></a>Q17. AI 应用如何做异常处理和兜底？</h3><p>面试官为什么问这个问题：<br>这是企业非常看重的一点。</p>
+<p>参考口语化回答：<br>我不会假设模型一定成功。<br>常见兜底包括：超时返回、降级模型、规则回复、人工介入。<br>关键是让用户”有反馈”，而不是一直转圈。</p>
+<h3 id="Q18-在-Docker-或服务化部署-AI-应用时，你会注意什么？"><a href="#Q18-在-Docker-或服务化部署-AI-应用时，你会注意什么？" class="headerlink" title="Q18. 在 Docker 或服务化部署 AI 应用时，你会注意什么？"></a>Q18. 在 Docker 或服务化部署 AI 应用时，你会注意什么？</h3><p>面试官为什么问这个问题：<br>这题考你是否具备平台化意识。</p>
+<p>参考口语化回答：<br>我会注意配置解耦、密钥管理和资源限制。<br>模型配置、Prompt 都不写死在代码里。<br>同时会限制并发，避免被一次流量打挂。</p>
+<h3 id="Q19-你是怎么做并发控制和限流的？"><a href="#Q19-你是怎么做并发控制和限流的？" class="headerlink" title="Q19. 你是怎么做并发控制和限流的？"></a>Q19. 你是怎么做并发控制和限流的？</h3><p>面试官为什么问这个问题：<br>AI 接口很贵，也很慢。</p>
+<p>参考口语化回答：<br>我会在入口层做限流，区分用户等级。<br>同时对内部 LLM 调用做队列或信号量控制。<br>宁可慢一点，也不能失控。</p>
+<h3 id="Q20-你如何看待缓存和-AI-的关系？"><a href="#Q20-你如何看待缓存和-AI-的关系？" class="headerlink" title="Q20. 你如何看待缓存和 AI 的关系？"></a>Q20. 你如何看待缓存和 AI 的关系？</h3><p>面试官为什么问这个问题：<br>很多人觉得 AI 不适合缓存，这是误区。</p>
+<p>参考口语化回答：<br>我认为 AI 非常适合缓存。<br>很多问题高度重复，比如知识问答、总结。<br>合理缓存可以直接省掉大量模型调用，成本差异非常明显。</p>
+<h3 id="Q21-AI-应用如何做到”可维护”？"><a href="#Q21-AI-应用如何做到”可维护”？" class="headerlink" title="Q21. AI 应用如何做到”可维护”？"></a>Q21. AI 应用如何做到”可维护”？</h3><p>面试官为什么问这个问题：<br>这是区分短期项目和长期系统的关键。</p>
+<p>参考口语化回答：<br>核心是模块化和可配置。<br>Prompt、模型、策略都能独立调整。<br>否则每次改一点，都要重发版本，很快就不可维护。</p>
+<h2 id="第四层：真实项目与场景能力【6-题】"><a href="#第四层：真实项目与场景能力【6-题】" class="headerlink" title="第四层：真实项目与场景能力【6 题】"></a>第四层：真实项目与场景能力【6 题】</h2><h3 id="Q22-你是如何把-AI-能力嵌入到业务流程中的？"><a href="#Q22-你是如何把-AI-能力嵌入到业务流程中的？" class="headerlink" title="Q22. 你是如何把 AI 能力嵌入到业务流程中的？"></a>Q22. 你是如何把 AI 能力嵌入到业务流程中的？</h3><p>面试官为什么问这个问题：<br>这题考你是不是”业务型工程师”。</p>
+<p>参考口语化回答：<br>我不会把 AI 当成一个独立功能，而是嵌进原有流程。<br>比如在审批、客服、诊断中做辅助，而不是替代。<br>这样业务接受度更高，风险也更可控。</p>
+<h3 id="Q23-在医疗或金融场景中，你如何控制-AI-风险？"><a href="#Q23-在医疗或金融场景中，你如何控制-AI-风险？" class="headerlink" title="Q23. 在医疗或金融场景中，你如何控制 AI 风险？"></a>Q23. 在医疗或金融场景中，你如何控制 AI 风险？</h3><p>面试官为什么问这个问题：<br>这是高风险行业的核心问题。</p>
+<p>参考口语化回答：<br>我会坚持”建议而非决策”的定位。<br>重要结论必须可追溯来源，并允许人工确认。<br>高风险场景下，AI 永远不是最终裁决者。</p>
+<h3 id="Q24-你如何评估一个-AI-项目”值不值得继续做”？"><a href="#Q24-你如何评估一个-AI-项目”值不值得继续做”？" class="headerlink" title="Q24. 你如何评估一个 AI 项目”值不值得继续做”？"></a>Q24. 你如何评估一个 AI 项目”值不值得继续做”？</h3><p>面试官为什么问这个问题：<br>考你有没有产品和成本意识。</p>
+<p>参考口语化回答：<br>我会看三个指标：<br>业务指标有没有改善、人工成本有没有下降、系统稳定性是否可接受。<br>如果只是技术好看，但业务没变化，我会建议及时止损。</p>
+<h3 id="Q25-如果业务方说”效果不稳定”，你会怎么排查？"><a href="#Q25-如果业务方说”效果不稳定”，你会怎么排查？" class="headerlink" title="Q25. 如果业务方说”效果不稳定”，你会怎么排查？"></a>Q25. 如果业务方说”效果不稳定”，你会怎么排查？</h3><p>面试官为什么问这个问题：<br>这是非常真实的场景题。</p>
+<p>参考口语化回答：<br>我会先拉日志，看失败集中在哪些问题类型。<br>再看是数据问题、Prompt 漂移，还是模型变更。<br>而不是第一时间去”再调一版 Prompt”。</p>
+<h3 id="Q26-你如何和产品经理或业务方协作-AI-项目？"><a href="#Q26-你如何和产品经理或业务方协作-AI-项目？" class="headerlink" title="Q26. 你如何和产品经理或业务方协作 AI 项目？"></a>Q26. 你如何和产品经理或业务方协作 AI 项目？</h3><p>面试官为什么问这个问题：<br>AI 项目失败，往往不是技术原因。</p>
+<p>参考口语化回答：<br>我会提前把 AI 的能力边界说清楚。<br>哪些能做，哪些不稳定，哪些必须人工兜底。<br>避免业务方对 AI 有不切实际的期待。</p>
+<h3 id="Q27-你遇到过-AI-项目失败的情况吗？原因是什么？"><a href="#Q27-你遇到过-AI-项目失败的情况吗？原因是什么？" class="headerlink" title="Q27. 你遇到过 AI 项目失败的情况吗？原因是什么？"></a>Q27. 你遇到过 AI 项目失败的情况吗？原因是什么？</h3><p>面试官为什么问这个问题：<br>这题在考你的反思能力。</p>
+<p>参考口语化回答：<br>有过。<br>最典型的是一开始目标定得太大，流程太复杂。<br>后来发现应该先从一个小闭环场景跑通，再逐步扩展。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】"><a href="#第五层：进阶与加分项（架构-视野）【3-题】" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q28-你如何看待多-Agent-架构的价值和风险？"><a href="#Q28-你如何看待多-Agent-架构的价值和风险？" class="headerlink" title="Q28. 你如何看待多 Agent 架构的价值和风险？"></a>Q28. 你如何看待多 Agent 架构的价值和风险？</h3><p>面试官为什么问这个问题：<br>这是高级候选人的分水岭。</p>
+<p>参考口语化回答：<br>多 Agent 在复杂任务拆解上很有价值。<br>但 Agent 一多，稳定性和调试成本急剧上升。<br>我会谨慎使用，只在收益明显时才引入。</p>
+<h3 id="Q29-你如何看待-LangChain-LangGraph-这类框架？"><a href="#Q29-你如何看待-LangChain-LangGraph-这类框架？" class="headerlink" title="Q29. 你如何看待 LangChain &#x2F; LangGraph 这类框架？"></a>Q29. 你如何看待 LangChain &#x2F; LangGraph 这类框架？</h3><p>面试官为什么问这个问题：<br>面试官想看你是不是”工具理性”。</p>
+<p>参考口语化回答：<br>我把它们当成加速器，而不是必选项。<br>理解底层流程比会用框架更重要。<br>框架能提高效率，但不应该替代思考。</p>
+<h3 id="Q30-在你看来，AI-应用开发工程师未来最重要的能力是什么？"><a href="#Q30-在你看来，AI-应用开发工程师未来最重要的能力是什么？" class="headerlink" title="Q30. 在你看来，AI 应用开发工程师未来最重要的能力是什么？"></a>Q30. 在你看来，AI 应用开发工程师未来最重要的能力是什么？</h3><p>面试官为什么问这个问题：<br>这是潜力判断题。</p>
+<p>参考口语化回答：<br>我觉得是系统思维和风险意识。<br>模型会越来越强，但真正有价值的是把 AI 安全、稳定、持续地用在业务里。<br>能把复杂问题落到工程层面解决的人，长期都很稀缺。</p>
+<hr>
+<h2 id="第一层：基础认知（Why-What）【5-题】-1"><a href="#第一层：基础认知（Why-What）【5-题】-1" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-你认为-AI-应用开发中，”工程复杂度”主要来自哪里？"><a href="#Q1-你认为-AI-应用开发中，”工程复杂度”主要来自哪里？" class="headerlink" title="Q1. 你认为 AI 应用开发中，”工程复杂度”主要来自哪里？"></a>Q1. 你认为 AI 应用开发中，”工程复杂度”主要来自哪里？</h3><p>面试官为什么问这个问题：<br>这道题在考察你是否真正理解”难点不在模型”。很多候选人会把复杂度归因到算法，面试官想确认你是否具备系统视角。</p>
+<p>参考口语化回答：<br>我觉得工程复杂度主要来自不确定性。<br>模型输出不稳定、用户输入不可控、业务规则又很复杂。<br>真正难的是把这些不确定因素包在一个稳定、可预测的系统里，而不是模型本身有多复杂。</p>
+<h3 id="Q2-如果让你向非技术同事解释-AI-应用的价值，你会怎么说？"><a href="#Q2-如果让你向非技术同事解释-AI-应用的价值，你会怎么说？" class="headerlink" title="Q2. 如果让你向非技术同事解释 AI 应用的价值，你会怎么说？"></a>Q2. 如果让你向非技术同事解释 AI 应用的价值，你会怎么说？</h3><p>面试官为什么问这个问题：<br>这是在考沟通能力和业务理解能力。企业里 AI 工程师不是只和工程师打交道。</p>
+<p>参考口语化回答：<br>我一般不会讲模型和参数。<br>我会直接说：AI 可以帮你减少重复劳动、缩短决策时间、降低人为遗漏。<br>比如以前需要 10 分钟查资料，现在 10 秒给你一个可用答案。</p>
+<h3 id="Q3-你觉得”AI-应用失败”的典型信号有哪些？"><a href="#Q3-你觉得”AI-应用失败”的典型信号有哪些？" class="headerlink" title="Q3. 你觉得”AI 应用失败”的典型信号有哪些？"></a>Q3. 你觉得”AI 应用失败”的典型信号有哪些？</h3><p>面试官为什么问这个问题：<br>这题在考你是否见过失败项目，而不是只参与过成功 Demo。</p>
+<p>参考口语化回答：<br>比较典型的信号是：<br>业务方越来越少用、反馈变少、问题被默默绕开。<br>技术上可能没报错，但说明 AI 已经没有被信任了。</p>
+<h3 id="Q4-在-AI-应用中，你如何看待”确定性输出”这件事？"><a href="#Q4-在-AI-应用中，你如何看待”确定性输出”这件事？" class="headerlink" title="Q4. 在 AI 应用中，你如何看待”确定性输出”这件事？"></a>Q4. 在 AI 应用中，你如何看待”确定性输出”这件事？</h3><p>面试官为什么问这个问题：<br>这是一个价值观问题，直接关系到工程取舍。</p>
+<p>参考口语化回答：<br>我不会追求完全确定，但会尽量缩小不确定范围。<br>对关键业务节点，输出一定要可预测、可解释。<br>创意场景可以放开，但业务核心场景一定要收紧。</p>
+<h3 id="Q5-你怎么看”AI-能不能完全替代人”这个问题？"><a href="#Q5-你怎么看”AI-能不能完全替代人”这个问题？" class="headerlink" title="Q5. 你怎么看”AI 能不能完全替代人”这个问题？"></a>Q5. 你怎么看”AI 能不能完全替代人”这个问题？</h3><p>面试官为什么问这个问题：<br>考察你的理性程度，而不是态度激进与否。</p>
+<p>参考口语化回答：<br>我更倾向于”增强而不是替代”。<br>在真实业务里，人负责判断和兜底，AI 负责提高效率。<br>至少在可预见的阶段，这是最安全、也最现实的模式。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】-1"><a href="#第二层：核心技术能力（How）【8-题】-1" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q6-你在-Prompt-中是如何表达”边界条件”的？"><a href="#Q6-你在-Prompt-中是如何表达”边界条件”的？" class="headerlink" title="Q6. 你在 Prompt 中是如何表达”边界条件”的？"></a>Q6. 你在 Prompt 中是如何表达”边界条件”的？</h3><p>面试官为什么问这个问题：<br>这题在考你是否意识到 Prompt 不只是”告诉模型做什么”。</p>
+<p>参考口语化回答：<br>我会明确告诉模型”不能做什么”和”不知道就说不知道”。<br>比如禁止编造结论、禁止超出给定数据。<br>Prompt 的约束比指令本身更重要。</p>
+<h3 id="Q7-你是否遇到过-Prompt-调得越多，效果反而越差的情况？"><a href="#Q7-你是否遇到过-Prompt-调得越多，效果反而越差的情况？" class="headerlink" title="Q7. 你是否遇到过 Prompt 调得越多，效果反而越差的情况？"></a>Q7. 你是否遇到过 Prompt 调得越多，效果反而越差的情况？</h3><p>面试官为什么问这个问题：<br>这是一个典型经验题。</p>
+<p>参考口语化回答：<br>遇到过，尤其是 Prompt 叠得太复杂的时候。<br>后来发现问题不在 Prompt，而在上下文噪音太多。<br>有时候删掉一半内容，效果反而更稳定。</p>
+<h3 id="Q8-你如何判断一个问题是否适合用-LLM-解决？"><a href="#Q8-你如何判断一个问题是否适合用-LLM-解决？" class="headerlink" title="Q8. 你如何判断一个问题是否适合用 LLM 解决？"></a>Q8. 你如何判断一个问题是否适合用 LLM 解决？</h3><p>面试官为什么问这个问题：<br>考察你是否会”滥用 AI”。</p>
+<p>参考口语化回答：<br>如果问题有明确规则、输入输出固定，我一般不会用 LLM。<br>只有在规则难以穷举、需要理解语义或综合判断时，才考虑模型。<br>能不用模型的地方，尽量不用。</p>
+<h3 id="Q9-在-RAG-中，你如何处理”召回结果冲突”的情况？"><a href="#Q9-在-RAG-中，你如何处理”召回结果冲突”的情况？" class="headerlink" title="Q9. 在 RAG 中，你如何处理”召回结果冲突”的情况？"></a>Q9. 在 RAG 中，你如何处理”召回结果冲突”的情况？</h3><p>面试官为什么问这个问题：<br>这是实际项目中很常见的问题。</p>
+<p>参考口语化回答：<br>我会优先保证来源可信度，而不是数量。<br>必要时按权重排序，或者直接让模型指出冲突并给出不确定提示。<br>强行合并只会放大幻觉风险。</p>
+<h3 id="Q10-你如何限制模型”过度推理”或”过度发挥”？"><a href="#Q10-你如何限制模型”过度推理”或”过度发挥”？" class="headerlink" title="Q10. 你如何限制模型”过度推理”或”过度发挥”？"></a>Q10. 你如何限制模型”过度推理”或”过度发挥”？</h3><p>面试官为什么问这个问题：<br>这是在考你对模型行为的理解。</p>
+<p>参考口语化回答：<br>我会通过输出格式、回答长度和明确目标来限制。<br>比如只让它输出结论，不要过程；<br>或者要求逐条引用来源，否则拒绝回答。</p>
+<h3 id="Q11-你怎么看待”模型温度”等参数在工程中的作用？"><a href="#Q11-你怎么看待”模型温度”等参数在工程中的作用？" class="headerlink" title="Q11. 你怎么看待”模型温度”等参数在工程中的作用？"></a>Q11. 你怎么看待”模型温度”等参数在工程中的作用？</h3><p>面试官为什么问这个问题：<br>面试官想知道你是不是只会调参数。</p>
+<p>参考口语化回答：<br>我觉得参数只是微调手段。<br>如果靠调温度才能勉强稳定，那说明 Prompt 或流程设计有问题。<br>工程上优先解决结构问题，而不是参数问题。</p>
+<h3 id="Q12-在-Agent-设计中，你如何避免”无限循环”？"><a href="#Q12-在-Agent-设计中，你如何避免”无限循环”？" class="headerlink" title="Q12. 在 Agent 设计中，你如何避免”无限循环”？"></a>Q12. 在 Agent 设计中，你如何避免”无限循环”？</h3><p>面试官为什么问这个问题：<br>这是 Agent 项目里非常真实的坑。</p>
+<p>参考口语化回答：<br>我会限制最大步数、强制中断条件。<br>同时在每一步记录状态，如果重复出现相同行为，就直接终止。<br>Agent 一定要”可刹车”。</p>
+<h3 id="Q13-你如何评估-Agent-带来的”收益是否大于复杂度”？"><a href="#Q13-你如何评估-Agent-带来的”收益是否大于复杂度”？" class="headerlink" title="Q13. 你如何评估 Agent 带来的”收益是否大于复杂度”？"></a>Q13. 你如何评估 Agent 带来的”收益是否大于复杂度”？</h3><p>面试官为什么问这个问题：<br>这是高级工程师才会考虑的问题。</p>
+<p>参考口语化回答：<br>我会看是否真的减少人工操作或流程步骤。<br>如果只是把一个简单流程拆成多个 Agent，那基本不值得。<br>Agent 的价值一定要体现在整体效率上。</p>
+<h2 id="第三层：工程化与系统能力【8-题】-1"><a href="#第三层：工程化与系统能力【8-题】-1" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q14-AI-应用如何做到”版本可回滚”？"><a href="#Q14-AI-应用如何做到”版本可回滚”？" class="headerlink" title="Q14. AI 应用如何做到”版本可回滚”？"></a>Q14. AI 应用如何做到”版本可回滚”？</h3><p>面试官为什么问这个问题：<br>这是稳定性意识的体现。</p>
+<p>参考口语化回答：<br>我会对 Prompt、模型版本、检索策略都做版本管理。<br>出现问题可以快速切回上一个稳定版本。<br>不能回滚的 AI 系统，线上风险非常大。</p>
+<h3 id="Q15-你是如何做-A-B-测试验证-AI-效果的？"><a href="#Q15-你是如何做-A-B-测试验证-AI-效果的？" class="headerlink" title="Q15. 你是如何做 A&#x2F;B 测试验证 AI 效果的？"></a>Q15. 你是如何做 A&#x2F;B 测试验证 AI 效果的？</h3><p>面试官为什么问这个问题：<br>这题在考你是否具备工程验证思维。</p>
+<p>参考口语化回答：<br>我会让不同用户或请求走不同策略。<br>对比命中率、人工介入率、用户反馈。<br>不用感觉判断，用数据说话。</p>
+<h3 id="Q16-AI-服务超时，你通常怎么处理？"><a href="#Q16-AI-服务超时，你通常怎么处理？" class="headerlink" title="Q16. AI 服务超时，你通常怎么处理？"></a>Q16. AI 服务超时，你通常怎么处理？</h3><p>面试官为什么问这个问题：<br>这是非常常见的线上问题。</p>
+<p>参考口语化回答：<br>我会设置合理超时时间，超时直接返回降级结果。<br>同时记录日志，避免请求堆积。<br>用户体验永远比”等一个完美答案”重要。</p>
+<h3 id="Q17-你如何防止-Prompt-或接口被滥用？"><a href="#Q17-你如何防止-Prompt-或接口被滥用？" class="headerlink" title="Q17. 你如何防止 Prompt 或接口被滥用？"></a>Q17. 你如何防止 Prompt 或接口被滥用？</h3><p>面试官为什么问这个问题：<br>这是安全意识问题。</p>
+<p>参考口语化回答：<br>我会限制调用频率、校验输入内容、过滤明显异常请求。<br>敏感 Prompt 不暴露给前端。<br>AI 接口本质上也是高风险接口。</p>
+<h3 id="Q18-在多模型共存的系统中，你如何做路由选择？"><a href="#Q18-在多模型共存的系统中，你如何做路由选择？" class="headerlink" title="Q18. 在多模型共存的系统中，你如何做路由选择？"></a>Q18. 在多模型共存的系统中，你如何做路由选择？</h3><p>面试官为什么问这个问题：<br>考察你是否有成本与性能意识。</p>
+<p>参考口语化回答：<br>我会根据问题复杂度分流。<br>简单问题走小模型，复杂问题才走大模型。<br>这样整体成本和响应时间都能控制住。</p>
+<h3 id="Q19-你如何监控-AI-输出”质量下降”这种软问题？"><a href="#Q19-你如何监控-AI-输出”质量下降”这种软问题？" class="headerlink" title="Q19. 你如何监控 AI 输出”质量下降”这种软问题？"></a>Q19. 你如何监控 AI 输出”质量下降”这种软问题？</h3><p>面试官为什么问这个问题：<br>这是高级工程问题。</p>
+<p>参考口语化回答：<br>我会关注人工介入率、重试率、用户否定反馈。<br>这些指标比单纯成功率更真实。<br>质量下降往往是渐进的，不是一次性崩掉。</p>
+<h3 id="Q20-AI-应用如何支持灰度发布？"><a href="#Q20-AI-应用如何支持灰度发布？" class="headerlink" title="Q20. AI 应用如何支持灰度发布？"></a>Q20. AI 应用如何支持灰度发布？</h3><p>面试官为什么问这个问题：<br>考察你是否具备平台化思维。</p>
+<p>参考口语化回答：<br>我会按用户、部门或比例放量。<br>先验证稳定性，再逐步扩大。<br>一次性全量上线风险太高。</p>
+<h3 id="Q21-你如何让-AI-系统”更容易被接手”？"><a href="#Q21-你如何让-AI-系统”更容易被接手”？" class="headerlink" title="Q21. 你如何让 AI 系统”更容易被接手”？"></a>Q21. 你如何让 AI 系统”更容易被接手”？</h3><p>面试官为什么问这个问题：<br>这题在考团队意识。</p>
+<p>参考口语化回答：<br>我会把关键逻辑写清楚，Prompt 有注释，流程有文档。<br>AI 项目如果只有一个人能维护，长期一定出问题。</p>
+<h2 id="第四层：真实项目与场景能力【6-题】-1"><a href="#第四层：真实项目与场景能力【6-题】-1" class="headerlink" title="第四层：真实项目与场景能力【6 题】"></a>第四层：真实项目与场景能力【6 题】</h2><h3 id="Q22-如果业务方要求”必须-100-准确”，你会怎么回应？"><a href="#Q22-如果业务方要求”必须-100-准确”，你会怎么回应？" class="headerlink" title="Q22. 如果业务方要求”必须 100% 准确”，你会怎么回应？"></a>Q22. 如果业务方要求”必须 100% 准确”，你会怎么回应？</h3><p>面试官为什么问这个问题：<br>这是一个典型的现实冲突题。</p>
+<p>参考口语化回答：<br>我会先说明 AI 的不确定性，再讨论哪些环节可以做到接近 100%。<br>通常通过规则、人工审核配合，而不是单靠模型。<br>承诺 100% 往往是风险信号。</p>
+<h3 id="Q23-你如何决定-AI-项目”先做什么，后做什么”？"><a href="#Q23-你如何决定-AI-项目”先做什么，后做什么”？" class="headerlink" title="Q23. 你如何决定 AI 项目”先做什么，后做什么”？"></a>Q23. 你如何决定 AI 项目”先做什么，后做什么”？</h3><p>面试官为什么问这个问题：<br>考察你的落地能力。</p>
+<p>参考口语化回答：<br>我会优先做高频、低风险、价值明确的场景。<br>先跑通闭环，再逐步扩展。<br>一开始就想覆盖所有需求，基本都会失败。</p>
+<h3 id="Q24-在真实业务中，AI-输出被否定时你怎么处理？"><a href="#Q24-在真实业务中，AI-输出被否定时你怎么处理？" class="headerlink" title="Q24. 在真实业务中，AI 输出被否定时你怎么处理？"></a>Q24. 在真实业务中，AI 输出被否定时你怎么处理？</h3><p>面试官为什么问这个问题：<br>考察你对反馈的态度。</p>
+<p>参考口语化回答：<br>我会把否定当成数据，而不是失败。<br>分析被否定的原因，是信息不足、理解错误，还是流程问题。<br>这些反馈对优化系统非常有价值。</p>
+<h3 id="Q25-你如何判断-AI-给业务”带来的真实价值”？"><a href="#Q25-你如何判断-AI-给业务”带来的真实价值”？" class="headerlink" title="Q25. 你如何判断 AI 给业务”带来的真实价值”？"></a>Q25. 你如何判断 AI 给业务”带来的真实价值”？</h3><p>面试官为什么问这个问题：<br>这是一个结果导向问题。</p>
+<p>参考口语化回答：<br>我会看效率是否提升、人力是否减少、错误是否下降。<br>如果只是”看起来很智能”，但业务没变化，那价值是有限的。</p>
+<h3 id="Q26-你如何在-AI-项目中引入”人工确认环节”？"><a href="#Q26-你如何在-AI-项目中引入”人工确认环节”？" class="headerlink" title="Q26. 你如何在 AI 项目中引入”人工确认环节”？"></a>Q26. 你如何在 AI 项目中引入”人工确认环节”？</h3><p>面试官为什么问这个问题：<br>这是安全与效率平衡的考察。</p>
+<p>参考口语化回答：<br>我会只在关键节点引入人工，而不是每一步都确认。<br>比如最终结论、对外输出前。<br>这样既安全，也不会拖慢流程。</p>
+<h3 id="Q27-你如何应对业务方频繁变更需求？"><a href="#Q27-你如何应对业务方频繁变更需求？" class="headerlink" title="Q27. 你如何应对业务方频繁变更需求？"></a>Q27. 你如何应对业务方频繁变更需求？</h3><p>面试官为什么问这个问题：<br>这是非常现实的问题。</p>
+<p>参考口语化回答：<br>我会提前把系统设计成可配置的。<br>需求变更尽量通过配置和策略调整解决，而不是重写代码。<br>否则 AI 项目会被拖死。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】-1"><a href="#第五层：进阶与加分项（架构-视野）【3-题】-1" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q28-你如何看待”AI-应用平台化”这件事？"><a href="#Q28-你如何看待”AI-应用平台化”这件事？" class="headerlink" title="Q28. 你如何看待”AI 应用平台化”这件事？"></a>Q28. 你如何看待”AI 应用平台化”这件事？</h3><p>面试官为什么问这个问题：<br>这是高级工程师视角。</p>
+<p>参考口语化回答：<br>平台化能避免重复造轮子。<br>把模型接入、Prompt 管理、监控统一起来，<br>业务团队只关注场景本身，整体效率会高很多。</p>
+<h3 id="Q29-你认为未来-AI-应用工程师会越来越偏”工程”还是”产品”？"><a href="#Q29-你认为未来-AI-应用工程师会越来越偏”工程”还是”产品”？" class="headerlink" title="Q29. 你认为未来 AI 应用工程师会越来越偏”工程”还是”产品”？"></a>Q29. 你认为未来 AI 应用工程师会越来越偏”工程”还是”产品”？</h3><p>面试官为什么问这个问题：<br>这是对职业理解的考察。</p>
+<p>参考口语化回答：<br>我觉得两者会越来越融合。<br>懂工程但不懂业务，很难做出好应用；<br>只懂产品，不懂工程，又很难落地。</p>
+<h3 id="Q30-面试官眼中，什么样的-AI-应用工程师”值得培养”？"><a href="#Q30-面试官眼中，什么样的-AI-应用工程师”值得培养”？" class="headerlink" title="Q30. 面试官眼中，什么样的 AI 应用工程师”值得培养”？"></a>Q30. 面试官眼中，什么样的 AI 应用工程师”值得培养”？</h3><p>面试官为什么问这个问题：<br>这是典型的潜力判断题。</p>
+<p>参考口语化回答：<br>我觉得是能主动考虑风险、成本和长期维护的人。<br>不只是把功能做出来，而是思考”上线后怎么办”。<br>这种人通常成长得很快。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/01/18/cargo-package-management/">Cargo 包管理器完全指南</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/01/01/ai-interview-01-python/">AI面试题 - Python 基础与工程实践</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2026/01/01/ai-interview-01-python/" title="AI面试题 - Python 基础与工程实践"><span class="title">AI面试题 - Python 基础与工程实践</span></a><a class="item" href="/2026/01/01/ai-interview-03-transformer/" title="AI面试题 - Transformer 架构原理"><span class="title">AI面试题 - Transformer 架构原理</span></a><a class="item" href="/2026/01/01/ai-interview-04-multimodal/" title="AI面试题 - 多模态 AI 应用"><span class="title">AI面试题 - 多模态 AI 应用</span></a><a class="item" href="/2026/01/01/ai-interview-05-agent-langchain/" title="AI面试题 - LangChain 智能体开发"><span class="title">AI面试题 - LangChain 智能体开发</span></a><a class="item" href="/2026/01/01/ai-interview-02-pytorch/" title="AI面试题 - PyTorch 深度学习框架"><span class="title">AI面试题 - PyTorch 深度学习框架</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E7%9F%A5%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91"><span class="toc-text">第一层：基础认知（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E4%BD%A0%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3%E2%80%9DAI-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E2%80%9D%E8%BF%99%E4%B8%AA%E5%B2%97%E4%BD%8D%EF%BC%9F%E5%92%8C%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%9C%89%E4%BB%80%E4%B9%88%E6%9C%AC%E8%B4%A8%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">Q1. 你怎么理解”AI 应用开发工程师”这个岗位？和算法工程师有什么本质区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E5%9C%A8%E4%BD%A0%E7%9C%8B%E6%9D%A5%EF%BC%8C%E2%80%9D%E6%A8%A1%E5%9E%8B%E2%80%9D%E2%80%9D%E7%AE%97%E6%B3%95%E2%80%9D%E2%80%9DAI-%E5%BA%94%E7%94%A8%E2%80%9D%E2%80%9DAI-%E7%B3%BB%E7%BB%9F%E2%80%9D%E4%B9%8B%E9%97%B4%E6%98%AF%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="toc-text">Q2. 在你看来，”模型””算法””AI 应用””AI 系统”之间是什么关系？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E4%BD%A0%E8%A7%89%E5%BE%97%E4%BC%81%E4%B8%9A%E7%9C%9F%E6%AD%A3%E9%9C%80%E8%A6%81%E7%9A%84%E6%98%AF%E2%80%9D%E6%9B%B4%E5%BC%BA%E7%9A%84%E6%A8%A1%E5%9E%8B%E2%80%9D%E8%BF%98%E6%98%AF%E2%80%9D%E6%9B%B4%E5%A5%BD%E7%9A%84-AI-%E5%BA%94%E7%94%A8%E2%80%9D%EF%BC%9F"><span class="toc-text">Q3. 你觉得企业真正需要的是”更强的模型”还是”更好的 AI 应用”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E4%BD%A0%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA-AI-%E5%8A%9F%E8%83%BD%E6%98%AF%E4%B8%8D%E6%98%AF%E2%80%9D%E8%83%BD%E4%B8%8A%E7%BA%BF%E2%80%9D%E7%9A%84%E7%8A%B6%E6%80%81%EF%BC%9F"><span class="toc-text">Q4. 你怎么判断一个 AI 功能是不是”能上线”的状态？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E4%BD%A0%E8%A7%89%E5%BE%97-AI-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E4%B8%AD%EF%BC%8C%E6%9C%80%E5%AE%B9%E6%98%93%E8%A2%AB%E6%96%B0%E4%BA%BA%E5%BF%BD%E8%A7%86%E7%9A%84%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q5. 你觉得 AI 应用开发中，最容易被新人忽视的点是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E4%BD%A0%E5%9C%A8%E5%AE%9E%E9%99%85%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%98%AF%E6%80%8E%E4%B9%88%E5%86%99-Prompt-%E7%9A%84%EF%BC%9F%E6%9C%89%E6%B2%A1%E6%9C%89%E6%96%B9%E6%B3%95%E8%AE%BA%EF%BC%9F"><span class="toc-text">Q6. 你在实际项目中是怎么写 Prompt 的？有没有方法论？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E4%BD%A0%E6%98%AF%E6%80%8E%E4%B9%88%E6%8E%A7%E5%88%B6%E5%A4%A7%E6%A8%A1%E5%9E%8B%E2%80%9D%E8%83%A1%E8%AF%B4%E5%85%AB%E9%81%93%E2%80%9D%E7%9A%84%EF%BC%9F"><span class="toc-text">Q7. 你是怎么控制大模型”胡说八道”的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E4%BD%A0%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3-RAG%EF%BC%9F%E5%AE%83%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q8. 你怎么理解 RAG？它解决的核心问题是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9-%E5%9C%A8-RAG-%E9%A1%B9%E7%9B%AE%E4%B8%AD%EF%BC%8C%E4%BD%A0%E8%A7%89%E5%BE%97%E6%9C%80%E5%AE%B9%E6%98%93%E5%BD%B1%E5%93%8D%E6%95%88%E6%9E%9C%E7%9A%84%E7%8E%AF%E8%8A%82%E6%98%AF%E5%93%AA%E4%B8%80%E6%AD%A5%EF%BC%9F"><span class="toc-text">Q9. 在 RAG 项目中，你觉得最容易影响效果的环节是哪一步？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10-%E4%BD%A0%E6%98%AF%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3-Agent-%E7%9A%84%EF%BC%9F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E7%94%A8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E8%AF%A5%E7%94%A8%EF%BC%9F"><span class="toc-text">Q10. 你是怎么理解 Agent 的？什么时候该用，什么时候不该用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q11-%E5%9C%A8%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E6%88%96%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E4%B8%AD%EF%BC%8C%E4%BD%A0%E6%9C%80%E5%85%B3%E6%B3%A8%E5%93%AA%E4%BA%9B%E9%A3%8E%E9%99%A9%EF%BC%9F"><span class="toc-text">Q11. 在工具调用或函数调用中，你最关注哪些风险？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q12-%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E4%B8%8A%E4%B8%8B%E6%96%87%E9%95%BF%E5%BA%A6%E5%92%8C-Token-%E6%88%90%E6%9C%AC%E7%9A%84%EF%BC%9F"><span class="toc-text">Q12. 你是如何管理上下文长度和 Token 成本的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q13-%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E4%B8%80%E4%B8%AA-Prompt-%E6%88%96-RAG-%E6%94%B9%E5%8A%A8%E2%80%9D%E6%98%AF%E4%B8%8D%E6%98%AF%E7%9C%9F%E7%9A%84%E5%8F%98%E5%A5%BD%E4%BA%86%E2%80%9D%EF%BC%9F"><span class="toc-text">Q13. 你如何评估一个 Prompt 或 RAG 改动”是不是真的变好了”？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q14-%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E7%9A%84-AI-%E5%BA%94%E7%94%A8%E5%90%8E%E7%AB%AF%E6%9E%B6%E6%9E%84%EF%BC%8C%E4%BD%A0%E4%BC%9A%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%EF%BC%9F"><span class="toc-text">Q14. 一个典型的 AI 应用后端架构，你会怎么设计？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q15-AI-%E5%BA%94%E7%94%A8%E4%B8%AD%EF%BC%8C%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%E9%80%9A%E5%B8%B8%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%EF%BC%9F"><span class="toc-text">Q15. AI 应用中，性能瓶颈通常出现在哪？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q16-%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%81%9A-AI-%E5%BA%94%E7%94%A8%E7%9A%84%E6%97%A5%E5%BF%97%E5%92%8C%E7%9B%91%E6%8E%A7%E7%9A%84%EF%BC%9F"><span class="toc-text">Q16. 你是如何做 AI 应用的日志和监控的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17-AI-%E5%BA%94%E7%94%A8%E5%A6%82%E4%BD%95%E5%81%9A%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%92%8C%E5%85%9C%E5%BA%95%EF%BC%9F"><span class="toc-text">Q17. AI 应用如何做异常处理和兜底？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q18-%E5%9C%A8-Docker-%E6%88%96%E6%9C%8D%E5%8A%A1%E5%8C%96%E9%83%A8%E7%BD%B2-AI-%E5%BA%94%E7%94%A8%E6%97%B6%EF%BC%8C%E4%BD%A0%E4%BC%9A%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q18. 在 Docker 或服务化部署 AI 应用时，你会注意什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q19-%E4%BD%A0%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E5%92%8C%E9%99%90%E6%B5%81%E7%9A%84%EF%BC%9F"><span class="toc-text">Q19. 你是怎么做并发控制和限流的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q20-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E7%BC%93%E5%AD%98%E5%92%8C-AI-%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="toc-text">Q20. 你如何看待缓存和 AI 的关系？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q21-AI-%E5%BA%94%E7%94%A8%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E2%80%9D%E5%8F%AF%E7%BB%B4%E6%8A%A4%E2%80%9D%EF%BC%9F"><span class="toc-text">Q21. AI 应用如何做到”可维护”？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91"><span class="toc-text">第四层：真实项目与场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q22-%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E6%8A%8A-AI-%E8%83%BD%E5%8A%9B%E5%B5%8C%E5%85%A5%E5%88%B0%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%EF%BC%9F"><span class="toc-text">Q22. 你是如何把 AI 能力嵌入到业务流程中的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q23-%E5%9C%A8%E5%8C%BB%E7%96%97%E6%88%96%E9%87%91%E8%9E%8D%E5%9C%BA%E6%99%AF%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6-AI-%E9%A3%8E%E9%99%A9%EF%BC%9F"><span class="toc-text">Q23. 在医疗或金融场景中，你如何控制 AI 风险？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q24-%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E4%B8%80%E4%B8%AA-AI-%E9%A1%B9%E7%9B%AE%E2%80%9D%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E7%BB%A7%E7%BB%AD%E5%81%9A%E2%80%9D%EF%BC%9F"><span class="toc-text">Q24. 你如何评估一个 AI 项目”值不值得继续做”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q25-%E5%A6%82%E6%9E%9C%E4%B8%9A%E5%8A%A1%E6%96%B9%E8%AF%B4%E2%80%9D%E6%95%88%E6%9E%9C%E4%B8%8D%E7%A8%B3%E5%AE%9A%E2%80%9D%EF%BC%8C%E4%BD%A0%E4%BC%9A%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5%EF%BC%9F"><span class="toc-text">Q25. 如果业务方说”效果不稳定”，你会怎么排查？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q26-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%92%8C%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E6%88%96%E4%B8%9A%E5%8A%A1%E6%96%B9%E5%8D%8F%E4%BD%9C-AI-%E9%A1%B9%E7%9B%AE%EF%BC%9F"><span class="toc-text">Q26. 你如何和产品经理或业务方协作 AI 项目？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q27-%E4%BD%A0%E9%81%87%E5%88%B0%E8%BF%87-AI-%E9%A1%B9%E7%9B%AE%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%83%85%E5%86%B5%E5%90%97%EF%BC%9F%E5%8E%9F%E5%9B%A0%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q27. 你遇到过 AI 项目失败的情况吗？原因是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q28-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E5%A4%9A-Agent-%E6%9E%B6%E6%9E%84%E7%9A%84%E4%BB%B7%E5%80%BC%E5%92%8C%E9%A3%8E%E9%99%A9%EF%BC%9F"><span class="toc-text">Q28. 你如何看待多 Agent 架构的价值和风险？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q29-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-LangChain-LangGraph-%E8%BF%99%E7%B1%BB%E6%A1%86%E6%9E%B6%EF%BC%9F"><span class="toc-text">Q29. 你如何看待 LangChain &#x2F; LangGraph 这类框架？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30-%E5%9C%A8%E4%BD%A0%E7%9C%8B%E6%9D%A5%EF%BC%8CAI-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E6%9C%AA%E6%9D%A5%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E8%83%BD%E5%8A%9B%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Q30. 在你看来，AI 应用开发工程师未来最重要的能力是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E7%9F%A5%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91-1"><span class="toc-text">第一层：基础认知（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E4%BD%A0%E8%AE%A4%E4%B8%BA-AI-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E4%B8%AD%EF%BC%8C%E2%80%9D%E5%B7%A5%E7%A8%8B%E5%A4%8D%E6%9D%82%E5%BA%A6%E2%80%9D%E4%B8%BB%E8%A6%81%E6%9D%A5%E8%87%AA%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-text">Q1. 你认为 AI 应用开发中，”工程复杂度”主要来自哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%BD%A0%E5%90%91%E9%9D%9E%E6%8A%80%E6%9C%AF%E5%90%8C%E4%BA%8B%E8%A7%A3%E9%87%8A-AI-%E5%BA%94%E7%94%A8%E7%9A%84%E4%BB%B7%E5%80%BC%EF%BC%8C%E4%BD%A0%E4%BC%9A%E6%80%8E%E4%B9%88%E8%AF%B4%EF%BC%9F"><span class="toc-text">Q2. 如果让你向非技术同事解释 AI 应用的价值，你会怎么说？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E4%BD%A0%E8%A7%89%E5%BE%97%E2%80%9DAI-%E5%BA%94%E7%94%A8%E5%A4%B1%E8%B4%A5%E2%80%9D%E7%9A%84%E5%85%B8%E5%9E%8B%E4%BF%A1%E5%8F%B7%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-text">Q3. 你觉得”AI 应用失败”的典型信号有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E5%9C%A8-AI-%E5%BA%94%E7%94%A8%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E2%80%9D%E7%A1%AE%E5%AE%9A%E6%80%A7%E8%BE%93%E5%87%BA%E2%80%9D%E8%BF%99%E4%BB%B6%E4%BA%8B%EF%BC%9F"><span class="toc-text">Q4. 在 AI 应用中，你如何看待”确定性输出”这件事？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E4%BD%A0%E6%80%8E%E4%B9%88%E7%9C%8B%E2%80%9DAI-%E8%83%BD%E4%B8%8D%E8%83%BD%E5%AE%8C%E5%85%A8%E6%9B%BF%E4%BB%A3%E4%BA%BA%E2%80%9D%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">Q5. 你怎么看”AI 能不能完全替代人”这个问题？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E4%BD%A0%E5%9C%A8-Prompt-%E4%B8%AD%E6%98%AF%E5%A6%82%E4%BD%95%E8%A1%A8%E8%BE%BE%E2%80%9D%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E2%80%9D%E7%9A%84%EF%BC%9F"><span class="toc-text">Q6. 你在 Prompt 中是如何表达”边界条件”的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87-Prompt-%E8%B0%83%E5%BE%97%E8%B6%8A%E5%A4%9A%EF%BC%8C%E6%95%88%E6%9E%9C%E5%8F%8D%E8%80%8C%E8%B6%8A%E5%B7%AE%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F"><span class="toc-text">Q7. 你是否遇到过 Prompt 调得越多，效果反而越差的情况？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E6%98%AF%E5%90%A6%E9%80%82%E5%90%88%E7%94%A8-LLM-%E8%A7%A3%E5%86%B3%EF%BC%9F"><span class="toc-text">Q8. 你如何判断一个问题是否适合用 LLM 解决？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9-%E5%9C%A8-RAG-%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E2%80%9D%E5%8F%AC%E5%9B%9E%E7%BB%93%E6%9E%9C%E5%86%B2%E7%AA%81%E2%80%9D%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F"><span class="toc-text">Q9. 在 RAG 中，你如何处理”召回结果冲突”的情况？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10-%E4%BD%A0%E5%A6%82%E4%BD%95%E9%99%90%E5%88%B6%E6%A8%A1%E5%9E%8B%E2%80%9D%E8%BF%87%E5%BA%A6%E6%8E%A8%E7%90%86%E2%80%9D%E6%88%96%E2%80%9D%E8%BF%87%E5%BA%A6%E5%8F%91%E6%8C%A5%E2%80%9D%EF%BC%9F"><span class="toc-text">Q10. 你如何限制模型”过度推理”或”过度发挥”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q11-%E4%BD%A0%E6%80%8E%E4%B9%88%E7%9C%8B%E5%BE%85%E2%80%9D%E6%A8%A1%E5%9E%8B%E6%B8%A9%E5%BA%A6%E2%80%9D%E7%AD%89%E5%8F%82%E6%95%B0%E5%9C%A8%E5%B7%A5%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="toc-text">Q11. 你怎么看待”模型温度”等参数在工程中的作用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q12-%E5%9C%A8-Agent-%E8%AE%BE%E8%AE%A1%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E2%80%9D%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E2%80%9D%EF%BC%9F"><span class="toc-text">Q12. 在 Agent 设计中，你如何避免”无限循环”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q13-%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0-Agent-%E5%B8%A6%E6%9D%A5%E7%9A%84%E2%80%9D%E6%94%B6%E7%9B%8A%E6%98%AF%E5%90%A6%E5%A4%A7%E4%BA%8E%E5%A4%8D%E6%9D%82%E5%BA%A6%E2%80%9D%EF%BC%9F"><span class="toc-text">Q13. 你如何评估 Agent 带来的”收益是否大于复杂度”？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q14-AI-%E5%BA%94%E7%94%A8%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E2%80%9D%E7%89%88%E6%9C%AC%E5%8F%AF%E5%9B%9E%E6%BB%9A%E2%80%9D%EF%BC%9F"><span class="toc-text">Q14. AI 应用如何做到”版本可回滚”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q15-%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%81%9A-A-B-%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81-AI-%E6%95%88%E6%9E%9C%E7%9A%84%EF%BC%9F"><span class="toc-text">Q15. 你是如何做 A&#x2F;B 测试验证 AI 效果的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q16-AI-%E6%9C%8D%E5%8A%A1%E8%B6%85%E6%97%B6%EF%BC%8C%E4%BD%A0%E9%80%9A%E5%B8%B8%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-text">Q16. AI 服务超时，你通常怎么处理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17-%E4%BD%A0%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2-Prompt-%E6%88%96%E6%8E%A5%E5%8F%A3%E8%A2%AB%E6%BB%A5%E7%94%A8%EF%BC%9F"><span class="toc-text">Q17. 你如何防止 Prompt 或接口被滥用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q18-%E5%9C%A8%E5%A4%9A%E6%A8%A1%E5%9E%8B%E5%85%B1%E5%AD%98%E7%9A%84%E7%B3%BB%E7%BB%9F%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%81%9A%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%EF%BC%9F"><span class="toc-text">Q18. 在多模型共存的系统中，你如何做路由选择？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q19-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7-AI-%E8%BE%93%E5%87%BA%E2%80%9D%E8%B4%A8%E9%87%8F%E4%B8%8B%E9%99%8D%E2%80%9D%E8%BF%99%E7%A7%8D%E8%BD%AF%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">Q19. 你如何监控 AI 输出”质量下降”这种软问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q20-AI-%E5%BA%94%E7%94%A8%E5%A6%82%E4%BD%95%E6%94%AF%E6%8C%81%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83%EF%BC%9F"><span class="toc-text">Q20. AI 应用如何支持灰度发布？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q21-%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%A9-AI-%E7%B3%BB%E7%BB%9F%E2%80%9D%E6%9B%B4%E5%AE%B9%E6%98%93%E8%A2%AB%E6%8E%A5%E6%89%8B%E2%80%9D%EF%BC%9F"><span class="toc-text">Q21. 你如何让 AI 系统”更容易被接手”？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91-1"><span class="toc-text">第四层：真实项目与场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q22-%E5%A6%82%E6%9E%9C%E4%B8%9A%E5%8A%A1%E6%96%B9%E8%A6%81%E6%B1%82%E2%80%9D%E5%BF%85%E9%A1%BB-100-%E5%87%86%E7%A1%AE%E2%80%9D%EF%BC%8C%E4%BD%A0%E4%BC%9A%E6%80%8E%E4%B9%88%E5%9B%9E%E5%BA%94%EF%BC%9F"><span class="toc-text">Q22. 如果业务方要求”必须 100% 准确”，你会怎么回应？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q23-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%86%B3%E5%AE%9A-AI-%E9%A1%B9%E7%9B%AE%E2%80%9D%E5%85%88%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%8C%E5%90%8E%E5%81%9A%E4%BB%80%E4%B9%88%E2%80%9D%EF%BC%9F"><span class="toc-text">Q23. 你如何决定 AI 项目”先做什么，后做什么”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q24-%E5%9C%A8%E7%9C%9F%E5%AE%9E%E4%B8%9A%E5%8A%A1%E4%B8%AD%EF%BC%8CAI-%E8%BE%93%E5%87%BA%E8%A2%AB%E5%90%A6%E5%AE%9A%E6%97%B6%E4%BD%A0%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-text">Q24. 在真实业务中，AI 输出被否定时你怎么处理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q25-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD-AI-%E7%BB%99%E4%B8%9A%E5%8A%A1%E2%80%9D%E5%B8%A6%E6%9D%A5%E7%9A%84%E7%9C%9F%E5%AE%9E%E4%BB%B7%E5%80%BC%E2%80%9D%EF%BC%9F"><span class="toc-text">Q25. 你如何判断 AI 给业务”带来的真实价值”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q26-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-AI-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BC%95%E5%85%A5%E2%80%9D%E4%BA%BA%E5%B7%A5%E7%A1%AE%E8%AE%A4%E7%8E%AF%E8%8A%82%E2%80%9D%EF%BC%9F"><span class="toc-text">Q26. 你如何在 AI 项目中引入”人工确认环节”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q27-%E4%BD%A0%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E4%B8%9A%E5%8A%A1%E6%96%B9%E9%A2%91%E7%B9%81%E5%8F%98%E6%9B%B4%E9%9C%80%E6%B1%82%EF%BC%9F"><span class="toc-text">Q27. 你如何应对业务方频繁变更需求？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91-1"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q28-%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E2%80%9DAI-%E5%BA%94%E7%94%A8%E5%B9%B3%E5%8F%B0%E5%8C%96%E2%80%9D%E8%BF%99%E4%BB%B6%E4%BA%8B%EF%BC%9F"><span class="toc-text">Q28. 你如何看待”AI 应用平台化”这件事？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q29-%E4%BD%A0%E8%AE%A4%E4%B8%BA%E6%9C%AA%E6%9D%A5-AI-%E5%BA%94%E7%94%A8%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%BC%9A%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%81%8F%E2%80%9D%E5%B7%A5%E7%A8%8B%E2%80%9D%E8%BF%98%E6%98%AF%E2%80%9D%E4%BA%A7%E5%93%81%E2%80%9D%EF%BC%9F"><span class="toc-text">Q29. 你认为未来 AI 应用工程师会越来越偏”工程”还是”产品”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30-%E9%9D%A2%E8%AF%95%E5%AE%98%E7%9C%BC%E4%B8%AD%EF%BC%8C%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84-AI-%E5%BA%94%E7%94%A8%E5%B7%A5%E7%A8%8B%E5%B8%88%E2%80%9D%E5%80%BC%E5%BE%97%E5%9F%B9%E5%85%BB%E2%80%9D%EF%BC%9F"><span class="toc-text">Q30. 面试官眼中，什么样的 AI 应用工程师”值得培养”？</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper markdown"><div class="widget-body fs14"><h3 id="快捷导航"><a href="#快捷导航" class="headerlink" title="快捷导航"></a>快捷导航</h3><p><a href="/categories/" style="font-size:1.2em;">🗂️ 分类索引</a><br><a href="/tags/" style="font-size:1.2em;">🔖 标签索引</a><br><a href="/archives/" style="font-size:1.2em;">🕘 文章归档</a><br><a target="_blank" rel="noopener" href="https://wenyinos.com/" style="font-size:1.2em;">📚 社区主页</a><br><a target="_blank" rel="noopener" href="https://dev.wenyinos.com/my/" style="font-size:1.2em;">📰 项目管理</a><br><a target="_blank" rel="noopener" href="https://forum.wenyinos.com/" style="font-size:1.2em;">🏷️ 论坛交流</a></p>
+</div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 16.27px; color: #694ab0" class="tag -4">agent</a> <a href="/tags/ai-engineer/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ai-engineer</a> <a href="/tags/aliyun/" style="font-size: 13px; color: #2563eb" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 13px; color: #2563eb" class="tag -0">android</a> <a href="/tags/apt/" style="font-size: 13px; color: #2563eb" class="tag -0">apt</a> <a href="/tags/arc/" style="font-size: 13px; color: #2563eb" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 13.82px; color: #365ddc" class="tag -1">arch</a> <a href="/tags/arch-linux/" style="font-size: 13px; color: #2563eb" class="tag -0">arch-linux</a> <a href="/tags/asf/" style="font-size: 13px; color: #2563eb" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 13px; color: #2563eb" class="tag -0">asus</a> <a href="/tags/async/" style="font-size: 13px; color: #2563eb" class="tag -0">async</a> <a href="/tags/attention-mechanism/" style="font-size: 13px; color: #2563eb" class="tag -0">attention-mechanism</a> <a href="/tags/aur/" style="font-size: 13px; color: #2563eb" class="tag -0">aur</a> <a href="/tags/bbr/" style="font-size: 13.82px; color: #365ddc" class="tag -1">bbr</a> <a href="/tags/benchmark/" style="font-size: 13px; color: #2563eb" class="tag -0">benchmark</a> <a href="/tags/cache/" style="font-size: 14.64px; color: #4756cd" class="tag -2">cache</a> <a href="/tags/career/" style="font-size: 13px; color: #2563eb" class="tag -0">career</a> <a href="/tags/cargo/" style="font-size: 13.82px; color: #365ddc" class="tag -1">cargo</a> <a href="/tags/centos/" style="font-size: 14.64px; color: #4756cd" class="tag -2">centos</a> <a href="/tags/cheat/" style="font-size: 13px; color: #2563eb" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 13px; color: #2563eb" class="tag -0">colab</a> <a href="/tags/command-line/" style="font-size: 13px; color: #2563eb" class="tag -0">command-line</a> <a href="/tags/cpp/" style="font-size: 13px; color: #2563eb" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 16.27px; color: #694ab0" class="tag -4">cpu</a> <a href="/tags/curl/" style="font-size: 13px; color: #2563eb" class="tag -0">curl</a> <a href="/tags/data-framework/" style="font-size: 13px; color: #2563eb" class="tag -0">data-framework</a> <a href="/tags/debian/" style="font-size: 13px; color: #2563eb" class="tag -0">debian</a> <a href="/tags/deep-learning/" style="font-size: 13px; color: #2563eb" class="tag -0">deep-learning</a> <a href="/tags/deployment/" style="font-size: 13px; color: #2563eb" class="tag -0">deployment</a> <a href="/tags/dg1/" style="font-size: 13px; color: #2563eb" class="tag -0">dg1</a> <a href="/tags/dnf/" style="font-size: 13px; color: #2563eb" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14.64px; color: #4756cd" class="tag -2">docker</a> <a href="/tags/edk2/" style="font-size: 13px; color: #2563eb" class="tag -0">edk2</a> <a href="/tags/entware/" style="font-size: 13px; color: #2563eb" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 13.82px; color: #365ddc" class="tag -1">epel</a> <a href="/tags/fcitx/" style="font-size: 13px; color: #2563eb" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 17.91px; color: #8c3d92" class="tag -5">fedora</a> <a href="/tags/firewalld/" style="font-size: 13px; color: #2563eb" class="tag -0">firewalld</a> <a href="/tags/freebsd/" style="font-size: 13px; color: #2563eb" class="tag -0">freebsd</a> <a href="/tags/fstab/" style="font-size: 13px; color: #2563eb" class="tag -0">fstab</a> <a href="/tags/fuchsia/" style="font-size: 13px; color: #2563eb" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 13px; color: #2563eb" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 13px; color: #2563eb" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 14.64px; color: #4756cd" class="tag -2">github</a> <a href="/tags/gpu/" style="font-size: 13px; color: #2563eb" class="tag -0">gpu</a> <a href="/tags/graphics/" style="font-size: 16.27px; color: #694ab0" class="tag -4">graphics</a> <a href="/tags/grub/" style="font-size: 15.45px; color: #5850bf" class="tag -3">grub</a> <a href="/tags/grubby/" style="font-size: 13px; color: #2563eb" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 13px; color: #2563eb" class="tag -0">hi1620</a> <a href="/tags/hr-screening/" style="font-size: 13px; color: #2563eb" class="tag -0">hr-screening</a> <a href="/tags/huawei/" style="font-size: 13px; color: #2563eb" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 13px; color: #2563eb" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 13px; color: #2563eb" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 13px; color: #2563eb" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 18.73px; color: #9d3683" class="tag -6">intel</a> <a href="/tags/interview/" style="font-size: 21.18px; color: #d02357" class="tag -9">interview</a> <a href="/tags/interview-tips/" style="font-size: 13px; color: #2563eb" class="tag -0">interview-tips</a> <a href="/tags/ip/" style="font-size: 13px; color: #2563eb" class="tag -0">ip</a> <a href="/tags/ipex-llm/" style="font-size: 13px; color: #2563eb" class="tag -0">ipex-llm</a> <a href="/tags/kde/" style="font-size: 15.45px; color: #5850bf" class="tag -3">kde</a> <a href="/tags/kernel/" style="font-size: 16.27px; color: #694ab0" class="tag -4">kernel</a> <a href="/tags/kvm/" style="font-size: 13.82px; color: #365ddc" class="tag -1">kvm</a> <a href="/tags/langchain/" style="font-size: 13px; color: #2563eb" class="tag -0">langchain</a> <a href="/tags/langgraph/" style="font-size: 13px; color: #2563eb" class="tag -0">langgraph</a> <a href="/tags/lcd/" style="font-size: 13px; color: #2563eb" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 13px; color: #2563eb" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 22px; color: #e11d48" class="tag -10">linux</a> <a href="/tags/llamaindex/" style="font-size: 13px; color: #2563eb" class="tag -0">llamaindex</a> <a href="/tags/llm/" style="font-size: 15.45px; color: #5850bf" class="tag -3">llm</a> <a href="/tags/lnmp/" style="font-size: 13px; color: #2563eb" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 13px; color: #2563eb" class="tag -0">magisk</a> <a href="/tags/mcp/" style="font-size: 13px; color: #2563eb" class="tag -0">mcp</a> <a href="/tags/mediatek/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mediatek</a> <a href="/tags/merlin/" style="font-size: 13px; color: #2563eb" class="tag -0">merlin</a> <a href="/tags/mlops/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mlops</a> <a href="/tags/modem/" style="font-size: 13px; color: #2563eb" class="tag -0">modem</a> <a href="/tags/monitoring/" style="font-size: 13px; color: #2563eb" class="tag -0">monitoring</a> <a href="/tags/multi-agent/" style="font-size: 13px; color: #2563eb" class="tag -0">multi-agent</a> <a href="/tags/multimodal/" style="font-size: 13px; color: #2563eb" class="tag -0">multimodal</a> <a href="/tags/mysql/" style="font-size: 13px; color: #2563eb" class="tag -0">mysql</a> <a href="/tags/n1/" style="font-size: 13px; color: #2563eb" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 13.82px; color: #365ddc" class="tag -1">nas</a> <a href="/tags/novelai/" style="font-size: 13px; color: #2563eb" class="tag -0">novelai</a> <a href="/tags/npm/" style="font-size: 13px; color: #2563eb" class="tag -0">npm</a> <a href="/tags/observability/" style="font-size: 13px; color: #2563eb" class="tag -0">observability</a> <a href="/tags/openai/" style="font-size: 13px; color: #2563eb" class="tag -0">openai</a> <a href="/tags/opencl/" style="font-size: 13px; color: #2563eb" class="tag -0">opencl</a> <a href="/tags/openvz/" style="font-size: 13px; color: #2563eb" class="tag -0">openvz</a> <a href="/tags/openwrt/" style="font-size: 13px; color: #2563eb" class="tag -0">openwrt</a> <a href="/tags/package-management/" style="font-size: 19.55px; color: #ae3074" class="tag -7">package-management</a> <a href="/tags/packagekit/" style="font-size: 13px; color: #2563eb" class="tag -0">packagekit</a> <a href="/tags/packaging/" style="font-size: 13.82px; color: #365ddc" class="tag -1">packaging</a> <a href="/tags/pkg/" style="font-size: 13px; color: #2563eb" class="tag -0">pkg</a> <a href="/tags/pnpm/" style="font-size: 13px; color: #2563eb" class="tag -0">pnpm</a> <a href="/tags/podman/" style="font-size: 13px; color: #2563eb" class="tag -0">podman</a> <a href="/tags/power/" style="font-size: 13px; color: #2563eb" class="tag -0">power</a> <a href="/tags/powershell/" style="font-size: 13px; color: #2563eb" class="tag -0">powershell</a> <a href="/tags/proxy/" style="font-size: 14.64px; color: #4756cd" class="tag -2">proxy</a> <a href="/tags/python/" style="font-size: 13px; color: #2563eb" class="tag -0">python</a> <a href="/tags/pytorch/" style="font-size: 13px; color: #2563eb" class="tag -0">pytorch</a> <a href="/tags/qchatgpt/" style="font-size: 13px; color: #2563eb" class="tag -0">qchatgpt</a> <a href="/tags/qemu/" style="font-size: 13px; color: #2563eb" class="tag -0">qemu</a> <a href="/tags/rag/" style="font-size: 13px; color: #2563eb" class="tag -0">rag</a> <a href="/tags/raspberry-pi/" style="font-size: 15.45px; color: #5850bf" class="tag -3">raspberry-pi</a> <a href="/tags/redhat/" style="font-size: 15.45px; color: #5850bf" class="tag -3">redhat</a> <a href="/tags/rhel/" style="font-size: 14.64px; color: #4756cd" class="tag -2">rhel</a> <a href="/tags/rk3588/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rk3588</a> <a href="/tags/rpm/" style="font-size: 13px; color: #2563eb" class="tag -0">rpm</a> <a href="/tags/rust/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rust</a> <a href="/tags/selinux/" style="font-size: 13px; color: #2563eb" class="tag -0">selinux</a> <a href="/tags/service/" style="font-size: 13px; color: #2563eb" class="tag -0">service</a> <a href="/tags/shadowsocks/" style="font-size: 13px; color: #2563eb" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 13px; color: #2563eb" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 14.64px; color: #4756cd" class="tag -2">ssh</a> <a href="/tags/steam/" style="font-size: 13px; color: #2563eb" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 13px; color: #2563eb" class="tag -0">synology</a> <a href="/tags/system-design/" style="font-size: 13.82px; color: #365ddc" class="tag -1">system-design</a> <a href="/tags/systemd/" style="font-size: 15.45px; color: #5850bf" class="tag -3">systemd</a> <a href="/tags/tool-calling/" style="font-size: 13px; color: #2563eb" class="tag -0">tool-calling</a> <a href="/tags/transformer/" style="font-size: 13px; color: #2563eb" class="tag -0">transformer</a> <a href="/tags/ubuntu/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ubuntu</a> <a href="/tags/uefi/" style="font-size: 13px; color: #2563eb" class="tag -0">uefi</a> <a href="/tags/virt-manager/" style="font-size: 13px; color: #2563eb" class="tag -0">virt-manager</a> <a href="/tags/vision-language-model/" style="font-size: 13px; color: #2563eb" class="tag -0">vision-language-model</a> <a href="/tags/vista/" style="font-size: 13.82px; color: #365ddc" class="tag -1">vista</a> <a href="/tags/vmware/" style="font-size: 13px; color: #2563eb" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 13px; color: #2563eb" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 15.45px; color: #5850bf" class="tag -3">vps</a> <a href="/tags/vscode/" style="font-size: 13px; color: #2563eb" class="tag -0">vscode</a> <a href="/tags/wayland/" style="font-size: 13px; color: #2563eb" class="tag -0">wayland</a> <a href="/tags/windows/" style="font-size: 20.36px; color: #bf2a66" class="tag -8">windows</a> <a href="/tags/windows-server/" style="font-size: 15.45px; color: #5850bf" class="tag -3">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.09px; color: #7a43a1" class="tag -5">windows10</a> <a href="/tags/workflow/" style="font-size: 13px; color: #2563eb" class="tag -0">workflow</a> <a href="/tags/wsl/" style="font-size: 13px; color: #2563eb" class="tag -0">wsl</a> <a href="/tags/x86/" style="font-size: 13px; color: #2563eb" class="tag -0">x86</a> <a href="/tags/xfs/" style="font-size: 13px; color: #2563eb" class="tag -0">xfs</a> <a href="/tags/xwayland/" style="font-size: 13px; color: #2563eb" class="tag -0">xwayland</a> <a href="/tags/yum/" style="font-size: 13px; color: #2563eb" class="tag -0">yum</a> <a href="/tags/zerotier/" style="font-size: 13px; color: #2563eb" class="tag -0">zerotier</a> <a href="/tags/zram/" style="font-size: 13px; color: #2563eb" class="tag -0">zram</a> <a href="/tags/zsh/" style="font-size: 13.82px; color: #365ddc" class="tag -1">zsh</a> <a href="/tags/%E4%B8%AD%E7%A7%8B%E8%8A%82/" style="font-size: 13px; color: #2563eb" class="tag -0">中秋节</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 14.64px; color: #4756cd" class="tag -2">代理</a> <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/" style="font-size: 13px; color: #2563eb" class="tag -0">传统文化</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 13px; color: #2563eb" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 13px; color: #2563eb" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">开源社区</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<button class="theme-toggle" type="button" aria-label="切换夜间模式" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+  <span class="theme-toggle-text">夜间</span>
+</button>
+<script>
+  (() => {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+    const label = button.querySelector('.theme-toggle-text');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentMode = () => document.documentElement.getAttribute('data-theme') || (media.matches ? 'dark' : 'light');
+    const syncButton = () => {
+      const dark = currentMode() === 'dark';
+      button.dataset.mode = dark ? 'dark' : 'light';
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? '切换到日间模式' : '切换到夜间模式');
+      if (label) label.textContent = dark ? '日间' : '夜间';
+    };
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      window.localStorage.setItem('Stellar.theme', theme);
+      if (window.utils && utils.dark) {
+        utils.dark.mode = theme;
+        utils.dark.method?.toggle?.start?.();
+      }
+      syncButton();
+    };
+    button.addEventListener('click', () => setTheme(currentMode() === 'dark' ? 'light' : 'dark'));
+    media.addEventListener?.('change', syncButton);
+    syncButton();
+  })();
+</script>
+
+</div></body></html>

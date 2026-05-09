@@ -1,0 +1,999 @@
+
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>AI面试题 - LlamaIndex 数据框架 - 玟茵开源社区知识库</title>
+
+  
+    <meta name="description" content="Q1. 【你如何定位 LlamaIndex？它解决的核心问题是什么？】面试官为什么问这个问题：这个问题不是在考 API，而是在判断候选人是否真正理解 LlamaIndex 的核心定位。如果候选人把它等同于”另一个 RAG 框架”，通常意味着对数据层的理解是缺失的。 参考口语化回答：我一直把 LlamaIndex 当成一个”数据到推理的中间层框架”，而不是模型框架。它解决的不是”怎么问模型”，而是”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI面试题 - LlamaIndex 数据框架">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-llamaindex/">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="Q1. 【你如何定位 LlamaIndex？它解决的核心问题是什么？】面试官为什么问这个问题：这个问题不是在考 API，而是在判断候选人是否真正理解 LlamaIndex 的核心定位。如果候选人把它等同于”另一个 RAG 框架”，通常意味着对数据层的理解是缺失的。 参考口语化回答：我一直把 LlamaIndex 当成一个”数据到推理的中间层框架”，而不是模型框架。它解决的不是”怎么问模型”，而是”">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="data-framework">
+<meta property="article:tag" content="interview">
+<meta property="article:tag" content="llamaindex">
+<meta property="article:tag" content="rag">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="interview,llamaindex,rag,data-framework">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2026-01-01T00:00:00+08:00","dateModified":"2026-01-01T00:00:00+08:00","datePublished":"2026-01-01T00:00:00+08:00","description":"","headline":"AI面试题 - LlamaIndex 数据框架","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-llamaindex/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-llamaindex/","keywords":"interview, llamaindex, rag, data-framework","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源社区知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/05/08/home-space-migration-fstab-adjustment/"><span class="title">/home 空间迁移与 fstab 调整记录</span></a><a class="item title" href="/2026/04/28/disable-intel-dg1-discrete-gpu/"><span class="title">彻底禁用 DG1 独立显卡</span></a><a class="item title" href="/2026/04/17/clean-vscode/"><span class="title">清理 VS Code</span></a><a class="item title" href="/2026/04/04/fedora-rebuild-grub-config/"><span class="title">在 Fedora 下重建 GRUB 配置文件</span></a><a class="item title" href="/2026/03/27/systemd-user-session-exit-service-stop/"><span class="title">用户会话退出导致的级联服务停止</span></a><a class="item title" href="/2026/03/14/aur-submit-guide/"><span class="title">AUR 提交指南</span></a><a class="item title" href="/2026/03/03/clean-cargo-cache-and-build-artifacts/"><span class="title">清理 Cargo 缓存和构建产物</span></a><a class="item title" href="/2026/02/19/powershell-command-line-proxy/"><span class="title">PowerShell 配置命令行代理</span></a><a class="item title" href="/2026/02/06/npm-pnpm-clean-cache/"><span class="title">npm 和 pnpm 清理缓存</span></a><a class="item title" href="/2026/01/29/freebsd-pkg-autoremove-dependencies/"><span class="title">FreeBSD pkg 自动卸载安装依赖</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/">AI工程师面试题</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>AI面试题 - LlamaIndex 数据框架</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h3 id="Q1-【你如何定位-LlamaIndex？它解决的核心问题是什么？】"><a href="#Q1-【你如何定位-LlamaIndex？它解决的核心问题是什么？】" class="headerlink" title="Q1. 【你如何定位 LlamaIndex？它解决的核心问题是什么？】"></a>Q1. 【你如何定位 LlamaIndex？它解决的核心问题是什么？】</h3><p>面试官为什么问这个问题：<br>这个问题不是在考 API，而是在判断候选人是否真正理解 LlamaIndex 的核心定位。如果候选人把它等同于”另一个 RAG 框架”，通常意味着对数据层的理解是缺失的。</p>
+<p>参考口语化回答：<br>我一直把 LlamaIndex 当成一个”数据到推理的中间层框架”，而不是模型框架。它解决的不是”怎么问模型”，而是”业务里的数据，怎么被结构化、索引化，最终变成模型可以稳定推理的对象”。<br>在真实项目里，模型可以随时替换，但数据一旦没治理好，RAG 和 Agent 的行为就会非常不稳定，这也是我认为 LlamaIndex 的核心价值所在。</p>
+<h3 id="Q2-【在-Agent-架构中，LlamaIndex-和-LangChain-的职责边界你是怎么划分的？】"><a href="#Q2-【在-Agent-架构中，LlamaIndex-和-LangChain-的职责边界你是怎么划分的？】" class="headerlink" title="Q2. 【在 Agent 架构中，LlamaIndex 和 LangChain 的职责边界你是怎么划分的？】"></a>Q2. 【在 Agent 架构中，LlamaIndex 和 LangChain 的职责边界你是怎么划分的？】</h3><p>面试官为什么问这个问题：<br>面试官希望区分”工具拼装型选手”和”系统设计型选手”。如果候选人说不清两者的边界，往往意味着只是跟着教程跑 Demo。</p>
+<p>参考口语化回答：<br>我一般把 LlamaIndex 放在”数据与知识层”，LangChain 放在”推理与流程编排层”。<br>LlamaIndex 负责的是数据的抽象、索引、检索和可追溯性，而 LangChain 更适合做 Agent 的行为编排、工具调用和多步推理。<br>如果把数据检索也交给 LangChain 直接处理，系统一复杂，后面几乎没法治理。</p>
+<h3 id="Q3-【你如何理解-Document、Node、Index-这三个抽象在工程上的意义？】"><a href="#Q3-【你如何理解-Document、Node、Index-这三个抽象在工程上的意义？】" class="headerlink" title="Q3. 【你如何理解 Document、Node、Index 这三个抽象在工程上的意义？】"></a>Q3. 【你如何理解 Document、Node、Index 这三个抽象在工程上的意义？】</h3><p>面试官为什么问这个问题：<br>这是判断候选人是否真正”用过索引体系”的关键问题。很多人只知道 Document，却说不清 Node 和 Index 的工程含义。</p>
+<p>参考口语化回答：<br>在我看来，Document 是原始业务数据的载体，Node 是”可被推理的最小知识单元”，而 Index 是对 Node 的组织和访问策略。<br>如果 Node 切得不好，模型上下文就会失真；如果 Index 设计不合理，Agent 的行为会非常随机。这三个抽象，直接决定了 RAG 的稳定性。</p>
+<h3 id="Q4-【为什么你认为-RAG-的核心问题不是”选哪个向量库”？】"><a href="#Q4-【为什么你认为-RAG-的核心问题不是”选哪个向量库”？】" class="headerlink" title="Q4. 【为什么你认为 RAG 的核心问题不是”选哪个向量库”？】"></a>Q4. 【为什么你认为 RAG 的核心问题不是”选哪个向量库”？】</h3><p>面试官为什么问这个问题：<br>这是一个典型的”筛初级选手”的问题。只关注向量库的候选人，通常忽略了数据治理。</p>
+<p>参考口语化回答：<br>向量库只是存储和相似度计算工具，本身并不解决数据质量问题。<br>我见过很多项目，向量库性能很好，但因为文档版本混乱、Chunk 设计不合理，最终生成的答案依然不可用。<br>真正决定 RAG 成败的，是数据是否被正确建模和索引。</p>
+<h3 id="Q5-【你如何理解”LlamaIndex-的核心价值是把数据变成可推理对象”？】"><a href="#Q5-【你如何理解”LlamaIndex-的核心价值是把数据变成可推理对象”？】" class="headerlink" title="Q5. 【你如何理解”LlamaIndex 的核心价值是把数据变成可推理对象”？】"></a>Q5. 【你如何理解”LlamaIndex 的核心价值是把数据变成可推理对象”？】</h3><p>面试官为什么问这个问题：<br>这是对候选人抽象能力的考察，看他是否能从工程层面总结 LlamaIndex 的价值。</p>
+<p>参考口语化回答：<br>在没有 LlamaIndex 之前，数据只是”被喂给模型的上下文”。<br>而通过 Node、Index、Metadata 这些抽象，数据变成了”可以被控制、过滤、解释的推理对象”，Agent 的行为才第一次变得可管理。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】"><a href="#第二层：核心技术能力（How）【8-题】" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q6-【在什么场景下你会选择-Vector-Index，而不是其他类型的-Index？】"><a href="#Q6-【在什么场景下你会选择-Vector-Index，而不是其他类型的-Index？】" class="headerlink" title="Q6. 【在什么场景下你会选择 Vector Index，而不是其他类型的 Index？】"></a>Q6. 【在什么场景下你会选择 Vector Index，而不是其他类型的 Index？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否理解不同 Index 的适用边界，而不是一味使用向量索引。</p>
+<p>参考口语化回答：<br>Vector Index 适合”语义相似度”主导的问题，比如知识问答、经验类文档检索。<br>但如果是结构化决策或强逻辑场景，我通常会结合 Tree 或 Summary Index，否则模型很容易在语义相似但逻辑错误的内容上发挥。</p>
+<h3 id="Q7-【Chunk-策略在你做过的项目中，对结果质量产生过哪些直接影响？】"><a href="#Q7-【Chunk-策略在你做过的项目中，对结果质量产生过哪些直接影响？】" class="headerlink" title="Q7. 【Chunk 策略在你做过的项目中，对结果质量产生过哪些直接影响？】"></a>Q7. 【Chunk 策略在你做过的项目中，对结果质量产生过哪些直接影响？】</h3><p>面试官为什么问这个问题：<br>Chunk 是 RAG 中最容易被忽视、但影响最大的环节之一。</p>
+<p>参考口语化回答：<br>Chunk 过大时，模型容易抓不到重点；过小时，语义被切碎，引用经常失真。<br>我在一个企业文档项目里，单是调整 Chunk 策略，就把错误引用率降低了接近一半。</p>
+<h3 id="Q8-【你如何设计-Node-的-Metadata，来约束-Agent-的行为？】"><a href="#Q8-【你如何设计-Node-的-Metadata，来约束-Agent-的行为？】" class="headerlink" title="Q8. 【你如何设计 Node 的 Metadata，来约束 Agent 的行为？】"></a>Q8. 【你如何设计 Node 的 Metadata，来约束 Agent 的行为？】</h3><p>面试官为什么问这个问题：<br>这是区分”会检索”和”会治理 Agent 行为”的关键问题。</p>
+<p>参考口语化回答：<br>我会在 Node 里明确标注来源、版本、生效时间、业务域等信息。<br>Agent 在检索时不是”随便拿内容”，而是通过 Metadata 过滤掉不符合当前决策上下文的数据，这一点在金融和医疗场景非常关键。</p>
+<h3 id="Q9-【Query-Engine-和-Retriever-在你理解中，各自解决什么问题？】"><a href="#Q9-【Query-Engine-和-Retriever-在你理解中，各自解决什么问题？】" class="headerlink" title="Q9. 【Query Engine 和 Retriever 在你理解中，各自解决什么问题？】"></a>Q9. 【Query Engine 和 Retriever 在你理解中，各自解决什么问题？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否理解 LlamaIndex 内部的职责分层。</p>
+<p>参考口语化回答：<br>Retriever 负责”我能拿到哪些候选知识”，Query Engine 负责”这些知识怎么被组织成答案”。<br>如果把这两层混在一起，后续调优和问题定位会非常困难。</p>
+<h3 id="Q10-【你是如何在-LlamaIndex-中做多阶段召回或过滤的？】"><a href="#Q10-【你是如何在-LlamaIndex-中做多阶段召回或过滤的？】" class="headerlink" title="Q10. 【你是如何在 LlamaIndex 中做多阶段召回或过滤的？】"></a>Q10. 【你是如何在 LlamaIndex 中做多阶段召回或过滤的？】</h3><p>面试官为什么问这个问题：<br>这是在判断候选人是否做过复杂 RAG 场景。</p>
+<p>参考口语化回答：<br>我通常先用粗粒度召回保证覆盖率，再通过 Metadata 和重排序模型做二次过滤。<br>这样 Agent 的回答既不会漏关键信息，也能减少噪声带来的幻觉。</p>
+<h3 id="Q11-【LlamaIndex-在-Agent-中通常承担什么角色？】"><a href="#Q11-【LlamaIndex-在-Agent-中通常承担什么角色？】" class="headerlink" title="Q11. 【LlamaIndex 在 Agent 中通常承担什么角色？】"></a>Q11. 【LlamaIndex 在 Agent 中通常承担什么角色？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否真正做过”知识型 Agent”。</p>
+<p>参考口语化回答：<br>在 Agent 体系里，LlamaIndex 更像是”可查询的长期记忆”。<br>Agent 的决策是否靠谱，很大程度上取决于它访问的这层知识是否稳定、可解释。</p>
+<h3 id="Q12-【你如何处理数据更新带来的索引一致性问题？】"><a href="#Q12-【你如何处理数据更新带来的索引一致性问题？】" class="headerlink" title="Q12. 【你如何处理数据更新带来的索引一致性问题？】"></a>Q12. 【你如何处理数据更新带来的索引一致性问题？】</h3><p>面试官为什么问这个问题：<br>这是一个典型的工程问题，很多 Demo 项目从未考虑。</p>
+<p>参考口语化回答：<br>我一般会把数据更新和索引构建解耦，通过版本化索引来保证查询一致性。<br>否则一旦线上数据频繁变更，Agent 的行为会出现非常难定位的漂移。</p>
+<h3 id="Q13-【在你的经验里，索引设计失误会带来哪些真实后果？】"><a href="#Q13-【在你的经验里，索引设计失误会带来哪些真实后果？】" class="headerlink" title="Q13. 【在你的经验里，索引设计失误会带来哪些真实后果？】"></a>Q13. 【在你的经验里，索引设计失误会带来哪些真实后果？】</h3><p>面试官为什么问这个问题：<br>面试官希望听到”踩过坑”的真实经验。</p>
+<p>参考口语化回答：<br>最直接的后果就是答案不稳定、引用错误，严重时会影响业务决策。<br>我见过因为索引设计问题，Agent 给出过期政策解释，差点引发合规风险。</p>
+<h2 id="第三层：工程化与系统能力【8-题】"><a href="#第三层：工程化与系统能力【8-题】" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q14-【你如何在索引构建成本和查询性能之间做权衡？】"><a href="#Q14-【你如何在索引构建成本和查询性能之间做权衡？】" class="headerlink" title="Q14. 【你如何在索引构建成本和查询性能之间做权衡？】"></a>Q14. 【你如何在索引构建成本和查询性能之间做权衡？】</h3><p>面试官为什么问这个问题：<br>这是系统上线后必然要面对的问题。</p>
+<p>参考口语化回答：<br>我会根据业务查询频率和数据变更频率做分层索引。<br>高频查询的索引提前构建，低频或实验性数据采用按需构建，避免无谓的成本浪费。</p>
+<h3 id="Q15-【多索引、多数据源的情况下，你是如何组织和治理的？】"><a href="#Q15-【多索引、多数据源的情况下，你是如何组织和治理的？】" class="headerlink" title="Q15. 【多索引、多数据源的情况下，你是如何组织和治理的？】"></a>Q15. 【多索引、多数据源的情况下，你是如何组织和治理的？】</h3><p>面试官为什么问这个问题：<br>考察候选人的系统设计能力。</p>
+<p>参考口语化回答：<br>我会按照业务域拆分索引，并在上层通过统一的检索接口聚合。<br>这样每个索引都有清晰的责任边界，问题定位也更容易。</p>
+<h3 id="Q16-【索引失效时，你如何设计回滚或降级策略？】"><a href="#Q16-【索引失效时，你如何设计回滚或降级策略？】" class="headerlink" title="Q16. 【索引失效时，你如何设计回滚或降级策略？】"></a>Q16. 【索引失效时，你如何设计回滚或降级策略？】</h3><p>面试官为什么问这个问题：<br>这是典型的生产环境问题。</p>
+<p>参考口语化回答：<br>我会保留历史索引版本，一旦新索引出现异常，可以快速切回。<br>同时在 Agent 层设置兜底逻辑，避免直接输出不可控结果。</p>
+<h3 id="Q17-【你是如何治理幻觉和错误引用问题的？】"><a href="#Q17-【你是如何治理幻觉和错误引用问题的？】" class="headerlink" title="Q17. 【你是如何治理幻觉和错误引用问题的？】"></a>Q17. 【你是如何治理幻觉和错误引用问题的？】</h3><p>面试官为什么问这个问题：<br>这是所有 RAG 系统绕不开的问题。</p>
+<p>参考口语化回答：<br>我不会只靠 Prompt，而是通过索引层限制可用数据范围，并强制返回引用来源。<br>当答案无法追溯时，我宁愿让 Agent 选择”不确定”。</p>
+<h3 id="Q18-【LlamaIndex-在服务化部署中通常以什么形式存在？】"><a href="#Q18-【LlamaIndex-在服务化部署中通常以什么形式存在？】" class="headerlink" title="Q18. 【LlamaIndex 在服务化部署中通常以什么形式存在？】"></a>Q18. 【LlamaIndex 在服务化部署中通常以什么形式存在？】</h3><p>面试官为什么问这个问题：<br>判断候选人是否有完整上线经验。</p>
+<p>参考口语化回答：<br>我一般会把 LlamaIndex 封装成独立的检索服务，通过 API 对 Agent 提供能力。<br>这样索引层和推理层解耦，维护成本会低很多。</p>
+<h3 id="Q19-【你如何设计日志和-Tracing，来保证答案可追溯？】"><a href="#Q19-【你如何设计日志和-Tracing，来保证答案可追溯？】" class="headerlink" title="Q19. 【你如何设计日志和 Tracing，来保证答案可追溯？】"></a>Q19. 【你如何设计日志和 Tracing，来保证答案可追溯？】</h3><p>面试官为什么问这个问题：<br>这是企业级系统非常看重的一点。</p>
+<p>参考口语化回答：<br>我会记录检索到的 Node、Index 版本和最终使用的上下文。<br>一旦出现问题，可以快速复盘 Agent 当时”看到了什么数据”。</p>
+<h3 id="Q20-【当-Agent-输出不符合预期时，你通常如何定位问题？】"><a href="#Q20-【当-Agent-输出不符合预期时，你通常如何定位问题？】" class="headerlink" title="Q20. 【当 Agent 输出不符合预期时，你通常如何定位问题？】"></a>Q20. 【当 Agent 输出不符合预期时，你通常如何定位问题？】</h3><p>面试官为什么问这个问题：<br>考察候选人的排障思路。</p>
+<p>参考口语化回答：<br>我会先排查数据和索引，再看模型和 Prompt。<br>大多数情况下，问题出在数据质量或索引设计，而不是模型本身。</p>
+<h3 id="Q21-【你如何评估一个-LlamaIndex-RAG-系统是否”稳定可用”？】"><a href="#Q21-【你如何评估一个-LlamaIndex-RAG-系统是否”稳定可用”？】" class="headerlink" title="Q21. 【你如何评估一个 LlamaIndex RAG 系统是否”稳定可用”？】"></a>Q21. 【你如何评估一个 LlamaIndex RAG 系统是否”稳定可用”？】</h3><p>面试官为什么问这个问题：<br>这是判断候选人是否具备工程视角的重要问题。</p>
+<p>参考口语化回答：<br>我更关注一致性和可解释性，而不仅是命中率。<br>只要系统能稳定给出可追溯的答案，即使偶尔回答”无法确定”，也是可接受的。</p>
+<h2 id="第四层：真实项目与业务场景能力【6-题】"><a href="#第四层：真实项目与业务场景能力【6-题】" class="headerlink" title="第四层：真实项目与业务场景能力【6 题】"></a>第四层：真实项目与业务场景能力【6 题】</h2><h3 id="Q22-【你在真实业务中用-LlamaIndex-解决过哪些”知识问题”？】"><a href="#Q22-【你在真实业务中用-LlamaIndex-解决过哪些”知识问题”？】" class="headerlink" title="Q22. 【你在真实业务中用 LlamaIndex 解决过哪些”知识问题”？】"></a>Q22. 【你在真实业务中用 LlamaIndex 解决过哪些”知识问题”？】</h3><p>面试官为什么问这个问题：<br>这是验证候选人是否真正做过项目。</p>
+<p>参考口语化回答：<br>我主要用它解决过企业内部知识检索和合规问答问题。<br>核心不是”回答快”，而是”回答对、能追责”。</p>
+<h3 id="Q23-【在医疗或金融场景中，你对索引设计有哪些额外约束？】"><a href="#Q23-【在医疗或金融场景中，你对索引设计有哪些额外约束？】" class="headerlink" title="Q23. 【在医疗或金融场景中，你对索引设计有哪些额外约束？】"></a>Q23. 【在医疗或金融场景中，你对索引设计有哪些额外约束？】</h3><p>面试官为什么问这个问题：<br>考察候选人对行业差异的理解。</p>
+<p>参考口语化回答：<br>这些场景我会特别强调来源权威性和版本控制。<br>宁可少答，也不能用错数据。</p>
+<h3 id="Q24-【你如何判断-RAG-效果差是模型问题还是数据问题？】"><a href="#Q24-【你如何判断-RAG-效果差是模型问题还是数据问题？】" class="headerlink" title="Q24. 【你如何判断 RAG 效果差是模型问题还是数据问题？】"></a>Q24. 【你如何判断 RAG 效果差是模型问题还是数据问题？】</h3><p>面试官为什么问这个问题：<br>这是非常典型的面试博弈点。</p>
+<p>参考口语化回答：<br>我会先固定模型，反复验证检索结果。<br>如果检索内容本身就不对，换模型也解决不了问题。</p>
+<h3 id="Q25-【在企业内部文档杂乱的情况下，你如何逐步提升-RAG-质量？】"><a href="#Q25-【在企业内部文档杂乱的情况下，你如何逐步提升-RAG-质量？】" class="headerlink" title="Q25. 【在企业内部文档杂乱的情况下，你如何逐步提升 RAG 质量？】"></a>Q25. 【在企业内部文档杂乱的情况下，你如何逐步提升 RAG 质量？】</h3><p>面试官为什么问这个问题：<br>考察候选人的实际落地能力。</p>
+<p>参考口语化回答：<br>我会先做数据分级，把高价值文档优先治理。<br>一步到位基本不现实，关键是建立可持续的治理机制。</p>
+<h3 id="Q26-【你是如何降低幻觉带来的业务风险的？】"><a href="#Q26-【你是如何降低幻觉带来的业务风险的？】" class="headerlink" title="Q26. 【你是如何降低幻觉带来的业务风险的？】"></a>Q26. 【你是如何降低幻觉带来的业务风险的？】</h3><p>面试官为什么问这个问题：<br>这是企业非常关心的问题。</p>
+<p>参考口语化回答：<br>我会通过索引约束、引用校验和人工兜底机制多层防护。<br>Agent 的目标不是”看起来聪明”，而是”不会出大错”。</p>
+<h3 id="Q27-【你如何向业务方解释：这是数据问题，而不是模型问题？】"><a href="#Q27-【你如何向业务方解释：这是数据问题，而不是模型问题？】" class="headerlink" title="Q27. 【你如何向业务方解释：这是数据问题，而不是模型问题？】"></a>Q27. 【你如何向业务方解释：这是数据问题，而不是模型问题？】</h3><p>面试官为什么问这个问题：<br>考察候选人的沟通能力。</p>
+<p>参考口语化回答：<br>我通常会用可追溯的检索结果给业务方看，让他们理解 Agent 依赖的数据本身存在缺陷。<br>一旦业务理解”数据才是核心资产”，合作会顺畅很多。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】"><a href="#第五层：进阶与加分项（架构-视野）【3-题】" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q28-【你如何在多-Agent-架构中做知识分工？】"><a href="#Q28-【你如何在多-Agent-架构中做知识分工？】" class="headerlink" title="Q28. 【你如何在多 Agent 架构中做知识分工？】"></a>Q28. 【你如何在多 Agent 架构中做知识分工？】</h3><p>面试官为什么问这个问题：<br>这是区分高级候选人的关键问题。</p>
+<p>参考口语化回答：<br>我会为不同 Agent 绑定不同索引域。<br>每个 Agent 只访问自己”负责的知识”，整体行为会更可控。</p>
+<h3 id="Q29-【你如何看待-LlamaIndex-与-LangGraph-的结合点？】"><a href="#Q29-【你如何看待-LlamaIndex-与-LangGraph-的结合点？】" class="headerlink" title="Q29. 【你如何看待 LlamaIndex 与 LangGraph 的结合点？】"></a>Q29. 【你如何看待 LlamaIndex 与 LangGraph 的结合点？】</h3><p>面试官为什么问这个问题：<br>考察候选人对复杂流程的理解。</p>
+<p>参考口语化回答：<br>LlamaIndex 负责”我知道什么”，LangGraph 负责”我下一步怎么走”。<br>两者结合后，Agent 才真正具备工程级可控性。</p>
+<h3 id="Q30-【从单一-RAG-项目到企业知识平台，你认为演进的关键是什么？】"><a href="#Q30-【从单一-RAG-项目到企业知识平台，你认为演进的关键是什么？】" class="headerlink" title="Q30. 【从单一 RAG 项目到企业知识平台，你认为演进的关键是什么？】"></a>Q30. 【从单一 RAG 项目到企业知识平台，你认为演进的关键是什么？】</h3><p>面试官为什么问这个问题：<br>这是判断候选人”潜力上限”的问题。</p>
+<p>参考口语化回答：<br>关键不在模型升级，而在数据治理体系是否建立。<br>一旦数据和索引可持续演进，Agent 能力只是自然结果。</p>
+<hr>
+<h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q31-【你如何向新人解释：为什么-LlamaIndex-是”数据框架”，而不是”RAG-工具集”？】"><a href="#Q31-【你如何向新人解释：为什么-LlamaIndex-是”数据框架”，而不是”RAG-工具集”？】" class="headerlink" title="Q31. 【你如何向新人解释：为什么 LlamaIndex 是”数据框架”，而不是”RAG 工具集”？】"></a>Q31. 【你如何向新人解释：为什么 LlamaIndex 是”数据框架”，而不是”RAG 工具集”？】</h3><p>面试官为什么问这个问题：<br>这是在考察候选人是否具备”向下解释”的能力。真正理解数据框架定位的人，才能讲清楚为什么 LlamaIndex 不等同于某几个 API 的组合。</p>
+<p>参考口语化回答：<br>我一般不会从”能做什么”讲，而是从”为什么需要它”讲。<br>在真实业务里，数据来源杂、生命周期长，光靠 RAG 流程根本管不住。LlamaIndex 提供的是一整套数据抽象、索引和检索机制，让数据在工程上是可管理、可演进的，而不是一次性喂给模型。</p>
+<h3 id="Q32-【如果不用-LlamaIndex，你认为-RAG-系统最容易失控的点在哪里？】"><a href="#Q32-【如果不用-LlamaIndex，你认为-RAG-系统最容易失控的点在哪里？】" class="headerlink" title="Q32. 【如果不用 LlamaIndex，你认为 RAG 系统最容易失控的点在哪里？】"></a>Q32. 【如果不用 LlamaIndex，你认为 RAG 系统最容易失控的点在哪里？】</h3><p>面试官为什么问这个问题：<br>这个问题在考察候选人是否经历过”没有数据框架支撑的 RAG 混乱期”。</p>
+<p>参考口语化回答：<br>最容易失控的是”数据到底从哪来、现在用的是哪一版”。<br>一旦业务复杂起来，没有 Index 和 Node 这些抽象，大家只能靠约定和注释，最后 Agent 输出的问题根本没法追溯。</p>
+<h3 id="Q33-【你如何理解-LlamaIndex-中”索引”与传统数据库索引的差异？】"><a href="#Q33-【你如何理解-LlamaIndex-中”索引”与传统数据库索引的差异？】" class="headerlink" title="Q33. 【你如何理解 LlamaIndex 中”索引”与传统数据库索引的差异？】"></a>Q33. 【你如何理解 LlamaIndex 中”索引”与传统数据库索引的差异？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否能把 AI 系统和传统工程经验联系起来，而不是孤立理解。</p>
+<p>参考口语化回答：<br>数据库索引解决的是”怎么更快查数据”，而 LlamaIndex 的索引解决的是”模型该看哪些数据、以什么结构看”。<br>它关注的是推理质量和上下文组织，而不仅是性能。</p>
+<h3 id="Q34-【你是否遇到过”不建索引也能跑，但结果越来越差”的情况？】"><a href="#Q34-【你是否遇到过”不建索引也能跑，但结果越来越差”的情况？】" class="headerlink" title="Q34. 【你是否遇到过”不建索引也能跑，但结果越来越差”的情况？】"></a>Q34. 【你是否遇到过”不建索引也能跑，但结果越来越差”的情况？】</h3><p>面试官为什么问这个问题：<br>这是一个典型的经验型问题，用来判断候选人是否真正踩过坑。</p>
+<p>参考口语化回答：<br>遇到过，而且一开始很难察觉。<br>系统还能跑，但回答开始前后矛盾、引用混乱，最后发现是数据堆在一起没有索引分层，Agent 实际是在”随机翻资料”。</p>
+<h3 id="Q35-【在你看来，什么情况下”不该上-RAG-LlamaIndex”？】"><a href="#Q35-【在你看来，什么情况下”不该上-RAG-LlamaIndex”？】" class="headerlink" title="Q35. 【在你看来，什么情况下”不该上 RAG &#x2F; LlamaIndex”？】"></a>Q35. 【在你看来，什么情况下”不该上 RAG &#x2F; LlamaIndex”？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否具备边界意识，而不是”技术万能论”。</p>
+<p>参考口语化回答：<br>如果数据规模小、变更少、逻辑强规则化，其实没必要上 RAG。<br>LlamaIndex 适合的是”知识复杂且长期演进”的场景，不是所有问题都需要。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】-1"><a href="#第二层：核心技术能力（How）【8-题】-1" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q36-【你在什么情况下会避免使用纯-Vector-检索？】"><a href="#Q36-【你在什么情况下会避免使用纯-Vector-检索？】" class="headerlink" title="Q36. 【你在什么情况下会避免使用纯 Vector 检索？】"></a>Q36. 【你在什么情况下会避免使用纯 Vector 检索？】</h3><p>面试官为什么问这个问题：<br>用来区分”只会语义相似度”的候选人。</p>
+<p>参考口语化回答：<br>当业务对逻辑顺序、章节结构或结论一致性要求很高时，我会避免只用 Vector。<br>因为语义相似不代表业务正确，这时候需要 Tree 或结构化索引辅助。</p>
+<h3 id="Q37-【Node-设计不合理，通常会在-Agent-行为上体现为哪些问题？】"><a href="#Q37-【Node-设计不合理，通常会在-Agent-行为上体现为哪些问题？】" class="headerlink" title="Q37. 【Node 设计不合理，通常会在 Agent 行为上体现为哪些问题？】"></a>Q37. 【Node 设计不合理，通常会在 Agent 行为上体现为哪些问题？】</h3><p>面试官为什么问这个问题：<br>这是一个从”数据设计”反推”Agent 行为”的问题。</p>
+<p>参考口语化回答：<br>最常见的是回答跳跃、上下文断裂，甚至前后自相矛盾。<br>本质上不是模型胡说，而是 Node 本身就不具备完整语义。</p>
+<h3 id="Q38-【你如何控制一次-Query-中，Node-被选中的”上限与下限”？】"><a href="#Q38-【你如何控制一次-Query-中，Node-被选中的”上限与下限”？】" class="headerlink" title="Q38. 【你如何控制一次 Query 中，Node 被选中的”上限与下限”？】"></a>Q38. 【你如何控制一次 Query 中，Node 被选中的”上限与下限”？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否真正调过 Query Engine，而不是默认参数一路跑。</p>
+<p>参考口语化回答：<br>我会明确控制 Top-K，同时结合 Metadata 做硬过滤。<br>否则要么信息不足，要么上下文溢出，Agent 的稳定性会明显下降。</p>
+<h3 id="Q39-【你如何理解-LlamaIndex-中”可组合检索策略”的价值？】"><a href="#Q39-【你如何理解-LlamaIndex-中”可组合检索策略”的价值？】" class="headerlink" title="Q39. 【你如何理解 LlamaIndex 中”可组合检索策略”的价值？】"></a>Q39. 【你如何理解 LlamaIndex 中”可组合检索策略”的价值？】</h3><p>面试官为什么问这个问题：<br>这是在考察候选人对复杂检索场景的理解。</p>
+<p>参考口语化回答：<br>真实业务的问题往往不是单一维度的。<br>通过组合检索策略，可以先保证覆盖，再逐步收敛，让 Agent 的决策更稳。</p>
+<h3 id="Q40-【你是否做过”索引级别”的-A-B-测试？怎么做的？】"><a href="#Q40-【你是否做过”索引级别”的-A-B-测试？怎么做的？】" class="headerlink" title="Q40. 【你是否做过”索引级别”的 A&#x2F;B 测试？怎么做的？】"></a>Q40. 【你是否做过”索引级别”的 A&#x2F;B 测试？怎么做的？】</h3><p>面试官为什么问这个问题：<br>这是中高级工程师才会考虑的问题。</p>
+<p>参考口语化回答：<br>做过，我会并行维护两套索引结构，让同一问题走不同索引路径。<br>通过对比引用准确率和人工反馈，判断哪种索引更适合当前业务。</p>
+<h3 id="Q41-【你如何在-LlamaIndex-中处理”强时效性数据”？】"><a href="#Q41-【你如何在-LlamaIndex-中处理”强时效性数据”？】" class="headerlink" title="Q41. 【你如何在 LlamaIndex 中处理”强时效性数据”？】"></a>Q41. 【你如何在 LlamaIndex 中处理”强时效性数据”？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否考虑过数据生命周期。</p>
+<p>参考口语化回答：<br>我通常会把时效性数据单独建索引，并设置明确的失效策略。<br>避免旧数据被模型当成”长期事实”。</p>
+<h3 id="Q42-【当数据量持续增长时，你如何避免索引无限膨胀？】"><a href="#Q42-【当数据量持续增长时，你如何避免索引无限膨胀？】" class="headerlink" title="Q42. 【当数据量持续增长时，你如何避免索引无限膨胀？】"></a>Q42. 【当数据量持续增长时，你如何避免索引无限膨胀？】</h3><p>面试官为什么问这个问题：<br>这是典型的长期运行系统问题。</p>
+<p>参考口语化回答：<br>我会定期做索引裁剪和冷热分层。<br>不是所有历史数据都值得被模型频繁访问。</p>
+<h3 id="Q43-【你是否在-LlamaIndex-中用过非文本数据？如何处理的？】"><a href="#Q43-【你是否在-LlamaIndex-中用过非文本数据？如何处理的？】" class="headerlink" title="Q43. 【你是否在 LlamaIndex 中用过非文本数据？如何处理的？】"></a>Q43. 【你是否在 LlamaIndex 中用过非文本数据？如何处理的？】</h3><p>面试官为什么问这个问题：<br>考察候选人的数据视野是否局限在”文档问答”。</p>
+<p>参考口语化回答：<br>用过结构化数据和 API 返回结果。<br>关键是先把它们转成语义清晰、可追溯的 Node，而不是直接拼字符串。</p>
+<h2 id="第三层：工程化与系统能力【8-题】-1"><a href="#第三层：工程化与系统能力【8-题】-1" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q44-【你如何评估一次索引重建是否”值得”？】"><a href="#Q44-【你如何评估一次索引重建是否”值得”？】" class="headerlink" title="Q44. 【你如何评估一次索引重建是否”值得”？】"></a>Q44. 【你如何评估一次索引重建是否”值得”？】</h3><p>面试官为什么问这个问题：<br>这是典型的成本与收益权衡问题。</p>
+<p>参考口语化回答：<br>我会结合数据变更幅度、当前错误率和业务风险来判断。<br>不是数据一变就重建，而是看是否真的影响决策质量。</p>
+<h3 id="Q45-【多团队共用一套索引体系时，你如何避免”互相污染”？】"><a href="#Q45-【多团队共用一套索引体系时，你如何避免”互相污染”？】" class="headerlink" title="Q45. 【多团队共用一套索引体系时，你如何避免”互相污染”？】"></a>Q45. 【多团队共用一套索引体系时，你如何避免”互相污染”？】</h3><p>面试官为什么问这个问题：<br>考察候选人是否经历过多人协作场景。</p>
+<p>参考口语化回答：<br>我会通过业务域隔离索引，并限制跨域访问。<br>否则一个团队的数据问题，很容易拖垮整个 Agent 系统。</p>
+<h3 id="Q46-【你如何在生产环境中验证索引的”健康状态”？】"><a href="#Q46-【你如何在生产环境中验证索引的”健康状态”？】" class="headerlink" title="Q46. 【你如何在生产环境中验证索引的”健康状态”？】"></a>Q46. 【你如何在生产环境中验证索引的”健康状态”？】</h3><p>面试官为什么问这个问题：<br>这是偏 SRE 视角的问题。</p>
+<p>参考口语化回答：<br>我会关注检索命中率、引用一致性和人工反馈。<br>如果这些指标异常，往往意味着索引已经偏离业务现实。</p>
+<h3 id="Q47-【你是否遇到过索引正确，但答案仍然不可用的情况？】"><a href="#Q47-【你是否遇到过索引正确，但答案仍然不可用的情况？】" class="headerlink" title="Q47. 【你是否遇到过索引正确，但答案仍然不可用的情况？】"></a>Q47. 【你是否遇到过索引正确，但答案仍然不可用的情况？】</h3><p>面试官为什么问这个问题：<br>这是为了看候选人是否能区分不同层次的问题。</p>
+<p>参考口语化回答：<br>遇到过，通常是 Query 组织或 Prompt 问题。<br>但前提是索引足够干净，否则根本无法判断问题在哪一层。</p>
+<h3 id="Q48-【你如何设计”只读索引”与”可写索引”的边界？】"><a href="#Q48-【你如何设计”只读索引”与”可写索引”的边界？】" class="headerlink" title="Q48. 【你如何设计”只读索引”与”可写索引”的边界？】"></a>Q48. 【你如何设计”只读索引”与”可写索引”的边界？】</h3><p>面试官为什么问这个问题：<br>考察候选人的系统治理意识。</p>
+<p>参考口语化回答：<br>核心知识索引我通常设为只读，更新走严格流程。<br>动态数据才允许频繁写入，避免核心知识被无意污染。</p>
+<h3 id="Q49-【当索引规模很大时，你如何保证-API-响应稳定？】"><a href="#Q49-【当索引规模很大时，你如何保证-API-响应稳定？】" class="headerlink" title="Q49. 【当索引规模很大时，你如何保证 API 响应稳定？】"></a>Q49. 【当索引规模很大时，你如何保证 API 响应稳定？】</h3><p>面试官为什么问这个问题：<br>这是生产环境的现实问题。</p>
+<p>参考口语化回答：<br>我会做缓存、限流，并提前做结果预计算。<br>Agent 的稳定性，离不开底层检索服务的稳定性。</p>
+<h3 id="Q50-【你如何在日志中区分”模型错误”和”索引错误”？】"><a href="#Q50-【你如何在日志中区分”模型错误”和”索引错误”？】" class="headerlink" title="Q50. 【你如何在日志中区分”模型错误”和”索引错误”？】"></a>Q50. 【你如何在日志中区分”模型错误”和”索引错误”？】</h3><p>面试官为什么问这个问题：<br>考察候选人的排障能力。</p>
+<p>参考口语化回答：<br>我会把检索结果完整记录下来。<br>如果检索本身就错，那就是索引问题；否则才考虑模型和 Prompt。</p>
+<h3 id="Q51-【你是否做过索引层面的权限控制？为什么要做？】"><a href="#Q51-【你是否做过索引层面的权限控制？为什么要做？】" class="headerlink" title="Q51. 【你是否做过索引层面的权限控制？为什么要做？】"></a>Q51. 【你是否做过索引层面的权限控制？为什么要做？】</h3><p>面试官为什么问这个问题：<br>这是企业级系统经常遇到的问题。</p>
+<p>参考口语化回答：<br>做过，不同角色只能访问不同索引。<br>否则 Agent 可能在不该看到的数据上做决策，风险非常高。</p>
+<h2 id="第四层：真实项目与业务场景能力【6-题】-1"><a href="#第四层：真实项目与业务场景能力【6-题】-1" class="headerlink" title="第四层：真实项目与业务场景能力【6 题】"></a>第四层：真实项目与业务场景能力【6 题】</h2><h3 id="Q52-【你是否经历过”业务不信任-Agent”的阶段？如何解决的？】"><a href="#Q52-【你是否经历过”业务不信任-Agent”的阶段？如何解决的？】" class="headerlink" title="Q52. 【你是否经历过”业务不信任 Agent”的阶段？如何解决的？】"></a>Q52. 【你是否经历过”业务不信任 Agent”的阶段？如何解决的？】</h3><p>面试官为什么问这个问题：<br>考察候选人的真实落地经验。</p>
+<p>参考口语化回答：<br>经历过，关键不是换模型，而是让答案可追溯。<br>一旦业务能看到数据来源，信任度会上升很多。</p>
+<h3 id="Q53-【在数据质量很差的前提下，你如何”阶段性上线”RAG？】"><a href="#Q53-【在数据质量很差的前提下，你如何”阶段性上线”RAG？】" class="headerlink" title="Q53. 【在数据质量很差的前提下，你如何”阶段性上线”RAG？】"></a>Q53. 【在数据质量很差的前提下，你如何”阶段性上线”RAG？】</h3><p>面试官为什么问这个问题：<br>这是现实中非常常见的问题。</p>
+<p>参考口语化回答：<br>我会先限定数据范围，只覆盖高质量子集。<br>与其全面但不准，不如小而稳。</p>
+<h3 id="Q54-【你如何评估”这个-Agent-是否真的在用知识，而不是在猜”？】"><a href="#Q54-【你如何评估”这个-Agent-是否真的在用知识，而不是在猜”？】" class="headerlink" title="Q54. 【你如何评估”这个 Agent 是否真的在用知识，而不是在猜”？】"></a>Q54. 【你如何评估”这个 Agent 是否真的在用知识，而不是在猜”？】</h3><p>面试官为什么问这个问题：<br>这是非常关键的判断能力。</p>
+<p>参考口语化回答：<br>我会重点看引用内容是否与问题强相关。<br>如果引用牵强，说明 Agent 实际是在模型自由发挥。</p>
+<h3 id="Q55-【在合规要求很高的场景，你如何限制-Agent-的回答边界？】"><a href="#Q55-【在合规要求很高的场景，你如何限制-Agent-的回答边界？】" class="headerlink" title="Q55. 【在合规要求很高的场景，你如何限制 Agent 的回答边界？】"></a>Q55. 【在合规要求很高的场景，你如何限制 Agent 的回答边界？】</h3><p>面试官为什么问这个问题：<br>考察候选人对风险的认知。</p>
+<p>参考口语化回答：<br>我会通过索引层直接限制可用数据。<br>不在索引里的内容，Agent 根本接触不到。</p>
+<h3 id="Q56-【你是否遇到过”业务问题变化快于索引更新”的情况？】"><a href="#Q56-【你是否遇到过”业务问题变化快于索引更新”的情况？】" class="headerlink" title="Q56. 【你是否遇到过”业务问题变化快于索引更新”的情况？】"></a>Q56. 【你是否遇到过”业务问题变化快于索引更新”的情况？】</h3><p>面试官为什么问这个问题：<br>这是非常真实的业务场景。</p>
+<p>参考口语化回答：<br>遇到过，所以我会设计快速补丁索引。<br>先保证正确性，再逐步完善整体结构。</p>
+<h3 id="Q57-【你如何判断一个-RAG-项目”已经到上限了”？】"><a href="#Q57-【你如何判断一个-RAG-项目”已经到上限了”？】" class="headerlink" title="Q57. 【你如何判断一个 RAG 项目”已经到上限了”？】"></a>Q57. 【你如何判断一个 RAG 项目”已经到上限了”？】</h3><p>面试官为什么问这个问题：<br>考察候选人的成熟度。</p>
+<p>参考口语化回答：<br>当继续调模型和 Prompt 收益很低时，通常说明数据和索引已经是瓶颈。<br>这时候再不治理数据，只会原地打转。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】-1"><a href="#第五层：进阶与加分项（架构-视野）【3-题】-1" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q58-【你如何看待”知识即基础设施”这件事？】"><a href="#Q58-【你如何看待”知识即基础设施”这件事？】" class="headerlink" title="Q58. 【你如何看待”知识即基础设施”这件事？】"></a>Q58. 【你如何看待”知识即基础设施”这件事？】</h3><p>面试官为什么问这个问题：<br>这是偏架构和视野的问题。</p>
+<p>参考口语化回答：<br>在复杂企业里，知识本身就是基础设施。<br>LlamaIndex 提供的是让这套基础设施可演进的能力。</p>
+<h3 id="Q59-【你认为未来-Data-centric-Agent-的核心竞争力是什么？】"><a href="#Q59-【你认为未来-Data-centric-Agent-的核心竞争力是什么？】" class="headerlink" title="Q59. 【你认为未来 Data-centric Agent 的核心竞争力是什么？】"></a>Q59. 【你认为未来 Data-centric Agent 的核心竞争力是什么？】</h3><p>面试官为什么问这个问题：<br>用来判断候选人的长期潜力。</p>
+<p>参考口语化回答：<br>不是模型多强，而是谁的数据治理能力更成熟。<br>Agent 只是数据能力的外在表现。</p>
+<h3 id="Q60-【如果让你从零设计一个企业级知识-Agent，你最先做什么？】"><a href="#Q60-【如果让你从零设计一个企业级知识-Agent，你最先做什么？】" class="headerlink" title="Q60. 【如果让你从零设计一个企业级知识 Agent，你最先做什么？】"></a>Q60. 【如果让你从零设计一个企业级知识 Agent，你最先做什么？】</h3><p>面试官为什么问这个问题：<br>这是典型的”架构思维”问题。</p>
+<p>参考口语化回答：<br>我会先梳理数据资产和索引边界，而不是选模型。<br>因为一旦数据结构定错，后面所有 Agent 能力都会受限。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/01/01/ai-interview-05-agent-langgraph/">AI面试题 - LangGraph 工作流编排</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/01/01/ai-interview-05-agent-mcp/">AI面试题 - MCP 协议与工具治理</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2026/01/01/ai-interview-00-ai-engineer/" title="AI面试题 - AI应用开发工程师综合题"><span class="title">AI面试题 - AI应用开发工程师综合题</span></a><a class="item" href="/2026/01/01/ai-interview-01-python/" title="AI面试题 - Python 基础与工程实践"><span class="title">AI面试题 - Python 基础与工程实践</span></a><a class="item" href="/2026/01/01/ai-interview-02-pytorch/" title="AI面试题 - PyTorch 深度学习框架"><span class="title">AI面试题 - PyTorch 深度学习框架</span></a><a class="item" href="/2026/01/01/ai-interview-03-transformer/" title="AI面试题 - Transformer 架构原理"><span class="title">AI面试题 - Transformer 架构原理</span></a><a class="item" href="/2026/01/01/ai-interview-04-multimodal/" title="AI面试题 - 多模态 AI 应用"><span class="title">AI面试题 - 多模态 AI 应用</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D-LlamaIndex%EF%BC%9F%E5%AE%83%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q1. 【你如何定位 LlamaIndex？它解决的核心问题是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E3%80%90%E5%9C%A8-Agent-%E6%9E%B6%E6%9E%84%E4%B8%AD%EF%BC%8CLlamaIndex-%E5%92%8C-LangChain-%E7%9A%84%E8%81%8C%E8%B4%A3%E8%BE%B9%E7%95%8C%E4%BD%A0%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%92%E5%88%86%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q2. 【在 Agent 架构中，LlamaIndex 和 LangChain 的职责边界你是怎么划分的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-Document%E3%80%81Node%E3%80%81Index-%E8%BF%99%E4%B8%89%E4%B8%AA%E6%8A%BD%E8%B1%A1%E5%9C%A8%E5%B7%A5%E7%A8%8B%E4%B8%8A%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9F%E3%80%91"><span class="toc-text">Q3. 【你如何理解 Document、Node、Index 这三个抽象在工程上的意义？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E3%80%90%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E8%AE%A4%E4%B8%BA-RAG-%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%E4%B8%8D%E6%98%AF%E2%80%9D%E9%80%89%E5%93%AA%E4%B8%AA%E5%90%91%E9%87%8F%E5%BA%93%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q4. 【为什么你认为 RAG 的核心问题不是”选哪个向量库”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E2%80%9DLlamaIndex-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC%E6%98%AF%E6%8A%8A%E6%95%B0%E6%8D%AE%E5%8F%98%E6%88%90%E5%8F%AF%E6%8E%A8%E7%90%86%E5%AF%B9%E8%B1%A1%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q5. 【你如何理解”LlamaIndex 的核心价值是把数据变成可推理对象”？】</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E3%80%90%E5%9C%A8%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%BD%A0%E4%BC%9A%E9%80%89%E6%8B%A9-Vector-Index%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E7%9A%84-Index%EF%BC%9F%E3%80%91"><span class="toc-text">Q6. 【在什么场景下你会选择 Vector Index，而不是其他类型的 Index？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E3%80%90Chunk-%E7%AD%96%E7%95%A5%E5%9C%A8%E4%BD%A0%E5%81%9A%E8%BF%87%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%B8%AD%EF%BC%8C%E5%AF%B9%E7%BB%93%E6%9E%9C%E8%B4%A8%E9%87%8F%E4%BA%A7%E7%94%9F%E8%BF%87%E5%93%AA%E4%BA%9B%E7%9B%B4%E6%8E%A5%E5%BD%B1%E5%93%8D%EF%BC%9F%E3%80%91"><span class="toc-text">Q7. 【Chunk 策略在你做过的项目中，对结果质量产生过哪些直接影响？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1-Node-%E7%9A%84-Metadata%EF%BC%8C%E6%9D%A5%E7%BA%A6%E6%9D%9F-Agent-%E7%9A%84%E8%A1%8C%E4%B8%BA%EF%BC%9F%E3%80%91"><span class="toc-text">Q8. 【你如何设计 Node 的 Metadata，来约束 Agent 的行为？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9-%E3%80%90Query-Engine-%E5%92%8C-Retriever-%E5%9C%A8%E4%BD%A0%E7%90%86%E8%A7%A3%E4%B8%AD%EF%BC%8C%E5%90%84%E8%87%AA%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q9. 【Query Engine 和 Retriever 在你理解中，各自解决什么问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10-%E3%80%90%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E5%9C%A8-LlamaIndex-%E4%B8%AD%E5%81%9A%E5%A4%9A%E9%98%B6%E6%AE%B5%E5%8F%AC%E5%9B%9E%E6%88%96%E8%BF%87%E6%BB%A4%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q10. 【你是如何在 LlamaIndex 中做多阶段召回或过滤的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q11-%E3%80%90LlamaIndex-%E5%9C%A8-Agent-%E4%B8%AD%E9%80%9A%E5%B8%B8%E6%89%BF%E6%8B%85%E4%BB%80%E4%B9%88%E8%A7%92%E8%89%B2%EF%BC%9F%E3%80%91"><span class="toc-text">Q11. 【LlamaIndex 在 Agent 中通常承担什么角色？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q12-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E5%B8%A6%E6%9D%A5%E7%9A%84%E7%B4%A2%E5%BC%95%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q12. 【你如何处理数据更新带来的索引一致性问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q13-%E3%80%90%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BB%8F%E9%AA%8C%E9%87%8C%EF%BC%8C%E7%B4%A2%E5%BC%95%E8%AE%BE%E8%AE%A1%E5%A4%B1%E8%AF%AF%E4%BC%9A%E5%B8%A6%E6%9D%A5%E5%93%AA%E4%BA%9B%E7%9C%9F%E5%AE%9E%E5%90%8E%E6%9E%9C%EF%BC%9F%E3%80%91"><span class="toc-text">Q13. 【在你的经验里，索引设计失误会带来哪些真实后果？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q14-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8%E7%B4%A2%E5%BC%95%E6%9E%84%E5%BB%BA%E6%88%90%E6%9C%AC%E5%92%8C%E6%9F%A5%E8%AF%A2%E6%80%A7%E8%83%BD%E4%B9%8B%E9%97%B4%E5%81%9A%E6%9D%83%E8%A1%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q14. 【你如何在索引构建成本和查询性能之间做权衡？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q15-%E3%80%90%E5%A4%9A%E7%B4%A2%E5%BC%95%E3%80%81%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E7%BB%84%E7%BB%87%E5%92%8C%E6%B2%BB%E7%90%86%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q15. 【多索引、多数据源的情况下，你是如何组织和治理的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q16-%E3%80%90%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E6%97%B6%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%9B%9E%E6%BB%9A%E6%88%96%E9%99%8D%E7%BA%A7%E7%AD%96%E7%95%A5%EF%BC%9F%E3%80%91"><span class="toc-text">Q16. 【索引失效时，你如何设计回滚或降级策略？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17-%E3%80%90%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E6%B2%BB%E7%90%86%E5%B9%BB%E8%A7%89%E5%92%8C%E9%94%99%E8%AF%AF%E5%BC%95%E7%94%A8%E9%97%AE%E9%A2%98%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q17. 【你是如何治理幻觉和错误引用问题的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q18-%E3%80%90LlamaIndex-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%8C%96%E9%83%A8%E7%BD%B2%E4%B8%AD%E9%80%9A%E5%B8%B8%E4%BB%A5%E4%BB%80%E4%B9%88%E5%BD%A2%E5%BC%8F%E5%AD%98%E5%9C%A8%EF%BC%9F%E3%80%91"><span class="toc-text">Q18. 【LlamaIndex 在服务化部署中通常以什么形式存在？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q19-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E6%97%A5%E5%BF%97%E5%92%8C-Tracing%EF%BC%8C%E6%9D%A5%E4%BF%9D%E8%AF%81%E7%AD%94%E6%A1%88%E5%8F%AF%E8%BF%BD%E6%BA%AF%EF%BC%9F%E3%80%91"><span class="toc-text">Q19. 【你如何设计日志和 Tracing，来保证答案可追溯？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q20-%E3%80%90%E5%BD%93-Agent-%E8%BE%93%E5%87%BA%E4%B8%8D%E7%AC%A6%E5%90%88%E9%A2%84%E6%9C%9F%E6%97%B6%EF%BC%8C%E4%BD%A0%E9%80%9A%E5%B8%B8%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q20. 【当 Agent 输出不符合预期时，你通常如何定位问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q21-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E4%B8%80%E4%B8%AA-LlamaIndex-RAG-%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E2%80%9D%E7%A8%B3%E5%AE%9A%E5%8F%AF%E7%94%A8%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q21. 【你如何评估一个 LlamaIndex RAG 系统是否”稳定可用”？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91"><span class="toc-text">第四层：真实项目与业务场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q22-%E3%80%90%E4%BD%A0%E5%9C%A8%E7%9C%9F%E5%AE%9E%E4%B8%9A%E5%8A%A1%E4%B8%AD%E7%94%A8-LlamaIndex-%E8%A7%A3%E5%86%B3%E8%BF%87%E5%93%AA%E4%BA%9B%E2%80%9D%E7%9F%A5%E8%AF%86%E9%97%AE%E9%A2%98%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q22. 【你在真实业务中用 LlamaIndex 解决过哪些”知识问题”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q23-%E3%80%90%E5%9C%A8%E5%8C%BB%E7%96%97%E6%88%96%E9%87%91%E8%9E%8D%E5%9C%BA%E6%99%AF%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%AF%B9%E7%B4%A2%E5%BC%95%E8%AE%BE%E8%AE%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E9%A2%9D%E5%A4%96%E7%BA%A6%E6%9D%9F%EF%BC%9F%E3%80%91"><span class="toc-text">Q23. 【在医疗或金融场景中，你对索引设计有哪些额外约束？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q24-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD-RAG-%E6%95%88%E6%9E%9C%E5%B7%AE%E6%98%AF%E6%A8%A1%E5%9E%8B%E9%97%AE%E9%A2%98%E8%BF%98%E6%98%AF%E6%95%B0%E6%8D%AE%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q24. 【你如何判断 RAG 效果差是模型问题还是数据问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q25-%E3%80%90%E5%9C%A8%E4%BC%81%E4%B8%9A%E5%86%85%E9%83%A8%E6%96%87%E6%A1%A3%E6%9D%82%E4%B9%B1%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E9%80%90%E6%AD%A5%E6%8F%90%E5%8D%87-RAG-%E8%B4%A8%E9%87%8F%EF%BC%9F%E3%80%91"><span class="toc-text">Q25. 【在企业内部文档杂乱的情况下，你如何逐步提升 RAG 质量？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q26-%E3%80%90%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E5%B9%BB%E8%A7%89%E5%B8%A6%E6%9D%A5%E7%9A%84%E4%B8%9A%E5%8A%A1%E9%A3%8E%E9%99%A9%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q26. 【你是如何降低幻觉带来的业务风险的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q27-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%90%91%E4%B8%9A%E5%8A%A1%E6%96%B9%E8%A7%A3%E9%87%8A%EF%BC%9A%E8%BF%99%E6%98%AF%E6%95%B0%E6%8D%AE%E9%97%AE%E9%A2%98%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%A8%A1%E5%9E%8B%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q27. 【你如何向业务方解释：这是数据问题，而不是模型问题？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q28-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8%E5%A4%9A-Agent-%E6%9E%B6%E6%9E%84%E4%B8%AD%E5%81%9A%E7%9F%A5%E8%AF%86%E5%88%86%E5%B7%A5%EF%BC%9F%E3%80%91"><span class="toc-text">Q28. 【你如何在多 Agent 架构中做知识分工？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q29-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85-LlamaIndex-%E4%B8%8E-LangGraph-%E7%9A%84%E7%BB%93%E5%90%88%E7%82%B9%EF%BC%9F%E3%80%91"><span class="toc-text">Q29. 【你如何看待 LlamaIndex 与 LangGraph 的结合点？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30-%E3%80%90%E4%BB%8E%E5%8D%95%E4%B8%80-RAG-%E9%A1%B9%E7%9B%AE%E5%88%B0%E4%BC%81%E4%B8%9A%E7%9F%A5%E8%AF%86%E5%B9%B3%E5%8F%B0%EF%BC%8C%E4%BD%A0%E8%AE%A4%E4%B8%BA%E6%BC%94%E8%BF%9B%E7%9A%84%E5%85%B3%E9%94%AE%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q30. 【从单一 RAG 项目到企业知识平台，你认为演进的关键是什么？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E7%9F%A5%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91"><span class="toc-text">第一层：基础认知（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q31-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%90%91%E6%96%B0%E4%BA%BA%E8%A7%A3%E9%87%8A%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88-LlamaIndex-%E6%98%AF%E2%80%9D%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6%E2%80%9D%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E2%80%9DRAG-%E5%B7%A5%E5%85%B7%E9%9B%86%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q31. 【你如何向新人解释：为什么 LlamaIndex 是”数据框架”，而不是”RAG 工具集”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q32-%E3%80%90%E5%A6%82%E6%9E%9C%E4%B8%8D%E7%94%A8-LlamaIndex%EF%BC%8C%E4%BD%A0%E8%AE%A4%E4%B8%BA-RAG-%E7%B3%BB%E7%BB%9F%E6%9C%80%E5%AE%B9%E6%98%93%E5%A4%B1%E6%8E%A7%E7%9A%84%E7%82%B9%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F%E3%80%91"><span class="toc-text">Q32. 【如果不用 LlamaIndex，你认为 RAG 系统最容易失控的点在哪里？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q33-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-LlamaIndex-%E4%B8%AD%E2%80%9D%E7%B4%A2%E5%BC%95%E2%80%9D%E4%B8%8E%E4%BC%A0%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E7%9A%84%E5%B7%AE%E5%BC%82%EF%BC%9F%E3%80%91"><span class="toc-text">Q33. 【你如何理解 LlamaIndex 中”索引”与传统数据库索引的差异？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q34-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87%E2%80%9D%E4%B8%8D%E5%BB%BA%E7%B4%A2%E5%BC%95%E4%B9%9F%E8%83%BD%E8%B7%91%EF%BC%8C%E4%BD%86%E7%BB%93%E6%9E%9C%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%B7%AE%E2%80%9D%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F%E3%80%91"><span class="toc-text">Q34. 【你是否遇到过”不建索引也能跑，但结果越来越差”的情况？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q35-%E3%80%90%E5%9C%A8%E4%BD%A0%E7%9C%8B%E6%9D%A5%EF%BC%8C%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E2%80%9D%E4%B8%8D%E8%AF%A5%E4%B8%8A-RAG-LlamaIndex%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q35. 【在你看来，什么情况下”不该上 RAG &#x2F; LlamaIndex”？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q36-%E3%80%90%E4%BD%A0%E5%9C%A8%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E7%BA%AF-Vector-%E6%A3%80%E7%B4%A2%EF%BC%9F%E3%80%91"><span class="toc-text">Q36. 【你在什么情况下会避免使用纯 Vector 检索？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q37-%E3%80%90Node-%E8%AE%BE%E8%AE%A1%E4%B8%8D%E5%90%88%E7%90%86%EF%BC%8C%E9%80%9A%E5%B8%B8%E4%BC%9A%E5%9C%A8-Agent-%E8%A1%8C%E4%B8%BA%E4%B8%8A%E4%BD%93%E7%8E%B0%E4%B8%BA%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q37. 【Node 设计不合理，通常会在 Agent 行为上体现为哪些问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q38-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E4%B8%80%E6%AC%A1-Query-%E4%B8%AD%EF%BC%8CNode-%E8%A2%AB%E9%80%89%E4%B8%AD%E7%9A%84%E2%80%9D%E4%B8%8A%E9%99%90%E4%B8%8E%E4%B8%8B%E9%99%90%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q38. 【你如何控制一次 Query 中，Node 被选中的”上限与下限”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q39-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3-LlamaIndex-%E4%B8%AD%E2%80%9D%E5%8F%AF%E7%BB%84%E5%90%88%E6%A3%80%E7%B4%A2%E7%AD%96%E7%95%A5%E2%80%9D%E7%9A%84%E4%BB%B7%E5%80%BC%EF%BC%9F%E3%80%91"><span class="toc-text">Q39. 【你如何理解 LlamaIndex 中”可组合检索策略”的价值？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q40-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E5%81%9A%E8%BF%87%E2%80%9D%E7%B4%A2%E5%BC%95%E7%BA%A7%E5%88%AB%E2%80%9D%E7%9A%84-A-B-%E6%B5%8B%E8%AF%95%EF%BC%9F%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q40. 【你是否做过”索引级别”的 A&#x2F;B 测试？怎么做的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q41-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8-LlamaIndex-%E4%B8%AD%E5%A4%84%E7%90%86%E2%80%9D%E5%BC%BA%E6%97%B6%E6%95%88%E6%80%A7%E6%95%B0%E6%8D%AE%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q41. 【你如何在 LlamaIndex 中处理”强时效性数据”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q42-%E3%80%90%E5%BD%93%E6%95%B0%E6%8D%AE%E9%87%8F%E6%8C%81%E7%BB%AD%E5%A2%9E%E9%95%BF%E6%97%B6%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E7%B4%A2%E5%BC%95%E6%97%A0%E9%99%90%E8%86%A8%E8%83%80%EF%BC%9F%E3%80%91"><span class="toc-text">Q42. 【当数据量持续增长时，你如何避免索引无限膨胀？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E5%9C%A8-LlamaIndex-%E4%B8%AD%E7%94%A8%E8%BF%87%E9%9D%9E%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE%EF%BC%9F%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q43. 【你是否在 LlamaIndex 中用过非文本数据？如何处理的？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q44-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E4%B8%80%E6%AC%A1%E7%B4%A2%E5%BC%95%E9%87%8D%E5%BB%BA%E6%98%AF%E5%90%A6%E2%80%9D%E5%80%BC%E5%BE%97%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q44. 【你如何评估一次索引重建是否”值得”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q45-%E3%80%90%E5%A4%9A%E5%9B%A2%E9%98%9F%E5%85%B1%E7%94%A8%E4%B8%80%E5%A5%97%E7%B4%A2%E5%BC%95%E4%BD%93%E7%B3%BB%E6%97%B6%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E2%80%9D%E4%BA%92%E7%9B%B8%E6%B1%A1%E6%9F%93%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q45. 【多团队共用一套索引体系时，你如何避免”互相污染”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q46-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E9%AA%8C%E8%AF%81%E7%B4%A2%E5%BC%95%E7%9A%84%E2%80%9D%E5%81%A5%E5%BA%B7%E7%8A%B6%E6%80%81%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q46. 【你如何在生产环境中验证索引的”健康状态”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q47-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87%E7%B4%A2%E5%BC%95%E6%AD%A3%E7%A1%AE%EF%BC%8C%E4%BD%86%E7%AD%94%E6%A1%88%E4%BB%8D%E7%84%B6%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F%E3%80%91"><span class="toc-text">Q47. 【你是否遇到过索引正确，但答案仍然不可用的情况？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q48-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E2%80%9D%E5%8F%AA%E8%AF%BB%E7%B4%A2%E5%BC%95%E2%80%9D%E4%B8%8E%E2%80%9D%E5%8F%AF%E5%86%99%E7%B4%A2%E5%BC%95%E2%80%9D%E7%9A%84%E8%BE%B9%E7%95%8C%EF%BC%9F%E3%80%91"><span class="toc-text">Q48. 【你如何设计”只读索引”与”可写索引”的边界？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q49-%E3%80%90%E5%BD%93%E7%B4%A2%E5%BC%95%E8%A7%84%E6%A8%A1%E5%BE%88%E5%A4%A7%E6%97%B6%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81-API-%E5%93%8D%E5%BA%94%E7%A8%B3%E5%AE%9A%EF%BC%9F%E3%80%91"><span class="toc-text">Q49. 【当索引规模很大时，你如何保证 API 响应稳定？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q50-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%9C%A8%E6%97%A5%E5%BF%97%E4%B8%AD%E5%8C%BA%E5%88%86%E2%80%9D%E6%A8%A1%E5%9E%8B%E9%94%99%E8%AF%AF%E2%80%9D%E5%92%8C%E2%80%9D%E7%B4%A2%E5%BC%95%E9%94%99%E8%AF%AF%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q50. 【你如何在日志中区分”模型错误”和”索引错误”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q51-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E5%81%9A%E8%BF%87%E7%B4%A2%E5%BC%95%E5%B1%82%E9%9D%A2%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%EF%BC%9F%E3%80%91"><span class="toc-text">Q51. 【你是否做过索引层面的权限控制？为什么要做？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91-1"><span class="toc-text">第四层：真实项目与业务场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q52-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E7%BB%8F%E5%8E%86%E8%BF%87%E2%80%9D%E4%B8%9A%E5%8A%A1%E4%B8%8D%E4%BF%A1%E4%BB%BB-Agent%E2%80%9D%E7%9A%84%E9%98%B6%E6%AE%B5%EF%BC%9F%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q52. 【你是否经历过”业务不信任 Agent”的阶段？如何解决的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q53-%E3%80%90%E5%9C%A8%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E5%BE%88%E5%B7%AE%E7%9A%84%E5%89%8D%E6%8F%90%E4%B8%8B%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E2%80%9D%E9%98%B6%E6%AE%B5%E6%80%A7%E4%B8%8A%E7%BA%BF%E2%80%9DRAG%EF%BC%9F%E3%80%91"><span class="toc-text">Q53. 【在数据质量很差的前提下，你如何”阶段性上线”RAG？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q54-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E2%80%9D%E8%BF%99%E4%B8%AA-Agent-%E6%98%AF%E5%90%A6%E7%9C%9F%E7%9A%84%E5%9C%A8%E7%94%A8%E7%9F%A5%E8%AF%86%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%9C%A8%E7%8C%9C%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q54. 【你如何评估”这个 Agent 是否真的在用知识，而不是在猜”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q55-%E3%80%90%E5%9C%A8%E5%90%88%E8%A7%84%E8%A6%81%E6%B1%82%E5%BE%88%E9%AB%98%E7%9A%84%E5%9C%BA%E6%99%AF%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E9%99%90%E5%88%B6-Agent-%E7%9A%84%E5%9B%9E%E7%AD%94%E8%BE%B9%E7%95%8C%EF%BC%9F%E3%80%91"><span class="toc-text">Q55. 【在合规要求很高的场景，你如何限制 Agent 的回答边界？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q56-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87%E2%80%9D%E4%B8%9A%E5%8A%A1%E9%97%AE%E9%A2%98%E5%8F%98%E5%8C%96%E5%BF%AB%E4%BA%8E%E7%B4%A2%E5%BC%95%E6%9B%B4%E6%96%B0%E2%80%9D%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F%E3%80%91"><span class="toc-text">Q56. 【你是否遇到过”业务问题变化快于索引更新”的情况？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q57-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA-RAG-%E9%A1%B9%E7%9B%AE%E2%80%9D%E5%B7%B2%E7%BB%8F%E5%88%B0%E4%B8%8A%E9%99%90%E4%BA%86%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q57. 【你如何判断一个 RAG 项目”已经到上限了”？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91-1"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q58-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E2%80%9D%E7%9F%A5%E8%AF%86%E5%8D%B3%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E2%80%9D%E8%BF%99%E4%BB%B6%E4%BA%8B%EF%BC%9F%E3%80%91"><span class="toc-text">Q58. 【你如何看待”知识即基础设施”这件事？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q59-%E3%80%90%E4%BD%A0%E8%AE%A4%E4%B8%BA%E6%9C%AA%E6%9D%A5-Data-centric-Agent-%E7%9A%84%E6%A0%B8%E5%BF%83%E7%AB%9E%E4%BA%89%E5%8A%9B%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q59. 【你认为未来 Data-centric Agent 的核心竞争力是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q60-%E3%80%90%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%BD%A0%E4%BB%8E%E9%9B%B6%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E4%BC%81%E4%B8%9A%E7%BA%A7%E7%9F%A5%E8%AF%86-Agent%EF%BC%8C%E4%BD%A0%E6%9C%80%E5%85%88%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q60. 【如果让你从零设计一个企业级知识 Agent，你最先做什么？】</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper markdown"><div class="widget-body fs14"><h3 id="快捷导航"><a href="#快捷导航" class="headerlink" title="快捷导航"></a>快捷导航</h3><p><a href="/categories/" style="font-size:1.2em;">🗂️ 分类索引</a><br><a href="/tags/" style="font-size:1.2em;">🔖 标签索引</a><br><a href="/archives/" style="font-size:1.2em;">🕘 文章归档</a><br><a target="_blank" rel="noopener" href="https://wenyinos.com/" style="font-size:1.2em;">📚 社区主页</a><br><a target="_blank" rel="noopener" href="https://dev.wenyinos.com/my/" style="font-size:1.2em;">📰 项目管理</a><br><a target="_blank" rel="noopener" href="https://forum.wenyinos.com/" style="font-size:1.2em;">🏷️ 论坛交流</a></p>
+</div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 16.27px; color: #694ab0" class="tag -4">agent</a> <a href="/tags/ai-engineer/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ai-engineer</a> <a href="/tags/aliyun/" style="font-size: 13px; color: #2563eb" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 13px; color: #2563eb" class="tag -0">android</a> <a href="/tags/apt/" style="font-size: 13px; color: #2563eb" class="tag -0">apt</a> <a href="/tags/arc/" style="font-size: 13px; color: #2563eb" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 13.82px; color: #365ddc" class="tag -1">arch</a> <a href="/tags/arch-linux/" style="font-size: 13px; color: #2563eb" class="tag -0">arch-linux</a> <a href="/tags/asf/" style="font-size: 13px; color: #2563eb" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 13px; color: #2563eb" class="tag -0">asus</a> <a href="/tags/async/" style="font-size: 13px; color: #2563eb" class="tag -0">async</a> <a href="/tags/attention-mechanism/" style="font-size: 13px; color: #2563eb" class="tag -0">attention-mechanism</a> <a href="/tags/aur/" style="font-size: 13px; color: #2563eb" class="tag -0">aur</a> <a href="/tags/bbr/" style="font-size: 13.82px; color: #365ddc" class="tag -1">bbr</a> <a href="/tags/benchmark/" style="font-size: 13px; color: #2563eb" class="tag -0">benchmark</a> <a href="/tags/cache/" style="font-size: 14.64px; color: #4756cd" class="tag -2">cache</a> <a href="/tags/career/" style="font-size: 13px; color: #2563eb" class="tag -0">career</a> <a href="/tags/cargo/" style="font-size: 13.82px; color: #365ddc" class="tag -1">cargo</a> <a href="/tags/centos/" style="font-size: 14.64px; color: #4756cd" class="tag -2">centos</a> <a href="/tags/cheat/" style="font-size: 13px; color: #2563eb" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 13px; color: #2563eb" class="tag -0">colab</a> <a href="/tags/command-line/" style="font-size: 13px; color: #2563eb" class="tag -0">command-line</a> <a href="/tags/cpp/" style="font-size: 13px; color: #2563eb" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 16.27px; color: #694ab0" class="tag -4">cpu</a> <a href="/tags/curl/" style="font-size: 13px; color: #2563eb" class="tag -0">curl</a> <a href="/tags/data-framework/" style="font-size: 13px; color: #2563eb" class="tag -0">data-framework</a> <a href="/tags/debian/" style="font-size: 13px; color: #2563eb" class="tag -0">debian</a> <a href="/tags/deep-learning/" style="font-size: 13px; color: #2563eb" class="tag -0">deep-learning</a> <a href="/tags/deployment/" style="font-size: 13px; color: #2563eb" class="tag -0">deployment</a> <a href="/tags/dg1/" style="font-size: 13px; color: #2563eb" class="tag -0">dg1</a> <a href="/tags/dnf/" style="font-size: 13px; color: #2563eb" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14.64px; color: #4756cd" class="tag -2">docker</a> <a href="/tags/edk2/" style="font-size: 13px; color: #2563eb" class="tag -0">edk2</a> <a href="/tags/entware/" style="font-size: 13px; color: #2563eb" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 13.82px; color: #365ddc" class="tag -1">epel</a> <a href="/tags/fcitx/" style="font-size: 13px; color: #2563eb" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 17.91px; color: #8c3d92" class="tag -5">fedora</a> <a href="/tags/firewalld/" style="font-size: 13px; color: #2563eb" class="tag -0">firewalld</a> <a href="/tags/freebsd/" style="font-size: 13px; color: #2563eb" class="tag -0">freebsd</a> <a href="/tags/fstab/" style="font-size: 13px; color: #2563eb" class="tag -0">fstab</a> <a href="/tags/fuchsia/" style="font-size: 13px; color: #2563eb" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 13px; color: #2563eb" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 13px; color: #2563eb" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 14.64px; color: #4756cd" class="tag -2">github</a> <a href="/tags/gpu/" style="font-size: 13px; color: #2563eb" class="tag -0">gpu</a> <a href="/tags/graphics/" style="font-size: 16.27px; color: #694ab0" class="tag -4">graphics</a> <a href="/tags/grub/" style="font-size: 15.45px; color: #5850bf" class="tag -3">grub</a> <a href="/tags/grubby/" style="font-size: 13px; color: #2563eb" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 13px; color: #2563eb" class="tag -0">hi1620</a> <a href="/tags/hr-screening/" style="font-size: 13px; color: #2563eb" class="tag -0">hr-screening</a> <a href="/tags/huawei/" style="font-size: 13px; color: #2563eb" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 13px; color: #2563eb" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 13px; color: #2563eb" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 13px; color: #2563eb" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 18.73px; color: #9d3683" class="tag -6">intel</a> <a href="/tags/interview/" style="font-size: 21.18px; color: #d02357" class="tag -9">interview</a> <a href="/tags/interview-tips/" style="font-size: 13px; color: #2563eb" class="tag -0">interview-tips</a> <a href="/tags/ip/" style="font-size: 13px; color: #2563eb" class="tag -0">ip</a> <a href="/tags/ipex-llm/" style="font-size: 13px; color: #2563eb" class="tag -0">ipex-llm</a> <a href="/tags/kde/" style="font-size: 15.45px; color: #5850bf" class="tag -3">kde</a> <a href="/tags/kernel/" style="font-size: 16.27px; color: #694ab0" class="tag -4">kernel</a> <a href="/tags/kvm/" style="font-size: 13.82px; color: #365ddc" class="tag -1">kvm</a> <a href="/tags/langchain/" style="font-size: 13px; color: #2563eb" class="tag -0">langchain</a> <a href="/tags/langgraph/" style="font-size: 13px; color: #2563eb" class="tag -0">langgraph</a> <a href="/tags/lcd/" style="font-size: 13px; color: #2563eb" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 13px; color: #2563eb" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 22px; color: #e11d48" class="tag -10">linux</a> <a href="/tags/llamaindex/" style="font-size: 13px; color: #2563eb" class="tag -0">llamaindex</a> <a href="/tags/llm/" style="font-size: 15.45px; color: #5850bf" class="tag -3">llm</a> <a href="/tags/lnmp/" style="font-size: 13px; color: #2563eb" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 13px; color: #2563eb" class="tag -0">magisk</a> <a href="/tags/mcp/" style="font-size: 13px; color: #2563eb" class="tag -0">mcp</a> <a href="/tags/mediatek/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mediatek</a> <a href="/tags/merlin/" style="font-size: 13px; color: #2563eb" class="tag -0">merlin</a> <a href="/tags/mlops/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mlops</a> <a href="/tags/modem/" style="font-size: 13px; color: #2563eb" class="tag -0">modem</a> <a href="/tags/monitoring/" style="font-size: 13px; color: #2563eb" class="tag -0">monitoring</a> <a href="/tags/multi-agent/" style="font-size: 13px; color: #2563eb" class="tag -0">multi-agent</a> <a href="/tags/multimodal/" style="font-size: 13px; color: #2563eb" class="tag -0">multimodal</a> <a href="/tags/mysql/" style="font-size: 13px; color: #2563eb" class="tag -0">mysql</a> <a href="/tags/n1/" style="font-size: 13px; color: #2563eb" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 13.82px; color: #365ddc" class="tag -1">nas</a> <a href="/tags/novelai/" style="font-size: 13px; color: #2563eb" class="tag -0">novelai</a> <a href="/tags/npm/" style="font-size: 13px; color: #2563eb" class="tag -0">npm</a> <a href="/tags/observability/" style="font-size: 13px; color: #2563eb" class="tag -0">observability</a> <a href="/tags/openai/" style="font-size: 13px; color: #2563eb" class="tag -0">openai</a> <a href="/tags/opencl/" style="font-size: 13px; color: #2563eb" class="tag -0">opencl</a> <a href="/tags/openvz/" style="font-size: 13px; color: #2563eb" class="tag -0">openvz</a> <a href="/tags/openwrt/" style="font-size: 13px; color: #2563eb" class="tag -0">openwrt</a> <a href="/tags/package-management/" style="font-size: 19.55px; color: #ae3074" class="tag -7">package-management</a> <a href="/tags/packagekit/" style="font-size: 13px; color: #2563eb" class="tag -0">packagekit</a> <a href="/tags/packaging/" style="font-size: 13.82px; color: #365ddc" class="tag -1">packaging</a> <a href="/tags/pkg/" style="font-size: 13px; color: #2563eb" class="tag -0">pkg</a> <a href="/tags/pnpm/" style="font-size: 13px; color: #2563eb" class="tag -0">pnpm</a> <a href="/tags/podman/" style="font-size: 13px; color: #2563eb" class="tag -0">podman</a> <a href="/tags/power/" style="font-size: 13px; color: #2563eb" class="tag -0">power</a> <a href="/tags/powershell/" style="font-size: 13px; color: #2563eb" class="tag -0">powershell</a> <a href="/tags/proxy/" style="font-size: 14.64px; color: #4756cd" class="tag -2">proxy</a> <a href="/tags/python/" style="font-size: 13px; color: #2563eb" class="tag -0">python</a> <a href="/tags/pytorch/" style="font-size: 13px; color: #2563eb" class="tag -0">pytorch</a> <a href="/tags/qchatgpt/" style="font-size: 13px; color: #2563eb" class="tag -0">qchatgpt</a> <a href="/tags/qemu/" style="font-size: 13px; color: #2563eb" class="tag -0">qemu</a> <a href="/tags/rag/" style="font-size: 13px; color: #2563eb" class="tag -0">rag</a> <a href="/tags/raspberry-pi/" style="font-size: 15.45px; color: #5850bf" class="tag -3">raspberry-pi</a> <a href="/tags/redhat/" style="font-size: 15.45px; color: #5850bf" class="tag -3">redhat</a> <a href="/tags/rhel/" style="font-size: 14.64px; color: #4756cd" class="tag -2">rhel</a> <a href="/tags/rk3588/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rk3588</a> <a href="/tags/rpm/" style="font-size: 13px; color: #2563eb" class="tag -0">rpm</a> <a href="/tags/rust/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rust</a> <a href="/tags/selinux/" style="font-size: 13px; color: #2563eb" class="tag -0">selinux</a> <a href="/tags/service/" style="font-size: 13px; color: #2563eb" class="tag -0">service</a> <a href="/tags/shadowsocks/" style="font-size: 13px; color: #2563eb" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 13px; color: #2563eb" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 14.64px; color: #4756cd" class="tag -2">ssh</a> <a href="/tags/steam/" style="font-size: 13px; color: #2563eb" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 13px; color: #2563eb" class="tag -0">synology</a> <a href="/tags/system-design/" style="font-size: 13.82px; color: #365ddc" class="tag -1">system-design</a> <a href="/tags/systemd/" style="font-size: 15.45px; color: #5850bf" class="tag -3">systemd</a> <a href="/tags/tool-calling/" style="font-size: 13px; color: #2563eb" class="tag -0">tool-calling</a> <a href="/tags/transformer/" style="font-size: 13px; color: #2563eb" class="tag -0">transformer</a> <a href="/tags/ubuntu/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ubuntu</a> <a href="/tags/uefi/" style="font-size: 13px; color: #2563eb" class="tag -0">uefi</a> <a href="/tags/virt-manager/" style="font-size: 13px; color: #2563eb" class="tag -0">virt-manager</a> <a href="/tags/vision-language-model/" style="font-size: 13px; color: #2563eb" class="tag -0">vision-language-model</a> <a href="/tags/vista/" style="font-size: 13.82px; color: #365ddc" class="tag -1">vista</a> <a href="/tags/vmware/" style="font-size: 13px; color: #2563eb" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 13px; color: #2563eb" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 15.45px; color: #5850bf" class="tag -3">vps</a> <a href="/tags/vscode/" style="font-size: 13px; color: #2563eb" class="tag -0">vscode</a> <a href="/tags/wayland/" style="font-size: 13px; color: #2563eb" class="tag -0">wayland</a> <a href="/tags/windows/" style="font-size: 20.36px; color: #bf2a66" class="tag -8">windows</a> <a href="/tags/windows-server/" style="font-size: 15.45px; color: #5850bf" class="tag -3">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.09px; color: #7a43a1" class="tag -5">windows10</a> <a href="/tags/workflow/" style="font-size: 13px; color: #2563eb" class="tag -0">workflow</a> <a href="/tags/wsl/" style="font-size: 13px; color: #2563eb" class="tag -0">wsl</a> <a href="/tags/x86/" style="font-size: 13px; color: #2563eb" class="tag -0">x86</a> <a href="/tags/xfs/" style="font-size: 13px; color: #2563eb" class="tag -0">xfs</a> <a href="/tags/xwayland/" style="font-size: 13px; color: #2563eb" class="tag -0">xwayland</a> <a href="/tags/yum/" style="font-size: 13px; color: #2563eb" class="tag -0">yum</a> <a href="/tags/zerotier/" style="font-size: 13px; color: #2563eb" class="tag -0">zerotier</a> <a href="/tags/zram/" style="font-size: 13px; color: #2563eb" class="tag -0">zram</a> <a href="/tags/zsh/" style="font-size: 13.82px; color: #365ddc" class="tag -1">zsh</a> <a href="/tags/%E4%B8%AD%E7%A7%8B%E8%8A%82/" style="font-size: 13px; color: #2563eb" class="tag -0">中秋节</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 14.64px; color: #4756cd" class="tag -2">代理</a> <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/" style="font-size: 13px; color: #2563eb" class="tag -0">传统文化</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 13px; color: #2563eb" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 13px; color: #2563eb" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">开源社区</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<button class="theme-toggle" type="button" aria-label="切换夜间模式" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+  <span class="theme-toggle-text">夜间</span>
+</button>
+<script>
+  (() => {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+    const label = button.querySelector('.theme-toggle-text');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentMode = () => document.documentElement.getAttribute('data-theme') || (media.matches ? 'dark' : 'light');
+    const syncButton = () => {
+      const dark = currentMode() === 'dark';
+      button.dataset.mode = dark ? 'dark' : 'light';
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? '切换到日间模式' : '切换到夜间模式');
+      if (label) label.textContent = dark ? '日间' : '夜间';
+    };
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      window.localStorage.setItem('Stellar.theme', theme);
+      if (window.utils && utils.dark) {
+        utils.dark.mode = theme;
+        utils.dark.method?.toggle?.start?.();
+      }
+      syncButton();
+    };
+    button.addEventListener('click', () => setTheme(currentMode() === 'dark' ? 'light' : 'dark'));
+    media.addEventListener?.('change', syncButton);
+    syncButton();
+  })();
+</script>
+
+</div></body></html>

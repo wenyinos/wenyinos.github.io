@@ -1,0 +1,999 @@
+
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>AI面试题 - 多智能体系统设计 - 玟茵开源社区知识库</title>
+
+  
+    <meta name="description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 【什么情况下你会明确选择多智能体，而不是把单 Agent 做”更聪明”？】面试官为什么问这个问题：这个问题用来判断候选人是否真正理解”多智能体的使用边界”。很多人会在单 Agent 已经可以覆盖的情况下，盲目拆分 Agent，导致系统复杂度失控。面试官想听的是决策标准，而不是抽象优势。 参考口语化回答：我一般不会因为”能拆”就拆，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI面试题 - 多智能体系统设计">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-multi/">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="第一层：基础认知（Why &#x2F; What）【5 题】Q1. 【什么情况下你会明确选择多智能体，而不是把单 Agent 做”更聪明”？】面试官为什么问这个问题：这个问题用来判断候选人是否真正理解”多智能体的使用边界”。很多人会在单 Agent 已经可以覆盖的情况下，盲目拆分 Agent，导致系统复杂度失控。面试官想听的是决策标准，而不是抽象优势。 参考口语化回答：我一般不会因为”能拆”就拆，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+<meta property="article:published_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="agent">
+<meta property="article:tag" content="interview">
+<meta property="article:tag" content="multi-agent">
+<meta property="article:tag" content="system-design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/icon/wenyin-logo.png">
+  
+  
+  
+  <meta name="keywords" content="interview,system-design,agent,multi-agent">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/images/icon/favicon.ico">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png"},"dateCreated":"2026-01-01T00:00:00+08:00","dateModified":"2026-01-01T00:00:00+08:00","datePublished":"2026-01-01T00:00:00+08:00","description":"","headline":"AI面试题 - 多智能体系统设计","mainEntityOfPage":{"@type":"WebPage","@id":"https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-multi/"},"publisher":{"@type":"Organization","name":"WenYin Open Source Community","sameAs":[],"image":"/images/icon/wenyin-logo.png","logo":{"@type":"ImageObject","url":"/images/icon/wenyin-logo.png"}},"url":"https://wiki.wenyinos.com/2026/01/01/ai-interview-05-agent-multi/","keywords":"interview, system-design, agent, multi-agent","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">玟茵开源社区知识库</div><div class="sub normal cap">Open Source Community</div><div class="sub hover cap" style="opacity:0">WenYin Wiki</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/05/08/home-space-migration-fstab-adjustment/"><span class="title">/home 空间迁移与 fstab 调整记录</span></a><a class="item title" href="/2026/04/28/disable-intel-dg1-discrete-gpu/"><span class="title">彻底禁用 DG1 独立显卡</span></a><a class="item title" href="/2026/04/17/clean-vscode/"><span class="title">清理 VS Code</span></a><a class="item title" href="/2026/04/04/fedora-rebuild-grub-config/"><span class="title">在 Fedora 下重建 GRUB 配置文件</span></a><a class="item title" href="/2026/03/27/systemd-user-session-exit-service-stop/"><span class="title">用户会话退出导致的级联服务停止</span></a><a class="item title" href="/2026/03/14/aur-submit-guide/"><span class="title">AUR 提交指南</span></a><a class="item title" href="/2026/03/03/clean-cargo-cache-and-build-artifacts/"><span class="title">清理 Cargo 缓存和构建产物</span></a><a class="item title" href="/2026/02/19/powershell-command-line-proxy/"><span class="title">PowerShell 配置命令行代理</span></a><a class="item title" href="/2026/02/06/npm-pnpm-clean-cache/"><span class="title">npm 和 pnpm 清理缓存</span></a><a class="item title" href="/2026/01/29/freebsd-pkg-autoremove-dependencies/"><span class="title">FreeBSD pkg 自动卸载安装依赖</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/wenyinos" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/08a41b181ce68.svg"/></a><a class="social" href="https://github.com/WenYin-Community" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder/social/3616429.svg"/></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/">AI工程师面试题</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-12-31T16:00:00.000Z">2026-01-01</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>AI面试题 - 多智能体系统设计</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-【什么情况下你会明确选择多智能体，而不是把单-Agent-做”更聪明”？】"><a href="#Q1-【什么情况下你会明确选择多智能体，而不是把单-Agent-做”更聪明”？】" class="headerlink" title="Q1. 【什么情况下你会明确选择多智能体，而不是把单 Agent 做”更聪明”？】"></a>Q1. 【什么情况下你会明确选择多智能体，而不是把单 Agent 做”更聪明”？】</h3><p>面试官为什么问这个问题：<br>这个问题用来判断候选人是否真正理解”多智能体的使用边界”。很多人会在单 Agent 已经可以覆盖的情况下，盲目拆分 Agent，导致系统复杂度失控。面试官想听的是决策标准，而不是抽象优势。</p>
+<p>参考口语化回答：<br>我一般不会因为”能拆”就拆，而是看三个信号：第一，任务是否天然存在角色分工，比如规划、执行、校验这类职责冲突明显的环节；第二，单 Agent 是否已经出现上下文过载，导致推理质量明显下降；第三，业务是否允许中间结果反复校验。如果只是知识问答或者简单流程，我宁愿把单 Agent 的 Prompt 和工具打磨好。多智能体一旦上来，协作成本、状态同步、失败传播都会指数级增加，这是必须提前算清楚的账。</p>
+<h3 id="Q2-【在你理解中，多智能体系统解决的”核心问题”是什么？】"><a href="#Q2-【在你理解中，多智能体系统解决的”核心问题”是什么？】" class="headerlink" title="Q2. 【在你理解中，多智能体系统解决的”核心问题”是什么？】"></a>Q2. 【在你理解中，多智能体系统解决的”核心问题”是什么？】</h3><p>面试官为什么问这个问题：<br>这道题用来区分”理解协作本质”和”只会堆 LLM 调用”的候选人。很多人会泛泛而谈并行、智能增强，但说不清真实价值。</p>
+<p>参考口语化回答：<br>我不认为多智能体的核心是”更聪明”，而是”降低单点认知风险”。在真实业务里，一个 Agent 很容易因为上下文偏差一路错到底。多智能体真正有价值的地方，是通过角色分离，把规划、执行、校验、反思这些高风险认知步骤拆开，让错误能被另一个 Agent 暴露出来。如果没有这个需求，多智能体只是在放大调用次数和成本。</p>
+<h3 id="Q3-【你如何区分”多智能体系统”和”多次-LLM-调用”的本质差异？】"><a href="#Q3-【你如何区分”多智能体系统”和”多次-LLM-调用”的本质差异？】" class="headerlink" title="Q3. 【你如何区分”多智能体系统”和”多次 LLM 调用”的本质差异？】"></a>Q3. 【你如何区分”多智能体系统”和”多次 LLM 调用”的本质差异？】</h3><p>面试官为什么问这个问题：<br>这是一个经典的”反套路题”，专门用来筛掉把 for-loop 调 LLM 也叫多 Agent 的人。</p>
+<p>参考口语化回答：<br>在我看来，关键不在数量，而在”是否存在独立决策闭环”。多次 LLM 调用通常是同一个意图在不同阶段展开，而多智能体里，每个 Agent 都有相对独立的目标、上下文和失败责任。我做过一个项目，如果把其中两个 Agent 合并，系统功能还能跑，但一旦合并后就失去了交叉校验能力，这时我才会把它视为真正的多智能体，而不是多次调用。</p>
+<h3 id="Q4-【你如何理解多智能体中的”协作、分工和博弈”？】"><a href="#Q4-【你如何理解多智能体中的”协作、分工和博弈”？】" class="headerlink" title="Q4. 【你如何理解多智能体中的”协作、分工和博弈”？】"></a>Q4. 【你如何理解多智能体中的”协作、分工和博弈”？】</h3><p>面试官为什么问这个问题：<br>这道题在考察候选人是否停留在概念层，还是理解这些关系在工程上意味着什么成本。</p>
+<p>参考口语化回答：<br>分工是最容易的，协作是最贵的，博弈是最危险的。分工只是职责划分，但一旦需要协作，就涉及状态共享、顺序控制和失败回滚。博弈我一般非常谨慎，只有在风险评估、策略对抗这种场景才用，因为一旦两个 Agent 都”很自信”，系统反而更难收敛。我踩过坑，博弈没设计好，最后是两个 Agent 无限互相否定。</p>
+<h3 id="Q5-【为什么说”多智能体不是银弹，而是复杂系统”？】"><a href="#Q5-【为什么说”多智能体不是银弹，而是复杂系统”？】" class="headerlink" title="Q5. 【为什么说”多智能体不是银弹，而是复杂系统”？】"></a>Q5. 【为什么说”多智能体不是银弹，而是复杂系统”？】</h3><p>面试官为什么问这个问题：<br>这是一个价值观判断题，面试官希望确认你是否对复杂性有敬畏感。</p>
+<p>参考口语化回答：<br>因为多智能体带来的不是线性收益，而是非线性复杂度。Agent 数量一上来，状态空间、日志量、异常路径都会爆炸式增长。如果没有清晰的失败策略和治理手段，多智能体很快会变成”没人敢改、没人敢动”的系统。所以我一直把多智能体当成最后手段，而不是默认选项。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】"><a href="#第二层：核心技术能力（How）【8-题】" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q6-【你在设计多智能体角色时，如何划清职责边界？】"><a href="#Q6-【你在设计多智能体角色时，如何划清职责边界？】" class="headerlink" title="Q6. 【你在设计多智能体角色时，如何划清职责边界？】"></a>Q6. 【你在设计多智能体角色时，如何划清职责边界？】</h3><p>面试官为什么问这个问题：<br>角色设计是多智能体的第一道工程门槛，拆错了后果非常重。</p>
+<p>参考口语化回答：<br>我会尽量按”认知类型”而不是”功能模块”来拆。比如 Planner 只负责生成计划，不允许调用工具；Executor 只能执行，不允许改计划；Critic 只能评价，不参与执行。这样做的好处是出问题时能快速定位责任归属。拆过一次”职责模糊”的 Agent，最后每个 Agent 都在偷偷补位，调试成本非常高。</p>
+<h3 id="Q7-【任务规划在多智能体中应该集中还是分散？】"><a href="#Q7-【任务规划在多智能体中应该集中还是分散？】" class="headerlink" title="Q7. 【任务规划在多智能体中应该集中还是分散？】"></a>Q7. 【任务规划在多智能体中应该集中还是分散？】</h3><p>面试官为什么问这个问题：<br>这是一个典型的架构取舍题，没有标准答案，但有明显的工程优劣。</p>
+<p>参考口语化回答：<br>我倾向于”集中规划，分布执行”。规划如果分散，很容易出现目标不一致的问题；但执行可以并行。早期我试过让多个 Agent 各自规划，结果是计划互相打架，最后还得人工兜底。集中规划虽然有单点风险，但更可控，也更容易监控。</p>
+<h3 id="Q8-【多智能体之间你通常如何通信和共享上下文？】"><a href="#Q8-【多智能体之间你通常如何通信和共享上下文？】" class="headerlink" title="Q8. 【多智能体之间你通常如何通信和共享上下文？】"></a>Q8. 【多智能体之间你通常如何通信和共享上下文？】</h3><p>面试官为什么问这个问题：<br>通信方式直接决定系统复杂度和稳定性。</p>
+<p>参考口语化回答：<br>我会刻意限制上下文共享，只传”结构化中间结果”，而不是整段对话历史。共享太多信息，很容易产生上下文污染，Agent 开始基于别人的幻觉继续推理。宁可多设计一层中间数据结构，也不要图省事直接传全文。</p>
+<h3 id="Q9-【在多智能体系统中，你如何引入-RAG-而不放大幻觉？】"><a href="#Q9-【在多智能体系统中，你如何引入-RAG-而不放大幻觉？】" class="headerlink" title="Q9. 【在多智能体系统中，你如何引入 RAG 而不放大幻觉？】"></a>Q9. 【在多智能体系统中，你如何引入 RAG 而不放大幻觉？】</h3><p>面试官为什么问这个问题：<br>RAG 一旦和多智能体叠加，错误会被迅速放大。</p>
+<p>参考口语化回答：<br>我一般只允许特定 Agent 访问 RAG，比如 Research Agent，其他 Agent 只能消费它的”摘要结论”。如果所有 Agent 都能直接查知识库，很快就会出现互相引用、循环放大的问题。RAG 在多智能体里一定要有”入口管控”。</p>
+<h3 id="Q10-【当多个-Agent-给出冲突决策时，你如何处理？】"><a href="#Q10-【当多个-Agent-给出冲突决策时，你如何处理？】" class="headerlink" title="Q10. 【当多个 Agent 给出冲突决策时，你如何处理？】"></a>Q10. 【当多个 Agent 给出冲突决策时，你如何处理？】</h3><p>面试官为什么问这个问题：<br>这是多智能体落地中必然会遇到的情况。</p>
+<p>参考口语化回答：<br>我不会指望 Agent 自己”吵出正确答案”。工程上我会引入裁决机制，比如规则优先级、置信度阈值，或者直接 Human-in-the-loop。冲突如果交给 Agent 自由博弈，最后往往是最”会说服人”的 Agent 赢，而不一定是对的。</p>
+<h3 id="Q11-【你如何看待中央调度-vs-去中心化多智能体？】"><a href="#Q11-【你如何看待中央调度-vs-去中心化多智能体？】" class="headerlink" title="Q11. 【你如何看待中央调度 vs 去中心化多智能体？】"></a>Q11. 【你如何看待中央调度 vs 去中心化多智能体？】</h3><p>面试官为什么问这个问题：<br>这是考察系统视野，而不是 API 熟练度。</p>
+<p>参考口语化回答：<br>在企业级系统里，我几乎不会用完全去中心化。中央调度虽然看起来不”智能”，但在失败控制、成本限制和审计上优势太大了。去中心化适合研究或仿真，但在生产环境，一旦失控，很难兜底。</p>
+<h3 id="Q12-【多智能体中工具调用权限你如何设计？】"><a href="#Q12-【多智能体中工具调用权限你如何设计？】" class="headerlink" title="Q12. 【多智能体中工具调用权限你如何设计？】"></a>Q12. 【多智能体中工具调用权限你如何设计？】</h3><p>面试官为什么问的问题：<br>工具滥用是多智能体常见风险。</p>
+<p>参考口语化回答：<br>我会做最小权限设计，每个 Agent 只开放必要工具，而且调用结果必须结构化返回。之前有 Agent 能直接调用外部 API，结果在异常情况下重复请求，直接把配额打爆，这是典型的权限没收紧。</p>
+<h3 id="Q13-【你如何防止多智能体”互相带偏”？】"><a href="#Q13-【你如何防止多智能体”互相带偏”？】" class="headerlink" title="Q13. 【你如何防止多智能体”互相带偏”？】"></a>Q13. 【你如何防止多智能体”互相带偏”？】</h3><p>面试官为什么问这个问题：<br>这是一个经验型问题，很难靠理论回答。</p>
+<p>参考口语化回答：<br>核心是减少”情绪化语言”和主观判断在 Agent 间传播。我会要求 Agent 输出尽量客观的中间结论，比如列表、评分、证据来源，而不是”我认为””我觉得”。一旦一个 Agent 用强语气下结论，很容易影响其他 Agent 的判断路径。</p>
+<h2 id="第三层：工程化与系统能力【8-题】"><a href="#第三层：工程化与系统能力【8-题】" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q14-【多智能体上线后，性能和成本问题你是如何评估的？】"><a href="#Q14-【多智能体上线后，性能和成本问题你是如何评估的？】" class="headerlink" title="Q14. 【多智能体上线后，性能和成本问题你是如何评估的？】"></a>Q14. 【多智能体上线后，性能和成本问题你是如何评估的？】</h3><p>面试官为什么问这个问题：<br>多智能体最容易在这里翻车。</p>
+<p>参考口语化回答：<br>我会在设计阶段就估算最坏路径的调用次数，而不是平均值。多智能体的 P95、P99 成本往往比单 Agent 高得多，如果不提前算，很容易上线后发现根本跑不起。</p>
+<h3 id="Q15-【你如何管理多智能体的状态？】"><a href="#Q15-【你如何管理多智能体的状态？】" class="headerlink" title="Q15. 【你如何管理多智能体的状态？】"></a>Q15. 【你如何管理多智能体的状态？】</h3><p>面试官为什么问这个问题：<br>状态是多智能体的核心复杂度来源。</p>
+<p>参考口语化回答：<br>我会把状态显式化，宁可写进 State，也不要隐含在 Prompt 里。隐式状态一旦错了，根本没法回放。用过 LangGraph 之后，我对状态机的敬畏感更强了。</p>
+<h3 id="Q16-【Agent-失败是如何在系统中传播的？你怎么切断？】"><a href="#Q16-【Agent-失败是如何在系统中传播的？你怎么切断？】" class="headerlink" title="Q16. 【Agent 失败是如何在系统中传播的？你怎么切断？】"></a>Q16. 【Agent 失败是如何在系统中传播的？你怎么切断？】</h3><p>面试官为什么问这个问题：<br>这是稳定性问题的核心。</p>
+<p>参考口语化回答：<br>我会区分”可恢复失败”和”致命失败”。可恢复的只影响当前 Agent，致命的直接中断整个流程。如果不区分，失败会被下游 Agent 当成正常输入继续放大。</p>
+<h3 id="Q17-【多智能体系统你如何做日志和-Tracing？】"><a href="#Q17-【多智能体系统你如何做日志和-Tracing？】" class="headerlink" title="Q17. 【多智能体系统你如何做日志和 Tracing？】"></a>Q17. 【多智能体系统你如何做日志和 Tracing？】</h3><p>面试官为什么问这个问题：<br>没有可观测性，多智能体不可维护。</p>
+<p>参考口语化回答：<br>我会给每个 Agent 单独打 Trace ID，同时保留调度层的全局 ID。否则出了问题，只看到一堆 LLM 调用日志，根本拼不出完整行为链。</p>
+<h3 id="Q18-【在-Docker-服务化环境下，你如何部署多智能体？】"><a href="#Q18-【在-Docker-服务化环境下，你如何部署多智能体？】" class="headerlink" title="Q18. 【在 Docker &#x2F; 服务化环境下，你如何部署多智能体？】"></a>Q18. 【在 Docker &#x2F; 服务化环境下，你如何部署多智能体？】</h3><p>面试官为什么问这个问题：<br>考察工程落地能力。</p>
+<p>参考口语化回答：<br>我一般不会把所有 Agent 拆成独立服务，除非确实有独立扩缩容需求。过度服务化只会增加网络延迟和运维成本。很多时候，一个进程内的多 Agent 调度更稳定。</p>
+<h3 id="Q19-【你如何限制-Agent-的”自由度”？】"><a href="#Q19-【你如何限制-Agent-的”自由度”？】" class="headerlink" title="Q19. 【你如何限制 Agent 的”自由度”？】"></a>Q19. 【你如何限制 Agent 的”自由度”？】</h3><p>面试官为什么问这个问题：<br>自由度过高是风险源头。</p>
+<p>参考口语化回答：<br>我会通过模板、输出 schema、工具白名单来约束，而不是靠 Prompt 提醒。Prompt 是软约束，工程手段才是硬约束。</p>
+<h3 id="Q20-【多智能体系统如何做回放和复现？】"><a href="#Q20-【多智能体系统如何做回放和复现？】" class="headerlink" title="Q20. 【多智能体系统如何做回放和复现？】"></a>Q20. 【多智能体系统如何做回放和复现？】</h3><p>面试官为什么问这个问题：<br>这是高阶工程能力体现。</p>
+<p>参考口语化回答：<br>必须记录完整输入、状态变化和中间输出，否则复现几乎不可能。我见过只能”线上看结果，线下复现不了”的多智能体系统，维护成本极高。</p>
+<h3 id="Q21-【你如何防止多智能体进入死循环？】"><a href="#Q21-【你如何防止多智能体进入死循环？】" class="headerlink" title="Q21. 【你如何防止多智能体进入死循环？】"></a>Q21. 【你如何防止多智能体进入死循环？】</h3><p>面试官为什么问这个问题：<br>死循环是多智能体的经典坑。</p>
+<p>参考口语化回答：<br>我会设置最大轮次、信心阈值和强制终止条件。不要指望 Agent 自己意识到”该停了”，它们往往不会。</p>
+<h2 id="第四层：真实项目与业务场景能力【6-题】"><a href="#第四层：真实项目与业务场景能力【6-题】" class="headerlink" title="第四层：真实项目与业务场景能力【6 题】"></a>第四层：真实项目与业务场景能力【6 题】</h2><h3 id="Q22-【你在哪些真实业务中用过多智能体？为什么值得？】"><a href="#Q22-【你在哪些真实业务中用过多智能体？为什么值得？】" class="headerlink" title="Q22. 【你在哪些真实业务中用过多智能体？为什么值得？】"></a>Q22. 【你在哪些真实业务中用过多智能体？为什么值得？】</h3><p>面试官为什么问这个问题：<br>这是”是否真的做过”的验证题。</p>
+<p>参考口语化回答：<br>我在金融分析场景用过，多维度评估一个标的。单 Agent 很容易被某一维信息带偏，多 Agent 可以互相制衡。但在简单报表生成场景，我试过多 Agent，效果反而更差。</p>
+<h3 id="Q23-【在医疗场景中，多智能体如何避免责任模糊？】"><a href="#Q23-【在医疗场景中，多智能体如何避免责任模糊？】" class="headerlink" title="Q23. 【在医疗场景中，多智能体如何避免责任模糊？】"></a>Q23. 【在医疗场景中，多智能体如何避免责任模糊？】</h3><p>面试官为什么问这个问题：<br>医疗是高风险场景。</p>
+<p>参考口语化回答：<br>我会明确多智能体只做”辅助分析”，最终决策必须由人或单一裁决模块输出。多 Agent 可以给建议，但不能给最终结论，这是底线。</p>
+<h3 id="Q24-【在企业流程自动化中，多智能体的最大风险是什么？】"><a href="#Q24-【在企业流程自动化中，多智能体的最大风险是什么？】" class="headerlink" title="Q24. 【在企业流程自动化中，多智能体的最大风险是什么？】"></a>Q24. 【在企业流程自动化中，多智能体的最大风险是什么？】</h3><p>面试官为什么问这个问题：<br>考察风险意识。</p>
+<p>参考口语化回答：<br>最大风险不是出错，而是”悄悄出错”。多智能体一旦自动跑流程，如果缺乏人工检查，很容易在错误方向上跑得很快。</p>
+<h3 id="Q25-【你如何评估多智能体是否真的提升了效果？】"><a href="#Q25-【你如何评估多智能体是否真的提升了效果？】" class="headerlink" title="Q25. 【你如何评估多智能体是否真的提升了效果？】"></a>Q25. 【你如何评估多智能体是否真的提升了效果？】</h3><p>面试官为什么问这个问题：<br>避免自嗨。</p>
+<p>参考口语化回答：<br>我会和单 Agent baseline 做严格对比，看质量、成本、稳定性三项指标。如果只有质量提升，但成本翻倍，我通常会放弃。</p>
+<h3 id="Q26-【你遇到过多智能体效果反而变差的情况吗？】"><a href="#Q26-【你遇到过多智能体效果反而变差的情况吗？】" class="headerlink" title="Q26. 【你遇到过多智能体效果反而变差的情况吗？】"></a>Q26. 【你遇到过多智能体效果反而变差的情况吗？】</h3><p>面试官为什么问这个问题：<br>这是经验验证题。</p>
+<p>参考口语化回答：<br>遇到过。信息密集但目标单一的任务，多 Agent 只会制造噪声。那次我直接合并回单 Agent，效果立刻稳定。</p>
+<h3 id="Q27-【你如何降低多智能体中的幻觉放大风险？】"><a href="#Q27-【你如何降低多智能体中的幻觉放大风险？】" class="headerlink" title="Q27. 【你如何降低多智能体中的幻觉放大风险？】"></a>Q27. 【你如何降低多智能体中的幻觉放大风险？】</h3><p>面试官为什么问这个问题：<br>幻觉是面试官最关心的问题之一。</p>
+<p>参考口语化回答：<br>核心是减少”幻觉传播链”。只允许一个 Agent 接触原始外部信息，其他 Agent 基于结构化结果推理。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】"><a href="#第五层：进阶与加分项（架构-视野）【3-题】" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q28-【你如何将多智能体与-LangChain-LangGraph-结合？】"><a href="#Q28-【你如何将多智能体与-LangChain-LangGraph-结合？】" class="headerlink" title="Q28. 【你如何将多智能体与 LangChain &#x2F; LangGraph 结合？】"></a>Q28. 【你如何将多智能体与 LangChain &#x2F; LangGraph 结合？】</h3><p>面试官为什么问这个问题：<br>考察框架理解深度。</p>
+<p>参考口语化回答：<br>我更倾向用 LangGraph 管理状态和流程，用 LangChain 管理单个 Agent 的能力边界。这样职责清晰，系统更可控。</p>
+<h3 id="Q29-【你如何看待多智能体系统的治理与演进？】"><a href="#Q29-【你如何看待多智能体系统的治理与演进？】" class="headerlink" title="Q29. 【你如何看待多智能体系统的治理与演进？】"></a>Q29. 【你如何看待多智能体系统的治理与演进？】</h3><p>面试官为什么问这个问题：<br>这是架构思维题。</p>
+<p>参考口语化回答：<br>我会先跑通单 Agent，再引入少量关键 Agent，最后才考虑平台化。一步到位的平台，往往死得最快。</p>
+<h3 id="Q30-【在你眼中，什么样的候选人是”多智能体系统潜力型选手”？】"><a href="#Q30-【在你眼中，什么样的候选人是”多智能体系统潜力型选手”？】" class="headerlink" title="Q30. 【在你眼中，什么样的候选人是”多智能体系统潜力型选手”？】"></a>Q30. 【在你眼中，什么样的候选人是”多智能体系统潜力型选手”？】</h3><p>面试官为什么问这个问题：<br>这是价值观和视野判断。</p>
+<p>参考口语化回答：<br>不是会用多少框架，而是能清楚说出”什么时候不用多智能体”。真正做过的人，对复杂度是谨慎甚至保守的，这一点一聊就能听出来。</p>
+<hr>
+<h3 id="Q31-【你第一次意识到”单-Agent-不够用”是因为什么问题？】"><a href="#Q31-【你第一次意识到”单-Agent-不够用”是因为什么问题？】" class="headerlink" title="Q31. 【你第一次意识到”单 Agent 不够用”是因为什么问题？】"></a>Q31. 【你第一次意识到”单 Agent 不够用”是因为什么问题？】</h3><p>面试官为什么问这个问题：<br>这道题不是在问理论判断，而是在追溯候选人的真实决策起点。真正做过多智能体的人，往往能清楚说出”单 Agent 失败的具体形态”。</p>
+<p>参考口语化回答：<br>我第一次意识到单 Agent 不够，是在一个分析链路特别长的场景里。Agent 前半段推理是对的，但中途一旦理解偏了，后面所有结论都跟着歪，而且我完全没办法中途介入。后来我把”分析”和”校验”拆开，哪怕多一次调用，整体稳定性明显提升，这才开始认真考虑多智能体。</p>
+<h3 id="Q32-【在你看来，多智能体的”下限风险”主要体现在哪里？】"><a href="#Q32-【在你看来，多智能体的”下限风险”主要体现在哪里？】" class="headerlink" title="Q32. 【在你看来，多智能体的”下限风险”主要体现在哪里？】"></a>Q32. 【在你看来，多智能体的”下限风险”主要体现在哪里？】</h3><p>面试官为什么问这个问题：<br>面试官想确认候选人是否意识到：多智能体最危险的不是失败，而是”系统性失败”。</p>
+<p>参考口语化回答：<br>下限风险在于错误会被包装得更”合理”。多个 Agent 彼此背书，看起来很有说服力，但一旦方向错了，系统反而更难被质疑。我一直认为，多智能体不是提高下限的手段，反而可能拉低下限。</p>
+<h3 id="Q33-【你如何向非技术同事解释”为什么不一定要上多智能体”？】"><a href="#Q33-【你如何向非技术同事解释”为什么不一定要上多智能体”？】" class="headerlink" title="Q33. 【你如何向非技术同事解释”为什么不一定要上多智能体”？】"></a>Q33. 【你如何向非技术同事解释”为什么不一定要上多智能体”？】</h3><p>面试官为什么问这个问题：<br>这是在考察候选人是否具备工程判断与沟通能力。</p>
+<p>参考口语化回答：<br>我一般会直接说：多智能体不是功能升级，而是系统复杂度升级。它解决的是”认知可靠性问题”，不是”需求没想清楚的问题”。如果业务问题本身很简单，上多智能体只会让维护成本和风险暴涨。</p>
+<h3 id="Q34-【多智能体系统中，”协作失败”通常意味着什么？】"><a href="#Q34-【多智能体系统中，”协作失败”通常意味着什么？】" class="headerlink" title="Q34. 【多智能体系统中，”协作失败”通常意味着什么？】"></a>Q34. 【多智能体系统中，”协作失败”通常意味着什么？】</h3><p>面试官为什么问这个问题：<br>这道题用来区分”协作想象”和”协作现实”。</p>
+<p>参考口语化回答：<br>协作失败通常不是 Agent 不聪明，而是目标函数不一致。有的 Agent 在追求完整性，有的在追求速度，如果不在设计阶段统一价值取向，协作一定会失败，而且失败得很隐蔽。</p>
+<h3 id="Q35-【你是否遇到过”为了多智能体而多智能体”的项目？结果如何？】"><a href="#Q35-【你是否遇到过”为了多智能体而多智能体”的项目？结果如何？】" class="headerlink" title="Q35. 【你是否遇到过”为了多智能体而多智能体”的项目？结果如何？】"></a>Q35. 【你是否遇到过”为了多智能体而多智能体”的项目？结果如何？】</h3><p>面试官为什么问这个问题：<br>这是在验证候选人的工程反思能力。</p>
+<p>参考口语化回答：<br>遇到过。结果基本都是两种：要么项目拖慢，要么后期被迫合并回单 Agent。真正有效的多智能体，几乎都是从单 Agent 痛点自然演化出来的，而不是一开始就设计成多 Agent。</p>
+<h2 id="第二层：核心技术能力（How）【8-题】-1"><a href="#第二层：核心技术能力（How）【8-题】-1" class="headerlink" title="第二层：核心技术能力（How）【8 题】"></a>第二层：核心技术能力（How）【8 题】</h2><h3 id="Q36-【你如何判断一个-Agent-是否应该”拥有长期记忆”？】"><a href="#Q36-【你如何判断一个-Agent-是否应该”拥有长期记忆”？】" class="headerlink" title="Q36. 【你如何判断一个 Agent 是否应该”拥有长期记忆”？】"></a>Q36. 【你如何判断一个 Agent 是否应该”拥有长期记忆”？】</h3><p>面试官为什么问这个问题：<br>长期记忆一旦引入，多智能体复杂度会明显上升。</p>
+<p>参考口语化回答：<br>我只会给”角色稳定、目标长期一致”的 Agent 加长期记忆，比如用户画像分析类。执行类 Agent 我一般不留长期记忆，否则历史偏见会不断叠加，反而降低决策质量。</p>
+<h3 id="Q37-【多智能体中的-Planner-是否应该具备执行能力？】"><a href="#Q37-【多智能体中的-Planner-是否应该具备执行能力？】" class="headerlink" title="Q37. 【多智能体中的 Planner 是否应该具备执行能力？】"></a>Q37. 【多智能体中的 Planner 是否应该具备执行能力？】</h3><p>面试官为什么问这个问题：<br>这是角色边界是否清晰的典型问题。</p>
+<p>参考口语化回答：<br>我一般严格禁止。Planner 一旦能执行，就会在执行失败时偷偷调整计划，导致后续很难复盘。把规划和执行拆开，是为了让错误暴露，而不是被”智能修复”。</p>
+<h3 id="Q38-【你如何设计-Agent-之间的依赖顺序？】"><a href="#Q38-【你如何设计-Agent-之间的依赖顺序？】" class="headerlink" title="Q38. 【你如何设计 Agent 之间的依赖顺序？】"></a>Q38. 【你如何设计 Agent 之间的依赖顺序？】</h3><p>面试官为什么问这个问题：<br>依赖顺序直接影响系统稳定性。</p>
+<p>参考口语化回答：<br>我会尽量让依赖单向化，避免环依赖。只要出现 A 依赖 B、B 又反过来依赖 A，这个系统基本就不可控了。必要时我宁愿引入一个中间裁决节点。</p>
+<h3 id="Q39-【多智能体中是否应该允许-Agent-质疑系统目标？】"><a href="#Q39-【多智能体中是否应该允许-Agent-质疑系统目标？】" class="headerlink" title="Q39. 【多智能体中是否应该允许 Agent 质疑系统目标？】"></a>Q39. 【多智能体中是否应该允许 Agent 质疑系统目标？】</h3><p>面试官为什么问这个问题：<br>这是一个容易被忽视的高级问题。</p>
+<p>参考口语化回答：<br>默认不允许。质疑目标的 Agent 必须是特定角色，比如安全或合规 Agent，而且它只能提出风险，不允许直接改目标。否则系统会频繁陷入”哲学讨论”，任务根本推进不了。</p>
+<h3 id="Q40-【你如何处理多智能体中的”信息过期”问题？】"><a href="#Q40-【你如何处理多智能体中的”信息过期”问题？】" class="headerlink" title="Q40. 【你如何处理多智能体中的”信息过期”问题？】"></a>Q40. 【你如何处理多智能体中的”信息过期”问题？】</h3><p>面试官为什么问这个问题：<br>考察候选人对时效性的认知。</p>
+<p>参考口语化回答：<br>我会给中间结果加时间戳和有效期，下游 Agent 只接受最新版本。否则很容易出现基于旧信息继续推理，最后结果看似合理，其实已经脱离现实。</p>
+<h3 id="Q41-【多智能体系统中，你是否使用过置信度或评分机制？】"><a href="#Q41-【多智能体系统中，你是否使用过置信度或评分机制？】" class="headerlink" title="Q41. 【多智能体系统中，你是否使用过置信度或评分机制？】"></a>Q41. 【多智能体系统中，你是否使用过置信度或评分机制？】</h3><p>面试官为什么问这个问题：<br>这是工程化判断的重要信号。</p>
+<p>参考口语化回答：<br>用过，而且很关键。不给置信度，所有 Agent 的输出在系统里都是”同权重”，这在冲突时非常危险。哪怕置信度不准，也比完全没有要好。</p>
+<h3 id="Q42-【你如何限制-Agent-的自我反思轮次？】"><a href="#Q42-【你如何限制-Agent-的自我反思轮次？】" class="headerlink" title="Q42. 【你如何限制 Agent 的自我反思轮次？】"></a>Q42. 【你如何限制 Agent 的自我反思轮次？】</h3><p>面试官为什么问这个问题：<br>反思机制很容易失控。</p>
+<p>参考口语化回答：<br>我会硬性限制轮次，并且要求每一轮反思必须引入新证据。否则 Agent 会在语言层面不断自我优化，但结论并没有实质变化。</p>
+<h3 id="Q43-【多智能体中是否有你坚决不用的机制？为什么？】"><a href="#Q43-【多智能体中是否有你坚决不用的机制？为什么？】" class="headerlink" title="Q43. 【多智能体中是否有你坚决不用的机制？为什么？】"></a>Q43. 【多智能体中是否有你坚决不用的机制？为什么？】</h3><p>面试官为什么问这个问题：<br>这是经验过滤题。</p>
+<p>参考口语化回答：<br>我基本不用完全开放式的 Agent 自由对话。看起来很智能，但在生产环境里几乎不可控，调试和审计成本都非常高。</p>
+<h2 id="第三层：工程化与系统能力【8-题】-1"><a href="#第三层：工程化与系统能力【8-题】-1" class="headerlink" title="第三层：工程化与系统能力【8 题】"></a>第三层：工程化与系统能力【8 题】</h2><h3 id="Q44-【多智能体系统的首个线上事故通常发生在哪里？】"><a href="#Q44-【多智能体系统的首个线上事故通常发生在哪里？】" class="headerlink" title="Q44. 【多智能体系统的首个线上事故通常发生在哪里？】"></a>Q44. 【多智能体系统的首个线上事故通常发生在哪里？】</h3><p>面试官为什么问这个问题：<br>真实事故经验是区分度很高的信号。</p>
+<p>参考口语化回答：<br>通常发生在异常路径，比如外部接口超时、RAG 返回空结果。正常流程跑得很好，但一旦异常，Agent 的补救行为会迅速放大问题。</p>
+<h3 id="Q45-【你如何控制多智能体系统的”最坏执行路径”？】"><a href="#Q45-【你如何控制多智能体系统的”最坏执行路径”？】" class="headerlink" title="Q45. 【你如何控制多智能体系统的”最坏执行路径”？】"></a>Q45. 【你如何控制多智能体系统的”最坏执行路径”？】</h3><p>面试官为什么问这个问题：<br>这是成本和稳定性核心。</p>
+<p>参考口语化回答：<br>我会提前画出最坏路径，计算最大调用次数和最长时延。如果这个数字业务接受不了，那这个设计本身就有问题。</p>
+<h3 id="Q46-【多智能体是否需要灰度发布？你怎么做？】"><a href="#Q46-【多智能体是否需要灰度发布？你怎么做？】" class="headerlink" title="Q46. 【多智能体是否需要灰度发布？你怎么做？】"></a>Q46. 【多智能体是否需要灰度发布？你怎么做？】</h3><p>面试官为什么问这个问题：<br>考察工程成熟度。</p>
+<p>参考口语化回答：<br>一定需要。我通常先灰度 Agent 组合，而不是单个 Agent。因为问题往往出在协作关系上，而不是某一个 Agent 本身。</p>
+<h3 id="Q47-【你如何判断一个-Agent-是否应该被”下线”？】"><a href="#Q47-【你如何判断一个-Agent-是否应该被”下线”？】" class="headerlink" title="Q47. 【你如何判断一个 Agent 是否应该被”下线”？】"></a>Q47. 【你如何判断一个 Agent 是否应该被”下线”？】</h3><p>面试官为什么问这个问题：<br>这是系统治理问题。</p>
+<p>参考口语化回答：<br>如果一个 Agent 的贡献无法量化，或者长期只增加复杂度，我会毫不犹豫下线。多智能体系统必须允许”做减法”。</p>
+<h3 id="Q48-【多智能体系统中，你如何做权限和审计？】"><a href="#Q48-【多智能体系统中，你如何做权限和审计？】" class="headerlink" title="Q48. 【多智能体系统中，你如何做权限和审计？】"></a>Q48. 【多智能体系统中，你如何做权限和审计？】</h3><p>面试官为什么问这个问题：<br>企业级系统的基本要求。</p>
+<p>参考口语化回答：<br>每个 Agent 的工具调用、关键决策都必须可审计。否则一旦出问题，很难界定是模型问题还是系统设计问题。</p>
+<h3 id="Q49-【你是否遇到过多智能体导致排障周期变长的情况？】"><a href="#Q49-【你是否遇到过多智能体导致排障周期变长的情况？】" class="headerlink" title="Q49. 【你是否遇到过多智能体导致排障周期变长的情况？】"></a>Q49. 【你是否遇到过多智能体导致排障周期变长的情况？】</h3><p>面试官为什么问这个问题：<br>验证真实维护经验。</p>
+<p>参考口语化回答：<br>经常遇到。所以我现在非常克制 Agent 数量。多一个 Agent，不只是多一份代码，而是多一条排障路径。</p>
+<h3 id="Q50-【你如何评估多智能体系统的”可维护性”？】"><a href="#Q50-【你如何评估多智能体系统的”可维护性”？】" class="headerlink" title="Q50. 【你如何评估多智能体系统的”可维护性”？】"></a>Q50. 【你如何评估多智能体系统的”可维护性”？】</h3><p>面试官为什么问这个问题：<br>这是长期视角问题。</p>
+<p>参考口语化回答：<br>我会看新人能否在一周内理解系统。如果需要反复口头解释协作逻辑，那这个系统基本是不可维护的。</p>
+<h3 id="Q51-【多智能体系统是否适合频繁迭代？】"><a href="#Q51-【多智能体系统是否适合频繁迭代？】" class="headerlink" title="Q51. 【多智能体系统是否适合频繁迭代？】"></a>Q51. 【多智能体系统是否适合频繁迭代？】</h3><p>面试官为什么问这个问题：<br>考察候选人对演进成本的认知。</p>
+<p>参考口语化回答：<br>不太适合。多智能体一旦稳定下来，我会尽量减少结构性调整，否则回归成本非常高。</p>
+<h2 id="第四层：真实项目与业务场景能力【6-题】-1"><a href="#第四层：真实项目与业务场景能力【6-题】-1" class="headerlink" title="第四层：真实项目与业务场景能力【6 题】"></a>第四层：真实项目与业务场景能力【6 题】</h2><h3 id="Q52-【在金融风控中，多智能体最大的价值和最大风险分别是什么？】"><a href="#Q52-【在金融风控中，多智能体最大的价值和最大风险分别是什么？】" class="headerlink" title="Q52. 【在金融风控中，多智能体最大的价值和最大风险分别是什么？】"></a>Q52. 【在金融风控中，多智能体最大的价值和最大风险分别是什么？】</h3><p>面试官为什么问这个问题：<br>金融是典型高风险场景。</p>
+<p>参考口语化回答：<br>价值在于多视角制衡，风险在于风险叠加。多个 Agent 同时给出”谨慎乐观”，很容易被误判为低风险。</p>
+<h3 id="Q53-【你是否在企业内部系统中替换过人工流程为多智能体？结果如何？】"><a href="#Q53-【你是否在企业内部系统中替换过人工流程为多智能体？结果如何？】" class="headerlink" title="Q53. 【你是否在企业内部系统中替换过人工流程为多智能体？结果如何？】"></a>Q53. 【你是否在企业内部系统中替换过人工流程为多智能体？结果如何？】</h3><p>面试官为什么问这个问题：<br>考察真实落地经验。</p>
+<p>参考口语化回答：<br>替换过部分环节，但从不全自动。完全自动的多智能体流程，一旦出问题，影响面太大。</p>
+<h3 id="Q54-【多智能体在合规或审计场景中是否合适？】"><a href="#Q54-【多智能体在合规或审计场景中是否合适？】" class="headerlink" title="Q54. 【多智能体在合规或审计场景中是否合适？】"></a>Q54. 【多智能体在合规或审计场景中是否合适？】</h3><p>面试官为什么问这个问题：<br>这是边界判断题。</p>
+<p>参考口语化回答：<br>只适合做辅助，不适合做裁决。合规更看重可解释性，而不是协作智能。</p>
+<h3 id="Q55-【你如何向业务方证明”多智能体值得这笔成本”？】"><a href="#Q55-【你如何向业务方证明”多智能体值得这笔成本”？】" class="headerlink" title="Q55. 【你如何向业务方证明”多智能体值得这笔成本”？】"></a>Q55. 【你如何向业务方证明”多智能体值得这笔成本”？】</h3><p>面试官为什么问这个问题：<br>商业判断能力。</p>
+<p>参考口语化回答：<br>我会拿稳定性和人工节省时间说话，而不是模型指标。只要能减少人工复核成本，业务通常是买账的。</p>
+<h3 id="Q56-【你是否因为业务压力被迫简化多智能体设计？】"><a href="#Q56-【你是否因为业务压力被迫简化多智能体设计？】" class="headerlink" title="Q56. 【你是否因为业务压力被迫简化多智能体设计？】"></a>Q56. 【你是否因为业务压力被迫简化多智能体设计？】</h3><p>面试官为什么问这个问题：<br>真实博弈题。</p>
+<p>参考口语化回答：<br>有过。最终我选择保留核心 Agent，其余合并。简单但稳定，往往比复杂但脆弱更重要。</p>
+<h3 id="Q57-【什么业务场景下，你会明确拒绝使用多智能体？】"><a href="#Q57-【什么业务场景下，你会明确拒绝使用多智能体？】" class="headerlink" title="Q57. 【什么业务场景下，你会明确拒绝使用多智能体？】"></a>Q57. 【什么业务场景下，你会明确拒绝使用多智能体？】</h3><p>面试官为什么问这个问题：<br>这是”会拒绝”的能力。</p>
+<p>参考口语化回答：<br>目标单一、时延敏感、容错率低的场景，我都会拒绝。多智能体在这些场景里几乎没有胜算。</p>
+<h2 id="第五层：进阶与加分项（架构-视野）【3-题】-1"><a href="#第五层：进阶与加分项（架构-视野）【3-题】-1" class="headerlink" title="第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】"></a>第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</h2><h3 id="Q58-【你如何看待多智能体向-Agent-Platform-演进的拐点？】"><a href="#Q58-【你如何看待多智能体向-Agent-Platform-演进的拐点？】" class="headerlink" title="Q58. 【你如何看待多智能体向 Agent Platform 演进的拐点？】"></a>Q58. 【你如何看待多智能体向 Agent Platform 演进的拐点？】</h3><p>面试官为什么问这个问题：<br>这是系统级视野判断。</p>
+<p>参考口语化回答：<br>当 Agent 数量多到需要统一权限、监控和调度时，才值得平台化。过早平台化只会增加负担。</p>
+<h3 id="Q59-【多智能体系统是否应该具备”自我简化”能力？】"><a href="#Q59-【多智能体系统是否应该具备”自我简化”能力？】" class="headerlink" title="Q59. 【多智能体系统是否应该具备”自我简化”能力？】"></a>Q59. 【多智能体系统是否应该具备”自我简化”能力？】</h3><p>面试官为什么问这个问题：<br>这是高阶设计思维。</p>
+<p>参考口语化回答：<br>我认为应该。系统能识别哪些 Agent 长期无效，并建议下线，这比无限扩张更重要。</p>
+<h3 id="Q60-【你如何判断一个团队是否”驾驭得了”多智能体系统？】"><a href="#Q60-【你如何判断一个团队是否”驾驭得了”多智能体系统？】" class="headerlink" title="Q60. 【你如何判断一个团队是否”驾驭得了”多智能体系统？】"></a>Q60. 【你如何判断一个团队是否”驾驭得了”多智能体系统？】</h3><p>面试官为什么问这个问题：<br>这是人才与组织判断。</p>
+<p>参考口语化回答：<br>看团队是否能清楚说出失败路径。如果大家只讨论成功案例，而不讨论最坏情况，那这个团队大概率驾驭不了多智能体系统。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/01/01/ai-interview-05-agent-mcp/">AI面试题 - MCP 协议与工具治理</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/01/01/ai-interview-06-deployment/">AI面试题 - 模型部署与运维</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="/2026/01/01/ai-interview-00-ai-engineer/" title="AI面试题 - AI应用开发工程师综合题"><span class="title">AI面试题 - AI应用开发工程师综合题</span></a><a class="item" href="/2026/01/01/ai-interview-05-agent-langchain/" title="AI面试题 - LangChain 智能体开发"><span class="title">AI面试题 - LangChain 智能体开发</span></a><a class="item" href="/2026/01/01/ai-interview-05-agent-langgraph/" title="AI面试题 - LangGraph 工作流编排"><span class="title">AI面试题 - LangGraph 工作流编排</span></a><a class="item" href="/2026/01/01/ai-interview-05-agent-mcp/" title="AI面试题 - MCP 协议与工具治理"><span class="title">AI面试题 - MCP 协议与工具治理</span></a><a class="item" href="/2026/01/01/ai-interview-01-python/" title="AI面试题 - Python 基础与工程实践"><span class="title">AI面试题 - Python 基础与工程实践</span></a></div></section></div>
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">WenYin Open Source Community</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E7%9F%A5%EF%BC%88Why-What%EF%BC%89%E3%80%905-%E9%A2%98%E3%80%91"><span class="toc-text">第一层：基础认知（Why &#x2F; What）【5 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E3%80%90%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BD%A0%E4%BC%9A%E6%98%8E%E7%A1%AE%E9%80%89%E6%8B%A9%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%8A%8A%E5%8D%95-Agent-%E5%81%9A%E2%80%9D%E6%9B%B4%E8%81%AA%E6%98%8E%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q1. 【什么情况下你会明确选择多智能体，而不是把单 Agent 做”更聪明”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E3%80%90%E5%9C%A8%E4%BD%A0%E7%90%86%E8%A7%A3%E4%B8%AD%EF%BC%8C%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E8%A7%A3%E5%86%B3%E7%9A%84%E2%80%9D%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%E2%80%9D%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q2. 【在你理解中，多智能体系统解决的”核心问题”是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%E2%80%9D%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E2%80%9D%E5%92%8C%E2%80%9D%E5%A4%9A%E6%AC%A1-LLM-%E8%B0%83%E7%94%A8%E2%80%9D%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%B7%AE%E5%BC%82%EF%BC%9F%E3%80%91"><span class="toc-text">Q3. 【你如何区分”多智能体系统”和”多次 LLM 调用”的本质差异？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E7%9A%84%E2%80%9D%E5%8D%8F%E4%BD%9C%E3%80%81%E5%88%86%E5%B7%A5%E5%92%8C%E5%8D%9A%E5%BC%88%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q4. 【你如何理解多智能体中的”协作、分工和博弈”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E3%80%90%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E2%80%9D%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%8D%E6%98%AF%E9%93%B6%E5%BC%B9%EF%BC%8C%E8%80%8C%E6%98%AF%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q5. 【为什么说”多智能体不是银弹，而是复杂系统”？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E3%80%90%E4%BD%A0%E5%9C%A8%E8%AE%BE%E8%AE%A1%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E8%A7%92%E8%89%B2%E6%97%B6%EF%BC%8C%E5%A6%82%E4%BD%95%E5%88%92%E6%B8%85%E8%81%8C%E8%B4%A3%E8%BE%B9%E7%95%8C%EF%BC%9F%E3%80%91"><span class="toc-text">Q6. 【你在设计多智能体角色时，如何划清职责边界？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E3%80%90%E4%BB%BB%E5%8A%A1%E8%A7%84%E5%88%92%E5%9C%A8%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E5%BA%94%E8%AF%A5%E9%9B%86%E4%B8%AD%E8%BF%98%E6%98%AF%E5%88%86%E6%95%A3%EF%BC%9F%E3%80%91"><span class="toc-text">Q7. 【任务规划在多智能体中应该集中还是分散？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B9%8B%E9%97%B4%E4%BD%A0%E9%80%9A%E5%B8%B8%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%E5%92%8C%E5%85%B1%E4%BA%AB%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%9F%E3%80%91"><span class="toc-text">Q8. 【多智能体之间你通常如何通信和共享上下文？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q9-%E3%80%90%E5%9C%A8%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%BC%95%E5%85%A5-RAG-%E8%80%8C%E4%B8%8D%E6%94%BE%E5%A4%A7%E5%B9%BB%E8%A7%89%EF%BC%9F%E3%80%91"><span class="toc-text">Q9. 【在多智能体系统中，你如何引入 RAG 而不放大幻觉？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q10-%E3%80%90%E5%BD%93%E5%A4%9A%E4%B8%AA-Agent-%E7%BB%99%E5%87%BA%E5%86%B2%E7%AA%81%E5%86%B3%E7%AD%96%E6%97%B6%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F%E3%80%91"><span class="toc-text">Q10. 【当多个 Agent 给出冲突决策时，你如何处理？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q11-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E4%B8%AD%E5%A4%AE%E8%B0%83%E5%BA%A6-vs-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%9F%E3%80%91"><span class="toc-text">Q11. 【你如何看待中央调度 vs 去中心化多智能体？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q12-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E6%9D%83%E9%99%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q12. 【多智能体中工具调用权限你如何设计？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q13-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E2%80%9D%E4%BA%92%E7%9B%B8%E5%B8%A6%E5%81%8F%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q13. 【你如何防止多智能体”互相带偏”？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q14-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%8A%E7%BA%BF%E5%90%8E%EF%BC%8C%E6%80%A7%E8%83%BD%E5%92%8C%E6%88%90%E6%9C%AC%E9%97%AE%E9%A2%98%E4%BD%A0%E6%98%AF%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E7%9A%84%EF%BC%9F%E3%80%91"><span class="toc-text">Q14. 【多智能体上线后，性能和成本问题你是如何评估的？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q15-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E7%8A%B6%E6%80%81%EF%BC%9F%E3%80%91"><span class="toc-text">Q15. 【你如何管理多智能体的状态？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q16-%E3%80%90Agent-%E5%A4%B1%E8%B4%A5%E6%98%AF%E5%A6%82%E4%BD%95%E5%9C%A8%E7%B3%BB%E7%BB%9F%E4%B8%AD%E4%BC%A0%E6%92%AD%E7%9A%84%EF%BC%9F%E4%BD%A0%E6%80%8E%E4%B9%88%E5%88%87%E6%96%AD%EF%BC%9F%E3%80%91"><span class="toc-text">Q16. 【Agent 失败是如何在系统中传播的？你怎么切断？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q17-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E4%BD%A0%E5%A6%82%E4%BD%95%E5%81%9A%E6%97%A5%E5%BF%97%E5%92%8C-Tracing%EF%BC%9F%E3%80%91"><span class="toc-text">Q17. 【多智能体系统你如何做日志和 Tracing？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q18-%E3%80%90%E5%9C%A8-Docker-%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%8E%AF%E5%A2%83%E4%B8%8B%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%9F%E3%80%91"><span class="toc-text">Q18. 【在 Docker &#x2F; 服务化环境下，你如何部署多智能体？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q19-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%99%90%E5%88%B6-Agent-%E7%9A%84%E2%80%9D%E8%87%AA%E7%94%B1%E5%BA%A6%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q19. 【你如何限制 Agent 的”自由度”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q20-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E5%81%9A%E5%9B%9E%E6%94%BE%E5%92%8C%E5%A4%8D%E7%8E%B0%EF%BC%9F%E3%80%91"><span class="toc-text">Q20. 【多智能体系统如何做回放和复现？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q21-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E8%BF%9B%E5%85%A5%E6%AD%BB%E5%BE%AA%E7%8E%AF%EF%BC%9F%E3%80%91"><span class="toc-text">Q21. 【你如何防止多智能体进入死循环？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91"><span class="toc-text">第四层：真实项目与业务场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q22-%E3%80%90%E4%BD%A0%E5%9C%A8%E5%93%AA%E4%BA%9B%E7%9C%9F%E5%AE%9E%E4%B8%9A%E5%8A%A1%E4%B8%AD%E7%94%A8%E8%BF%87%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%EF%BC%9F%E3%80%91"><span class="toc-text">Q22. 【你在哪些真实业务中用过多智能体？为什么值得？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q23-%E3%80%90%E5%9C%A8%E5%8C%BB%E7%96%97%E5%9C%BA%E6%99%AF%E4%B8%AD%EF%BC%8C%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E8%B4%A3%E4%BB%BB%E6%A8%A1%E7%B3%8A%EF%BC%9F%E3%80%91"><span class="toc-text">Q23. 【在医疗场景中，多智能体如何避免责任模糊？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q24-%E3%80%90%E5%9C%A8%E4%BC%81%E4%B8%9A%E6%B5%81%E7%A8%8B%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%AD%EF%BC%8C%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E6%9C%80%E5%A4%A7%E9%A3%8E%E9%99%A9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q24. 【在企业流程自动化中，多智能体的最大风险是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q25-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%98%AF%E5%90%A6%E7%9C%9F%E7%9A%84%E6%8F%90%E5%8D%87%E4%BA%86%E6%95%88%E6%9E%9C%EF%BC%9F%E3%80%91"><span class="toc-text">Q25. 【你如何评估多智能体是否真的提升了效果？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q26-%E3%80%90%E4%BD%A0%E9%81%87%E5%88%B0%E8%BF%87%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%95%88%E6%9E%9C%E5%8F%8D%E8%80%8C%E5%8F%98%E5%B7%AE%E7%9A%84%E6%83%85%E5%86%B5%E5%90%97%EF%BC%9F%E3%80%91"><span class="toc-text">Q26. 【你遇到过多智能体效果反而变差的情况吗？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q27-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E7%9A%84%E5%B9%BB%E8%A7%89%E6%94%BE%E5%A4%A7%E9%A3%8E%E9%99%A9%EF%BC%9F%E3%80%91"><span class="toc-text">Q27. 【你如何降低多智能体中的幻觉放大风险？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q28-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%B0%86%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%8E-LangChain-LangGraph-%E7%BB%93%E5%90%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q28. 【你如何将多智能体与 LangChain &#x2F; LangGraph 结合？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q29-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%B2%BB%E7%90%86%E4%B8%8E%E6%BC%94%E8%BF%9B%EF%BC%9F%E3%80%91"><span class="toc-text">Q29. 【你如何看待多智能体系统的治理与演进？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q30-%E3%80%90%E5%9C%A8%E4%BD%A0%E7%9C%BC%E4%B8%AD%EF%BC%8C%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E5%80%99%E9%80%89%E4%BA%BA%E6%98%AF%E2%80%9D%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E6%BD%9C%E5%8A%9B%E5%9E%8B%E9%80%89%E6%89%8B%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q30. 【在你眼中，什么样的候选人是”多智能体系统潜力型选手”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q31-%E3%80%90%E4%BD%A0%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%84%8F%E8%AF%86%E5%88%B0%E2%80%9D%E5%8D%95-Agent-%E4%B8%8D%E5%A4%9F%E7%94%A8%E2%80%9D%E6%98%AF%E5%9B%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q31. 【你第一次意识到”单 Agent 不够用”是因为什么问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q32-%E3%80%90%E5%9C%A8%E4%BD%A0%E7%9C%8B%E6%9D%A5%EF%BC%8C%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%9A%84%E2%80%9D%E4%B8%8B%E9%99%90%E9%A3%8E%E9%99%A9%E2%80%9D%E4%B8%BB%E8%A6%81%E4%BD%93%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F%E3%80%91"><span class="toc-text">Q32. 【在你看来，多智能体的”下限风险”主要体现在哪里？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q33-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%90%91%E9%9D%9E%E6%8A%80%E6%9C%AF%E5%90%8C%E4%BA%8B%E8%A7%A3%E9%87%8A%E2%80%9D%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E4%B8%80%E5%AE%9A%E8%A6%81%E4%B8%8A%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q33. 【你如何向非技术同事解释”为什么不一定要上多智能体”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q34-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E4%B8%AD%EF%BC%8C%E2%80%9D%E5%8D%8F%E4%BD%9C%E5%A4%B1%E8%B4%A5%E2%80%9D%E9%80%9A%E5%B8%B8%E6%84%8F%E5%91%B3%E7%9D%80%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q34. 【多智能体系统中，”协作失败”通常意味着什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q35-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87%E2%80%9D%E4%B8%BA%E4%BA%86%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E8%80%8C%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E2%80%9D%E7%9A%84%E9%A1%B9%E7%9B%AE%EF%BC%9F%E7%BB%93%E6%9E%9C%E5%A6%82%E4%BD%95%EF%BC%9F%E3%80%91"><span class="toc-text">Q35. 【你是否遇到过”为了多智能体而多智能体”的项目？结果如何？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9A%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%83%BD%E5%8A%9B%EF%BC%88How%EF%BC%89%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第二层：核心技术能力（How）【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q36-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA-Agent-%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E2%80%9D%E6%8B%A5%E6%9C%89%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q36. 【你如何判断一个 Agent 是否应该”拥有长期记忆”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q37-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E7%9A%84-Planner-%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E5%85%B7%E5%A4%87%E6%89%A7%E8%A1%8C%E8%83%BD%E5%8A%9B%EF%BC%9F%E3%80%91"><span class="toc-text">Q37. 【多智能体中的 Planner 是否应该具备执行能力？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q38-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1-Agent-%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96%E9%A1%BA%E5%BA%8F%EF%BC%9F%E3%80%91"><span class="toc-text">Q38. 【你如何设计 Agent 之间的依赖顺序？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q39-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E5%85%81%E8%AE%B8-Agent-%E8%B4%A8%E7%96%91%E7%B3%BB%E7%BB%9F%E7%9B%AE%E6%A0%87%EF%BC%9F%E3%80%91"><span class="toc-text">Q39. 【多智能体中是否应该允许 Agent 质疑系统目标？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q40-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E7%9A%84%E2%80%9D%E4%BF%A1%E6%81%AF%E8%BF%87%E6%9C%9F%E2%80%9D%E9%97%AE%E9%A2%98%EF%BC%9F%E3%80%91"><span class="toc-text">Q40. 【你如何处理多智能体中的”信息过期”问题？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q41-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E4%B8%AD%EF%BC%8C%E4%BD%A0%E6%98%AF%E5%90%A6%E4%BD%BF%E7%94%A8%E8%BF%87%E7%BD%AE%E4%BF%A1%E5%BA%A6%E6%88%96%E8%AF%84%E5%88%86%E6%9C%BA%E5%88%B6%EF%BC%9F%E3%80%91"><span class="toc-text">Q41. 【多智能体系统中，你是否使用过置信度或评分机制？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q42-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E9%99%90%E5%88%B6-Agent-%E7%9A%84%E8%87%AA%E6%88%91%E5%8F%8D%E6%80%9D%E8%BD%AE%E6%AC%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q42. 【你如何限制 Agent 的自我反思轮次？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q43-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%AD%E6%98%AF%E5%90%A6%E6%9C%89%E4%BD%A0%E5%9D%9A%E5%86%B3%E4%B8%8D%E7%94%A8%E7%9A%84%E6%9C%BA%E5%88%B6%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q43. 【多智能体中是否有你坚决不用的机制？为什么？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%9A%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E3%80%908-%E9%A2%98%E3%80%91-1"><span class="toc-text">第三层：工程化与系统能力【8 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q44-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%A6%96%E4%B8%AA%E7%BA%BF%E4%B8%8A%E4%BA%8B%E6%95%85%E9%80%9A%E5%B8%B8%E5%8F%91%E7%94%9F%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F%E3%80%91"><span class="toc-text">Q44. 【多智能体系统的首个线上事故通常发生在哪里？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q45-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E2%80%9D%E6%9C%80%E5%9D%8F%E6%89%A7%E8%A1%8C%E8%B7%AF%E5%BE%84%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q45. 【你如何控制多智能体系统的”最坏执行路径”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q46-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83%EF%BC%9F%E4%BD%A0%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F%E3%80%91"><span class="toc-text">Q46. 【多智能体是否需要灰度发布？你怎么做？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q47-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA-Agent-%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E8%A2%AB%E2%80%9D%E4%B8%8B%E7%BA%BF%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q47. 【你如何判断一个 Agent 是否应该被”下线”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q48-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E4%B8%AD%EF%BC%8C%E4%BD%A0%E5%A6%82%E4%BD%95%E5%81%9A%E6%9D%83%E9%99%90%E5%92%8C%E5%AE%A1%E8%AE%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q48. 【多智能体系统中，你如何做权限和审计？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q49-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E9%81%87%E5%88%B0%E8%BF%87%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%AF%BC%E8%87%B4%E6%8E%92%E9%9A%9C%E5%91%A8%E6%9C%9F%E5%8F%98%E9%95%BF%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F%E3%80%91"><span class="toc-text">Q49. 【你是否遇到过多智能体导致排障周期变长的情况？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q50-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E2%80%9D%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q50. 【你如何评估多智能体系统的”可维护性”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q51-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E9%80%82%E5%90%88%E9%A2%91%E7%B9%81%E8%BF%AD%E4%BB%A3%EF%BC%9F%E3%80%91"><span class="toc-text">Q51. 【多智能体系统是否适合频繁迭代？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%9A%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE%E4%B8%8E%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E8%83%BD%E5%8A%9B%E3%80%906-%E9%A2%98%E3%80%91-1"><span class="toc-text">第四层：真实项目与业务场景能力【6 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q52-%E3%80%90%E5%9C%A8%E9%87%91%E8%9E%8D%E9%A3%8E%E6%8E%A7%E4%B8%AD%EF%BC%8C%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E6%9C%80%E5%A4%A7%E7%9A%84%E4%BB%B7%E5%80%BC%E5%92%8C%E6%9C%80%E5%A4%A7%E9%A3%8E%E9%99%A9%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%91"><span class="toc-text">Q52. 【在金融风控中，多智能体最大的价值和最大风险分别是什么？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q53-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E5%9C%A8%E4%BC%81%E4%B8%9A%E5%86%85%E9%83%A8%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%9B%BF%E6%8D%A2%E8%BF%87%E4%BA%BA%E5%B7%A5%E6%B5%81%E7%A8%8B%E4%B8%BA%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%9F%E7%BB%93%E6%9E%9C%E5%A6%82%E4%BD%95%EF%BC%9F%E3%80%91"><span class="toc-text">Q53. 【你是否在企业内部系统中替换过人工流程为多智能体？结果如何？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q54-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%9C%A8%E5%90%88%E8%A7%84%E6%88%96%E5%AE%A1%E8%AE%A1%E5%9C%BA%E6%99%AF%E4%B8%AD%E6%98%AF%E5%90%A6%E5%90%88%E9%80%82%EF%BC%9F%E3%80%91"><span class="toc-text">Q54. 【多智能体在合规或审计场景中是否合适？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q55-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%90%91%E4%B8%9A%E5%8A%A1%E6%96%B9%E8%AF%81%E6%98%8E%E2%80%9D%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%80%BC%E5%BE%97%E8%BF%99%E7%AC%94%E6%88%90%E6%9C%AC%E2%80%9D%EF%BC%9F%E3%80%91"><span class="toc-text">Q55. 【你如何向业务方证明”多智能体值得这笔成本”？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q56-%E3%80%90%E4%BD%A0%E6%98%AF%E5%90%A6%E5%9B%A0%E4%B8%BA%E4%B8%9A%E5%8A%A1%E5%8E%8B%E5%8A%9B%E8%A2%AB%E8%BF%AB%E7%AE%80%E5%8C%96%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E8%AE%BE%E8%AE%A1%EF%BC%9F%E3%80%91"><span class="toc-text">Q56. 【你是否因为业务压力被迫简化多智能体设计？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q57-%E3%80%90%E4%BB%80%E4%B9%88%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E4%B8%8B%EF%BC%8C%E4%BD%A0%E4%BC%9A%E6%98%8E%E7%A1%AE%E6%8B%92%E7%BB%9D%E4%BD%BF%E7%94%A8%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%EF%BC%9F%E3%80%91"><span class="toc-text">Q57. 【什么业务场景下，你会明确拒绝使用多智能体？】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%9A%E8%BF%9B%E9%98%B6%E4%B8%8E%E5%8A%A0%E5%88%86%E9%A1%B9%EF%BC%88%E6%9E%B6%E6%9E%84-%E8%A7%86%E9%87%8E%EF%BC%89%E3%80%903-%E9%A2%98%E3%80%91-1"><span class="toc-text">第五层：进阶与加分项（架构 &#x2F; 视野）【3 题】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q58-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E7%9C%8B%E5%BE%85%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%90%91-Agent-Platform-%E6%BC%94%E8%BF%9B%E7%9A%84%E6%8B%90%E7%82%B9%EF%BC%9F%E3%80%91"><span class="toc-text">Q58. 【你如何看待多智能体向 Agent Platform 演进的拐点？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q59-%E3%80%90%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E5%85%B7%E5%A4%87%E2%80%9D%E8%87%AA%E6%88%91%E7%AE%80%E5%8C%96%E2%80%9D%E8%83%BD%E5%8A%9B%EF%BC%9F%E3%80%91"><span class="toc-text">Q59. 【多智能体系统是否应该具备”自我简化”能力？】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q60-%E3%80%90%E4%BD%A0%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%9B%A2%E9%98%9F%E6%98%AF%E5%90%A6%E2%80%9D%E9%A9%BE%E9%A9%AD%E5%BE%97%E4%BA%86%E2%80%9D%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F%EF%BC%9F%E3%80%91"><span class="toc-text">Q60. 【你如何判断一个团队是否”驾驭得了”多智能体系统？】</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+
+<widget class="widget-wrapper user-card ghuser"><div class="widget-body data-service ds-ghinfo" data-api="https://api.github.com/users/WenYin-Community"><div class="avatar" ><img no-lazy type="img" id="avatar_url" src="/images/icon/wenyin-logo.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><p class="username" type="text" id="name">&nbsp;</p><p class="bio" type="text" id="bio">&nbsp;</p><div class="buttons"><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=followers"><span class="title" type="text" id="followers">0</span><span class="desc">followers</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=following"><span class="title" type="text" id="following">0</span><span class="desc">following</span></a><a class="btn" target="_blank" rel="noopener" href="https://github.com/WenYin-Community?tab=repositories"><span class="title" type="text" id="public_repos">0</span><span class="desc">repos</span></a></div><a class="follow" target="_blank" rel="noopener" href="https://github.com/WenYin-Community"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>Follow</a></div></widget>
+
+<widget class="widget-wrapper markdown"><div class="widget-body fs14"><h3 id="快捷导航"><a href="#快捷导航" class="headerlink" title="快捷导航"></a>快捷导航</h3><p><a href="/categories/" style="font-size:1.2em;">🗂️ 分类索引</a><br><a href="/tags/" style="font-size:1.2em;">🔖 标签索引</a><br><a href="/archives/" style="font-size:1.2em;">🕘 文章归档</a><br><a target="_blank" rel="noopener" href="https://wenyinos.com/" style="font-size:1.2em;">📚 社区主页</a><br><a target="_blank" rel="noopener" href="https://dev.wenyinos.com/my/" style="font-size:1.2em;">📰 项目管理</a><br><a target="_blank" rel="noopener" href="https://forum.wenyinos.com/" style="font-size:1.2em;">🏷️ 论坛交流</a></p>
+</div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-body fs14"><a href="/tags/agent/" style="font-size: 16.27px; color: #694ab0" class="tag -4">agent</a> <a href="/tags/ai-engineer/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ai-engineer</a> <a href="/tags/aliyun/" style="font-size: 13px; color: #2563eb" class="tag -0">aliyun</a> <a href="/tags/android/" style="font-size: 13px; color: #2563eb" class="tag -0">android</a> <a href="/tags/apt/" style="font-size: 13px; color: #2563eb" class="tag -0">apt</a> <a href="/tags/arc/" style="font-size: 13px; color: #2563eb" class="tag -0">arc</a> <a href="/tags/arch/" style="font-size: 13.82px; color: #365ddc" class="tag -1">arch</a> <a href="/tags/arch-linux/" style="font-size: 13px; color: #2563eb" class="tag -0">arch-linux</a> <a href="/tags/asf/" style="font-size: 13px; color: #2563eb" class="tag -0">asf</a> <a href="/tags/asus/" style="font-size: 13px; color: #2563eb" class="tag -0">asus</a> <a href="/tags/async/" style="font-size: 13px; color: #2563eb" class="tag -0">async</a> <a href="/tags/attention-mechanism/" style="font-size: 13px; color: #2563eb" class="tag -0">attention-mechanism</a> <a href="/tags/aur/" style="font-size: 13px; color: #2563eb" class="tag -0">aur</a> <a href="/tags/bbr/" style="font-size: 13.82px; color: #365ddc" class="tag -1">bbr</a> <a href="/tags/benchmark/" style="font-size: 13px; color: #2563eb" class="tag -0">benchmark</a> <a href="/tags/cache/" style="font-size: 14.64px; color: #4756cd" class="tag -2">cache</a> <a href="/tags/career/" style="font-size: 13px; color: #2563eb" class="tag -0">career</a> <a href="/tags/cargo/" style="font-size: 13.82px; color: #365ddc" class="tag -1">cargo</a> <a href="/tags/centos/" style="font-size: 14.64px; color: #4756cd" class="tag -2">centos</a> <a href="/tags/cheat/" style="font-size: 13px; color: #2563eb" class="tag -0">cheat</a> <a href="/tags/colab/" style="font-size: 13px; color: #2563eb" class="tag -0">colab</a> <a href="/tags/command-line/" style="font-size: 13px; color: #2563eb" class="tag -0">command-line</a> <a href="/tags/cpp/" style="font-size: 13px; color: #2563eb" class="tag -0">cpp</a> <a href="/tags/cpu/" style="font-size: 16.27px; color: #694ab0" class="tag -4">cpu</a> <a href="/tags/curl/" style="font-size: 13px; color: #2563eb" class="tag -0">curl</a> <a href="/tags/data-framework/" style="font-size: 13px; color: #2563eb" class="tag -0">data-framework</a> <a href="/tags/debian/" style="font-size: 13px; color: #2563eb" class="tag -0">debian</a> <a href="/tags/deep-learning/" style="font-size: 13px; color: #2563eb" class="tag -0">deep-learning</a> <a href="/tags/deployment/" style="font-size: 13px; color: #2563eb" class="tag -0">deployment</a> <a href="/tags/dg1/" style="font-size: 13px; color: #2563eb" class="tag -0">dg1</a> <a href="/tags/dnf/" style="font-size: 13px; color: #2563eb" class="tag -0">dnf</a> <a href="/tags/docker/" style="font-size: 14.64px; color: #4756cd" class="tag -2">docker</a> <a href="/tags/edk2/" style="font-size: 13px; color: #2563eb" class="tag -0">edk2</a> <a href="/tags/entware/" style="font-size: 13px; color: #2563eb" class="tag -0">entware</a> <a href="/tags/epel/" style="font-size: 13.82px; color: #365ddc" class="tag -1">epel</a> <a href="/tags/fcitx/" style="font-size: 13px; color: #2563eb" class="tag -0">fcitx</a> <a href="/tags/fedora/" style="font-size: 17.91px; color: #8c3d92" class="tag -5">fedora</a> <a href="/tags/firewalld/" style="font-size: 13px; color: #2563eb" class="tag -0">firewalld</a> <a href="/tags/freebsd/" style="font-size: 13px; color: #2563eb" class="tag -0">freebsd</a> <a href="/tags/fstab/" style="font-size: 13px; color: #2563eb" class="tag -0">fstab</a> <a href="/tags/fuchsia/" style="font-size: 13px; color: #2563eb" class="tag -0">fuchsia</a> <a href="/tags/gameserver/" style="font-size: 13px; color: #2563eb" class="tag -0">gameserver</a> <a href="/tags/gcc/" style="font-size: 13px; color: #2563eb" class="tag -0">gcc</a> <a href="/tags/github/" style="font-size: 14.64px; color: #4756cd" class="tag -2">github</a> <a href="/tags/gpu/" style="font-size: 13px; color: #2563eb" class="tag -0">gpu</a> <a href="/tags/graphics/" style="font-size: 16.27px; color: #694ab0" class="tag -4">graphics</a> <a href="/tags/grub/" style="font-size: 15.45px; color: #5850bf" class="tag -3">grub</a> <a href="/tags/grubby/" style="font-size: 13px; color: #2563eb" class="tag -0">grubby</a> <a href="/tags/hi1620/" style="font-size: 13px; color: #2563eb" class="tag -0">hi1620</a> <a href="/tags/hr-screening/" style="font-size: 13px; color: #2563eb" class="tag -0">hr-screening</a> <a href="/tags/huawei/" style="font-size: 13px; color: #2563eb" class="tag -0">huawei</a> <a href="/tags/hyper-v/" style="font-size: 13px; color: #2563eb" class="tag -0">hyper-v</a> <a href="/tags/i211/" style="font-size: 13px; color: #2563eb" class="tag -0">i211</a> <a href="/tags/ibm/" style="font-size: 13px; color: #2563eb" class="tag -0">ibm</a> <a href="/tags/intel/" style="font-size: 18.73px; color: #9d3683" class="tag -6">intel</a> <a href="/tags/interview/" style="font-size: 21.18px; color: #d02357" class="tag -9">interview</a> <a href="/tags/interview-tips/" style="font-size: 13px; color: #2563eb" class="tag -0">interview-tips</a> <a href="/tags/ip/" style="font-size: 13px; color: #2563eb" class="tag -0">ip</a> <a href="/tags/ipex-llm/" style="font-size: 13px; color: #2563eb" class="tag -0">ipex-llm</a> <a href="/tags/kde/" style="font-size: 15.45px; color: #5850bf" class="tag -3">kde</a> <a href="/tags/kernel/" style="font-size: 16.27px; color: #694ab0" class="tag -4">kernel</a> <a href="/tags/kvm/" style="font-size: 13.82px; color: #365ddc" class="tag -1">kvm</a> <a href="/tags/langchain/" style="font-size: 13px; color: #2563eb" class="tag -0">langchain</a> <a href="/tags/langgraph/" style="font-size: 13px; color: #2563eb" class="tag -0">langgraph</a> <a href="/tags/lcd/" style="font-size: 13px; color: #2563eb" class="tag -0">lcd</a> <a href="/tags/libvirt/" style="font-size: 13px; color: #2563eb" class="tag -0">libvirt</a> <a href="/tags/linux/" style="font-size: 22px; color: #e11d48" class="tag -10">linux</a> <a href="/tags/llamaindex/" style="font-size: 13px; color: #2563eb" class="tag -0">llamaindex</a> <a href="/tags/llm/" style="font-size: 15.45px; color: #5850bf" class="tag -3">llm</a> <a href="/tags/lnmp/" style="font-size: 13px; color: #2563eb" class="tag -0">lnmp</a> <a href="/tags/magisk/" style="font-size: 13px; color: #2563eb" class="tag -0">magisk</a> <a href="/tags/mcp/" style="font-size: 13px; color: #2563eb" class="tag -0">mcp</a> <a href="/tags/mediatek/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mediatek</a> <a href="/tags/merlin/" style="font-size: 13px; color: #2563eb" class="tag -0">merlin</a> <a href="/tags/mlops/" style="font-size: 13.82px; color: #365ddc" class="tag -1">mlops</a> <a href="/tags/modem/" style="font-size: 13px; color: #2563eb" class="tag -0">modem</a> <a href="/tags/monitoring/" style="font-size: 13px; color: #2563eb" class="tag -0">monitoring</a> <a href="/tags/multi-agent/" style="font-size: 13px; color: #2563eb" class="tag -0">multi-agent</a> <a href="/tags/multimodal/" style="font-size: 13px; color: #2563eb" class="tag -0">multimodal</a> <a href="/tags/mysql/" style="font-size: 13px; color: #2563eb" class="tag -0">mysql</a> <a href="/tags/n1/" style="font-size: 13px; color: #2563eb" class="tag -0">n1</a> <a href="/tags/nas/" style="font-size: 13.82px; color: #365ddc" class="tag -1">nas</a> <a href="/tags/novelai/" style="font-size: 13px; color: #2563eb" class="tag -0">novelai</a> <a href="/tags/npm/" style="font-size: 13px; color: #2563eb" class="tag -0">npm</a> <a href="/tags/observability/" style="font-size: 13px; color: #2563eb" class="tag -0">observability</a> <a href="/tags/openai/" style="font-size: 13px; color: #2563eb" class="tag -0">openai</a> <a href="/tags/opencl/" style="font-size: 13px; color: #2563eb" class="tag -0">opencl</a> <a href="/tags/openvz/" style="font-size: 13px; color: #2563eb" class="tag -0">openvz</a> <a href="/tags/openwrt/" style="font-size: 13px; color: #2563eb" class="tag -0">openwrt</a> <a href="/tags/package-management/" style="font-size: 19.55px; color: #ae3074" class="tag -7">package-management</a> <a href="/tags/packagekit/" style="font-size: 13px; color: #2563eb" class="tag -0">packagekit</a> <a href="/tags/packaging/" style="font-size: 13.82px; color: #365ddc" class="tag -1">packaging</a> <a href="/tags/pkg/" style="font-size: 13px; color: #2563eb" class="tag -0">pkg</a> <a href="/tags/pnpm/" style="font-size: 13px; color: #2563eb" class="tag -0">pnpm</a> <a href="/tags/podman/" style="font-size: 13px; color: #2563eb" class="tag -0">podman</a> <a href="/tags/power/" style="font-size: 13px; color: #2563eb" class="tag -0">power</a> <a href="/tags/powershell/" style="font-size: 13px; color: #2563eb" class="tag -0">powershell</a> <a href="/tags/proxy/" style="font-size: 14.64px; color: #4756cd" class="tag -2">proxy</a> <a href="/tags/python/" style="font-size: 13px; color: #2563eb" class="tag -0">python</a> <a href="/tags/pytorch/" style="font-size: 13px; color: #2563eb" class="tag -0">pytorch</a> <a href="/tags/qchatgpt/" style="font-size: 13px; color: #2563eb" class="tag -0">qchatgpt</a> <a href="/tags/qemu/" style="font-size: 13px; color: #2563eb" class="tag -0">qemu</a> <a href="/tags/rag/" style="font-size: 13px; color: #2563eb" class="tag -0">rag</a> <a href="/tags/raspberry-pi/" style="font-size: 15.45px; color: #5850bf" class="tag -3">raspberry-pi</a> <a href="/tags/redhat/" style="font-size: 15.45px; color: #5850bf" class="tag -3">redhat</a> <a href="/tags/rhel/" style="font-size: 14.64px; color: #4756cd" class="tag -2">rhel</a> <a href="/tags/rk3588/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rk3588</a> <a href="/tags/rpm/" style="font-size: 13px; color: #2563eb" class="tag -0">rpm</a> <a href="/tags/rust/" style="font-size: 13.82px; color: #365ddc" class="tag -1">rust</a> <a href="/tags/selinux/" style="font-size: 13px; color: #2563eb" class="tag -0">selinux</a> <a href="/tags/service/" style="font-size: 13px; color: #2563eb" class="tag -0">service</a> <a href="/tags/shadowsocks/" style="font-size: 13px; color: #2563eb" class="tag -0">shadowsocks</a> <a href="/tags/snap/" style="font-size: 13px; color: #2563eb" class="tag -0">snap</a> <a href="/tags/ssh/" style="font-size: 14.64px; color: #4756cd" class="tag -2">ssh</a> <a href="/tags/steam/" style="font-size: 13px; color: #2563eb" class="tag -0">steam</a> <a href="/tags/synology/" style="font-size: 13px; color: #2563eb" class="tag -0">synology</a> <a href="/tags/system-design/" style="font-size: 13.82px; color: #365ddc" class="tag -1">system-design</a> <a href="/tags/systemd/" style="font-size: 15.45px; color: #5850bf" class="tag -3">systemd</a> <a href="/tags/tool-calling/" style="font-size: 13px; color: #2563eb" class="tag -0">tool-calling</a> <a href="/tags/transformer/" style="font-size: 13px; color: #2563eb" class="tag -0">transformer</a> <a href="/tags/ubuntu/" style="font-size: 13.82px; color: #365ddc" class="tag -1">ubuntu</a> <a href="/tags/uefi/" style="font-size: 13px; color: #2563eb" class="tag -0">uefi</a> <a href="/tags/virt-manager/" style="font-size: 13px; color: #2563eb" class="tag -0">virt-manager</a> <a href="/tags/vision-language-model/" style="font-size: 13px; color: #2563eb" class="tag -0">vision-language-model</a> <a href="/tags/vista/" style="font-size: 13.82px; color: #365ddc" class="tag -1">vista</a> <a href="/tags/vmware/" style="font-size: 13px; color: #2563eb" class="tag -0">vmware</a> <a href="/tags/vpc/" style="font-size: 13px; color: #2563eb" class="tag -0">vpc</a> <a href="/tags/vps/" style="font-size: 15.45px; color: #5850bf" class="tag -3">vps</a> <a href="/tags/vscode/" style="font-size: 13px; color: #2563eb" class="tag -0">vscode</a> <a href="/tags/wayland/" style="font-size: 13px; color: #2563eb" class="tag -0">wayland</a> <a href="/tags/windows/" style="font-size: 20.36px; color: #bf2a66" class="tag -8">windows</a> <a href="/tags/windows-server/" style="font-size: 15.45px; color: #5850bf" class="tag -3">windows-server</a> <a href="/tags/windows10/" style="font-size: 17.09px; color: #7a43a1" class="tag -5">windows10</a> <a href="/tags/workflow/" style="font-size: 13px; color: #2563eb" class="tag -0">workflow</a> <a href="/tags/wsl/" style="font-size: 13px; color: #2563eb" class="tag -0">wsl</a> <a href="/tags/x86/" style="font-size: 13px; color: #2563eb" class="tag -0">x86</a> <a href="/tags/xfs/" style="font-size: 13px; color: #2563eb" class="tag -0">xfs</a> <a href="/tags/xwayland/" style="font-size: 13px; color: #2563eb" class="tag -0">xwayland</a> <a href="/tags/yum/" style="font-size: 13px; color: #2563eb" class="tag -0">yum</a> <a href="/tags/zerotier/" style="font-size: 13px; color: #2563eb" class="tag -0">zerotier</a> <a href="/tags/zram/" style="font-size: 13px; color: #2563eb" class="tag -0">zram</a> <a href="/tags/zsh/" style="font-size: 13.82px; color: #365ddc" class="tag -1">zsh</a> <a href="/tags/%E4%B8%AD%E7%A7%8B%E8%8A%82/" style="font-size: 13px; color: #2563eb" class="tag -0">中秋节</a> <a href="/tags/%E4%BB%A3%E7%90%86/" style="font-size: 14.64px; color: #4756cd" class="tag -2">代理</a> <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/" style="font-size: 13px; color: #2563eb" class="tag -0">传统文化</a> <a href="/tags/%E5%85%A8%E5%B1%80/" style="font-size: 13px; color: #2563eb" class="tag -0">全局</a> <a href="/tags/%E5%8D%8E%E4%B8%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">华为</a> <a href="/tags/%E5%A4%A7%E5%9E%8B%E6%9C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">大型机</a> <a href="/tags/%E5%B1%8F%E5%B9%95/" style="font-size: 13px; color: #2563eb" class="tag -0">屏幕</a> <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" style="font-size: 13px; color: #2563eb" class="tag -0">开源社区</a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<button class="theme-toggle" type="button" aria-label="切换夜间模式" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+  <span class="theme-toggle-text">夜间</span>
+</button>
+<script>
+  (() => {
+    const button = document.querySelector('.theme-toggle');
+    if (!button) return;
+    const label = button.querySelector('.theme-toggle-text');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentMode = () => document.documentElement.getAttribute('data-theme') || (media.matches ? 'dark' : 'light');
+    const syncButton = () => {
+      const dark = currentMode() === 'dark';
+      button.dataset.mode = dark ? 'dark' : 'light';
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? '切换到日间模式' : '切换到夜间模式');
+      if (label) label.textContent = dark ? '日间' : '夜间';
+    };
+    const setTheme = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      window.localStorage.setItem('Stellar.theme', theme);
+      if (window.utils && utils.dark) {
+        utils.dark.mode = theme;
+        utils.dark.method?.toggle?.start?.();
+      }
+      syncButton();
+    };
+    button.addEventListener('click', () => setTheme(currentMode() === 'dark' ? 'light' : 'dark'));
+    media.addEventListener?.('change', syncButton);
+    syncButton();
+  })();
+</script>
+
+</div></body></html>
