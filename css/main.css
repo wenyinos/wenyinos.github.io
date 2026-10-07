@@ -1385,7 +1385,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #732b65;
+    background: #24ffff;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -2969,6 +2969,41 @@ body {
 }
 .site-title {
   white-space: nowrap;
+}
+.posts-collapse .post-content .collection-month {
+  font-size: 1.125em;
+  font-weight: 600;
+  margin: 32px 0 8px;
+  position: relative;
+}
+.posts-collapse .post-content .collection-month::before {
+  background: #6f42c1;
+  border-radius: 50%;
+  content: '';
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  position: absolute;
+  top: 50%;
+  width: 6px;
+}
+.posts-collapse .post-content .collection-month .collection-month-count {
+  font-size: 0.75em;
+  background: rgba(111,66,193,0.12);
+  border-radius: 10px;
+  color: #6f42c1;
+  margin-left: 5px;
+  padding: 2px 8px;
+  vertical-align: 2px;
+}
+@media (prefers-color-scheme: dark) {
+  .posts-collapse .post-content .collection-month::before {
+    background: #a78bfa;
+  }
+  .posts-collapse .post-content .collection-month .collection-month-count {
+    background: rgba(167,139,250,0.18);
+    color: #a78bfa;
+  }
 }
 .site-subtitle {
   color: rgba(255,255,255,0.78);
