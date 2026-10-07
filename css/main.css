@@ -1385,7 +1385,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #24ffff;
+    background: #2fffe7;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -1644,7 +1644,7 @@ pre code {
 }
 .site-description {
   color: #999;
-  font-size: 0.8125em;
+  font-size: 0.9375em;
   margin-top: 0;
 }
 .site-state {
@@ -1662,12 +1662,12 @@ pre code {
 }
 .site-state-item-count {
   display: block;
-  font-size: 1em;
+  font-size: 1.0625em;
   font-weight: 600;
 }
 .site-state-item-name {
   color: #999;
-  font-size: 0.8125em;
+  font-size: 0.9375em;
 }
 .sidebar .sidebar-button:not(:first-child) {
   margin-top: 15px;
@@ -2969,6 +2969,12 @@ body {
 }
 .site-title {
   white-space: nowrap;
+}
+.menu .menu-item a {
+  font-size: 1em;
+}
+.links-of-author a {
+  font-size: 0.9375em;
 }
 .posts-collapse .post-content .collection-month {
   font-size: 1.125em;
