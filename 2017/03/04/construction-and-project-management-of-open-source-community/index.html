@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="摘要： 笔者作为玟茵开源社区联合创始人，在现代开源社区建设及项目管理的方面有一定心得体会，希望与大家进行分享。 （重要提示：本文仅适用于纯兴趣爱好性质的开源社区，商业性质组织请建立自己的规章制度。） 首先介绍一下我们玟茵开源社区的概况。首先本社区主要参与者和服务用户为女生，同时开发技术上并不十分成熟，也易于进行一些情绪化动作。当然成员基本没有太多空闲时间，也许是比较懒。我们并没有把这个当做一项事业">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈开源社区之建设与项目管理">
+<meta property="og:url" content="https://wiki.wenyinos.com/2017/03/04/construction-and-project-management-of-open-source-community/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="摘要： 笔者作为玟茵开源社区联合创始人，在现代开源社区建设及项目管理的方面有一定心得体会，希望与大家进行分享。 （重要提示：本文仅适用于纯兴趣爱好性质的开源社区，商业性质组织请建立自己的规章制度。） 首先介绍一下我们玟茵开源社区的概况。首先本社区主要参与者和服务用户为女生，同时开发技术上并不十分成熟，也易于进行一些情绪化动作。当然成员基本没有太多空闲时间，也许是比较懒。我们并没有把这个当做一项事业">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-26a0335e522e784a599ce60b67bc8011_b.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-b7863536148e3ae92c2480e757124164_b.jpeg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-6e3352b916f97332efafc1681fb9168f_b.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-ed4bb72b61873ca9e1df08837cb49da2_b.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-98adafa39f45f0266adc878c38268760_b.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-51c765296dbeec40dec97b8244033cb9_b.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-782eff373b671c1f961b5c609fe31d33_b.png">
+<meta property="article:published_time" content="2017-03-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-03T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="开源社区">
+<meta property="article:tag" content="项目管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/v2-26a0335e522e784a599ce60b67bc8011_b.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2017/03/04/construction-and-project-management-of-open-source-community/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2017/03/04/construction-and-project-management-of-open-source-community/","path":"2017/03/04/construction-and-project-management-of-open-source-community/","title":"浅谈开源社区之建设与项目管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>浅谈开源社区之建设与项目管理 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2017/03/04/construction-and-project-management-of-open-source-community/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="浅谈开源社区之建设与项目管理 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈开源社区之建设与项目管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2017-03-04T00:00:00+08:00">2017-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" itemprop="url" rel="index"><span itemprop="name">开源社区</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>摘要：</p>
+<p>笔者作为玟茵开源社区联合创始人，在现代开源社区建设及项目管理的方面有一定心得体会，希望与大家进行分享。</p>
+<p>（重要提示：本文仅适用于纯兴趣爱好性质的开源社区，商业性质组织请建立自己的规章制度。）</p>
+<p>首先介绍一下我们玟茵开源社区的概况。首先本社区主要参与者和服务用户为女生，同时开发技术上并不十分成熟，也易于进行一些情绪化动作。当然成员基本没有太多空闲时间，也许是比较懒。我们并没有把这个当做一项事业来做，单纯为了爱好，并不考虑任何利益。</p>
+<p>第一部分：开源社区的建设</p>
+<p>1.闲聊灌水问题</p>
+<p>开源社区并不是非常严肃的事情，一些志同道合的开源软件爱好者聚集在一起，做非盈利性质软硬件开发项目而已。所以我并不赞成一些开源社区管理者所做的，严格控制灌水的做法。大家闲聊是一种自由。当然闲聊不是无限制的，开源社区最好建立独立的灌水QQ群或者是IRC频道，在不影响正常开发交流进度的情况下，可以适当交流一些娱乐话题（huang duan zi），来提升气氛。不过应该注意的是某些限制性话题请勿接触，社区不应该是一个谈论政治性话题的地方。社区的气氛有赖于大家一起维护成长，理想的状态是不沉闷也不过分活跃。</p>
+<p>社区不应该是一个只谈论枯燥的技术的地方，最好能建设成为一个开源爱好者共同的家园。也可以适当接收并不懂开源技术的用户加入。在一些开发的事情上，外行人往往比内行人更看得广阔，同时开源社区的推广也少不了大众的参与。作为一个负责人，我想对大家说，不仅仅是写代码重要，例如美工设计，用户体验等方面更加需要重视。尤其是对于规模较大的项目。</p>
+<p>2.社区成员之间的沟通</p>
+<p>作为一个开源社区负责人或者是管理者，一定要与所有新加入的社区成员进行一对一充分沟通和交流，了解他们的实际能力和自身的兴趣爱好。实际开发中，可以仿行敏捷项目管理中的站立会议方式，不一定是每天开会，但需要到特定时间期限进行整个社区的充分沟通讨论，以确定下一步的工作努力方向和进度。</p>
+<p>敏捷开发它只写有必要的文档，或尽量少写文档，敏捷开发注重的是人与人之间，面对面的交流，所以它强调以人为核心。在开源社区中也是如此，不需要堆砌wiki和邮件列表，人与人的沟通远远比这些文档要有用得多。</p>
+<p>3.性别问题</p>
+<p>开源社区不应该存在对女性爱好者的性别歧视问题。这种歧视常常表现在，对程序媛的成果过分吹捧，或者是把程序媛当作“镇社之宝”什么的。言下之意就是，女性的实际能力都有问题，凭脸还是卖萌在这里混的一样。这会很让程序媛们寒心的。（本人也是程序媛一枚╮（﹀＿﹀）╭）我的想法是，社区内应对男性和女性成员一视同仁，最起码不应该有太多差别，工作量做到基本平衡（不过根据情况也是可以进行适当照顾滴～）</p>
+<p>4.喷子的处置</p>
+<p>喷子，键盘侠，一种有天朝特色的东西。其特点是不管你在做什么他总能找出吐槽点进行吐槽→_→，还用各种不堪入目的语言非要逼你和他打口水战。对于混入社区内部的喷子应该采取果断清除出去的做法，懒得和他们费口水，毕竟这是我们的地盘，容不得你在这里撒野。如果实在社区外的公众交流平台上，成员应该坚决果断地维护社区的名誉和利益，坚决和这些人做斗争。</p>
+<p>二.开源社区的项目管理</p>
+<p>1.基于过程的全流程敏捷项目管理综述</p>
+<p>对于当下的开源社区，国外通行的方式个人感觉并不适合，造成了大量拖延症患者存在，影响开发进度以及项目迭代。大多数开源社区的项目管理往往是基于issue（事务）形式，为每一个事务打上“未完成”，“已开始”，“进行中”，“已完成”，“已终结” 类似的标签，对于软件开发中的缺陷管理也是采用类似的方式。这种方法看似简洁，实际上存在一定隐患。只注重结果而不注重过程的管理方式，往往造成代码质量逐渐下降，拖延症问题日益严重。一定需要项目全流程敏捷开发管理，从只注重结果到过程与结果并重。由于开源社区往往所有者处在不同的时空之下，有必要使用在线的项目全流程管理工具。现在常用的项目全流程管理工具有Redmine，Jira，ZentaoPMS之类。本文中后续部分将基于ZentaoPMS（禅道项目管理软件）进行简要叙述。采用本套软件，主要是因为其搭建方便，可直接利用常见的PHP+MySQL网站环境进行搭建（Redmine和Jira分别需要Ruby和Java ME运行时）功能也比较全面，基本上可以做到开箱即用。</p>
+<p>我们要理解，敏捷开发不是一门技术，它是一种开发方法，也就是一种软件开发的流程，它会指导我们用规定的环节去一步一步完成项目的开发；而这种开发方式的主要驱动核心是人；它采用的是迭代式开发，这里采用的是Scrum方式。</p>
+<p>什么是Scrum？</p>
+<p>Scrum的英文意思是橄榄球运动的一个专业术语，表示“争球”的动作；把一个开发流程的名字取名为Scrum，我想大家一定能想象出一个开发团队在开发一个项目时，大家像打橄榄球一样迅速、富有战斗激情、人人你争我抢地完成它，每个成员一定会感到非常兴奋的。</p>
+<p>2.项目迭代</p>
+<p>迭代是指把一个复杂且开发周期很长的开发任务，分解为很多小周期可完成的任务，这样的一个周期就是一次迭代的过程；同时每一次迭代都可以生产或开发出一个可以交付的软件产品。</p>
+<p>在社区的开发中，我们不可能做到商业化管理的严格细致程度，但Scrum的一些手段还是值得采用的。在此着重叙述一下社区开发中易于被忽略的部分：</p>
+<p>（1）需求提交与整理</p>
+<p>开源社区的软件作品，大多并无商业利益的关联。同时大多数开源项目参与度也并非很高，提出的需求大部分来自社区成员内部和爱好者的日常使用。从这点看来，我们既是开发成员又是客户，虽然是自己给自己提需求，这一步也是绝对不能省略的，在脑海中时常会显示灵光一现的想法，最好能及时做记录，分类后提交到项目管理系统的需求管理处，方便日后开发时整理。提需求时可以参考如下格式：</p>
+<p>{我是xx样的用户&#x2F;开发者}；</p>
+<p>{需要加入yy的功能}；</p>
+<p>{这项功能可以起到zz的效果}。</p>
+<p>………</p>
+<p><img src="/images/v2-26a0335e522e784a599ce60b67bc8011_b.png"><img src="/images/v2-b7863536148e3ae92c2480e757124164_b.jpeg"></p>
+<p>如上图，第一个画面为社区成员提出的需求，第二个画面为爱好者对玟茵系统提出的一些意见，这里也暂时整理为需求。不过融入产品迭代中。这类型需求还需要进行细分。</p>
+<p>（2）关于开发中的Sprint方法</p>
+<p>何为Sprint？</p>
+<p>Sprint是短距离赛跑的意思，这里面指的是一次迭代，而一次迭代的周期是1个月时间（笔者注：开源社区中这个周期可以更短一些，以能完成一项有意义的任务为准），也就是我们要把一次迭代的开发内容以最快的速度完成它，这个过程我们称它为Sprint。</p>
+<p>Sprint简单的说就是版本更新。考虑到社区的实际情况，例如我们现在做的是GNU&#x2F;Linux distribution这种比较大型的项目，可以把某系统组件的更新或者是某开发模块也算作一次Sprint。这里会用到上文（1）中的需求列表，根据优先级排列，交给所有参与此项目的Team成员进行一次Sprint计划会议，研究讨论，根据优先级选出一个Story作为本次Sprint的目标。还要共同确定一个迭代周期，一般不要太长时间，以刚好能做完为准。</p>
+<p>接下来，要做的就是Story的分解，即需求细分。需求细分建议由社区的总负责人来完成，负责人必须高度熟悉这个项目的工作流程，善于领导成员完成自己应有的目标。创建这个Sprint Backlog后，到此，每个参与成员可以根据需求细分的结果来确定自己的task（每个任务在短时间内完成）这里要重点注意：每个成员接受任务应根据自己实际能力。创建的任务应该在选择好期限内完成，尽量不要拖延，否则会影响整个项目的开发。</p>
+<p><img src="/images/v2-6e3352b916f97332efafc1681fb9168f_b.png"><img src="/images/v2-ed4bb72b61873ca9e1df08837cb49da2_b.png"></p>
+<p>上图我们看到了，存在一些长期性质任务，也要合理设置执行期限，尽快完成，防止过度拖延出现意料之外的后果，</p>
+<p>（3）开发的总结过程</p>
+<p>Scrum中的每日站立会议（Daily Scrum Meeting），在社区的实际情况中，可以做一定简化。每天只更新进度表和燃尽图，定期进行开发成员之间的交流。Daily-Build可以根据社区实际情况确定是否执行。</p>
+<p>当一个阶段性目标Story完成，也就是一个Sprint Backlog被完成，也就表示一次Sprint完成，这时，我们要进行 Srpint Review Meeting（演示会议），每一个参与开发的成员和社区负责人都要参加，需求的提出者则必须参加。每一个成员都要演示一下自己本阶段完成的产品，互相提出意见，做记录融入到下一轮Sprint中（这个会议非常重要，一定不能取消）。</p>
+<p>每个较大模块开发完成后，我们要进行Sprint Retrospective Meeting（回顾会议），也称为总结会议，大家在一起总结并讨论改进的地方，放入下一轮Sprint的产品需求中。</p>
+<p>（4）巧用任务管理列表和燃尽图</p>
+<p>在禅道系统中，可以清晰显示出每位成员的工作进度和任务完成情况。如果有某位成员的工作进度图常处于停滞状态，社区负责人或者是其他伙伴们应该和这位成员做主动和及时地沟通，了解一下具体是什么情况，适当为这位成员的工作做出合理调整。</p>
+<p>3.测试及缺陷管理</p>
+<p>开源社区的开发当中，一般并不重视测试环节。大部分开源软件采取被动测试方式，即不稳定版本交给用户去测试，然后根据用户反馈粗略确定当下产品质量。这种做法实际上也是不合理的，软件开发者的工作为什么要推给用户完成？应做到开发与测试并重。</p>
+<p>（1）Bug的全流程跟踪</p>
+<p>每当用户或开发者反馈回一个Bug，跟踪机制应该立即定位出现在哪一个Sprint阶段，对应Story是什么，这个Task当时是由哪位成员负责的，等等。最好能做到责任到人。一定要详细记录这个Bug的重现步骤，出现结果以及用户期望。这并不是为了单纯追究责任，而是把这个问题融入到下一轮迭代开发中，以后尽量不要再犯类似错误。如果这个Bug是由上游某开源软件引起的，那么务必记录此软件的详细版本号，以及构建日期。同时要rollback到前一个能正常运行的版本。等到该软件发行下一个修正版本时进行相同测试（可作为一个长期任务）。</p>
+<p><img src="/images/v2-98adafa39f45f0266adc878c38268760_b.png"></p>
+<p>如上图，表示出一个Bug从提出到解决的完整步骤。</p>
+<p>（2）测试用例及文档管理</p>
+<p>可以记录一些常见模块测试的方法，作为测试用例，以后可以不断补充内容。</p>
+<p>开发中的文档，是社区内部的重要资料。其中包括产品的需求文档，或者是开发中用到的wiki等资料，还有各种项目的开源许可证。这些一定要分门别类保存，作为日后开发的重要参考依据。</p>
+<p><img src="/images/v2-51c765296dbeec40dec97b8244033cb9_b.png"></p>
+<p>3.产品计划的建立</p>
+<p>尽量为自己的产品发布做出一个合理的计划安排，比如多长时间发行一个版本，每个版本的迭代周期确定一个合理的程度，并力争按时完成，尽量不要跳票。（如下图）</p>
+<p><img src="/images/v2-782eff373b671c1f961b5c609fe31d33_b.png"></p>
+<p>尽量在规定时间内做完一样事情，不要养成拖延的习惯。</p>
+<p>总结：</p>
+<p>作为开源社区的创始人和主要维护者，我们反对过度民主的做法。那样会把大量时间浪费在争论上，最终什么事都做不成。社区也需要一个负责人，最终说了算的人。及时调节矛盾，让大家在祥和的气氛之下进行技术交流，为开源软件事业做出自己应有的贡献。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA/" rel="tag"># 开源社区</a>
+              <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" rel="tag"># 项目管理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/04/girls-learn-linuxs-hard-disk-partition/" rel="prev" title="女孩子学Linux之硬盘分区篇">
+                  <i class="fa fa-angle-left"></i> 女孩子学Linux之硬盘分区篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/17/fedora-centos-configure-shadowsocks-on-commandline-mode/" rel="next" title="Fedora&#x2F;CentOS下命令行配置Shadowsocks全局代理">
+                  Fedora/CentOS下命令行配置Shadowsocks全局代理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

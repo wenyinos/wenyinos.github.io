@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Cargo 包管理器完全指南TL;DR: Cargo 是 Rust 的构建系统和包管理器，处理代码构建、依赖管理和任务自动化。本指南涵盖从安装到高级使用的完整流程。  目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cargo 包管理器完全指南">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/18/cargo-package-management/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="Cargo 包管理器完全指南TL;DR: Cargo 是 Rust 的构建系统和包管理器，处理代码构建、依赖管理和任务自动化。本指南涵盖从安装到高级使用的完整流程。  目录">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-01-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-17T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="cargo">
+<meta property="article:tag" content="package-management">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/01/18/cargo-package-management/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/01/18/cargo-package-management/","path":"2026/01/18/cargo-package-management/","title":"Cargo 包管理器完全指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cargo 包管理器完全指南 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cargo-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">Cargo 包管理器完全指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">自动安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%89%E8%A3%85%EF%BC%88Linux%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">包管理器安装（Linux）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.3.</span> <span class="nav-text">创建第一个项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%A1%B9%E7%9B%AE%EF%BC%88%E9%BB%98%E8%AE%A4%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">二进制项目（默认）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%93%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">库项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text">核心命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="nav-number">1.4.1.</span> <span class="nav-text">构建与运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%AF%B9%E6%AF%94%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">时间对比示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">依赖管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="nav-number">1.5.1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E4%BE%9D%E8%B5%96"><span class="nav-number">1.5.2.</span> <span class="nav-text">更新依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6"><span class="nav-number">1.5.3.</span> <span class="nav-text">依赖解析机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%B1%BB%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="nav-number">1.6.</span> <span class="nav-text">项目类型对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%8E%E6%A3%80%E6%9F%A5"><span class="nav-number">1.7.</span> <span class="nav-text">测试与检查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">运行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%B5%8B%E8%AF%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.7.2.</span> <span class="nav-text">默认测试示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.7.3.</span> <span class="nav-text">测试输出示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%9E%84%E5%BB%BA"><span class="nav-number">1.8.</span> <span class="nav-text">优化构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9E%84%E5%BB%BA%EF%BC%88%E9%BB%98%E8%AE%A4%EF%BC%89"><span class="nav-number">1.8.1.</span> <span class="nav-text">开发构建（默认）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E6%9E%84%E5%BB%BA"><span class="nav-number">1.8.2.</span> <span class="nav-text">发布构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-number">1.8.3.</span> <span class="nav-text">性能对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7"><span class="nav-number">1.9.</span> <span class="nav-text">高级技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.9.1.</span> <span class="nav-text">详细模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%A4%96%E9%83%A8%E5%8C%85"><span class="nav-number">1.9.2.</span> <span class="nav-text">构建外部包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E9%87%8F%E7%BC%96%E8%AF%91"><span class="nav-number">1.9.3.</span> <span class="nav-text">增量编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86%E5%90%88"><span class="nav-number">1.9.4.</span> <span class="nav-text">实用命令集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.10.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="nav-number">1.10.1.</span> <span class="nav-text">开发流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.10.2.</span> <span class="nav-text">项目维护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="nav-number">1.10.3.</span> <span class="nav-text">磁盘管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.11.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81%EF%BC%9F"><span class="nav-number">1.11.1.</span> <span class="nav-text">如何处理版本冲突？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BC%96%E8%AF%91%E8%BF%99%E4%B9%88%E6%85%A2%EF%BC%9F"><span class="nav-number">1.11.2.</span> <span class="nav-text">为什么编译这么慢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%8A%A0%E9%80%9F-CI-CD-%E6%9E%84%E5%BB%BA%EF%BC%9F"><span class="nav-number">1.11.3.</span> <span class="nav-text">如何加速 CI&#x2F;CD 构建？</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/18/cargo-package-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Cargo 包管理器完全指南 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cargo 包管理器完全指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-18T00:00:00+08:00">2026-01-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Cargo-包管理器完全指南"><a href="#Cargo-包管理器完全指南" class="headerlink" title="Cargo 包管理器完全指南"></a>Cargo 包管理器完全指南</h1><p><strong>TL;DR</strong>: Cargo 是 Rust 的构建系统和包管理器，处理代码构建、依赖管理和任务自动化。本指南涵盖从安装到高级使用的完整流程。</p>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE">安装与配置</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE">创建第一个项目</a></li>
+<li><a href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4">核心命令</a></li>
+<li><a href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86">依赖管理</a></li>
+<li><a href="#%E9%A1%B9%E7%9B%AE%E7%B1%BB%E5%9E%8B">项目类型</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E4%B8%8E%E6%A3%80%E6%9F%A5">测试与检查</a></li>
+<li><a href="#%E4%BC%98%E5%8C%96%E6%9E%84%E5%BB%BA">优化构建</a></li>
+<li><a href="#%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7">高级技巧</a></li>
+</ol>
+<hr>
+<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><h3 id="自动安装"><a href="#自动安装" class="headerlink" title="自动安装"></a>自动安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载安装脚本</span></span><br><span class="line">curl https://sh.rustup.rs -sSf | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或手动下载后检查</span></span><br><span class="line">sh ./rustup.rs</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 立即生效</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$HOME</span>/.cargo/env</span><br><span class="line"></span><br><span class="line"><span class="comment"># 永久配置（添加到 ~/.bashrc 或 ~/.zshrc）</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$HOME</span>/.cargo/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">rustc --version</span><br><span class="line">cargo --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="包管理器安装（Linux）"><a href="#包管理器安装（Linux）" class="headerlink" title="包管理器安装（Linux）"></a>包管理器安装（Linux）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian/Ubuntu</span></span><br><span class="line"><span class="built_in">sudo</span> apt install rust cargo</span><br><span class="line"></span><br><span class="line"><span class="comment"># RHEL/Fedora</span></span><br><span class="line"><span class="built_in">sudo</span> dnf install rust cargo</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="创建第一个项目"><a href="#创建第一个项目" class="headerlink" title="创建第一个项目"></a>创建第一个项目</h2><h3 id="二进制项目（默认）"><a href="#二进制项目（默认）" class="headerlink" title="二进制项目（默认）"></a>二进制项目（默认）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cargo new hello_opensource</span><br><span class="line"><span class="built_in">cd</span> hello_opensource</span><br></pre></td></tr></table></figure>
+
+<p>项目结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hello_opensource/</span><br><span class="line">├── Cargo.toml          # 项目配置</span><br><span class="line">└── src/</span><br><span class="line">    └── main.rs         # 入口文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="库项目"><a href="#库项目" class="headerlink" title="库项目"></a>库项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo new --lib libhello</span><br></pre></td></tr></table></figure>
+
+<p>结构差异：</p>
+<ul>
+<li>生成 <code>src/lib.rs</code> 而非 <code>src/main.rs</code></li>
+<li>包含默认测试示例</li>
+</ul>
+<hr>
+<h2 id="核心命令"><a href="#核心命令" class="headerlink" title="核心命令"></a>核心命令</h2><h3 id="构建与运行"><a href="#构建与运行" class="headerlink" title="构建与运行"></a>构建与运行</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+<th>输出目录</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cargo build</code></td>
+<td>编译项目</td>
+<td><code>target/debug/</code></td>
+<td>开发调试</td>
+</tr>
+<tr>
+<td><code>cargo run</code></td>
+<td>编译并运行</td>
+<td><code>target/debug/</code></td>
+<td>快速执行</td>
+</tr>
+<tr>
+<td><code>cargo check</code></td>
+<td>仅检查语法</td>
+<td>无二进制文件</td>
+<td>快速验证</td>
+</tr>
+<tr>
+<td><code>cargo clean</code></td>
+<td>清理构建产物</td>
+<td>删除 <code>target/</code></td>
+<td>释放空间</td>
+</tr>
+</tbody></table>
+<h3 id="时间对比示例"><a href="#时间对比示例" class="headerlink" title="时间对比示例"></a>时间对比示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build 耗时</span></span><br><span class="line"><span class="keyword">time</span> cargo build  <span class="comment"># ~0.4s</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># check 耗时（显著更快）</span></span><br><span class="line"><span class="keyword">time</span> cargo check  <span class="comment"># ~0.15s</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><p>编辑 <code>Cargo.toml</code>：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">rand</span> = <span class="string">&quot;0.3.14&quot;</span>  <span class="comment"># 指定版本</span></span><br><span class="line"><span class="attr">serde</span> = <span class="string">&quot;1.0&quot;</span>    <span class="comment"># 语义化版本</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更新依赖"><a href="#更新依赖" class="headerlink" title="更新依赖"></a>更新依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新所有依赖</span></span><br><span class="line">cargo update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新特定包</span></span><br><span class="line">cargo update -p rand</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看依赖树</span></span><br><span class="line">cargo tree</span><br></pre></td></tr></table></figure>
+
+<h3 id="依赖解析机制"><a href="#依赖解析机制" class="headerlink" title="依赖解析机制"></a>依赖解析机制</h3><ul>
+<li><code>Cargo.lock</code>：锁定精确版本，确保可重现构建</li>
+<li>自动处理传递依赖（如 <code>rand</code> 依赖 <code>libc</code>）</li>
+</ul>
+<hr>
+<h2 id="项目类型对比"><a href="#项目类型对比" class="headerlink" title="项目类型对比"></a>项目类型对比</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>命令</th>
+<th>入口文件</th>
+<th>输出</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>二进制</td>
+<td><code>cargo new</code></td>
+<td><code>main.rs</code></td>
+<td>可执行文件</td>
+<td>应用程序</td>
+</tr>
+<tr>
+<td>库</td>
+<td><code>cargo new --lib</code></td>
+<td><code>lib.rs</code></td>
+<td>库文件</td>
+<td>共享代码</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="测试与检查"><a href="#测试与检查" class="headerlink" title="测试与检查"></a>测试与检查</h2><h3 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行所有测试</span></span><br><span class="line">cargo <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行特定测试</span></span><br><span class="line">cargo <span class="built_in">test</span> test_name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 包含文档测试</span></span><br><span class="line">cargo <span class="built_in">test</span> --doc</span><br></pre></td></tr></table></figure>
+
+<h3 id="默认测试示例"><a href="#默认测试示例" class="headerlink" title="默认测试示例"></a>默认测试示例</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[cfg(test)]</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">it_works</span>() &#123;</span><br><span class="line">        <span class="built_in">assert_eq!</span>(<span class="number">2</span> + <span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试输出示例"><a href="#测试输出示例" class="headerlink" title="测试输出示例"></a>测试输出示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">running 1 test</span><br><span class="line">test tests::it_works ... ok</span><br><span class="line"></span><br><span class="line">test result: ok. 1 passed; 0 failed; 0 ignored</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="优化构建"><a href="#优化构建" class="headerlink" title="优化构建"></a>优化构建</h2><h3 id="开发构建（默认）"><a href="#开发构建（默认）" class="headerlink" title="开发构建（默认）"></a>开发构建（默认）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cargo build</span><br><span class="line"><span class="comment"># 输出: [unoptimized + debuginfo]</span></span><br><span class="line"><span class="comment"># 包含调试信息，未优化性能</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="发布构建"><a href="#发布构建" class="headerlink" title="发布构建"></a>发布构建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cargo build --release</span><br><span class="line"><span class="comment"># 输出: [optimized]</span></span><br><span class="line"><span class="comment"># 优化性能，移除调试信息</span></span><br><span class="line"><span class="comment"># 编译时间更长，运行时更快</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h3><table>
+<thead>
+<tr>
+<th>构建类型</th>
+<th>编译时间</th>
+<th>运行时性能</th>
+<th>二进制大小</th>
+<th>调试信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Debug</td>
+<td>快</td>
+<td>较慢</td>
+<td>较大</td>
+<td>包含</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>慢</td>
+<td>快</td>
+<td>小</td>
+<td>移除</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h2><h3 id="详细模式"><a href="#详细模式" class="headerlink" title="详细模式"></a>详细模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看底层命令</span></span><br><span class="line">cargo build -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看清理操作</span></span><br><span class="line">cargo clean -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="构建外部包"><a href="#构建外部包" class="headerlink" title="构建外部包"></a>构建外部包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> &lt;repo-url&gt;</span><br><span class="line"><span class="built_in">cd</span> &lt;package-folder&gt;</span><br><span class="line">cargo build</span><br></pre></td></tr></table></figure>
+
+<h3 id="增量编译"><a href="#增量编译" class="headerlink" title="增量编译"></a>增量编译</h3><ul>
+<li>默认启用，加速重新编译</li>
+<li>缓存位于 <code>target/debug/incremental/</code></li>
+</ul>
+<h3 id="实用命令集合"><a href="#实用命令集合" class="headerlink" title="实用命令集合"></a>实用命令集合</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式化代码</span></span><br><span class="line">cargo <span class="built_in">fmt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 代码检查</span></span><br><span class="line">cargo clippy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成文档</span></span><br><span class="line">cargo doc --open</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布到 crates.io</span></span><br><span class="line">cargo publish</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><h3 id="开发流程"><a href="#开发流程" class="headerlink" title="开发流程"></a>开发流程</h3><ol>
+<li><strong>编码阶段</strong>：使用 <code>cargo check</code> 快速验证</li>
+<li><strong>调试阶段</strong>：使用 <code>cargo build</code> 生成调试信息</li>
+<li><strong>发布阶段</strong>：使用 <code>cargo build --release</code> 优化性能</li>
+<li><strong>测试阶段</strong>：使用 <code>cargo test</code> 确保质量</li>
+</ol>
+<h3 id="项目维护"><a href="#项目维护" class="headerlink" title="项目维护"></a>项目维护</h3><ul>
+<li>定期运行 <code>cargo update</code> 更新依赖</li>
+<li>使用 <code>cargo outdated</code> 检查过期依赖</li>
+<li>发布前执行 <code>cargo clean &amp;&amp; cargo build --release</code></li>
+</ul>
+<h3 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h3><ul>
+<li>使用 <code>cargo clean</code> 清理中间文件</li>
+<li>定期清理 <code>~/.cargo/registry</code> 缓存</li>
+<li>使用 <code>cargo sweep</code> 清理旧构建产物</li>
+</ul>
+<hr>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="如何处理版本冲突？"><a href="#如何处理版本冲突？" class="headerlink" title="如何处理版本冲突？"></a>如何处理版本冲突？</h3><p>Cargo 自动解决依赖版本冲突，遵循语义化版本规则。使用 <code>cargo tree</code> 查看依赖关系图。</p>
+<h3 id="为什么编译这么慢？"><a href="#为什么编译这么慢？" class="headerlink" title="为什么编译这么慢？"></a>为什么编译这么慢？</h3><ul>
+<li>首次构建需下载和编译依赖</li>
+<li>Release 模式优化级别高</li>
+<li>解决方案：使用 <code>cargo check</code> 快速验证</li>
+</ul>
+<h3 id="如何加速-CI-CD-构建？"><a href="#如何加速-CI-CD-构建？" class="headerlink" title="如何加速 CI&#x2F;CD 构建？"></a>如何加速 CI&#x2F;CD 构建？</h3><ul>
+<li>缓存 <code>~/.cargo</code> 和 <code>target/</code> 目录</li>
+<li>使用 <code>cargo check</code> 代替 <code>cargo build</code> 进行快速验证</li>
+</ul>
+<hr>
+<p><strong>Tags</strong>: #rust #cargo #package-manager #build-system #development #tutorial #dependency-management</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/package-management/" rel="tag"># package-management</a>
+              <a href="/tags/cargo/" rel="tag"># cargo</a>
+              <a href="/tags/rust/" rel="tag"># rust</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/01/ai-interview-00-ai-engineer/" rel="prev" title="AI面试题 - AI应用开发工程师综合题">
+                  <i class="fa fa-angle-left"></i> AI面试题 - AI应用开发工程师综合题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/01/29/freebsd-pkg-autoremove-dependencies/" rel="next" title="FreeBSD pkg 自动卸载安装依赖">
+                  FreeBSD pkg 自动卸载安装依赖 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

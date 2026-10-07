@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这大概也适用于Rocky&#x2F;Alma和CentOS（Stream）。 我需要为某个项目创建一个AlmaLinux 9.1（注：译者在RHEL9.1测试通过）工作站。 我唯一的抱怨是，我不是GNOME桌面的忠实粉丝。 除了“标准”桌面或GNOME桌面之外，如果有另一种选择就好了。我最近不得不为一个项目创建一个AlmaLinux 9.1工作站。我唯一的抱怨是，我不是Gnome桌面的忠实粉丝。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在基于RHEL的系统上安装KDE Plasma桌面环境">
+<meta property="og:url" content="https://wiki.wenyinos.com/2023/04/09/installing-kde-plasma-on-rhel-based-9/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="这大概也适用于Rocky&#x2F;Alma和CentOS（Stream）。 我需要为某个项目创建一个AlmaLinux 9.1（注：译者在RHEL9.1测试通过）工作站。 我唯一的抱怨是，我不是GNOME桌面的忠实粉丝。 除了“标准”桌面或GNOME桌面之外，如果有另一种选择就好了。我最近不得不为一个项目创建一个AlmaLinux 9.1工作站。我唯一的抱怨是，我不是Gnome桌面的忠实粉丝。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720230410095846.png">
+<meta property="article:published_time" content="2023-04-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-08T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="epel">
+<meta property="article:tag" content="kde">
+<meta property="article:tag" content="redhat">
+<meta property="article:tag" content="rhel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720230410095846.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2023/04/09/installing-kde-plasma-on-rhel-based-9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2023/04/09/installing-kde-plasma-on-rhel-based-9/","path":"2023/04/09/installing-kde-plasma-on-rhel-based-9/","title":"在基于RHEL的系统上安装KDE Plasma桌面环境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在基于RHEL的系统上安装KDE Plasma桌面环境 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E5%8F%82%E8%80%83%E6%AD%A4%E5%A4%84%E5%AE%89%E8%A3%85EPEL%E9%95%9C%E5%83%8F%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">首先，参考此处安装EPEL镜像。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-KDE%EF%BC%9A%E5%AE%89%E8%A3%85KDE"><span class="nav-number">2.</span> <span class="nav-text">安装 KDE：安装KDE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#KDE%E5%8F%AF%E9%80%89%E7%BB%84%E4%BB%B6%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">KDE可选组件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-%E4%BD%BF%E7%94%A8sddm%E4%BD%9C%E4%B8%BA%E7%99%BB%E5%BD%95%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">(可选) 使用sddm作为登录管理器：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E9%80%89-%E9%80%9A%E8%BF%87Flatpak%E5%AE%89%E8%A3%85Apps%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">(可选) 通过Flatpak安装Apps：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%E7%A6%81%E7%94%A8GNOME%E7%9A%84gdm%EF%BC%9A%E8%AE%BE%E7%BD%AEsddm%E6%9B%BF%E6%8D%A2gdm%E7%99%BB%E5%BD%95%E5%B1%8F%E5%B9%95"><span class="nav-number">2.4.</span> <span class="nav-text">（可选）禁用GNOME的gdm：设置sddm替换gdm登录屏幕</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%E5%8D%B8%E8%BD%BDGNOME%E6%A1%8C%E9%9D%A2%E5%88%A0%E9%99%A4GNOME%E6%A1%8C%E9%9D%A2"><span class="nav-number">2.5.</span> <span class="nav-text">（可选）卸载GNOME桌面删除GNOME桌面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A5%E6%BA%90%EF%BC%9A"><span class="nav-number">2.6.</span> <span class="nav-text">来源：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/09/installing-kde-plasma-on-rhel-based-9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在基于RHEL的系统上安装KDE Plasma桌面环境 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在基于RHEL的系统上安装KDE Plasma桌面环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-09 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-09T00:00:00+08:00">2023-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/QQ%E5%9B%BE%E7%89%8720230410095846.png"><img src="/images/QQ%E5%9B%BE%E7%89%8720230410095846.png"></a>这大概也适用于Rocky&#x2F;Alma和CentOS（Stream）。</p>
+<p>我需要为某个项目创建一个AlmaLinux 9.1（注：译者在RHEL9.1测试通过）工作站。</p>
+<p>我唯一的抱怨是，我不是GNOME桌面的忠实粉丝。 除了“标准”桌面或GNOME桌面之外，如果有另一种选择就好了。<br>我最近不得不为一个项目创建一个AlmaLinux 9.1工作站。我唯一的抱怨是，我不是Gnome桌面的忠实粉丝。 除了“标准”桌面或Gnome桌面之外，如果有另一种选择就好了。</p>
+<p>这就是如何在基于RHEL9的系统上安装KDE Plasma的方法。<br>这就是如何在基于RHEL9的系统上安装KDE Plasma。</p>
+<h4 id="首先，参考此处安装EPEL镜像。"><a href="#首先，参考此处安装EPEL镜像。" class="headerlink" title="首先，参考此处安装EPEL镜像。"></a>首先，<a href="https://wiki.wenyinos.com/index.php/2022/05/24/extra-packages-for-enterprise-linux/">参考此处</a>安装EPEL镜像。</h4><h2 id="安装-KDE：安装KDE"><a href="#安装-KDE：安装KDE" class="headerlink" title="安装 KDE：安装KDE"></a>安装 KDE：安装KDE</h2><p><code>sudo dnf -y groupinstall &quot;KDE Plasma Workspaces&quot; &quot;base-x&quot;</code></p>
+<h4 id="KDE可选组件："><a href="#KDE可选组件：" class="headerlink" title="KDE可选组件："></a>KDE可选组件：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf groupinstall kde-apps</span><br><span class="line">sudo dnf groupinstall kde-media</span><br><span class="line">sudo dnf groupinstall kde-education</span><br><span class="line">sudo dnf install okular</span><br><span class="line">sudo dnf groupinstall kde-software-development</span><br><span class="line">sudo dnf groupinstall kf5-software-development</span><br></pre></td></tr></table></figure>
+
+<p>（注：若有依赖关系破损可通过 –skip-broken参数跳过，使用中暂未见异常）</p>
+<h4 id="可选-使用sddm作为登录管理器："><a href="#可选-使用sddm作为登录管理器：" class="headerlink" title="(可选) 使用sddm作为登录管理器："></a>(可选) 使用sddm作为登录管理器：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl set-default graphical.target</span><br><span class="line">sudo dnf install sddm\*</span><br><span class="line">sudo systemctl enable sddm -f</span><br></pre></td></tr></table></figure>
+
+<h4 id="可选-通过Flatpak安装Apps："><a href="#可选-通过Flatpak安装Apps：" class="headerlink" title="(可选) 通过Flatpak安装Apps："></a>(可选) 通过Flatpak安装Apps：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf -y install flatpak</span><br><span class="line">sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</span><br><span class="line">sudo flatpak install flathub org.kde.kdenlive</span><br><span class="line">sudo flatpak install flathub org.kde.krita</span><br></pre></td></tr></table></figure>
+
+<h4 id="（可选）禁用GNOME的gdm：设置sddm替换gdm登录屏幕"><a href="#（可选）禁用GNOME的gdm：设置sddm替换gdm登录屏幕" class="headerlink" title="（可选）禁用GNOME的gdm：设置sddm替换gdm登录屏幕"></a>（可选）禁用GNOME的gdm：设置sddm替换gdm登录屏幕</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl disable gdm</span><br><span class="line">sudo systemctl enable gdm</span><br></pre></td></tr></table></figure>
+
+<p>注销，在登录界面选择Plasma会话登录即可。</p>
+<p>在登录屏幕上从小“设置”图标中选择您的桌面环境然后重启到等离子桌面。</p>
+<h4 id="（可选）卸载GNOME桌面删除GNOME桌面"><a href="#（可选）卸载GNOME桌面删除GNOME桌面" class="headerlink" title="（可选）卸载GNOME桌面删除GNOME桌面"></a>（可选）卸载GNOME桌面删除GNOME桌面</h4><p><code>sudo dnf autoremove @gnome-desktop gdm</code></p>
+<h3 id="来源："><a href="#来源：" class="headerlink" title="来源："></a>来源：</h3><p><a target="_blank" rel="noopener" href="https://www.linux.org/threads/installing-kde-plasma-on-almalinux-9-1.42978/">https://www.linux.org/threads/installing-kde-plasma-on-almalinux-9-1.42978/</a></p>
+<p><a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/SIGs/KDE/EPEL">https://fedoraproject.org/wiki/SIGs/KDE/EPEL</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/centos/" rel="tag"># centos</a>
+              <a href="/tags/epel/" rel="tag"># epel</a>
+              <a href="/tags/redhat/" rel="tag"># redhat</a>
+              <a href="/tags/rhel/" rel="tag"># rhel</a>
+              <a href="/tags/kde/" rel="tag"># kde</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/01/how-to-clean-mysql-binary-log/" rel="prev" title="mysql日志文件mysql-bin太大怎么办">
+                  <i class="fa fa-angle-left"></i> mysql日志文件mysql-bin太大怎么办
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/09/fedora-rhel-cpu-tuned-mode/" rel="next" title="Fedora&#x2F;RHEL动态调优CPU性能模式">
+                  Fedora/RHEL动态调优CPU性能模式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

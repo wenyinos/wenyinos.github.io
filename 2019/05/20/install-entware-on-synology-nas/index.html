@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="IntroductionARM &amp; intel based devices are supported. DSM version must be 3.2 or higher. Use armv5 installer for Marvell Kirkwood mv6282 cpu, you can use armv7 installer for newer ARM cpu’s. Althou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install entware repository on Synology NAS">
+<meta property="og:url" content="https://wiki.wenyinos.com/2019/05/20/install-entware-on-synology-nas/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="IntroductionARM &amp; intel based devices are supported. DSM version must be 3.2 or higher. Use armv5 installer for Marvell Kirkwood mv6282 cpu, you can use armv7 installer for newer ARM cpu’s. Althou">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-05-19T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="entware">
+<meta property="article:tag" content="nas">
+<meta property="article:tag" content="synology">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2019/05/20/install-entware-on-synology-nas/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2019/05/20/install-entware-on-synology-nas/","path":"2019/05/20/install-entware-on-synology-nas/","title":"Install entware repository on Synology NAS"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Install entware repository on Synology NAS | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deploying-Entware-ng"><span class="nav-number">2.</span> <span class="nav-text">Deploying Entware-ng</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Create-a-folder-on-your-hdd-outside-rootfs"><span class="nav-number">2.1.</span> <span class="nav-text">1. Create a folder on your hdd (outside rootfs)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Remove-opt-and-create-a-symlink"><span class="nav-number">2.2.</span> <span class="nav-text">2. Remove &#x2F;opt and create a symlink</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Run-install-script"><span class="nav-number">2.3.</span> <span class="nav-text">3. Run install script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Edit-etc-rc-local-file"><span class="nav-number">2.4.</span> <span class="nav-text">4. Edit &#x2F;etc&#x2F;rc.local file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Add-the-following-line-in-the-end-of-etc-profile-file"><span class="nav-number">2.5.</span> <span class="nav-text">5. Add the following line in the end of &#x2F;etc&#x2F;profile file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Reboot-your-NAS"><span class="nav-number">2.6.</span> <span class="nav-text">6. Reboot your NAS</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/05/20/install-entware-on-synology-nas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Install entware repository on Synology NAS | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Install entware repository on Synology NAS
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-20T00:00:00+08:00">2019-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%91%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index"><span itemprop="name">云服务</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><a target="_blank" rel="noopener" href="http://forum.synology.com/wiki/index.php/What_kind_of_CPU_does_my_NAS_have">ARM &amp; intel based devices</a> are supported. DSM version must be 3.2 or higher. Use armv5 installer for Marvell Kirkwood mv6282 cpu, you can use armv7 installer for newer ARM cpu’s. Although armv7 repo was compiled with cortex-a9 optimization it was successfully tested on Marvell Armada XP based NAS.</p>
+<h2 id="Deploying-Entware-ng"><a href="#Deploying-Entware-ng" class="headerlink" title="Deploying Entware-ng"></a>Deploying Entware-ng</h2><h3 id="1-Create-a-folder-on-your-hdd-outside-rootfs"><a href="#1-Create-a-folder-on-your-hdd-outside-rootfs" class="headerlink" title="1. Create a folder on your hdd (outside rootfs)"></a>1. Create a folder on your hdd (outside rootfs)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /volume1/@entware-ng/opt</span><br></pre></td></tr></table></figure>
+
+<p>Make sure that <code>/opt</code> folder is empty (Optware is not installed), we will <strong>remove</strong> <code>/opt</code> folder with its contents at this step.</p>
+<h3 id="2-Remove-opt-and-create-a-symlink"><a href="#2-Remove-opt-and-create-a-symlink" class="headerlink" title="2. Remove /opt and create a symlink"></a>2. Remove <code>/opt</code> and create a symlink</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf /opt</span><br><span class="line"><span class="built_in">ln</span> -sf /volume1/@entware-ng/opt /opt</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Run-install-script"><a href="#3-Run-install-script" class="headerlink" title="3. Run install script"></a>3. Run install script</h3><ul>
+<li>for ARMv5</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - http://pkg.entware.net/binaries/armv5/installer/entware_install.sh | /bin/sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for ARMv7</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - http://pkg.entware.net/binaries/armv7/installer/entware_install.sh | /bin/sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for x86-32</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - http://pkg.entware.net/binaries/x86-32/installer/entware_install.sh | /bin/sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for x86-64</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - http://pkg.entware.net/binaries/x86-64/installer/entware_install.sh | /bin/sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>for MIPS</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O - http://pkg.entware.net/binaries/mipsel/installer/installer.sh | /bin/sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Edit-etc-rc-local-file"><a href="#4-Edit-etc-rc-local-file" class="headerlink" title="4. Edit /etc/rc.local file"></a>4. Edit <code>/etc/rc.local</code> file</h3><p>Edit <code>/etc/rc.local</code> file with a text editor and insert following strings:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/bin/ln -sf /volume1/@entware-ng/opt /opt</span><br><span class="line">/opt/etc/init.d/rc.unslung start</span><br></pre></td></tr></table></figure>
+
+<p>at the end of this file, but before <code>exit 0</code>. The last line ensures that Entware services will be started at boot.</p>
+<blockquote>
+<p>Note: As of DSM 6.0, <code>/etc/rc.local</code> is no longer executed as part of the boot process. Instead you have two options.</p>
+</blockquote>
+<p><strong>Option 1</strong>: Documented in the <a target="_blank" rel="noopener" href="https://developer.synology.com/download/developer-guide.pdf">Synology DSM6.0 3rd-Party Package Developer Guide</a>, custom startup scripts should be placed in <code>/usr/local/etc/rc.d</code>.</p>
+<p>Example: Create <code>/usr/local/etc/rc.d/entware-startup.sh</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">    <span class="built_in">mkdir</span> -p /opt</span><br><span class="line">    mount -o <span class="built_in">bind</span> /volume1/@entware-ng/opt /opt</span><br><span class="line">    /opt/etc/init.d/rc.unslung start</span><br><span class="line">    ;;</span><br><span class="line">    stop)</span><br><span class="line">    ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Option 2</strong>: Make an executable script and use the Task Scheduler to create a triggered task that runs on boot. The script would contain:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt</span><br><span class="line">mount -o <span class="built_in">bind</span> /volume1/@entware-ng/opt /opt</span><br><span class="line">/opt/etc/init.d/rc.unslung start</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Add-the-following-line-in-the-end-of-etc-profile-file"><a href="#5-Add-the-following-line-in-the-end-of-etc-profile-file" class="headerlink" title="5. Add the following line in the end of /etc/profile file"></a>5. Add the following line in the end of <code>/etc/profile</code> file</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. /opt/etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>It will add <code>/opt/bin</code> and <code>/opt/sbin</code> to the PATH variable for interactive login.</p>
+<h3 id="6-Reboot-your-NAS"><a href="#6-Reboot-your-NAS" class="headerlink" title="6. Reboot your NAS"></a>6. Reboot your NAS</h3><p>After rebooting, you can use opkg commands.</p>
+<hr>
+<p>via <a target="_blank" rel="noopener" href="https://github.com/Entware/Entware-ng/wiki/Install-on-Synology-NAS">Entware Wiki - Install on Synology NAS</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/entware/" rel="tag"># entware</a>
+              <a href="/tags/nas/" rel="tag"># nas</a>
+              <a href="/tags/synology/" rel="tag"># synology</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/17/using-wifi-adapter-unas40/" rel="prev" title="在万由U-NAS 4.0中使用无线网卡">
+                  <i class="fa fa-angle-left"></i> 在万由U-NAS 4.0中使用无线网卡
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/08/02/how-to-overclock-raspberry-pi-4-to-2-0ghz/" rel="next" title="将您的树莓派4超频至2.0GHz">
+                  将您的树莓派4超频至2.0GHz <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

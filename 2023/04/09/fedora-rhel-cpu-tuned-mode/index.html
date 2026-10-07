@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="主要依赖 Tuned。 在 CentOS &#x2F; RHEL 7 和 Fedora 上，默认情况下已预先安装并激活了 tuned，但在较旧版本的 CentOS &#x2F; RHEL 6.x 上，需要使用以下 yum 命令进行安装： 1sudo yum install tuned -y  安装后，您将找到以下重要的调整配置文件：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fedora&#x2F;RHEL动态调优CPU性能模式">
+<meta property="og:url" content="https://wiki.wenyinos.com/2023/04/09/fedora-rhel-cpu-tuned-mode/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="主要依赖 Tuned。 在 CentOS &#x2F; RHEL 7 和 Fedora 上，默认情况下已预先安装并激活了 tuned，但在较旧版本的 CentOS &#x2F; RHEL 6.x 上，需要使用以下 yum 命令进行安装： 1sudo yum install tuned -y  安装后，您将找到以下重要的调整配置文件：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-08T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="cpu">
+<meta property="article:tag" content="fedora">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="redhat">
+<meta property="article:tag" content="rhel">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2023/04/09/fedora-rhel-cpu-tuned-mode/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2023/04/09/fedora-rhel-cpu-tuned-mode/","path":"2023/04/09/fedora-rhel-cpu-tuned-mode/","title":"Fedora/RHEL动态调优CPU性能模式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Fedora/RHEL动态调优CPU性能模式 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">常用模式介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#balanced"><span class="nav-number">1.1.</span> <span class="nav-text">balanced</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#desktop"><span class="nav-number">1.2.</span> <span class="nav-text">desktop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#latency-performance"><span class="nav-number">1.3.</span> <span class="nav-text">latency-performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#throughput-performance"><span class="nav-number">1.4.</span> <span class="nav-text">throughput-performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#virtual-guest"><span class="nav-number">1.5.</span> <span class="nav-text">virtual-guest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#oracle"><span class="nav-number">1.6.</span> <span class="nav-text">oracle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#network-latency"><span class="nav-number">1.7.</span> <span class="nav-text">network-latency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#network-throughput"><span class="nav-number">1.8.</span> <span class="nav-text">network-throughput</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">获取当前模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">切换模式</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/09/fedora-rhel-cpu-tuned-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Fedora&#x2F;RHEL动态调优CPU性能模式 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fedora/RHEL动态调优CPU性能模式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-09 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-09T00:00:00+08:00">2023-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>主要依赖 Tuned。</p>
+<p>在 CentOS &#x2F; RHEL 7 和 Fedora 上，默认情况下已预先安装并激活了 tuned，但在较旧版本的 CentOS &#x2F; RHEL 6.x 上，需要使用以下 yum 命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum install tuned -y</span><br></pre></td></tr></table></figure>
+
+<p>安装后，您将找到以下重要的调整配置文件：</p>
+<ul>
+<li><code>/etc/tuned</code> - 调整配置目录</li>
+<li><code>/etc/tuned/tuned-main.conf</code> - 调整的邮件配置文件</li>
+<li><code>/usr/lib/tuned/</code> - 存储所有调优配置文件的子目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> tuned-adm list</span><br></pre></td></tr></table></figure>
+
+<p>列出自带的模式，实际上就是目录 <code>/usr/lib/tuned/</code> 里的目录对应 list 出的条目，我们可以自己创建目录写配置文件来定制一个模式。</p>
+<blockquote>
+<p>Available profiles:</p>
+<ul>
+<li>accelerator-performance - Throughput performance based tuning with disabled higher latency STOP states</li>
+<li>balanced - General non-specialized tuned profile</li>
+<li>desktop - Optimize for the desktop use-case</li>
+<li>hpc-compute - Optimize for HPC compute workloads</li>
+<li>intel-sst - Configure for Intel Speed Select Base Frequency</li>
+<li>latency-performance - Optimize for deterministic performance at the cost of increased power consumption</li>
+<li>network-latency - Optimize for deterministic performance at the cost of increased power consumption, focused on low latency network performance</li>
+<li>network-throughput - Optimize for streaming network throughput, generally only necessary on older CPUs or 40G+ networks</li>
+<li>optimize-serial-console - Optimize for serial console use.</li>
+<li>powersave - Optimize for low power consumption</li>
+<li>throughput-performance - Broadly applicable tuning that provides excellent performance across a variety of common server workloads</li>
+<li>virtual-guest - Optimize for running inside a virtual guest</li>
+<li>virtual-host - Optimize for running KVM guests<br>Current active profile: desktop</li>
+</ul>
+</blockquote>
+<h2 id="常用模式介绍"><a href="#常用模式介绍" class="headerlink" title="常用模式介绍"></a>常用模式介绍</h2><h3 id="balanced"><a href="#balanced" class="headerlink" title="balanced"></a>balanced</h3><p>它的目的是成为性能和功耗之间的折衷。它试图尽量使用自动调节。它有好的结果对于大多数负载。唯一的缺点是增加了延迟。在当前调释放它使 CPU、磁盘、音频和视频插件和激活 ondemand 调控器。radeon_powersave 设置为自动。</p>
+<h3 id="desktop"><a href="#desktop" class="headerlink" title="desktop"></a>desktop</h3><p>针对桌面系统设计的节能 Profile，对 SATA 适配器、CPU、网络和磁盘插件应用 ALPM 策略。</p>
+<h3 id="latency-performance"><a href="#latency-performance" class="headerlink" title="latency-performance"></a>latency-performance</h3><p>典型低延迟的性能模式。此配置会禁用动态调整机制和透明的大页面。cpuspeed 模式改变为 performance，将性能低的 CPU 锁定 C 状态（通过 PM QoS）。同时将磁盘 IO 的调度算法更改为 deadline，在 Red Hat Enterprise Linux 6.5 和更高版本中 cpu_dma_latency 参数的值注册为 1（可能的最低延迟，早期值为 0），用于电源管理服务质量，以尽可能限制延迟。</p>
+<h3 id="throughput-performance"><a href="#throughput-performance" class="headerlink" title="throughput-performance"></a>throughput-performance</h3><p>高吞吐量优化模式。用于典型吞吐量性能调整的服务器配置文件，它禁止 tuned 和 ktune 节能机制。如果系统没有企业级存储，则建议使用此配置文件。与 latency-performance 类似，但有以下区别：</p>
+<ul>
+<li><code>kernel.sched_wakeup_granularity_ns</code>（调度程序唤醒粒度）设置为 15 毫秒</li>
+<li><code>vm.dirty_ratio</code> 设置为 40%：脏数据限制，内存里的脏数据百分比不能超过这个值</li>
+<li>透明的大页面已启用</li>
+</ul>
+<h3 id="virtual-guest"><a href="#virtual-guest" class="headerlink" title="virtual-guest"></a>virtual-guest</h3><p>基于企业存储配置文件，在其他任务，增加虚拟内存 swappiness 和减少磁盘预读值。它没有禁用磁盘屏障。</p>
+<h3 id="oracle"><a href="#oracle" class="headerlink" title="oracle"></a>oracle</h3><p>基于 throughput-performance 模式，它另外禁用透明的巨大的页面和修改内核参数相关的一些其他性能。这个配置文件是由 tuned-profiles-oracle 包。在 6.8 及以后版本可用。</p>
+<h3 id="network-latency"><a href="#network-latency" class="headerlink" title="network-latency"></a>network-latency</h3><p>包括 “latency-performance”，禁用 transparent_hugepages，禁用 NUMA 平衡并启用一些基于延迟的网络调整。</p>
+<h3 id="network-throughput"><a href="#network-throughput" class="headerlink" title="network-throughput"></a>network-throughput</h3><p>包括 “throughput-performance”，并增加网络堆栈缓冲区大小。</p>
+<h2 id="获取当前模式"><a href="#获取当前模式" class="headerlink" title="获取当前模式"></a>获取当前模式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> tuned-adm active</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Current active profile: balanced</span><br><span class="line">sudo tuned-adm profile_mode</span><br><span class="line">Profile selection mode: auto</span><br></pre></td></tr></table></figure>
+
+<h2 id="切换模式"><a href="#切换模式" class="headerlink" title="切换模式"></a>切换模式</h2><p>切换到 throughput-performance 模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> tuned-adm profile throughput-performance</span><br></pre></td></tr></table></figure>
+
+<p>切换到 network-throughput 模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> tuned-adm profile network-throughput</span><br></pre></td></tr></table></figure>
+
+<p>切换到 network-latency 模式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> tuned-adm profile network-latency</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/cpu/" rel="tag"># cpu</a>
+              <a href="/tags/fedora/" rel="tag"># fedora</a>
+              <a href="/tags/redhat/" rel="tag"># redhat</a>
+              <a href="/tags/rhel/" rel="tag"># rhel</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/09/installing-kde-plasma-on-rhel-based-9/" rel="prev" title="在基于RHEL的系统上安装KDE Plasma桌面环境">
+                  <i class="fa fa-angle-left"></i> 在基于RHEL的系统上安装KDE Plasma桌面环境
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/" rel="next" title="在RedHat&#x2F;Fedora KDE桌面使用fcitx5&#x2F;ibus输入法">
+                  在RedHat/Fedora KDE桌面使用fcitx5/ibus输入法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

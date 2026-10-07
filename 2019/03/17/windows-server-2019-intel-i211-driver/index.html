@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="由于Windows系统原因，一般桌面主板自带的Intel网卡（典型的包括I211、I211-AT、I217-V、I218-V、I219-V）等，都无法在Windows Server系统上找到对应的驱动。但是，这些网卡几乎都有对应的服务器主板版本（例如I219-LM）。这些网卡其实并没有本质上的差别，只是在驱动层面，利用不同的驱动签名使得显卡不能通用。本文将详细说明如何在Windows Server">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Server 2019安装Intel I211网卡驱动">
+<meta property="og:url" content="https://wiki.wenyinos.com/2019/03/17/windows-server-2019-intel-i211-driver/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="由于Windows系统原因，一般桌面主板自带的Intel网卡（典型的包括I211、I211-AT、I217-V、I218-V、I219-V）等，都无法在Windows Server系统上找到对应的驱动。但是，这些网卡几乎都有对应的服务器主板版本（例如I219-LM）。这些网卡其实并没有本质上的差别，只是在驱动层面，利用不同的驱动签名使得显卡不能通用。本文将详细说明如何在Windows Server">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/1.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/5.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/6.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/7.png">
+<meta property="article:published_time" content="2019-03-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-03-16T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="i211">
+<meta property="article:tag" content="intel">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="windows-server">
+<meta property="article:tag" content="驱动">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/1.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2019/03/17/windows-server-2019-intel-i211-driver/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2019/03/17/windows-server-2019-intel-i211-driver/","path":"2019/03/17/windows-server-2019-intel-i211-driver/","title":"Windows Server 2019安装Intel I211网卡驱动"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows Server 2019安装Intel I211网卡驱动 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%A9%B1%E5%8A%A8%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">1、驱动下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BF%AE%E6%94%B9%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%87%E4%BB%B6%EF%BC%88%E4%BB%A5I211%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2、修改驱动程序文件（以I211为例）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#I211"><span class="nav-number">2.1.</span> <span class="nav-text">I211</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E8%AE%B0%E4%BA%8B%E6%9C%AC%E6%89%93%E5%BC%80e1r64x64-inf%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%EF%BC%8C%E6%90%9C%E7%B4%A2I211%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84ID"><span class="nav-number">2.2.</span> <span class="nav-text">用记事本打开e1r64x64.inf这个文件，搜索I211找到对应的ID</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%B5%8B%E8%AF%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">开启测试模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%A9%B1%E5%8A%A8"><span class="nav-number">4.</span> <span class="nav-text">安装驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E6%B5%8B%E8%AF%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">关闭测试模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E9%99%84%E5%8A%A0%EF%BC%9A%E5%BC%80%E5%90%AFWLAN"><span class="nav-number">6.</span> <span class="nav-text">6、附加：开启WLAN</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/03/17/windows-server-2019-intel-i211-driver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows Server 2019安装Intel I211网卡驱动 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows Server 2019安装Intel I211网卡驱动
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-17 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-17T00:00:00+08:00">2019-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>由于Windows系统原因，一般桌面主板自带的Intel网卡（典型的包括I211、I211-AT、I217-V、I218-V、I219-V）等，都无法在Windows Server系统上找到对应的驱动。但是，这些网卡几乎都有对应的服务器主板版本（例如I219-LM）。这些网卡其实并没有本质上的差别，只是在驱动层面，利用不同的驱动签名使得显卡不能通用。本文将详细说明如何在Windows Server系统上安装这些驱动。</p>
+<h3 id="1、驱动下载"><a href="#1、驱动下载" class="headerlink" title="1、驱动下载"></a>1、驱动下载</h3><p>首先，在Intel官网下载网卡驱动程序包，由于Windows Server 2019刚发布，所以目前没有2019的专门页面，但可以通用Windows Server 2016版本（<a target="_blank" rel="noopener" href="https://downloadcenter.intel.com/download/26092/Intel-Network-Adapter-Driver-for-Windows-Server-2016-">下载页面</a>）。下载完成后，得到一个PROWinx64.exe的自解压安装包，使用7zip或其他解压软件解压到任意文件夹。</p>
+<h3 id="2、修改驱动程序文件（以I211为例）"><a href="#2、修改驱动程序文件（以I211为例）" class="headerlink" title="2、修改驱动程序文件（以I211为例）"></a>2、修改驱动程序文件（以I211为例）</h3><p>进入第一步解压后的文件夹，依次进入PRO1000 -&gt; Winx64 -&gt; NDIS64文件夹。这个文件夹中，有举例的I211网卡的驱动安装文件。</p>
+<p><img src="/images/1.png"></p>
+<h4 id="I211"><a href="#I211" class="headerlink" title="I211"></a><strong>I211</strong></h4><h4 id="用记事本打开e1r64x64-inf这个文件，搜索I211找到对应的ID"><a href="#用记事本打开e1r64x64-inf这个文件，搜索I211找到对应的ID" class="headerlink" title="用记事本打开e1r64x64.inf这个文件，搜索I211找到对应的ID"></a>用记事本打开e1r64x64.inf这个文件，搜索I211找到对应的ID</h4><p>和I219-V差不多的步骤，不过配置的文件是同文件夹下的另一个文件，e1r64x64.inf。同样通过搜索找到I211所对应的ID</p>
+<p><img src="/images/5.png"></p>
+<p>用这个ID搜索到对应的键[Intel.NTamd64.6.3.1]和配置行</p>
+<p><img src="/images/6.png"></p>
+<p>将此行复制到后面的另一个键[Intel.NTamd64.6.3]中。保存，关闭。</p>
+<p><img src="/images/7.png"></p>
+<h3 id="开启测试模式"><a href="#开启测试模式" class="headerlink" title="开启测试模式"></a>开启测试模式</h3><p>因为我们修改了签名配置文件，所以如果要安装这些驱动，我们需要开启测试模式，允许未经过签名的驱动。</p>
+<p>在 CMD(管理员) 中执行以下两条命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bcdedit -<span class="built_in">set</span> loadoptions DISABLE_INTEGRITY_CHECKS</span><br><span class="line">bcdedit -<span class="built_in">set</span> TESTSIGNING ON</span><br></pre></td></tr></table></figure>
+
+<p>执行完后，需要重启电脑，以进入测试模式。</p>
+<h3 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h3><p>这里以I211网卡驱动安装为例，I219-V安装同理，只是在后续步骤选择驱动程序文件时不同而已。</p>
+<p>在设备管理器中，找到那个没有驱动的网络控制器，右键选择“更新驱动程序”</p>
+<p>选择“浏览我的计算机以查找驱动程序软件”</p>
+<p>选择“让我从计算机上的可用驱动程序列表中选取”</p>
+<p>下滑下拉列表，找到并选择“网络设配器”，点击下一步</p>
+<p>这里不做选择，点击右下的“从磁盘安装”</p>
+<p>在弹出窗口中，点击右下角的浏览，选择我们刚才修改的I211所在的配置文件，即e1r64x64.inf，然后点击确认。</p>
+<p>上一步点击完确认后，由于我们之前修改好了配置文件，所以就可以在后续窗口里看见I211驱动了，点击下一步。</p>
+<p>这里会弹出一个警告，因为我们对配置文件进行了修改，签名肯定是无法通过验证的，所以这里会有这个警告信息。当然点击“始终安装此驱动程序软件”</p>
+<p>安装完成后，在设备管理器中，也能看见这张网卡信息了。</p>
+<h3 id="关闭测试模式"><a href="#关闭测试模式" class="headerlink" title="关闭测试模式"></a>关闭测试模式</h3><p>安装完成后，关闭测试模式。在 CMD 中执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bcdedit -<span class="built_in">set</span> loadoptions ENABLE_INTEGRITY_CHECKS</span><br><span class="line">bcdedit -<span class="built_in">set</span> TESTSIGNING OFF</span><br></pre></td></tr></table></figure>
+
+<p>重启电脑，完成。</p>
+<h3 id="6、附加：开启WLAN"><a href="#6、附加：开启WLAN" class="headerlink" title="6、附加：开启WLAN"></a>6、附加：开启WLAN</h3><p>默认安装时无线LAN服务是关闭的，如果需要开启，只需要在“添加角色和功能”中，选择开启“无线LAN服务”即可。</p>
+<p>来源：<a target="_blank" rel="noopener" href="http://blog.zivers.com/post/2157.html">http://blog.zivers.com/post/2157.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/intel/" rel="tag"># intel</a>
+              <a href="/tags/windows/" rel="tag"># windows</a>
+              <a href="/tags/windows-server/" rel="tag"># windows-server</a>
+              <a href="/tags/i211/" rel="tag"># i211</a>
+              <a href="/tags/%E9%A9%B1%E5%8A%A8/" rel="tag"># 驱动</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/" rel="prev" title="Linux(CentOS 7)下使用mono+ArchiSteamFarm挂卡">
+                  <i class="fa fa-angle-left"></i> Linux(CentOS 7)下使用mono+ArchiSteamFarm挂卡
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/17/using-wifi-adapter-unas40/" rel="next" title="在万由U-NAS 4.0中使用无线网卡">
+                  在万由U-NAS 4.0中使用无线网卡 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

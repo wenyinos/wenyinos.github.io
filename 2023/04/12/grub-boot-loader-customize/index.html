@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="使用 grubby 工具在 GRUB 中进行永久更改。先决条件 您已在您的系统上成功安装了 RHEL。 您有 root 权限。  列出默认的内核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对 GRUB 引导装载程序进行永久性更改">
+<meta property="og:url" content="https://wiki.wenyinos.com/2023/04/12/grub-boot-loader-customize/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="使用 grubby 工具在 GRUB 中进行永久更改。先决条件 您已在您的系统上成功安装了 RHEL。 您有 root 权限。  列出默认的内核">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-11T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="grub">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2023/04/12/grub-boot-loader-customize/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2023/04/12/grub-boot-loader-customize/","path":"2023/04/12/grub-boot-loader-customize/","title":"对 GRUB 引导装载程序进行永久性更改"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>对 GRUB 引导装载程序进行永久性更改 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-grubby-%E5%B7%A5%E5%85%B7%E5%9C%A8-GRUB-%E4%B8%AD%E8%BF%9B%E8%A1%8C%E6%B0%B8%E4%B9%85%E6%9B%B4%E6%94%B9%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">使用 grubby 工具在 GRUB 中进行永久更改。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">先决条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E9%BB%98%E8%AE%A4%E7%9A%84%E5%86%85%E6%A0%B8"><span class="nav-number">1.2.</span> <span class="nav-text">列出默认的内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%86%85%E6%A0%B8%E7%9A%84-GRUB-%E8%8F%9C%E5%8D%95%E6%9D%A1%E7%9B%AE"><span class="nav-number">1.3.</span> <span class="nav-text">查看内核的 GRUB 菜单条目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">1.4.</span> <span class="nav-text">注意:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%86%85%E6%A0%B8%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">编辑内核参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-GRUB-%E8%8F%9C%E5%8D%95%E6%9D%A1%E7%9B%AE%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%92%8C%E5%88%A0%E9%99%A4%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">在 GRUB 菜单条目中添加和删除参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.</span> <span class="nav-text">验证步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%BC%95%E5%AF%BC%E6%9D%A1%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">添加一个新的引导条目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grubby-%E2%80%93info-boot-vmlinuz-4-18-0-372-9-1-el8-x86-64"><span class="nav-number">5.</span> <span class="nav-text">grubby –info &#x2F;boot&#x2F;vmlinuz-4.18.0-372.9.1.el8.x86_64</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grubby-%E2%80%93add-kernel-new-kernel-%E2%80%93title-%E2%80%9Dentry-title%E2%80%9D-%E2%80%93initrd-%E2%80%9Dnew-initrd%E2%80%9D-%E2%80%93copy-default"><span class="nav-number">6.</span> <span class="nav-text">grubby –add-kernel&#x3D;new_kernel –title&#x3D;”entry_title” –initrd&#x3D;”new_initrd” –copy-default</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls-l-boot-loader-entries"><span class="nav-number">7.</span> <span class="nav-text">ls -l &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;*</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grubby-%E2%80%93grub2-%E2%80%93add-kernel-boot-vmlinuz-4-18-0-193-el8-x86-64-%E2%80%93title-%E2%80%9DRed-Hat-Enterprise-8-Test%E2%80%9D-%E2%80%93initrd-boot-initramfs-4-18-0-193-el8-x86-64-img-%E2%80%93copy-default"><span class="nav-number">8.</span> <span class="nav-text">grubby –grub2 –add-kernel&#x3D;&#x2F;boot&#x2F;vmlinuz-4.18.0-193.el8.x86_64 –title&#x3D;”Red Hat Enterprise 8 Test” –initrd&#x3D;&#x2F;boot&#x2F;initramfs-4.18.0-193.el8.x86_64.img –copy-default</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls-l-boot-loader-entries-1"><span class="nav-number">9.</span> <span class="nav-text">ls -l &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;*</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%90%8C%E6%A0%B7%E7%9A%84%E5%8F%82%E6%95%B0%E6%9B%B4%E6%96%B0%E6%89%80%E6%9C%89%E5%86%85%E6%A0%B8%E8%8F%9C%E5%8D%95"><span class="nav-number">9.1.</span> <span class="nav-text">使用同样的参数更新所有内核菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E8%B5%84%E6%BA%90"><span class="nav-number">9.2.</span> <span class="nav-text">其它资源</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/12/grub-boot-loader-customize/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="对 GRUB 引导装载程序进行永久性更改 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对 GRUB 引导装载程序进行永久性更改
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-12T00:00:00+08:00">2023-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="使用-grubby-工具在-GRUB-中进行永久更改。"><a href="#使用-grubby-工具在-GRUB-中进行永久更改。" class="headerlink" title="使用 grubby 工具在 GRUB 中进行永久更改。"></a>使用 grubby 工具在 GRUB 中进行永久更改。</h2><h3 id="先决条件"><a href="#先决条件" class="headerlink" title="先决条件"></a>先决条件</h3><ul>
+<li>您已在您的系统上成功安装了 RHEL。</li>
+<li>您有 root 权限。</li>
+</ul>
+<h3 id="列出默认的内核"><a href="#列出默认的内核" class="headerlink" title="列出默认的内核"></a>列出默认的内核</h3><p>通过列出默认内核，您可以找到默认内核的文件名和索引号，以对 GRUB 引导装载程序进行永久更改。要找到默认内核的文件名，请输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grubby --default-kernel</span><br><span class="line">/boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>要找到默认内核的索引号，请输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grubby --default-index</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看内核的-GRUB-菜单条目"><a href="#查看内核的-GRUB-菜单条目" class="headerlink" title="查看内核的 GRUB 菜单条目"></a>查看内核的 GRUB 菜单条目</h3><p>您可以列出所有内核菜单条目，或者查看特定内核的 GRUB 菜单条目。</p>
+<p>要列出所有内核菜单条目，请输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --info=ALL</span><br></pre></td></tr></table></figure>
+
+<p>要查看特定内核的 GRUB 菜单条目，请输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --info /boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h3><p>尝试 tab 补全来查看 <code>/boot</code> 目录中的可用内核。</p>
+<h2 id="编辑内核参数"><a href="#编辑内核参数" class="headerlink" title="编辑内核参数"></a>编辑内核参数</h2><p>您可以更改现有内核参数中的值。例如，您可以更改虚拟控制台（屏幕）字体和大小。</p>
+<p>将虚拟控制台字体更改为 <code>latarcyrheb-sun</code>，大小为 <code>32</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --args=vconsole.font=latarcyrheb-sun32 --update-kernel /boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<h2 id="在-GRUB-菜单条目中添加和删除参数"><a href="#在-GRUB-菜单条目中添加和删除参数" class="headerlink" title="在 GRUB 菜单条目中添加和删除参数"></a>在 GRUB 菜单条目中添加和删除参数</h2><p>您可以从 GRUB 菜单添加、删除或同时添加或删除参数。</p>
+<p>要向 GRUB 菜单条目中添加参数，请使用 <code>--update-kernel</code> 选项和 <code>--args</code>。例如，以下命令添加了一个串行控制台：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --args=console=ttyS0,115200 --update-kernel /boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>控制台参数附加到行尾，新控制台将优先于任何其他配置的控制台。</p>
+<p>要从 GRUB 菜单条目中删除参数，请使用 <code>--update-kernel</code> 选项和 <code>--remove-args</code>。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --remove-args=<span class="string">&quot;rhgb quiet&quot;</span> --update-kernel /boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会删除图形引导参数，并启用日志消息，这是详细模式。</p>
+<p>要同时添加和删除参数，请输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --remove-args=<span class="string">&quot;rhgb quiet&quot;</span> --args=console=ttyS0,115200 --update-kernel /boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证步骤"><a href="#验证步骤" class="headerlink" title="验证步骤"></a>验证步骤</h3><p>要查看您所做的永久更改，请输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --info /boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加一个新的引导条目"><a href="#添加一个新的引导条目" class="headerlink" title="添加一个新的引导条目"></a>添加一个新的引导条目</h2><p>您可以向引导装载程序菜单条目中添加一个新的引导条目。</p>
+<p>将来自默认内核的所有内核参数复制到这个新的内核条目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --add-kernel=new_kernel --title=<span class="string">&quot;entry_title&quot;</span> --initrd=<span class="string">&quot;new_initrd&quot;</span> --copy-default</span><br></pre></td></tr></table></figure>
+
+<p>获取可用的引导条目的列表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l /boot/loader/entries/*</span><br></pre></td></tr></table></figure>
+
+<p>创建一个新的引导条目。例如，对于 <code>4.18.0-193.el8.x86_64</code> 内核：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --grub2 --add-kernel=/boot/vmlinuz-4.18.0-193.el8.x86_64 --title=<span class="string">&quot;Red Hat Enterprise 8 Test&quot;</span> --initrd=/boot/initramfs-4.18.0-193.el8.x86_64.img --copy-default</span><br></pre></td></tr></table></figure>
+
+<p>验证新添加的引导条目是否已列在可用的引导条目中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l /boot/loader/entries/*</span><br></pre></td></tr></table></figure>
+<h1 id="grubby-–info-boot-vmlinuz-4-18-0-372-9-1-el8-x86-64"><a href="#grubby-–info-boot-vmlinuz-4-18-0-372-9-1-el8-x86-64" class="headerlink" title="grubby –info &#x2F;boot&#x2F;vmlinuz-4.18.0-372.9.1.el8.x86_64"></a>grubby –info &#x2F;boot&#x2F;vmlinuz-4.18.0-372.9.1.el8.x86_64</h1><p>index&#x3D;0<br>kernel&#x3D;”&#x2F;boot&#x2F;vmlinuz-4.18.0-372.9.1.el8.x86_64”<br>args&#x3D;”ro crashkernel&#x3D;auto resume&#x3D;&#x2F;dev&#x2F;mapper&#x2F;rhel-swap rd.lvm.lv&#x3D;rhel&#x2F;root rd.lvm.lv&#x3D;rhel&#x2F;swap $tuned_params zswap.enabled&#x3D;1 console&#x3D;ttyS0,115200”<br>root&#x3D;”&#x2F;dev&#x2F;mapper&#x2F;rhel-root”<br>initrd&#x3D;”&#x2F;boot&#x2F;initramfs-4.18.0-372.9.1.el8.x86_64.img $tuned_initrd”<br>title&#x3D;”Red Hat Enterprise Linux (4.18.0-372.9.1.el8.x86_64) 8.6 (Ootpa)”<br>id&#x3D;”67db13ba8cdb420794ef3ee0a8313205-4.18.0-372.9.1.el8.x86_64”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 添加一个新的引导条目</span><br><span class="line"></span><br><span class="line">您可以向引导装载程序菜单条目中添加一个新的引导条目。</span><br><span class="line"></span><br><span class="line">将来自默认内核的所有内核参数复制到这个新的内核条目。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="grubby-–add-kernel-new-kernel-–title-”entry-title”-–initrd-”new-initrd”-–copy-default"><a href="#grubby-–add-kernel-new-kernel-–title-”entry-title”-–initrd-”new-initrd”-–copy-default" class="headerlink" title="grubby –add-kernel&#x3D;new_kernel –title&#x3D;”entry_title” –initrd&#x3D;”new_initrd” –copy-default"></a>grubby –add-kernel&#x3D;new_kernel –title&#x3D;”entry_title” –initrd&#x3D;”new_initrd” –copy-default</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">获取可用的引导条目的列表。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="ls-l-boot-loader-entries"><a href="#ls-l-boot-loader-entries" class="headerlink" title="ls -l &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;*"></a>ls -l &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;*</h1><p>-rw-r–r–. 1 root root 408 May 27 06:18 &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;67db13ba8cdb420794ef3ee0a8313205-0-rescue.conf<br>-rw-r–r–. 1 root root 536 Jun 30 07:53 &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;67db13ba8cdb420794ef3ee0a8313205-4.18.0-372.9.1.el8.x86_64.conf<br>-rw-r–r– 1 root root 336 Aug 15 15:12 &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;d88fa2c7ff574ae782ec8c4288de4e85-4.18.0-193.el8.x86_64.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">创建一个新的引导条目。例如，对于 _4.18.0-193.el8.x86\_64_ 内核，请按如下所示运行命令：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="grubby-–grub2-–add-kernel-boot-vmlinuz-4-18-0-193-el8-x86-64-–title-”Red-Hat-Enterprise-8-Test”-–initrd-boot-initramfs-4-18-0-193-el8-x86-64-img-–copy-default"><a href="#grubby-–grub2-–add-kernel-boot-vmlinuz-4-18-0-193-el8-x86-64-–title-”Red-Hat-Enterprise-8-Test”-–initrd-boot-initramfs-4-18-0-193-el8-x86-64-img-–copy-default" class="headerlink" title="grubby –grub2 –add-kernel&#x3D;&#x2F;boot&#x2F;vmlinuz-4.18.0-193.el8.x86_64 –title&#x3D;”Red Hat Enterprise 8 Test” –initrd&#x3D;&#x2F;boot&#x2F;initramfs-4.18.0-193.el8.x86_64.img –copy-default"></a>grubby –grub2 –add-kernel&#x3D;&#x2F;boot&#x2F;vmlinuz-4.18.0-193.el8.x86_64 –title&#x3D;”Red Hat Enterprise 8 Test” –initrd&#x3D;&#x2F;boot&#x2F;initramfs-4.18.0-193.el8.x86_64.img –copy-default</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">验证新添加的引导条目是否已列在可用的引导条目中。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="ls-l-boot-loader-entries-1"><a href="#ls-l-boot-loader-entries-1" class="headerlink" title="ls -l &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;*"></a>ls -l &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;*</h1><p>-rw-r–r–. 1 root root 408 May 27 06:18 &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;67db13ba8cdb420794ef3ee0a8313205-0-rescue.conf<br>-rw-r–r–. 1 root root 536 Jun 30 07:53 &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;67db13ba8cdb420794ef3ee0a8313205-4.18.0-372.9.1.el8.x86_64.conf<br>-rw-r–r– 1 root root 287 Aug 16 15:17 &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;d88fa2c7ff574ae782ec8c4288de4e85-4.18.0-193.el8.x86_64.0~custom.conf<br>-rw-r–r– 1 root root 287 Aug 16 15:29 &#x2F;boot&#x2F;loader&#x2F;entries&#x2F;d88fa2c7ff574ae782ec8c4288de4e85-4.18.0-193.el8.x86_64.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 使用 grubby 更改默认引导条目</span><br><span class="line"></span><br><span class="line">使用 `grubby` 工具，您可以更改默认引导条目。</span><br><span class="line"></span><br><span class="line">要在指定为默认内核的内核中进行持久更改，请输入：</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">grubby --set-default /boot/vmlinuz-4.18.0-372.9.1.el8.x86_64</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用同样的参数更新所有内核菜单"><a href="#使用同样的参数更新所有内核菜单" class="headerlink" title="使用同样的参数更新所有内核菜单"></a>使用同样的参数更新所有内核菜单</h2><p>您可以向所有内核菜单条目中添加相同的内核引导参数。</p>
+<p>要向所有内核菜单条目中添加相同的内核引导参数，请附加 <code>--update-kernel=ALL</code> 参数。例如，这个命令向所有内核添加一个串行控制台：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grubby --update-kernel=ALL --args=console=ttyS0,115200</span><br></pre></td></tr></table></figure>
+
+<p>注意：<code>--update-kernel</code> 参数还接受 <code>DEFAULT</code> 或以逗号分隔的内核索引号列表。</p>
+<h2 id="其它资源"><a href="#其它资源" class="headerlink" title="其它资源"></a>其它资源</h2><p><code>/usr/share/doc/grub2-common</code> 目录。</p>
+<p><code>info grub2</code> 命令。</p>
+<p>来源：<a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/8/html-single/managing_monitoring_and_updating_the_kernel/index#proc_changing-the-default-boot-entry_assembly_making-persistent-changes-to-the-grub-boot-loader">https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux&#x2F;8&#x2F;html-single&#x2F;managing_monitoring_and_updating_the_kernel&#x2F;index#proc_changing-the-default-boot-entry_assembly_making-persistent-changes-to-the-grub-boot-loader</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/grub/" rel="tag"># grub</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/" rel="prev" title="在RedHat&#x2F;Fedora KDE桌面使用fcitx5&#x2F;ibus输入法">
+                  <i class="fa fa-angle-left"></i> 在RedHat/Fedora KDE桌面使用fcitx5/ibus输入法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/22/how-to-move-wsl-dict/" rel="next" title="如何将win10&#x2F;win11的wsl子系统移动到其他位置">
+                  如何将win10/win11的wsl子系统移动到其他位置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

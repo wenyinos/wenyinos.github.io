@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="来源： http:&#x2F;&#x2F;locez.com&#x2F;fuchsia&#x2F;fuchsia-compile-tutorial&#x2F; Fuchsia 简介在进入本文正文之前，有必要简单介绍一下 Fuchsia 是个什么东西。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（转）Fushsia编译指南">
+<meta property="og:url" content="https://wiki.wenyinos.com/2018/12/18/how-to-build-fuchsia/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="来源： http:&#x2F;&#x2F;locez.com&#x2F;fuchsia&#x2F;fuchsia-compile-tutorial&#x2F; Fuchsia 简介在进入本文正文之前，有必要简单介绍一下 Fuchsia 是个什么东西。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-7580efa0b5dc67ef3c420674c349eca1_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-a844a5e857acddba69d822be24359f81_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-167eda2a265d56ba7e5ca24f6058e41d_hd.jpg">
+<meta property="article:published_time" content="2018-12-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2018-12-17T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="fuchsia">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/v2-7580efa0b5dc67ef3c420674c349eca1_hd.jpg">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2018/12/18/how-to-build-fuchsia/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2018/12/18/how-to-build-fuchsia/","path":"2018/12/18/how-to-build-fuchsia/","title":"（转）Fushsia编译指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>（转）Fushsia编译指南 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fuchsia-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Fuchsia 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">准备工作：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%BA%90%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">获取源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91-Fuchsia"><span class="nav-number">4.</span> <span class="nav-text">编译 Fuchsia</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-QEMU-%E5%90%AF%E5%8A%A8-Fuchsia"><span class="nav-number">5.</span> <span class="nav-text">使用 QEMU 启动 Fuchsia</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%8E%A2%E7%B4%A2"><span class="nav-number">6.</span> <span class="nav-text">简单探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/12/18/how-to-build-fuchsia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="（转）Fushsia编译指南 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          （转）Fushsia编译指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-18T00:00:00+08:00">2018-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>来源：</p>
+<p><a href="http://link.zhihu.com/?target=http://locez.com/fuchsia/fuchsia-compile-tutorial/">http://locez.com/fuchsia/fuchsia-compile-tutorial/</a></p>
+<h2 id="Fuchsia-简介"><a href="#Fuchsia-简介" class="headerlink" title="Fuchsia 简介"></a><strong>Fuchsia 简介</strong></h2><p>在进入本文正文之前，有必要简单介绍一下 Fuchsia 是个什么东西。</p>
+<p>Fuchsia 是 Google 在 2016 年 8 月推出出的一个操作系统，是一个实时操作系统。它不再基于 Linux 内核，而是基于名为 <code>Zircon</code> 的微内核，并且它被设计为支持多种设备，手机、平板、PC，因此可以猜测其准备在三种终端设备上进行一定的统一</p>
+<p>在官方文档中有这么一句话：</p>
+<p>Pink + Purple &#x3D; Fuchsia(a new Operating System)</p>
+<p>可以作为该系统的 slogan</p>
+<p>在本文，将介绍从源码编译该系统进行探索体验。</p>
+<h2 id="准备工作："><a href="#准备工作：" class="headerlink" title="准备工作："></a><strong>准备工作：</strong></h2><p><strong>一台原生安装Linux系统的PC机（比较强力的CPU等配置），足够的硬盘空间，</strong></p>
+<p><strong><em>以及一个能访问Googlesource网站下载15GB源码的可靠网络代理</em>。</strong></p>
+<p>环境：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- go ( &gt;=1.6 )</span><br><span class="line">- git</span><br><span class="line">- python (2.7)</span><br><span class="line">- qemu</span><br></pre></td></tr></table></figure>
+
+<p>在 Fuchsia 官方提供的各种脚本中使用的 python 2 的代码，因此此处请确保你的 python 解释器是 2.7 的。</p>
+<p>go 则是因为获取源码的工具用到了 go 环境。</p>
+<h2 id="获取源码"><a href="#获取源码" class="headerlink" title="获取源码"></a><strong>获取源码</strong></h2><p>获取源码的方式非常简单，执行以下命令即可，但是要注意源码有 15 G 左右，下载下来还是非常需要时间的</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir fuchsia</span><br><span class="line">$ cd fuchsia</span><br><span class="line">$ curl -s &quot;https://fuchsia.googlesource.com/scripts/+/master/bootstrap?format=TEXT&quot; | base64 --decode</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译-Fuchsia"><a href="#编译-Fuchsia" class="headerlink" title="编译 Fuchsia"></a><strong>编译 Fuchsia</strong></h2><p>注意，编译的过程非常简单，但是可能需要安装一些额外的依赖，在本人的 gentoo 系统中，编译环境本身是齐全的，如果你按照以下的命令编译不成功，可根据 <code>Error</code> 安装相应的依赖包，下面是一条官方给出的 <code>debian</code> 系统的依赖安装命令：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential curl git python unzip</span><br></pre></td></tr></table></figure>
+
+<p>Fuchsia 目前支持 <code>x64</code> 与 <code>arm64</code> 两种架构，此处我们编译 <code>x64</code> 版本，从时间上来说编译时间比预期要短的多，本人只编译了 1h 左右，编译的文件有两万六千多个：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd fuchsia</span><br><span class="line">$ ./scripts/fx set x64</span><br><span class="line">$ ./scripts/fx full-build</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-QEMU-启动-Fuchsia"><a href="#使用-QEMU-启动-Fuchsia" class="headerlink" title="使用 QEMU 启动 Fuchsia"></a><strong>使用 QEMU 启动 Fuchsia</strong></h2><p>Fuchsia 的图形界面需要 <code>vulkan</code> 进行硬件加速才可以使用，所以使用 QEMU 进行模拟启动的时候只会有简单的界面而已，使用如下命令启动 tty 界面，其中 <code>-m</code> 用于指定使用的内存，单位（MB），本人内存多就随便设置了。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./scripts/fx run  -m 4096</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/v2-7580efa0b5dc67ef3c420674c349eca1_hd.jpg"><br>另外可用以下命令启动简易版的图形界面：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/scripts/fx run  -m 4096 -g</span><br></pre></td></tr></table></figure>
+
+<p>在这个简易的图形界面中，我们可以看到有<code>4</code>个<code>tab</code>可用<code>Alt+Tab</code>按键进行切换，第一个是<code>debug</code>，其余<code>3</code>个是普通终端，可在上面输入命令。<br><img src="/images/v2-a844a5e857acddba69d822be24359f81_hd.jpg"><br><img src="/images/v2-167eda2a265d56ba7e5ca24f6058e41d_hd.jpg"><br>系统目前含有<code>198</code> 个命令，已经实现了大部分我们常用的系统基础命令，甚至还包含 vim 噢</p>
+<h2 id="简单探索"><a href="#简单探索" class="headerlink" title="简单探索"></a><strong>简单探索</strong></h2><p>从上面的图中，我们也可以看到 Fuchsia 的根目录包含以下几个目录（由于该系统还没 <code>tree</code> 命令，因此我无法给出目录树）</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">blob</span><br><span class="line">boot</span><br><span class="line">config</span><br><span class="line">data</span><br><span class="line">dev</span><br><span class="line">hub</span><br><span class="line">install</span><br><span class="line">pkgfs</span><br><span class="line">svc</span><br><span class="line">system</span><br><span class="line">tmp</span><br><span class="line">volume</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>blob</code> 文件夹中其实是一些二进制数据，具体该文件夹的作用尚不明确</li>
+<li><code>boot</code> 顾名思义，启动文件夹，其下有 <code>bin``config``driver``kernel``lib</code> 等子文件夹，有关系统启动的文件放在此处</li>
+<li><code>config</code> 文件夹下是 <code>ssl</code> 证书目录，推测相关配置文件放在此处</li>
+<li><code>data</code> 尚不清楚具体用途，推测是存放应用数据</li>
+<li><code>dev</code> 设备文件夹</li>
+<li><code>svc</code> 文件夹包含一系列 <code>fuchsia.*</code> 开头的文件</li>
+<li><code>system</code> 目录与 <code>boot</code> 目录的结构类似，没有 <code>kernel``config</code></li>
+<li><code>volume``install</code> 等目录都是空目录，无法推测其用途</li>
+</ul>
+<p>另外值得一提的是虽然 <code>system</code> 文件夹中目前不含有 <code>apps</code> 文件夹，但是 <code>PATH</code> 变量是包含该目录的，因此可以推测安装的应用应该会放到 <code>/system/apps</code> 下</p>
+<p>PS：最后关机输入 <code>dm poweroff</code> 即可</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><p>本文其实整体编译流程与官方文档差不多，如果你的英文阅读能力还可以的话，可以去阅读英文文档，应该会比笔者讲的细节要对，其次就是对 Fuchsia 进行了简单的探索，说实话也不算是探索，因为对该系统最好奇的还是 UI，但是由于没有对应的硬件，无法进行测试体验，这也算是在意料之外的。</p>
+<p><a href="http://link.zhihu.com/?target=http://qm.qq.com/cgi-bin/qm/qr?k=hgAAJUvwdbC9i5SMKflN0Ka-ez3470tk">http://qm.qq.com/cgi-bin/qm/qr?k=hgAAJUvwdbC9i5SMKflN0Ka-ez3470tk</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/fuchsia/" rel="tag"># fuchsia</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/18/x86-arch-enter-your-iphone/" rel="prev" title="x86架构进入你的iPhone">
+                  <i class="fa fa-angle-left"></i> x86架构进入你的iPhone
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/19/remove_aliyun_tencentyun_monitoring_processes/" rel="next" title="卸载阿里&#x2F;腾讯云Linux主机监控进程，屏蔽云盾功能">
+                  卸载阿里/腾讯云Linux主机监控进程，屏蔽云盾功能 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在 N1 内置 eMMC 中刷入 Linux armbian，不需要外置 USB 设备启动，除了没有 GPIO 外和各种 Pi 功能完全一样，内置千兆以太网&#x2F;2.4+5G WiFi&#x2F;Bluetooth&#x2F;USB2.0*2&#x2F;HDMI，硬件配置为 Amlogic S905D 1.5GHz*4 Cortex-A53+2GB RAM+8GB eMMC（Linux 可用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在斐讯N1盒子上刷入armbian Linux系统">
+<meta property="og:url" content="https://wiki.wenyinos.com/2018/06/24/phicomm-n1-install-armbian-linux/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="在 N1 内置 eMMC 中刷入 Linux armbian，不需要外置 USB 设备启动，除了没有 GPIO 外和各种 Pi 功能完全一样，内置千兆以太网&#x2F;2.4+5G WiFi&#x2F;Bluetooth&#x2F;USB2.0*2&#x2F;HDMI，硬件配置为 Amlogic S905D 1.5GHz*4 Cortex-A53+2GB RAM+8GB eMMC（Linux 可用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180624230645.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180624230657.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625104922.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625142012.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625142112.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625142900.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/haha.png">
+<meta property="article:published_time" content="2018-06-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2018-06-23T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="n1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180624230645.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2018/06/24/phicomm-n1-install-armbian-linux/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2018/06/24/phicomm-n1-install-armbian-linux/","path":"2018/06/24/phicomm-n1-install-armbian-linux/","title":"在斐讯N1盒子上刷入armbian Linux系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在斐讯N1盒子上刷入armbian Linux系统 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%8B%BF%E5%88%B0%E7%9B%92%E5%AD%90%EF%BC%8C%E9%A6%96%E5%85%88%E9%99%8D%E7%BA%A7-Bootloader%EF%BC%8C%E5%88%B7%E5%85%A5%E7%AC%AC%E4%B8%89%E6%96%B9%E5%9B%BA%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">一、拿到盒子，首先降级 Bootloader，刷入第三方固件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%88%B6%E4%BD%9C-Linux-%E5%90%AF%E5%8A%A8%E7%9B%98"><span class="nav-number">2.</span> <span class="nav-text">二、制作 Linux 启动盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%B0%86%E7%B3%BB%E7%BB%9F%E5%86%99%E5%85%A5-eMMC"><span class="nav-number">3.</span> <span class="nav-text">三、将系统写入 eMMC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9AN1%E5%88%B7%E5%85%A5Linux%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%88%A0%E9%99%A4%E6%8E%89%E7%9A%84%E5%8E%9F%E5%88%86%E5%8C%BA%E5%8F%8A%E5%86%85%E5%AE%B9"><span class="nav-number">4.</span> <span class="nav-text">补充：N1刷入Linux后可以删除掉的原分区及内容</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/06/24/phicomm-n1-install-armbian-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在斐讯N1盒子上刷入armbian Linux系统 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在斐讯N1盒子上刷入armbian Linux系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在 N1 内置 eMMC 中刷入 Linux armbian，不需要外置 USB 设备启动，除了没有 GPIO 外和各种 Pi 功能完全一样，内置千兆以太网&#x2F;2.4+5G WiFi&#x2F;Bluetooth&#x2F;USB2.0*2&#x2F;HDMI，硬件配置为 Amlogic S905D 1.5GHz*4 Cortex-A53+2GB RAM+8GB eMMC（Linux 可用 5GB）。</p>
+<p>在二手平台收购全新已激活的 N1 仅需 80-90 元，未激活的 900 多元，三个月返现 1099（此处注意风险）可以说是很超值了。</p>
+<h2 id="一、拿到盒子，首先降级-Bootloader，刷入第三方固件"><a href="#一、拿到盒子，首先降级-Bootloader，刷入第三方固件" class="headerlink" title="一、拿到盒子，首先降级 Bootloader，刷入第三方固件"></a>一、拿到盒子，首先降级 Bootloader，刷入第三方固件</h2><p>参考资料：<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/thread-322736-1-1.html">N1盒子 2018-5-28 斐讯天天链N1 官改v2.0线刷包, 补丁patch1</a></p>
+<h2 id="二、制作-Linux-启动盘"><a href="#二、制作-Linux-启动盘" class="headerlink" title="二、制作 Linux 启动盘"></a>二、制作 Linux 启动盘</h2><p>按照说明，制作好 Linux 启动盘，插入 N1 正常启动，并配置好用户名密码，网络连接等。请使用 8G 以上，质量可靠的 U 盘。</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/thread-322991-1-1.html">N1盒子 应广大人民群众要求,搞个N1通过U盘跑LINUX(armbian)的教程</a></p>
+<blockquote>
+<ol start="6">
+<li>打开 n1 的 adb</li>
+<li>通过 adb 连接 n1 (<code>adb connect ip</code>)</li>
+<li>输入 <code>adb shell reboot update</code></li>
+<li>喝口茶等待启动</li>
+</ol>
+</blockquote>
+<p>注：原文中以上操作可改为在 N1 盒子内部的终端模拟器输入 <code>su</code> 回车然后 <code>reboot update</code></p>
+<h2 id="三、将系统写入-eMMC"><a href="#三、将系统写入-eMMC" class="headerlink" title="三、将系统写入 eMMC"></a>三、将系统写入 eMMC</h2><p>将配置好的 U 盘中的 armbian 系统写入到内置 eMMC，并修改引导，直接从内置 eMMC 启动，不再需要插入 U 盘。</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/thread-327496-1-1.html">N1盒子 成功！把Armbian 安装到 emmc并直接从 emmc 启动</a></p>
+<p>安装步骤为：</p>
+<ol>
+<li><p>下载原文中附件 install.gz 脚本，上传释放到 N1 的 &#x2F;root 目录下，名称为 install.sh，并赋予执行权限；</p>
+</li>
+<li><p>以 root 用户执行（第二行操作时间较长请耐心等待执行完成）：</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/cmdline</span><br><span class="line">nand-sata-install</span><br><span class="line"><span class="comment"># 取消U盘上第二分区的 ROOTFS 标签，并给 emmc 上的 data 分区打上 ROOTFS 的标签</span></span><br><span class="line">e2label /dev/sda2 <span class="string">&quot;&quot;</span></span><br><span class="line">e2label /dev/data <span class="string">&quot;ROOTFS&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>关机并拔下 U 盘，重新上电，正常情况下可启动到 Linux。</li>
+</ol>
+<blockquote>
+<p><strong>原理说明：</strong><br>基本原理：uboot 命令中支持读取 ext4 文件系统，所以：</p>
+<ol>
+<li>在把 root 系统安装到 eMMC</li>
+<li>设置 uboot 里面的环境变量，让系统先尝试从 U 盘启动，如果没有 U 盘的话，再尝试 eMMC 的 data 分区上的 armbian 相关文件</li>
+<li>如果都没有，再尝试启动盒子上的 android 系统。</li>
+</ol>
+<p>**风险：**不会破坏系统上原先的 android 系统，但是安装了 armbian 系统之后，没有一定的 linux 基础知识，你可以回不去 android 系统。</p>
+<p>基于某些测试，ext4load 命令偶尔会读取不了文件，所以想尝试的同学，需要一个大心脏，有一定的机率失败。</p>
+<p>系统是直接启动到 armbian 了，想回到 android 怎么办？android 和 armbian 可以自由切换。很简单，启动到 armbian 系统后，只需要把 &#x2F;boot&#x2F;s905_autoscript 改个名字，重新启动就会跑到 android 系统去了。如果想回到 armbian 系统，只需要在 android 系统里面，把 &#x2F;data&#x2F;boot&#x2F; 下面 s905_autoscript 名字改回来就行了。</p>
+</blockquote>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180624230645.png"><img src="/images/TIM%E5%9B%BE%E7%89%8720180624230657.png"></p>
+<p>内置 eMMC 读取速度，比采用 SD 卡做根文件系统的 Pi 不知高到哪里去了。</p>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625104922.png"></p>
+<hr>
+<h2 id="补充：N1刷入Linux后可以删除掉的原分区及内容"><a href="#补充：N1刷入Linux后可以删除掉的原分区及内容" class="headerlink" title="补充：N1刷入Linux后可以删除掉的原分区及内容"></a>补充：N1刷入Linux后可以删除掉的原分区及内容</h2><p>以下操作会完全破坏掉 Android 系统，只能用 Linux，不过随时可以线刷回来，不要动 eMMC 的分区结构：</p>
+<ol>
+<li>&#x2F;dev&#x2F;data 里面的内容：先 cd 到 &#x2F; 下，删除以下目录中内容，占用空间比较多。</li>
+</ol>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625142012.png"></p>
+<ol start="2">
+<li>格式化掉 android 的 system 分区，记得先挂载上看看内容对不对再 mkfs，为了安全起见：</li>
+</ol>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625142112.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mkfs.ext4 /dev/system</span><br></pre></td></tr></table></figure>
+
+<p>然后把 &#x2F;dev&#x2F;system 随便挂载到什么地方就可以用了。</p>
+<p>不知道哪些分区还能干掉，目前不敢动别的，希望各位补充。</p>
+<p>最终容量如图所示：</p>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625142900.png"></p>
+<p><img src="/images/haha.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/n1/" rel="tag"># n1</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/25/phicomm-k2t-openwrt/" rel="prev" title="斐讯K2t免拆机刷入LEDE&#x2F;OpenWRT的步骤">
+                  <i class="fa fa-angle-left"></i> 斐讯K2t免拆机刷入LEDE/OpenWRT的步骤
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/11/xda-recover-huawei-magisk-support/" rel="next" title="XDA开发者已修复华为设备的Magisk支持">
+                  XDA开发者已修复华为设备的Magisk支持 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文记录一次 &#x2F;home 空间压力处理：没有直接调整 XFS 分区，而是把部分用户目录迁移到 &#x2F;opt&#x2F;home-offload&#x2F;zemi，再通过 bind mount 挂回原路径。 背景系统未使用 LVM，&#x2F; 与 &#x2F;home 均为 XFS。XFS 不支持原地缩小，因此不适合直接缩小 &#x2F; 后扩展 &#x2F;home。 12&#x2F;      XFS，约 75G，空闲较多&#x2F;home  XFS，约 50G，空间压力">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&#x2F;home 空间迁移与 fstab 调整记录">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/05/08/home-space-migration-fstab-adjustment/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="本文记录一次 &#x2F;home 空间压力处理：没有直接调整 XFS 分区，而是把部分用户目录迁移到 &#x2F;opt&#x2F;home-offload&#x2F;zemi，再通过 bind mount 挂回原路径。 背景系统未使用 LVM，&#x2F; 与 &#x2F;home 均为 XFS。XFS 不支持原地缩小，因此不适合直接缩小 &#x2F; 后扩展 &#x2F;home。 12&#x2F;      XFS，约 75G，空闲较多&#x2F;home  XFS，约 50G，空间压力">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-07T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="fedora">
+<meta property="article:tag" content="fstab">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="systemd">
+<meta property="article:tag" content="xfs">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/05/08/home-space-migration-fstab-adjustment/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/05/08/home-space-migration-fstab-adjustment/","path":"2026/05/08/home-space-migration-fstab-adjustment/","title":"/home 空间迁移与 fstab 调整记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>/home 空间迁移与 fstab 调整记录 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E5%8F%96%E8%88%8D"><span class="nav-number">2.</span> <span class="nav-text">方案取舍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E8%BF%81%E7%A7%BB"><span class="nav-number">3.</span> <span class="nav-text">实际迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E4%B8%8E%E6%A0%A1%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">清理与校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">结果与注意事项</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/05/08/home-space-migration-fstab-adjustment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="&#x2F;home 空间迁移与 fstab 调整记录 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          /home 空间迁移与 fstab 调整记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-08 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-08T00:00:00+08:00">2026-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文记录一次 <code>/home</code> 空间压力处理：没有直接调整 XFS 分区，而是把部分用户目录迁移到 <code>/opt/home-offload/zemi</code>，再通过 bind mount 挂回原路径。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>系统未使用 LVM，<code>/</code> 与 <code>/home</code> 均为 XFS。XFS 不支持原地缩小，因此不适合直接缩小 <code>/</code> 后扩展 <code>/home</code>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/      XFS，约 75G，空闲较多</span><br><span class="line">/home  XFS，约 50G，空间压力较大</span><br></pre></td></tr></table></figure>
+
+<p>最初计划是缩小 <code>/</code> 分区，把释放出的空间加给 <code>/home</code>；但 <code>/home</code> 位于 <code>/</code> 前面，且 <code>/</code> 为 XFS，实际操作会变成删除并重建根分区。</p>
+<h2 id="方案取舍"><a href="#方案取舍" class="headerlink" title="方案取舍"></a>方案取舍</h2><p>可行但高风险的离线方案是：用 Fedora LiveUSB 或 Rescue 环境启动，先备份根分区，再重建分区并恢复数据。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xfsdump 备份 / -&gt; 重建 / 分区 -&gt; 扩展 /home -&gt; xfsrestore 恢复 / -&gt; 更新 fstab UUID -&gt; 重建 dracut 和 GRUB</span><br></pre></td></tr></table></figure>
+
+<p>该方案没有执行。原因是需要删除并重建根分区，任何设备选错、备份损坏、UUID 未更新或引导修复失败，都可能导致系统无法启动。</p>
+<h2 id="实际迁移"><a href="#实际迁移" class="headerlink" title="实际迁移"></a>实际迁移</h2><p>最终将以下目录迁移到 <code>/opt/home-offload/zemi</code>，并通过 bind mount 挂回原路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/home/zemi/.vscode/extensions</span><br><span class="line">/home/zemi/.config/Code</span><br><span class="line">/home/zemi/.config/google-chrome</span><br><span class="line">/home/zemi/.config/QQ</span><br><span class="line">/home/zemi/.local/share/zed</span><br><span class="line">/home/zemi/.config/opencode</span><br><span class="line">/home/zemi/.local/share/opencode</span><br></pre></td></tr></table></figure>
+
+<p>fstab 中为这些 bind mount 增加了 <code>nofail</code> 和 <code>x-systemd.requires-mounts-for=/opt/home-offload</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind,nofail,x-systemd.requires-mounts-for=/opt/home-offload</span><br></pre></td></tr></table></figure>
+
+<p><code>/home/zemi/.npm-global</code> 未迁移，因为当前会话依赖该目录中的可执行文件，迁移会影响正在运行的工具链。</p>
+<h2 id="清理与校验"><a href="#清理与校验" class="headerlink" title="清理与校验"></a>清理与校验</h2><p>迁移确认后，已先卸载 bind mount，确认原路径落在 <code>/home</code> 分区，再移动旧目录、重建挂载点、重新挂载，并删除被 bind mount 遮住的旧副本。</p>
+<p><code>/home/zemi/.cache</code> 中明确可重建的缓存（如 Chrome、Mozilla、libdnf5、opencode、uv、mesa shader、node-gyp、pnpm、pip 等）已清理；可能含用户状态的 <code>sessions</code>、<code>cliphist</code>、<code>thunderbird</code> 保留。</p>
+<p>已执行 <code>findmnt --verify --verbose</code> 和 <code>mount -a --fake --verbose</code>。结果为 <code>0 parse errors, 0 errors, 4 warnings</code>；warning 来自工具无法直接探测部分磁盘文件系统类型，UUID 仍能解析到 <code>/</code>、<code>/boot/efi</code>、<code>/home</code> 和 <code>swap</code>。</p>
+<h2 id="结果与注意事项"><a href="#结果与注意事项" class="headerlink" title="结果与注意事项"></a>结果与注意事项</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/home 已用约 26G -&gt; 12G</span><br><span class="line">/home 可用约 39G</span><br><span class="line">/ 分区承载 offload 数据后仍约 37G 可用</span><br></pre></td></tr></table></figure>
+
+<p>Fedora 原地大版本升级前建议检查 <code>df -h / /home</code>、<code>findmnt | grep home-offload</code> 和 <code>sudo mount -a</code>。如果未来重装系统但保留 <code>/home</code>，必须单独备份 <code>/opt/home-offload/zemi</code>，因为它位于 <code>/</code> 分区。</p>
+<p>回滚时先关闭对应应用，从 <code>/etc/fstab</code> 删除对应 bind mount 行，卸载挂载点，把数据从 <code>/opt/home-offload/zemi/...</code> 迁回原路径，再执行 <code>sudo systemctl daemon-reload</code> 和 <code>sudo mount -a</code>。</p>
+<p>本次没有调整磁盘分区，也没有缩小 XFS 文件系统；实际采用的是更低风险的用户目录迁移方案，通过 bind mount 保持原路径不变。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/fedora/" rel="tag"># fedora</a>
+              <a href="/tags/xfs/" rel="tag"># xfs</a>
+              <a href="/tags/fstab/" rel="tag"># fstab</a>
+              <a href="/tags/systemd/" rel="tag"># systemd</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/28/disable-intel-dg1-discrete-gpu/" rel="prev" title="彻底禁用 DG1 独立显卡">
+                  <i class="fa fa-angle-left"></i> 彻底禁用 DG1 独立显卡
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

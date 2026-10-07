@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="路由器梅林固件软件中心重置方法 2021年6月4日 悟空 文章目录 1) 1. 软件中心重置方法     1.1) 1.1 界面重置：     1.2) 1.2 命令重置： 1.3) 1.3 一键重置： 2) 2. 释放jffs空间 3) 3. 重启软件中心">
+<meta property="og:type" content="article">
+<meta property="og:title" content="路由器梅林固件软件中心重置方法">
+<meta property="og:url" content="https://wiki.wenyinos.com/2023/11/26/router-asus-merlin-reset-method/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="路由器梅林固件软件中心重置方法 2021年6月4日 悟空 文章目录 1) 1. 软件中心重置方法     1.1) 1.1 界面重置：     1.2) 1.2 命令重置： 1.3) 1.3 一键重置： 2) 2. 释放jffs空间 3) 3. 重启软件中心">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720231126144627-640x480.png">
+<meta property="article:published_time" content="2023-11-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-25T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="asus">
+<meta property="article:tag" content="merlin">
+<meta property="article:tag" content="路由器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720231126144627-640x480.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2023/11/26/router-asus-merlin-reset-method/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2023/11/26/router-asus-merlin-reset-method/","path":"2023/11/26/router-asus-merlin-reset-method/","title":"路由器梅林固件软件中心重置方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>路由器梅林固件软件中心重置方法 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/11/26/router-asus-merlin-reset-method/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="路由器梅林固件软件中心重置方法 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          路由器梅林固件软件中心重置方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-26 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-26T00:00:00+08:00">2023-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>路由器梅林固件软件中心重置方法</strong> 2021年6月4日 悟空</p>
+<p><strong>文章目录</strong> 1) 1. 软件中心重置方法</p>
+<p>    1.1) 1.1 界面重置：</p>
+<p>    1.2) 1.2 命令重置： 1.3) 1.3 一键重置： 2) 2. 释放jffs空间 3) 3. 重启软件中心</p>
+<p> </p>
+<p>最近刷了华硕固件，但是软件中心页面出了点问题，</p>
+<p>似乎是&#x2F;jffs&#x2F;db目录下的数据库损毁导致skipd服务启动不了了，</p>
+<p>解决方法就是重置软件中心数据库，下面是找到的资料，留下来保存一下。</p>
+<p><strong>1. 软件中心重置方法</strong></p>
+<p>软件中心出现问题需要重置软件中心的，可以解决大部分问题；</p>
+<p>由于jffs坏块或者硬件问题导致的软件中心问题，重置是不管用的，建议及时换机。</p>
+<p><strong>1.1 界面重置：</strong></p>
+<p>在【系统管理 】–【 系统设置】内勾选：</p>
+<p>Format JFFS partition at next boot 和 Enable JFFS custom scripts and configs</p>
+<p>然后点击应用本页面设置，成功应用后重启路由器即可，</p>
+<p>此操作可以清除jffs分区中的所有数据，包括安装在jffs分区的软件中心和所有插件。</p>
+<p>重启路由后，软件中心会自动重新完成初始安装，然后将路由器连上网络，</p>
+<p>进入软件中心将软件中心更新到最新即完成软件中心重置。</p>
+<p>软件中心一直显示更新中怎么办？ 可以尝试通过运行命令service restart_skipd来重启skipd服务。</p>
+<p>如果运行重启skipd的命令后，再次运行ps|grep skipd|grep -v grep仍然没有输出，</p>
+<p>说明储存在jffs分区的skipd数据库可能遭到了损坏，</p>
+<p>此时可以请参考 软件中心重置方法 （见下文：重要命令部分）</p>
+<p><strong>1.2 命令重置：</strong></p>
+<p>需要开启固件的ssh功能（【系统管理 】-【 系统设置】-【启用 SSH】），</p>
+<p>然后使用ssh客户端（Putty、Xshell、SecureCRT等软件均可）登录进路由器，</p>
+<p>依次输入以下命令，即可重置软件中心。</p>
+<p># 1. 关闭软件中心相关进程，删除软件中心文件 kill -9 $(pidof skipd) cd &#x2F;koolshare&#x2F;perp &amp;&amp; sh perp.sh stop cd &#x2F; &amp;&amp; rm -rf &#x2F;jffs&#x2F;.asusrouter &#x2F;jffs&#x2F;.koolshare &#x2F;jffs&#x2F;db #2. 重置软件中心 jffsinit.sh cd &#x2F;koolshare&#x2F;perp &amp;&amp; sh perp.sh start service restart_skipd # 3. 重启路由器（可选） reboot # 4.浏览器进入软件中心，将软件中心版本更新到最新，安装插件… <strong>1.3 一键重置：</strong></p>
+<p>如果你刷的梅林固件是384.10_0及其以上版本，</p>
+<p>直接在ssh客户端内运行koolshare-reset命令即可，</p>
+<p>其效果等同上面手动输入命令。</p>
+<p><strong>2. 释放jffs空间</strong></p>
+<p>注意，此操作会删除jffs分区内的所有文件，</p>
+<p>包括但不限于：软件中心本身、软件中心所有的插件、</p>
+<p>安装的证书、TrafficAnalyzer的数据库、自定义的设备图标等</p>
+<p>kill -9 $(pidof skipd) rm -rf &#x2F;jffs&#x2F;.asusrouter &#x2F;jffs&#x2F;.koolshare &#x2F;jffs&#x2F;.cert &#x2F;jffs&#x2F;.sys &#x2F;jffs&#x2F;.wtfast &#x2F;jffs&#x2F;* reboot</p>
+<p><strong>3. 重启软件中心</strong></p>
+<p>当httpd进程挂掉的时候（FAQ中第3个问题），此时可以用ssh进入路由器后台，输入以下命令重启</p>
+<p>cd &#x2F;koolshare&#x2F;perp sh perp.sh stop sh perp.sh start</p>
+<blockquote>
+<p>转载本文时请注明出处及本文链接地址<a target="_blank" rel="noopener" href="https://www.learnhard.cn/articles/797.html">路由器梅林固件软件中心重置方法</a></p>
+</blockquote>
+<blockquote>
+<p> <strong>1，解决Merlin 380 老固件软件中心显示 0.0</strong></p>
+</blockquote>
+<p>很多用户反馈，重新刷固件，或者重置系统之后，软件中心显示 0.0，并且无法显示任何插件，解决方法: 打开路由器的 ssh（如何打开 ssh 终端请自己参考下相关方法） 复制下面的脚本，修复服务器地址 sed -i ‘s&#x2F;koolshare.ngrok.wang&#x2F;ks.ddnsto.com&#x2F;g’ &#x2F;koolshare&#x2F;scripts&#x2F;ks_app_install.sh sed -i ‘s&#x2F;koolshare.ngrok.wang&#x2F;ks.ddnsto.com&#x2F;g’ &#x2F;koolshare&#x2F;webs&#x2F;Main_Soft_center.asp <strong>2，Koolshare软件中心1.5.8增加了对安装包名称的检测，屏蔽了科学插件，无法离线安装。</strong> 如果提示检测到离线安装包名有非法关键词，开启路由器的SSH功能， 登录并输入以下命令后，再进行离线安装。 sed -i ‘s&#x2F;\tdetect_package&#x2F;\t# detect_package&#x2F;g’ &#x2F;koolshare&#x2F;scripts&#x2F;ks_tar_install.sh</p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/11/QQ%E5%9B%BE%E7%89%8720231126144627.png"><img src="/images/QQ%E5%9B%BE%E7%89%8720231126144627-640x480.png"></a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/asus/" rel="tag"># asus</a>
+              <a href="/tags/merlin/" rel="tag"># merlin</a>
+              <a href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" rel="tag"># 路由器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/09/firefox-anable-hardware-decoder/" rel="prev" title="Firefox 打开视频硬解码功能">
+                  <i class="fa fa-angle-left"></i> Firefox 打开视频硬解码功能
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/28/use-grubby-to-edit-grub/" rel="next" title="使用 grubby 工具在 GRUB 中进行永久更改">
+                  使用 grubby 工具在 GRUB 中进行永久更改 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

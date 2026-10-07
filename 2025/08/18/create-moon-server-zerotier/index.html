@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="1. 使用服务器安装 zerotier 客户端1curl -s https:&#x2F;&#x2F;install.zerotier.com&#x2F; | sudo bash  启动 zerotier 服务12sudo systemctl start zerotier-one.servicesudo systemctl enable zerotier-one.service">
+<meta property="og:type" content="article">
+<meta property="og:title" content="架设moon服务器加快zerotier的访问速度">
+<meta property="og:url" content="https://wiki.wenyinos.com/2025/08/18/create-moon-server-zerotier/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="1. 使用服务器安装 zerotier 客户端1curl -s https:&#x2F;&#x2F;install.zerotier.com&#x2F; | sudo bash  启动 zerotier 服务12sudo systemctl start zerotier-one.servicesudo systemctl enable zerotier-one.service">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-08-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-17T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="zerotier">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2025/08/18/create-moon-server-zerotier/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2025/08/18/create-moon-server-zerotier/","path":"2025/08/18/create-moon-server-zerotier/","title":"架设moon服务器加快zerotier的访问速度"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>架设moon服务器加快zerotier的访问速度 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85-zerotier-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.</span> <span class="nav-text">1. 使用服务器安装 zerotier 客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-zerotier-%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">启动 zerotier 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E4%BD%A0%E7%9A%84-zerotier-%E7%BD%91%E7%BB%9C"><span class="nav-number">1.2.</span> <span class="nav-text">加入你的 zerotier 网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE-moon-%E8%8A%82%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">2. 配置 moon 节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA-moon-%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">生成一个 moon 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-moon-json"><span class="nav-number">2.2.</span> <span class="nav-text">修改 moon.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90-moon-%E7%AD%BE%E5%90%8D%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">生成 moon 签名文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-moons-d-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">2.4.</span> <span class="nav-text">创建 moons.d 文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AD%BE%E5%90%8D%E6%96%87%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">移动签名文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A%E5%9C%A8%E7%BE%A4%E6%99%96-DSM-7-%E4%B8%8A%E9%9D%A2%E9%80%9A%E8%BF%87%E2%80%9D%E6%88%91%E4%B8%8D%E6%98%AF%E7%9F%BF%E7%A5%9E%E2%80%9D%E7%AC%AC%E4%B8%89%E6%96%B9%E6%BA%90%E5%AE%89%E8%A3%85-zerotier-%E4%BD%8D%E7%BD%AE%E4%B8%BA%EF%BC%88volume-%E4%B8%BA%E5%AE%89%E8%A3%85%E7%9A%84%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E7%BC%96%E5%8F%B7%EF%BC%89%EF%BC%9A"><span class="nav-number">2.6.</span> <span class="nav-text">注意：在群晖 DSM 7 上面通过”我不是矿神”第三方源安装 zerotier 位置为（volume 为安装的存储空间编号）：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2025/08/18/create-moon-server-zerotier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="架设moon服务器加快zerotier的访问速度 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          架设moon服务器加快zerotier的访问速度
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-18T00:00:00+08:00">2025-08-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-使用服务器安装-zerotier-客户端"><a href="#1-使用服务器安装-zerotier-客户端" class="headerlink" title="1. 使用服务器安装 zerotier 客户端"></a>1. 使用服务器安装 zerotier 客户端</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://install.zerotier.com/ | <span class="built_in">sudo</span> bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-zerotier-服务"><a href="#启动-zerotier-服务" class="headerlink" title="启动 zerotier 服务"></a>启动 zerotier 服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start zerotier-one.service</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> zerotier-one.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="加入你的-zerotier-网络"><a href="#加入你的-zerotier-网络" class="headerlink" title="加入你的 zerotier 网络"></a>加入你的 zerotier 网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> zerotier-cli <span class="built_in">join</span> 你的网络ID</span><br></pre></td></tr></table></figure>
+
+<p>如果成功的话，我们会在 zerotier 的管理页面里看到你的新服务器。给它把 Auth 那一栏给勾上，这样你的服务器就加入网络了。</p>
+<h2 id="2-配置-moon-节点"><a href="#2-配置-moon-节点" class="headerlink" title="2. 配置 moon 节点"></a>2. 配置 moon 节点</h2><h3 id="生成一个-moon-文件"><a href="#生成一个-moon-文件" class="headerlink" title="生成一个 moon 文件"></a>生成一个 moon 文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/lib/zerotier-one</span><br><span class="line"><span class="built_in">sudo</span> zerotier-idtool initmoon identity.public &gt; moon.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改-moon-json"><a href="#修改-moon-json" class="headerlink" title="修改 moon.json"></a>修改 moon.json</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano moon.json</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>stableEndpoints</code> 中括号里输入 <code>&quot;你的服务器公网ip/9993&quot;</code>，保存退出。注意两头加引号 <code>&quot;&quot;</code>。</p>
+<h3 id="生成-moon-签名文件"><a href="#生成-moon-签名文件" class="headerlink" title="生成 moon 签名文件"></a>生成 moon 签名文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> zerotier-idtool genmoon moon.json</span><br></pre></td></tr></table></figure>
+
+<p>这个时候下面会跳出来一行 wrote 开头的代码就说明写入成功了。</p>
+<h3 id="创建-moons-d-文件夹"><a href="#创建-moons-d-文件夹" class="headerlink" title="创建 moons.d 文件夹"></a>创建 moons.d 文件夹</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> moons.d</span><br></pre></td></tr></table></figure>
+
+<h3 id="移动签名文件"><a href="#移动签名文件" class="headerlink" title="移动签名文件"></a>移动签名文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> 一串数字.moon moons.d/</span><br></pre></td></tr></table></figure>
+
+<p>这一步是把上次生成的签名文件移动到 moons.d 文件夹里。那个看起来一长串乱码的 .moon 文件的名字在那一行 wrote 开头的代码里可以看到，实在看不到就打个 <code>ls</code> 回车就看到了。</p>
+<p>做完这些你的 moon 服务器就算配置完成，重启下 zerotier 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart zerotier-one</span><br></pre></td></tr></table></figure>
+
+<p>然后保存 moon 文件，复制到其他客户端 moons.d 目录，再重启服务即可。</p>
+<p>使用以下命令查看是否接入 moon 节点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zerotier-cli listpeers</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意：在群晖-DSM-7-上面通过”我不是矿神”第三方源安装-zerotier-位置为（volume-为安装的存储空间编号）："><a href="#注意：在群晖-DSM-7-上面通过”我不是矿神”第三方源安装-zerotier-位置为（volume-为安装的存储空间编号）：" class="headerlink" title="注意：在群晖 DSM 7 上面通过”我不是矿神”第三方源安装 zerotier 位置为（volume 为安装的存储空间编号）："></a>注意：在群晖 DSM 7 上面通过”我不是矿神”第三方源安装 zerotier 位置为（volume 为安装的存储空间编号）：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/volume1/@appdata/zerotier</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/zerotier/" rel="tag"># zerotier</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/17/use-zram-generator-configure/" rel="prev" title="使用zram-generator配置zram">
+                  <i class="fa fa-angle-left"></i> 使用zram-generator配置zram
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/11/12/qemu_kvm-shrink-disk/" rel="next" title="Qemu_kvm虚拟机缩小磁盘容量">
+                  Qemu_kvm虚拟机缩小磁盘容量 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

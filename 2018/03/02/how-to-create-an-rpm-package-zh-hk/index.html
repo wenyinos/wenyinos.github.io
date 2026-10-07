@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="首先感谢存档，本文在此找回：https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;How_to_create_an_RPM_package&#x2F;zh-hk 此页面包含 Packaging:ScriptletSnippets 的 zh_CN 翻译，由于不具有 ScriptletSnippets 的编辑权限，故在此保存翻译。 RPM 打包脚本综述Rpm spec 文件有几个部分，允许软件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to create an RPM package&#x2F;zh-hk（如何创建一个打包的RPM">
+<meta property="og:url" content="https://wiki.wenyinos.com/2018/03/02/how-to-create-an-rpm-package-zh-hk/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="首先感谢存档，本文在此找回：https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;How_to_create_an_RPM_package&#x2F;zh-hk 此页面包含 Packaging:ScriptletSnippets 的 zh_CN 翻译，由于不具有 ScriptletSnippets 的编辑权限，故在此保存翻译。 RPM 打包脚本综述Rpm spec 文件有几个部分，允许软件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/35px-Note.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/35px-Note.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/35px-Warning.png">
+<meta property="article:published_time" content="2018-03-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2018-03-01T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="fedora">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="package-management">
+<meta property="article:tag" content="packaging">
+<meta property="article:tag" content="rpm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/35px-Note.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2018/03/02/how-to-create-an-rpm-package-zh-hk/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2018/03/02/how-to-create-an-rpm-package-zh-hk/","path":"2018/03/02/how-to-create-an-rpm-package-zh-hk/","title":"How to create an RPM package/zh-hk（如何创建一个打包的RPM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>How to create an RPM package/zh-hk（如何创建一个打包的RPM | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RPM-%E6%89%93%E5%8C%85%E8%84%9A%E6%9C%AC%E7%BB%BC%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">RPM 打包脚本综述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4-Shell"><span class="nav-number">2.</span> <span class="nav-text">默认 Shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%89%87%E6%AE%B5%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">脚本片段命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E7%89%87%E6%AE%B5"><span class="nav-number">5.</span> <span class="nav-text">编写脚本片段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E8%84%9A%E6%9C%AC%E7%89%87%E6%AE%B5%E9%97%B4%E4%BF%9D%E5%AD%98%E7%8A%B6%E6%80%81"><span class="nav-number">5.1.</span> <span class="nav-text">在脚本片段间保存状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Macros"><span class="nav-number">5.2.</span> <span class="nav-text">Macros</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trigger"><span class="nav-number">5.3.</span> <span class="nav-text">Trigger</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5"><span class="nav-number">6.</span> <span class="nav-text">代码片段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="nav-number">6.1.</span> <span class="nav-text">共享库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84"><span class="nav-number">6.2.</span> <span class="nav-text">用户和组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1"><span class="nav-number">6.3.</span> <span class="nav-text">服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Init-%E8%84%9A%E6%9C%AC%E7%BA%A6%E5%AE%9A"><span class="nav-number">6.3.1.</span> <span class="nav-text">Init 脚本约定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GConf"><span class="nav-number">6.4.</span> <span class="nav-text">GConf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%B7%B2%E4%BF%AE%E6%94%B9%E7%9A%84%E5%AE%8F%E9%87%8D%E5%BB%BA%E5%8C%85"><span class="nav-number">6.4.1.</span> <span class="nav-text">为已修改的宏重建包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EPEL-%E8%AF%B4%E6%98%8E"><span class="nav-number">6.4.2.</span> <span class="nav-text">EPEL 说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GSettings-Schema"><span class="nav-number">6.5.</span> <span class="nav-text">GSettings Schema</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdk-pixbuf-%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">6.6.</span> <span class="nav-text">gdk-pixbuf 加载器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GTK-%E6%A8%A1%E5%9D%97"><span class="nav-number">6.7.</span> <span class="nav-text">GTK+ 模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIO-%E6%A8%A1%E5%9D%97"><span class="nav-number">6.8.</span> <span class="nav-text">GIO 模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Texinfo"><span class="nav-number">6.9.</span> <span class="nav-text">Texinfo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrollkeeper"><span class="nav-number">6.10.</span> <span class="nav-text">Scrollkeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#desktop-database"><span class="nav-number">6.11.</span> <span class="nav-text">desktop-database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mimeinfo"><span class="nav-number">6.12.</span> <span class="nav-text">mimeinfo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Icon-%E7%BC%93%E5%AD%98"><span class="nav-number">6.13.</span> <span class="nav-text">Icon 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Systemd"><span class="nav-number">6.14.</span> <span class="nav-text">Systemd</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">6.14.1.</span> <span class="nav-text">新软件包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Scriptlets"><span class="nav-number">6.14.1.1.</span> <span class="nav-text">Scriptlets</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E8%BD%AF%E4%BB%B6%E5%8C%85%E4%BB%8E-SysV-init-%E8%84%9A%E6%9C%AC%E8%BF%81%E7%A7%BB%E8%87%B3-Systemd-Unit"><span class="nav-number">6.14.2.</span> <span class="nav-text">将软件包从 SysV init 脚本迁移至 Systemd Unit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shells"><span class="nav-number">6.15.</span> <span class="nav-text">Shells</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/03/02/how-to-create-an-rpm-package-zh-hk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="How to create an RPM package&#x2F;zh-hk（如何创建一个打包的RPM | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to create an RPM package/zh-hk（如何创建一个打包的RPM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-02 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-02T00:00:00+08:00">2018-03-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>首先感谢存档，本文在此找回：<a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/How_to_create_an_RPM_package/zh-hk">https://fedoraproject.org/wiki/How_to_create_an_RPM_package&#x2F;zh-hk</a></p>
+<p>此页面包含 <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Packaging:ScriptletSnippets" title="Packaging:ScriptletSnippets">Packaging:ScriptletSnippets</a> 的 zh_CN 翻译，由于不具有 ScriptletSnippets 的编辑权限，故在此保存翻译。</p>
+<h1 id="RPM-打包脚本综述"><a href="#RPM-打包脚本综述" class="headerlink" title="RPM 打包脚本综述"></a>RPM 打包脚本综述</h1><p>Rpm spec 文件有几个部分，允许软件包执行代码来完成安装和卸载操作。这些软件包中的脚本片段大多用于更新系统信息。此页面提供 RPM 脚本片段概述和一些常见软件包的 spec 脚本片段的示例。更完整的脚本片段，请参阅 <a target="_blank" rel="noopener" href="http://www.rpm.org/max-rpm-snapshot/">Maximum RPM book</a> 。</p>
+<h1 id="默认-Shell"><a href="#默认-Shell" class="headerlink" title="默认 Shell"></a>默认 Shell</h1><p>在 Fedora ，您可以直接使用默认的 bash shell (<code>/bin/sh</code>)。因此，所有脚本片段可以安全地在 bash 中运行。</p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>基本语法在 %build, %install 以及 rpm spec 文件的其他部分都是一致的。脚本支持一个特殊标记， -p 允许脚本直接调用一个程序，而不必启用 shell 来运行程序。(即 <code>%post -p /sbin/ldconfig</code>)</p>
+<p>脚本片段还传递一个参数，用于表示本软件包的<strong>个数</strong>。执行特定动作时，通过向 $1 传递不同值，来表示不同动作（安装&#x2F;升级&#x2F;卸载），除了 %pretrans 和 %posttrans 它们的 $1 为 0 (rpm 4.4+ 支持 %pretrans 和 %posttrans)。对于安装、升级和卸载，所传递的参数值如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>安装（install）</th>
+<th>升级（update&#x2F;upgrade）</th>
+<th>卸载（remove&#x2F;erase）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%pretrans</td>
+<td>$1 &#x3D;&#x3D; 0</td>
+<td>$1 &#x3D;&#x3D; 0</td>
+<td>(N&#x2F;A)</td>
+</tr>
+<tr>
+<td>%triggerprein</td>
+<td>安装本包: $1 &#x3D;&#x3D; 0, $2 &#x3D;&#x3D; 1 安装目标包: $1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 0</td>
+<td>$1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 1</td>
+<td>(N&#x2F;A)</td>
+</tr>
+<tr>
+<td>%pre</td>
+<td>$1 &#x3D;&#x3D; 1</td>
+<td>$1 &#x3D;&#x3D; 2</td>
+<td>(N&#x2F;A)</td>
+</tr>
+<tr>
+<td>%post</td>
+<td>$1 &#x3D;&#x3D; 1</td>
+<td>$1 &#x3D;&#x3D; 2</td>
+<td>(N&#x2F;A)</td>
+</tr>
+<tr>
+<td>%triggerin</td>
+<td>$1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 1</td>
+<td>升级本包: $1 &#x3D;&#x3D; 2, $2 &#x3D;&#x3D; 1 升级目标包: $1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 2</td>
+<td>(N&#x2F;A)</td>
+</tr>
+<tr>
+<td>%triggerun</td>
+<td>(N&#x2F;A)</td>
+<td>$1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 1</td>
+<td>卸载本包: $1 &#x3D;&#x3D; 0, $2 &#x3D;&#x3D; 1 卸载目标包: $1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>%preun</td>
+<td>(N&#x2F;A)</td>
+<td>$1 &#x3D;&#x3D; 1</td>
+<td>$1 &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>%postun</td>
+<td>(N&#x2F;A)</td>
+<td>$1 &#x3D;&#x3D; 1</td>
+<td>$1 &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>%triggerpostun</td>
+<td>(N&#x2F;A)</td>
+<td>升级目标包: $1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 1</td>
+<td>卸载目标包: $1 &#x3D;&#x3D; 1, $2 &#x3D;&#x3D; 0</td>
+</tr>
+<tr>
+<td>%posttrans</td>
+<td>$1 &#x3D;&#x3D; 0</td>
+<td>$1 &#x3D;&#x3D; 0</td>
+<td>(N&#x2F;A)</td>
+</tr>
+</tbody></table>
+<p>注意，如果安装相同软件包的多个版本，这些参数值将会不同（这发生于同时安装包，如 kernel 和 multilib 包。然而，它会引发错误，防止软件包升级完成）。所以，使用以下结构的脚本是个好主意：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%pre</span><br><span class="line">if [ $1 -gt 1 ] ; then   # -gt大于</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>…对于 %pre 和 %post 脚本，检查它的值等于 2。</p>
+<p>除了一些特殊情况（如果有的话），我们希望所有的脚本退出时返回 0。因为 rpm 默认配置不使用 <code>-e</code> 参数执行 shell 脚本，不包括明确的 <code>exit</code> 调用（可能出现非 0 返回值），在脚本中，最后一个命令的退出状态决定了脚本片段的退出状态。大多数命令包含 “<code>|| :</code>“ 后缀，这会强制以 0 状态退出，无论命令是否可以正常工作。通常，最重要的是在脚本片段的最后一个命令添加此后缀，或在脚本的最后一行添加 “<code>:</code>“ 或 “<code>exit 0</code>“ 命令。注意，根据情况，使用其他的错误检测&#x2F;预防措施可能更合适，事先运行一些命令进行检查，检查成功才执行之后的命令。</p>
+<p>脚本片段以非 0 状态退出会中断安装&#x2F;升级&#x2F;删除操作，避免事务中的包执行进一步的操作（见脚本片段命令部分），这可以防止旧包被删除，同时也在 rpmdb 留下了重复记录，在文件系统上留下了无主文件。某些情况下，事务中的脚本片段执行失败，可能导致部分安装失败（不会中断）。这往往局限于，软件包不影响事务继续执行，而此时中断安装之后的某些包，会导致更严重的系统问题。</p>
+<h1 id="脚本片段命令"><a href="#脚本片段命令" class="headerlink" title="脚本片段命令"></a>脚本片段命令</h1><p>%pre 和 %post 脚本片段分别在软件包安装前和安装后执行。%preun 和 %postun 脚本片段分别在软件包卸载前和卸载后执行。%pretrans 和 %posttrans 脚本片段分别在软件包事务开始和结束时执行。升级软件包时，按如下顺序执行脚本片段：</p>
+<ol>
+<li>检查软件包依赖、下载软件包和 DRPM</li>
+<li>(all)%pretrans：事务开始时，执行新软件包的此段代码</li>
+<li>…… (操作其它软件包) ……</li>
+<li>(any)%triggerprein：此包的新版本安装之前，触发此包或其他包的脚本（如果有）</li>
+<li>(new)%triggerprein：指定的其他软件包安装之前，触发此脚本</li>
+<li>(new)%pre：执行新软件包的 %pre 脚本</li>
+<li>…… (安装所有新文件) ……</li>
+<li>(new)%post：执行新软件包的 %post 脚本</li>
+<li>(any)%triggerin：安装此软件包时，触发此包或其他包的脚本（如果有）</li>
+<li>(new)%triggerin：安装指定的其他软件包时，触发此脚本</li>
+<li>(old)%triggerun：卸载指定的其他软件包的旧版本时，触发此脚本</li>
+<li>(any)%triggerun：卸载此软件包的旧版本时，触发此包或其他包的脚本（如果有）</li>
+<li>(old)%preun：执行旧软件包的 %preun 脚本</li>
+<li>…… (删除所有旧文件) ……</li>
+<li>(old)%postun：执行旧软件包的 %postun 脚本</li>
+<li>(old)%triggerpostun：指定的其他软件包的旧版本已卸载之后，触发此脚本</li>
+<li>(any)%triggerpostun：此包的旧版本已卸载之后，触发其他包的脚本（如果有，此包脚本不运行）</li>
+<li>…… (操作其它软件包) ……</li>
+<li>(all)%posttrans：事务结束时，执行新软件包的此段代码</li>
+<li>验证软件包，Done</li>
+</ol>
+<hr>
+<p>Trigger 示例：</p>
+<p>Trigger 用于在操作指定包时，运行您包中的一些代码。通常因为您的包使用其他包的服务，或为其他包提供服务。参考以下的 Trigger 部分。提供以下示例以帮助理解：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%triggerin -p /usr/bin/perl -- ruby &gt; 2.0, perl &gt; 5.20  # -p 指定其他解释器</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以下情况触发此段代码：</p>
+<ul>
+<li>已安装此包，ruby 或 perl 被安装&#x2F;升级时</li>
+<li>已安装 ruby 或 perl，此包被安装&#x2F;升级时</li>
+</ul>
+<h1 id="编写脚本片段"><a href="#编写脚本片段" class="headerlink" title="编写脚本片段"></a>编写脚本片段</h1><p>以下是一些编写高质量打包脚本的建议。</p>
+<h2 id="在脚本片段间保存状态"><a href="#在脚本片段间保存状态" class="headerlink" title="在脚本片段间保存状态"></a>在脚本片段间保存状态</h2><p>有时脚本需要保存之前脚本的一些状态，以便在之后运行脚本时使用。这常用于对脚本片段进行优化。例如：</p>
+<ul>
+<li>如果 <code>%posttrans</code> 需要在软件包升级时注销一些信息，但旧软件包删除时，包含这些信息的文件也一并被删除，<code>%pre</code> 或 <code>%post</code> 脚本片段需要在文件中保存这些信息，以便 <code>%posttrans</code> 脚本可以访问。</li>
+<li>如果我们只想让 <code>%posttrans</code> 中的程序在每次事务时工作，我们需要编写一个标志文件，使 <code>%posttrans</code> 执行相应动作。</li>
+</ul>
+<p>为了解决这些问题，脚本片段需要输出供 <code>%posttrans</code> 使用的信息。我们建议使用 <code>%{_localstatedir}/lib/rpm-state/</code> 子目录保存信息。例如， 当安装 eclipse 插件时，脚本需要在 <code>%{_localstatedir}/lib/rpm-state/eclipse/</code> 创建一个文件。 <code>%posttrans</code> 运行脚本检查文件是否存在。如果存在，执行相应动作，并删除文件。这样，每次事务时脚本只执行一次操作。</p>
+<p><a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/File:Note.png"><img src="/images/35px-Note.png" alt="Note.png"></a></p>
+<p>在 Fedora 中，我们要求 <code>%{_localstatedir}/lib/rpm-state/</code> 目录属于 rpm 或 filesystem 软件包。使用事务时，软件包需要创建自己的 <code>%{_localstatedir}/lib/rpm-state/</code> 子目录。</p>
+<h2 id="Macros"><a href="#Macros" class="headerlink" title="Macros"></a>Macros</h2><p>复杂的脚本片段可以记录在 rpm 宏中。这有两个好处：</p>
+<ol>
+<li>标准包的作者只需要记住宏，不需要记住它复杂的内容。</li>
+<li>宏的实现可能改变，而无需更新包。</li>
+</ol>
+<p>编写宏时，FPC 需要审阅宏（指南中记录了打包者需要做什么）。</p>
+<p>原则上，宏不能包含脚本片段的起始标记（如 <code>%pre</code>）。这也意味着，一个宏不能同时定义 <code>%pre</code> 和 <code>%post</code> 需要执行的动作。相反，需要编写一个宏在 <code>%pre</code> 执行，编写另一个宏在 <code>%post</code> 执行。此原则使所有 spec 文件可以以同样的方式使用宏，即使它们已定义了 <code>%pre</code> 或 <code>%post</code>。</p>
+<h2 id="Trigger"><a href="#Trigger" class="headerlink" title="Trigger"></a>Trigger</h2><p>Trigger 用于在操作指定包时，运行您包中的一些代码。通常因为您的包使用其他包的服务，或为其他包提供服务。Trigger 语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%trigger&#123;un|in|postun&#125; [[-n] &lt;subpackage&gt;] [-p &lt;program&gt;] -- &lt;trigger&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>有一个很好的例子。假设您正在为 Emacs 和 Xemacs 编辑器打包一个很好的插件。它可以和这些编辑器一起工作，但根据不同编辑器，需要做不同配置。安装插件时，可以检查 Emacs 和 Xemacs 是否已安装，并配置插件。但是，如果用户稍后安装 Xemacs，那么会发生什么呢？您的插件在 Xemacs 不可用，除非用户卸载并重装插件。通过触发器，可以告诉此包，“已安装 Xemacs，需要执行插件配置”。怎么样，很赞吧！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%triggerin -- emacs  # 以下情况执行：已安装此包， emasc 被安装/升级时；已安装 emacs，此包被安装/升级时。</span><br><span class="line"># 安装插件相关代码</span><br><span class="line">%triggerin -- xemacs # 以下情况执行：已安装此包，xemasc 被安装/升级时；已安装 xemacs，此包被安装/升级时。</span><br><span class="line"># 安装插件相关代码</span><br><span class="line">%triggerun -- emacs  # 以下情况执行：已安装此包， emacs 被卸载时；已安装 emacs，此包被卸载时。</span><br><span class="line"># 卸载插件相关代码</span><br><span class="line">%triggerun -- xemacs # 以下情况执行：已安装此包，xemacs 被卸载时；已安装 xemacs，此包被卸载时。</span><br><span class="line"># 卸载插件相关代码</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>rpm 向触发器脚本传递了两个参数。$1 表示脚本完成时本软件包的个数。$2 表示脚本完成时被触发的软件包的个数。</p>
+<h1 id="代码片段"><a href="#代码片段" class="headerlink" title="代码片段"></a>代码片段</h1><h2 id="共享库"><a href="#共享库" class="headerlink" title="共享库"></a>共享库</h2><p>安装共享库需要运行 &#x2F;sbin&#x2F;ldconfig 来更新动态链接器的缓存文件。可调用以下语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%post</span><br><span class="line">/sbin/ldconfig</span><br><span class="line">%postun</span><br><span class="line">/sbin/ldconfig</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>仅需要运行 ldconfig 时，可使用 -p 选项避免运行 shell：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%post -p /sbin/ldconfig</span><br><span class="line">%postun -p /sbin/ldconfig</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>建议使用第二种方式，这样会自动添加 &#x2F;sbin&#x2F;ldconfig 依赖到软件包（另外，可以避免启用不必要的 Shell 进程来执行脚本）。</p>
+<h2 id="用户和组"><a href="#用户和组" class="headerlink" title="用户和组"></a>用户和组</h2><p>这些问题在 <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Packaging/UsersAndGroups" title="Packaging&#x2F;UsersAndGroups">separate page</a> 讨论。</p>
+<h2 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h2><h3 id="Init-脚本约定"><a href="#Init-脚本约定" class="headerlink" title="Init 脚本约定"></a>Init 脚本约定</h3><p>完整 SysV 风格的 init 脚本指南： <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Packaging/SysVInitScript" title="Packaging&#x2F;SysVInitScript">Packaging&#x2F;SysVInitScript</a> 脚本片段细节： <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Packaging/SysVInitScript#InitscriptScriptlets" title="Packaging&#x2F;SysVInitScript">Packaging&#x2F;SysVInitScript#InitscriptScriptlets</a></p>
+<h2 id="GConf"><a href="#GConf" class="headerlink" title="GConf"></a>GConf</h2><p>GConf 是 GNOME 桌面目前使用的配置方案。程序使用的默认值保存在 [NAME].schemas 文件，并安装至 %{_sysconfdir}&#x2F;gconf&#x2F;schemas&#x2F;[NAME].schemas。gconf 守护进程注册并监控这些配置，并在配置变化时通知应用程序。schema 文件中包含了每个值的解释（使用 gconf-editor 查询数据库时显示这些信息）。</p>
+<p>在构建包的过程中，必须禁止安装 schema，并在实际安装时，使用 gconf 守护进程注册 [NAME].schemas 值；在删除时，注销这些值。脚本片段包含以下 4 个步骤。</p>
+<p>创建包时，禁止安装 Gconf schema：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%install</span><br><span class="line">export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1</span><br><span class="line">make install DESTDIR=$RPM_BUILD_ROOT</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL 环境变量在包构建过程中，禁止安装 schema。另一种方法是通过 configure 标识设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">%build</span><br><span class="line">%configure --disable-schemas</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>不幸的是，此选项需要上游开发者修改 Makefile.am 进行处理 。如果 Makefile.am 未配置，此选项不会生效，需使用环境变量代替。</p>
+<p>第 2 步：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BuildRequires: GConf2</span><br><span class="line">Requires(pre): GConf2</span><br><span class="line">Requires(post): GConf2</span><br><span class="line">Requires(preun): GConf2</span><br><span class="line">...</span><br><span class="line">%pre</span><br><span class="line">%gconf_schema_prepare schema1 schema2</span><br><span class="line">%gconf_schema_obsolete schema3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这一部分，我们使用 2 个宏卸载&#x2F;更新旧 schema。</p>
+<p><code>%gconf_schema_prepare</code> 用于任何 GConf schema。它需要卸载当前已安装的 schema。它需要不包含路径和后缀的空格分隔的 schema 列表。注意宏幕后的工作，这个宏在 <code>%post</code> 中只处理已更改的 Gconf schema。</p>
+<p><code>%gconf_schema_obsolete</code> 标记废弃包之前提供的 schema。如果系统存在旧 schema，它会将其注销。如果旧 schema 不存在，则不执行动作。此宏接受空格分隔的 schema 列表。以下示例可能用于软件包已改名的情况。如果旧 schema 名为 <code>foo.schemas</code>，新 schema 名为 <code>foobar.schemas</code>，你应该使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%gconf_schema_prepare foobar</span><br><span class="line">%gconf_schema_obsolete foo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下一步，对新安装的 schema 进行处理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%post</span><br><span class="line">%gconf_schema_upgrade schema1 schema2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>%gconf_schema_upgrade</code> 接受以空格分隔的 schema 列表。在宏幕后，它实际注册新版本的 schema 并注销旧版本。</p>
+<p>最后一步，在包删除时注销 schema：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%preun</span><br><span class="line">%gconf_schema_remove schema1 schema2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当包升级时，rpm 调用 <code>%pre</code> 脚本来注册和注销 schema。当包卸载时，使用 <code>%preun</code> 脚本。<code>%gconf_schema_remove</code> 接受空格分隔的 schema 列表，并提供删除方法。</p>
+<h3 id="为已修改的宏重建包"><a href="#为已修改的宏重建包" class="headerlink" title="为已修改的宏重建包"></a>为已修改的宏重建包</h3><p>当宏修改时，使用这些宏的软件包必须重建，以适应这些变化。repoquery 命令用于查找包含 schema 的软件包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repoquery --whatprovides &quot;/etc/gconf/schemas/*&quot; |sort |uniq |wc -l</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="EPEL-说明"><a href="#EPEL-说明" class="headerlink" title="EPEL 说明"></a>EPEL 说明</h3><p>EPEL 不包含 macros.gconf2，所以请按此说明操作： <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Packaging:EPEL#GConf" title="Packaging:EPEL">Packaging:EPEL#GConf</a></p>
+<h2 id="GSettings-Schema"><a href="#GSettings-Schema" class="headerlink" title="GSettings Schema"></a>GSettings Schema</h2><p>GSettings是 GNOME 3 桌面的配置系统。它代替了 GNOME 2 中使用的 GConf 系统。GSettings 支持可插拔后端，本地的 GNOME 使用 DConf 存储设置。GSettings API 和工具属于 glib2 软件包。</p>
+<p>程序使用的 GSettings schema 文件保存在 %{_datadir}&#x2F;glib-2.0&#x2F;schemas 目录。schema 文件是扩展名为 .gschema.xml 的 XML 文件。运行时，GSettings 使用已编译的二进制缓存（平台无关），缓存通过 glib-compile-schemas 创建。只要修改 schema，就需要运行 &#x2F;usr&#x2F;bin&#x2F;glib-compile-schemas 更新缓存。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%postun</span><br><span class="line">if [ $1 -eq 0 ] ; then</span><br><span class="line">    /usr/bin/glib-compile-schemas %&#123;_datadir&#125;/glib-2.0/schemas &amp;&gt; /dev/null || :</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">%posttrans</span><br><span class="line">    /usr/bin/glib-compile-schemas %&#123;_datadir&#125;/glib-2.0/schemas &amp;&gt; /dev/null || :</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="gdk-pixbuf-加载器"><a href="#gdk-pixbuf-加载器" class="headerlink" title="gdk-pixbuf 加载器"></a>gdk-pixbuf 加载器</h2><p>gdk-pixbuf 库属于 gdk-pixbuf2 软件包。它用于在 GNOME 中加载各种图像格式。gdk-pixbuf 可通过载入模块来扩展对图像格式的支持。这些模块必须安装在 %{_libdir}&#x2F;gdk-pixbuf-2.0&#x2F;2.10.0&#x2F;loaders。为了避免载入所有模块，gdk-pixbuf 在 %{_libdir}&#x2F;gdk-pixbuf-2.0&#x2F;2.10.0&#x2F;loaders.cache 文件中保存模块信息缓存。当模块更改时，需要调用 &#x2F;usr&#x2F;bin&#x2F;gdk-pixbuf-query-loaders 程序更新缓存信息。gdk-pixbuf-query-loaders 包含 -32 和 -64 版本，用于生成对应架构的缓存。</p>
+<p>维护缓存文件的脚本是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%postun</span><br><span class="line">    /usr/bin/gdk-pixbuf-query-loaders-%&#123;__isa_bits&#125; --update-cache &amp;&gt; /dev/null || :</span><br><span class="line"></span><br><span class="line">%post</span><br><span class="line">if [ $1 -eq 1 ] ; then</span><br><span class="line">    # For upgrades, the cache will be regenerated by the new package&#x27;s %postun</span><br><span class="line">    /usr/bin/gdk-pixbuf-query-loaders-%&#123;__isa_bits&#125; --update-cache &amp;&gt; /dev/null || :</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意， %{__isa_bits} 宏根据软件包架构返回 32 或 64。</p>
+<h2 id="GTK-模块"><a href="#GTK-模块" class="headerlink" title="GTK+ 模块"></a>GTK+ 模块</h2><p>GTK+ 工具包（gtk3）支持通过加载模块来提供主题引擎，输入方法，打印后端或其他功能。这些模块必须安装至 %{_libdir}&#x2F;gtk-3.0 或 %{_libdir}&#x2F;gtk-3.0&#x2F;3.0.0 目录。对于输入法，GTK+ 使用 %{_libdir}&#x2F;gtk-3.0&#x2F;3.0.0&#x2F;immodules.cache 缓存记录输入法模块信息。当修改输入法时，需要调用 gtk-query-immodules-3.0 更新缓存信息。gtk-query-immodules-3.0 包含 -32 和 -64 版本，用于生成对应架构的缓存。</p>
+<p>维护缓存文件的脚本是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%postun</span><br><span class="line">/usr/bin/gtk-query-immodules-3.0-%&#123;__isa_bits&#125; --update-cache &amp;&gt; /dev/null || :</span><br><span class="line"></span><br><span class="line">%post</span><br><span class="line">if [ $1 -eq 1 ] ; then</span><br><span class="line">    # For upgrades, the cache will be regenerated by the new package&#x27;s %postun</span><br><span class="line">    /usr/bin/gtk-query-immodules-3.0-%&#123;__isa_bits&#125; --update-cache &amp;&gt; /dev/null || :</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3.0版本的可执行文件，是由于 gtk2 包含相同功能的工具（gtk-query-immodules-2.0）。注意， %{__isa_bits} 宏根据软件包架构返回 32 或 64。</p>
+<h2 id="GIO-模块"><a href="#GIO-模块" class="headerlink" title="GIO 模块"></a>GIO 模块</h2><p>GIO 共享库属于 glib2 软件包。它是 GNOME 中的底层堆栈。GIO 可以通过模块中的 <a target="_blank" rel="noopener" href="http://library.gnome.org/devel/gio/2.26/extending-gio.html">extension points</a> 实现扩展。这些扩展模块必须安装至 %{_libdir}&#x2F;gio&#x2F;modules。为了避免载入所有模块，GIO 在相同目录的 giomodule.cache 文件中记录可用模块的缓存信息。当模块改变时，通过调用 gio-querymodules 程序更新缓存信息。 gio-querymodules 包含 -32 和 -64 版本，用于生成对应架构的缓存。</p>
+<p>维护缓存文件的脚本是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%postun</span><br><span class="line">/usr/bin/gio-querymodules-%&#123;__isa_bits&#125; %&#123;_libdir&#125;/gio/modules &amp;&gt; /dev/null || :</span><br><span class="line"></span><br><span class="line">%post</span><br><span class="line"># We run this after every install or upgrade because of a cornercase</span><br><span class="line"># when installing the second architecture of a multilib package </span><br><span class="line">/usr/bin/gio-querymodules-%&#123;__isa_bits&#125; %&#123;_libdir&#125;/gio/modules || :</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意， %{__isa_bits} 宏根据软件包架构返回 32 或 64。</p>
+<h2 id="Texinfo"><a href="#Texinfo" class="headerlink" title="Texinfo"></a>Texinfo</h2><p>GNU 项目和许多其他程序使用 texinfo 文件格式保存文档。这些 info 文件保存在 &#x2F;usr&#x2F;share&#x2F;info&#x2F;。安装或删除软件包时，install-info 添加新文件至 info 索引中，并在卸载时删除它们。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Requires(post): info</span><br><span class="line">Requires(preun): info</span><br><span class="line">...</span><br><span class="line">%post</span><br><span class="line">/sbin/install-info %&#123;_infodir&#125;/%&#123;name&#125;.info %&#123;_infodir&#125;/dir || :</span><br><span class="line"></span><br><span class="line">%preun</span><br><span class="line">if [ $1 = 0 ] ; then</span><br><span class="line">  /sbin/install-info --delete %&#123;_infodir&#125;/%&#123;name&#125;.info %&#123;_infodir&#125;/dir || :</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这两个脚本使用 install-info 在安装时将 info 页的信息添加至 info 索引文件，并在卸载时删除索引信息。 “|| :” 可防止在系统已配置为不安装任何 %doc 文件，或使用只读挂载 %_netsharedpath &#x2F;usr&#x2F;share时，命令执行失败。</p>
+<h2 id="Scrollkeeper"><a href="#Scrollkeeper" class="headerlink" title="Scrollkeeper"></a>Scrollkeeper</h2><p>在当前 Fedora 中， scrollkeeper 已被 rarian 代替。rarian 不需要使用脚本片段进行处理。关于 EPEL 源的进一步说明，请访问 <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Packaging:EPEL#Scrollkeeper" title="Packaging:EPEL">Packaging:EPEL#Scrollkeeper</a></p>
+<h2 id="desktop-database"><a href="#desktop-database" class="headerlink" title="desktop-database"></a>desktop-database</h2><p>当 desktop entry 包含 MimeType 关键字时，应添加以下脚本。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%post</span><br><span class="line">/usr/bin/update-desktop-database &amp;&gt; /dev/null || :</span><br><span class="line"></span><br><span class="line">%postun</span><br><span class="line">/usr/bin/update-desktop-database &amp;&gt; /dev/null || :</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意：对于 Fedora Core 5 之后的版本，使用相同的 mimeinfo 文件和 gtk-icon-cache。即 spec 文件不需要为此添加 Require desktop-file-utils 。对于旧发行版，应添加以下语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Requires(post): desktop-file-utils</span><br><span class="line">Requires(postun): desktop-file-utils</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>(访问 <a target="_blank" rel="noopener" href="http://bugzilla.redhat.com/180898">http://bugzilla.redhat.com/180898</a> 和 <a target="_blank" rel="noopener" href="http://bugzilla.redhat.com/180899">http://bugzilla.redhat.com/180899</a>)</p>
+<h2 id="mimeinfo"><a href="#mimeinfo" class="headerlink" title="mimeinfo"></a>mimeinfo</h2><p>当软件包在 %{_datadir}&#x2F;mime&#x2F;packages 安装 XML 文件时，需使用以下脚本。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">%post</span><br><span class="line">/bin/touch --no-create %&#123;_datadir&#125;/mime/packages &amp;&gt;/dev/null || :</span><br><span class="line"></span><br><span class="line">%postun</span><br><span class="line">if [ $1 -eq 0 ] ; then</span><br><span class="line">  /usr/bin/update-mime-database %&#123;_datadir&#125;/mime &amp;&gt; /dev/null || :</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">%posttrans</span><br><span class="line">/usr/bin/update-mime-database %&#123;?fedora:-n&#125; %&#123;_datadir&#125;/mime &amp;&gt; /dev/null || :</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意，与 gtk-update-icon-cache 代码类似，这些脚本只在安装 shared-mime-info 软件包时运行，但不需要指定 Requires: shared-mime-info 。如果未安装 shared-mime-info，update-mime-database 不会运行。然而这并不重要，因为大部分系统默认安装 shared-mime-info。</p>
+<h2 id="Icon-缓存"><a href="#Icon-缓存" class="headerlink" title="Icon 缓存"></a>Icon 缓存</h2><p>如果应用程序在 <code>%{_datadir}/icons/</code> 的子目录（如 <code>hicolor</code>）安装图标，则必须更新图标缓存，以便菜单正常显示图标。这包括：更新图标上层目录的时间戳，并运行 <code>gtk-update-icon-cache</code>。’touch’ 顶层目录以便兼容 <a target="_blank" rel="noopener" href="http://standards.freedesktop.org/icon-theme-spec/latest/ar01s08.html">Icon theme specification</a> 的环境可以刷新缓存，并且 <code>gtk-update-icon-cache</code> 的运行也需要基于目录的时间戳。</p>
+<p>注意，不需要为此添加依赖关系。如果 gtk-update-icon-cache 不可用，则不会更新图标缓存，同上，如果 “touch” 不可用，则不会更新图标缓存。不添加 gtk-update-icon-cache（即 gtk2 &gt;&#x3D; 2.6.0）或 “touch” 依赖，使软件包（spec）对系统的兼容性更好。例如，旧发行版或最小化安装方式，通常在 spec 文件、rpmdb 和源的元数据中不包含这些包的条目。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">%post</span><br><span class="line">/bin/touch --no-create %&#123;_datadir&#125;/icons/hicolor &amp;&gt;/dev/null || :</span><br><span class="line"></span><br><span class="line">%postun</span><br><span class="line">if [ $1 -eq 0 ] ; then</span><br><span class="line">    /bin/touch --no-create %&#123;_datadir&#125;/icons/hicolor &amp;&gt;/dev/null</span><br><span class="line">    /usr/bin/gtk-update-icon-cache %&#123;_datadir&#125;/icons/hicolor &amp;&gt;/dev/null || :</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">%posttrans</span><br><span class="line">/usr/bin/gtk-update-icon-cache %&#123;_datadir&#125;/icons/hicolor &amp;&gt;/dev/null || :</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Systemd"><a href="#Systemd" class="headerlink" title="Systemd"></a>Systemd</h2><p>包含 systemd unit 文件的软件包，需要使用脚本以确保妥善处理这些服务。默认服务可以启用或禁用。确定哪些情况下可以启动服务，请参考 FESCo 策略： <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Starting_services_by_default" title="Starting services by default">Starting_services_by_default</a>。升级包时，如果服务正在运行，则会重启服务；如果服务未运行，则不启动它。同时，如果服务当前被禁用，则服务不会启用。</p>
+<h3 id="新软件包"><a href="#新软件包" class="headerlink" title="新软件包"></a>新软件包</h3><p><a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/File:Note.png"><img src="/images/35px-Note.png" alt="Note.png"></a></p>
+<p><strong>什么是新软件包?</strong> 在这段文字中，一个新软件包指不包含任何 SysV init 脚本文件的包。</p>
+<h4 id="Scriptlets"><a href="#Scriptlets" class="headerlink" title="Scriptlets"></a>Scriptlets</h4><p>Fedora 18+ 之后的 systemd 软件包，提供了一系列宏来帮助处理 systemd 服务。这些宏的功能相当于旧版本 Fedora 的启动脚本，但它还加入了 systemd “presets” 支持，参考文档： <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Features/PackagePresets">https://fedoraproject.org/wiki/Features/PackagePresets</a> 注意不要使用 %systemd_requires 宏。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Requires(post): systemd</span><br><span class="line">Requires(preun): systemd</span><br><span class="line">Requires(postun): systemd</span><br><span class="line">BuildRequires: systemd</span><br><span class="line"></span><br><span class="line">[...]</span><br><span class="line">%post</span><br><span class="line">%systemd_post apache-httpd.service</span><br><span class="line"></span><br><span class="line">%preun</span><br><span class="line">%systemd_preun apache-httpd.service</span><br><span class="line"></span><br><span class="line">%postun</span><br><span class="line">%systemd_postun_with_restart apache-httpd.service </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>有些服务不支持重启（如 D-Bus 和某些存储守护进程）。如果你的服务不需要在升级时重启，使用以下 <code>%post</code> 脚本代替以上脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%postun</span><br><span class="line">%systemd_postun</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果你的软件包包含的一个或多个 systemd unit，需要在安装时默认启用，它们 <strong>必须</strong> 符合 <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Starting_services_by_default" title="Starting services by default">Fedora preset policy</a>。</p>
+<p>宏的细节信息，请参考以下链接： <a target="_blank" rel="noopener" href="http://cgit.freedesktop.org/systemd/systemd/tree/src/core/macros.systemd.in">http://cgit.freedesktop.org/systemd/systemd/tree/src/core/macros.systemd.in</a> <a target="_blank" rel="noopener" href="http://www.freedesktop.org/software/systemd/man/daemon.html">http://www.freedesktop.org/software/systemd/man/daemon.html</a></p>
+<h3 id="将软件包从-SysV-init-脚本迁移至-Systemd-Unit"><a href="#将软件包从-SysV-init-脚本迁移至-Systemd-Unit" class="headerlink" title="将软件包从 SysV init 脚本迁移至 Systemd Unit"></a>将软件包从 SysV init 脚本迁移至 Systemd Unit</h3><p>当从包含 SysV init 脚本的软件包升级至包含 systemd unit 文件的软件包时，将使用新的管理策略，不迁移用户之前的配置。因此，可以简单的使用以上脚本，不必担心将 SysV 的相关信息迁移到 systemd。</p>
+<p><a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/File:Warning.png"><img src="/images/35px-Warning.png" alt="Warning.png"></a></p>
+<p><strong>在发行版之间迁移</strong> 软件包严禁从 systemd 更新到一个不包含 systemd 的版本。由于迁移将重置系统管理服务。只允许在 Fedora 版本间进行迁移。</p>
+<h2 id="Shells"><a href="#Shells" class="headerlink" title="Shells"></a>Shells</h2><p><code>/etc/shells</code> 配置文件用于控制应用程序是否可以作为系统的用户登录 shell。它包含用于系统的有效 shells。如果你制作了一个新的 shell 软件包，你需要将 shell 添加至此文件。详细参考： <code>man 5 SHELLS</code> 获得更多信息。</p>
+<p>由于此配置可以编辑，所以首先需要确定配置已包含相关路径。如果路径不存在，就需要查看 shell 的二进制文件路径。自从 Fedora 17 应用 UsrMove Feature 后，<code>/bin</code> 作为 <code>/usr/bin</code> 目录的软链接，我们需要导出所有路径至 <code>/etc/shells</code> 文件。以下脚本，以打包名为 “foo” 的 shell 为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">%post</span><br><span class="line">if [ &quot;$1&quot; = 1 ]; then</span><br><span class="line">  if [ ! -f %&#123;_sysconfdir&#125;/shells ] ; then</span><br><span class="line">    echo &quot;%&#123;_bindir&#125;/foo&quot; &gt; %&#123;_sysconfdir&#125;/shells</span><br><span class="line">    echo &quot;/bin/foo&quot; &gt;&gt; %&#123;_sysconfdir&#125;/shells</span><br><span class="line">  else</span><br><span class="line">    grep -q &quot;^%&#123;_bindir&#125;/foo$&quot; %&#123;_sysconfdir&#125;/shells || echo &quot;%&#123;_bindir&#125;/foo&quot; &gt;&gt; %&#123;_sysconfdir&#125;/shells</span><br><span class="line">    grep -q &quot;^/bin/foo$&quot; %&#123;_sysconfdir&#125;/shells || echo &quot;/bin/foo&quot; &gt;&gt; %&#123;_sysconfdir&#125;/shells</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">%postun</span><br><span class="line">if [ &quot;$1&quot; = 0 ] &amp;&amp; [ -f %&#123;_sysconfdir&#125;/shells ] ; then</span><br><span class="line">  sed -i &#x27;\!^%&#123;_bindir&#125;/foo$!d&#x27; %&#123;_sysconfdir&#125;/shells</span><br><span class="line">  sed -i &#x27;\!^/bin/foo$!d&#x27; %&#123;_sysconfdir&#125;/shells</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/packaging/" rel="tag"># packaging</a>
+              <a href="/tags/package-management/" rel="tag"># package-management</a>
+              <a href="/tags/fedora/" rel="tag"># fedora</a>
+              <a href="/tags/rpm/" rel="tag"># rpm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/02/28/centos-7-yum-lnmp/" rel="prev" title="CentOS 7 YUM 10分钟快速安装 LNMP 环境">
+                  <i class="fa fa-angle-left"></i> CentOS 7 YUM 10分钟快速安装 LNMP 环境
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/03/02/apply-for-ibm-mainframe-trial/" rel="next" title="免费申请120天的IBM PowerPC s390x大型机VPS试用">
+                  免费申请120天的IBM PowerPC s390x大型机VPS试用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

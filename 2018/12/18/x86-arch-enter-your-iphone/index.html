@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="来源：https:&#x2F;&#x2F;lcq2.github.io&#x2F;x86_iphone&#x2F; 介绍生活中，我是一名从事基带开发的漏洞研究员。正如每个漏洞研究人员都知道的那样，了解最新技术发展对于您的工作成功是至关重要的。当然，在Apple宣布其新的，闪亮的，大的，更大的和最大的iPhone智能手机系列之后，我从http:&#x2F;&#x2F;ipsw.me下载了一些OTA固件并开始研究新的基带固件。 我发现的东西在我的脊椎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="x86架构进入你的iPhone">
+<meta property="og:url" content="https://wiki.wenyinos.com/2018/12/18/x86-arch-enter-your-iphone/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="来源：https:&#x2F;&#x2F;lcq2.github.io&#x2F;x86_iphone&#x2F; 介绍生活中，我是一名从事基带开发的漏洞研究员。正如每个漏洞研究人员都知道的那样，了解最新技术发展对于您的工作成功是至关重要的。当然，在Apple宣布其新的，闪亮的，大的，更大的和最大的iPhone智能手机系列之后，我从http:&#x2F;&#x2F;ipsw.me下载了一些OTA固件并开始研究新的基带固件。 我发现的东西在我的脊椎">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-8d2cb7b111ba00e64927f86be503a08f_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-88da1dcf9248a899a75962e2c6769848_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-4e8b193a974c3ddcdc3ae59c6ede2e27_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-22a6120c1e5a2a5643a167e845b4831f_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-618b366c3513c0067d1903a58781894f_hd.jpg">
+<meta property="article:published_time" content="2018-12-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2018-12-17T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="modem">
+<meta property="article:tag" content="x86">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/v2-8d2cb7b111ba00e64927f86be503a08f_hd.jpg">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2018/12/18/x86-arch-enter-your-iphone/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2018/12/18/x86-arch-enter-your-iphone/","path":"2018/12/18/x86-arch-enter-your-iphone/","title":"x86架构进入你的iPhone"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>x86架构进入你的iPhone | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%81-%E4%BB%80%E4%B9%88-%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">谁&#x2F;什么&#x2F;在哪里？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%80%81%E6%AC%BE%E7%9A%84%E8%8B%B1%E7%89%B9%E5%B0%94%E5%9F%BA%E5%B8%A6"><span class="nav-number">3.</span> <span class="nav-text">老款的英特尔基带</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%9A%84%E8%8B%B1%E7%89%B9%E5%B0%94%E5%9F%BA%E5%B8%A6%E2%80%A6%E2%80%A6%E6%81%90%E6%80%96%E2%80%A6%E2%80%A6%E6%81%90%E6%80%96%E2%80%A6%E2%80%A6"><span class="nav-number">4.</span> <span class="nav-text">新的英特尔基带……恐怖……恐怖……</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/12/18/x86-arch-enter-your-iphone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="x86架构进入你的iPhone | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          x86架构进入你的iPhone
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-18T00:00:00+08:00">2018-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>来源：<a href="http://link.zhihu.com/?target=https://lcq2.github.io/x86_iphone/">https://lcq2.github.io/x86_iphone&#x2F;</a></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>生活中，我是一名从事基带开发的漏洞研究员。正如每个漏洞研究人员都知道的那样，了解最新技术发展对于您的工作成功是至关重要的。当然，在Apple宣布其<strong>新的，闪亮的，大的，更大的和最大的</strong>iPhone智能手机系列之后，我从<a href="http://link.zhihu.com/?target=http://ipsw.me">http://ipsw.me</a>下载了一些OTA固件并开始研究新的基带固件。</p>
+<p>我发现的东西在我的脊椎上发出一阵惊骇，那种只在夜间玩Doom的恐怖，独自在你的房间，没有灯光，可以产生。忍受我，我会告诉你我发现了什么……</p>
+<p><em>注意</em>：这只是一些初步分析，我不打算描述与基带恢复相关的任何内容，这不是本篇的范围。</p>
+<h2 id="谁-什么-在哪里？"><a href="#谁-什么-在哪里？" class="headerlink" title="谁&#x2F;什么&#x2F;在哪里？"></a>谁&#x2F;什么&#x2F;在哪里？</h2><p>基带cpu是一个独立的核心，存在于手机中，负责处理2g &#x2F; 3g &#x2F; 4g &#x2F; cdma &#x2F; 5g无线通信。鉴于这些标准的荒谬复杂性，现在的基带cpu必须非常强大且足够通用，因此基于FPGA的定制IP的时代早已过去，至少对于主要部分而言。在现代智能手机上已经有很多关于基带的说法和文章，所以我不再重复了。为了我们的目的，您只需要知道通常基带是使用嵌入式低功耗CPU实现的（译者注：通常使用简单的嵌入式架构），例如ARM（Cortex-M，Cortex-R或其他内容），Qualcomm Hexagon（一种通用，VLIW dsp）或其他或多或少的已知架构。</p>
+<p>Apple在这方面并不特别，直到iPhone8 &#x2F; iPhoneX（译者注：原文有误，iPhone7&#x2F;7P开始使用不同的基带），它们曾经拥有两个不同的基带，一个用于CDMA市场，另一个用于其他所有基带。CDMA市场区域基于Qualcomm Hexagon dsp，而其他基于Intel XMMxxxx架构。对于那些喜欢玩iPhone固件的人来说，您可能已经在ipsw中看到了MAVxxx和ICExxx文件，这两个文件分别包含基于Qualcomm的设备（MAV）和基于Intel的设备（ICE）的固件。</p>
+<p>您可能知道，Apple决定放弃高通，现在他们只使用基于英特尔的基带，因此本篇将专注讨论。</p>
+<h2 id="老款的英特尔基带"><a href="#老款的英特尔基带" class="headerlink" title="老款的英特尔基带"></a>老款的英特尔基带</h2><p>让我们来看看上一代的英特尔基带，一个用于iPhoneX的基带。如果你下载了</p>
+<p>一个ipsw GSM固件并解压缩它（ipsw文件只是zip文件），除了其他之外，还有一个“固件”文件夹。在这个文件夹中你会看到几个文件：“ICE17-1.04.52.Release.bbfw”和“Mav17-1.91.00.Release.bbfw”。版本当然会改变，这些版本适用于带有iOS 11.4beta3的iPhone8。这些文件再次是zip文件，我们对ICE17-xxx感兴趣，让我们解压缩并查看内容：<br><img src="/images/v2-8d2cb7b111ba00e64927f86be503a08f_hd.jpg"><br>这里值得考虑。熟悉嵌入式固件反汇编的人，当然会把目光投向“psi_ram.bin”和“ebl.bin”。对其内容进行快速十六进制转储，将立即显示它们包含ARM代码。事实上，“psi_ram.bin”是stage0引导加载程序，它将在某个地址加载“ebl.bin”并跳转到其入口点。然后，ebl.bin将加载所有其他文件并跳转到SYS_SW.elf中包含的主固件。为了确定，让我们使用IDA并打开psi_ram.bin，加载地址无关紧要，只需将其设置为0：<br><img src="/images/v2-88da1dcf9248a899a75962e2c6769848_hd.jpg"><br>这里没什么奇怪的，它是你的标准嵌入式ARM启动代码，有一些与这个特定SoC相关的自定义设置。继续前进，psi_ram将加载ebl并跳转到它，你可以自己找到代码，并不复杂。重要的是，这是ARM代码。</p>
+<h2 id="新的英特尔基带……恐怖……恐怖……"><a href="#新的英特尔基带……恐怖……恐怖……" class="headerlink" title="新的英特尔基带……恐怖……恐怖……"></a>新的英特尔基带……恐怖……恐怖……</h2><p>今天早上醒来，我想分析新版本的基带固件，以了解改变了什么以及在哪里。所以我从<a href="http://link.zhihu.com/?target=http://ipsw.me">http://ipsw.me</a>下载了一个新的iPhone的随机OTA，特别是：<a href="http://link.zhihu.com/?target=https://ipsw.me/otas/iPhone11,2">https：&#x2F;&#x2F;ipsw.me&#x2F;otas&#x2F;iPhone11,2</a>，应该是新的iPhone Xs。我经历了通常的阶段（下载，解压缩，解压缩，解压缩，复制等等），我将psi_ram.bin加载到IDA中，我选择ARM little endian，以及…大量未定义数据。我按“C”就像一个白痴大约200次，我重新加载文件多次，我尝试另一个IDA版本，我尝试用Capstone反汇编字节，我手动拆卸它们，什么都没有……我得到的只是无效代码。所以我回去睡觉，因为显然这不是一个美好的一天。</p>
+<p>大约一个小时后我再次醒来，我再次下载同一型号的ipsw，我会像往常一样完成所有相同的步骤。代码仍然无效。我的第一个猜测是代码是加密的，所以我使用一些随机工具来分析被加密文件，没有，它非常低。好吧，这些天你不能相信工具，所以我编写了自己的脚本来计算，再次，太低而不能加密，无论如何，通过快速的“肉眼”分析也很清楚，即使你不应该过度相信你的眼睛。</p>
+<p>我盯着屏幕看几分钟，想着发生了什么。但是当然，作为一个逆转器，你永远不应该放弃，所以我尝试了我所知道的每一个可能的RISC架构，并且相信我，它们中有很多（不是我的意思，很多，我把所有从Dreamcast SH4转移到富士通&#x2F;西门子在我的尼康D90内跑，并…没什么，我得到的只是垃圾。我的下一个猜测是：好的，它是用一些熵保留算法加密的。我尝试了一些我知道的加密方法，即使我不是专业用户，仍然没有。</p>
+<p>我又喝了一杯咖啡，在我看来，我开始认为这是一个笑话：fuck it，这是x86，因为英特尔已经疯了。我开始疯狂地对这个想法大笑，但是你知道，我已经尝试了所有东西，所以我重新打开“psi_ram.bin”并在IDA中保留默认的“MetaPC”架构，并且……<br><img src="/images/v2-4e8b193a974c3ddcdc3ae59c6ede2e27_hd.jpg"><br>我无法相信自己的眼睛……我正在寻找基带CPU内运行的嵌入式x86代码。我认为这只是偶然的机会，不知为何，我最终得到了有效的x86代码，所以我看了另一个函数（注意：IDA自动解析了大部分代码）和…….<br><img src="/images/v2-22a6120c1e5a2a5643a167e845b4831f_hd.jpg"><br>holy shit …</p>
+<p>lgdt … mov ds，eax … jmp far ptr 8：xxx，你不能得到比这个更像x86的代码了。这绝不是巧合，这必须是有效的x86代码……我完全无言以及有些敬畏，因为这让我想起了我在386保护模式下运行的引导加载程序和操作系统时的年轻时光。</p>
+<p>但我理性的部分告诉我“嘿，可能他们只是决定使用嵌入式x86 mcu启动系统，显然主要固件仍然在ARM上运行”，所以我把注意力转向主要固件“SYS_SW.elf”。我看看ELF标题，它说ARM ……很好。我把它加载到IDA中，然后我得到垃圾……再次！我想…..</p>
+<p>what.the.fuck，我尝试再次使用MetaPC加载它…… BOOM，有效的x86代码！随机片段：<br><img src="/images/v2-618b366c3513c0067d1903a58781894f_hd.jpg"><br>This is awesome…</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>这并没有什么，我发现这是很有趣的并想分享。如果你觉得自己错过了生活中的x86核心，那么现在有一个或数个与你在一起，所以你不会再感到孤单。我没有时间分析其他模型，但我的猜测是它们也在x86机构上运行。</p>
+<p>接下来会发生什么？我们打算在手机中使用z80吗？为什么不是6502？天啊，我很想在我的手机里本地运行C64基本解释器….</p>
+<p>不是真的，我不批评苹果或英特尔使用x86架构，我真的不在乎，但是……我的个人观点认为，在这个世界上出现了一些问题。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>你可能在以下内容中发现有用的信息，无特别顺序：</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=https://www.usenix.org/system/files/conference/woot12/woot12-final24.pdf">Baseband Attacks: Remote Exploitation of Memory Corruptions in CellularProtocol Stacks</a> by Ralf-Philipp Weinmann</li>
+<li><a href="http://link.zhihu.com/?target=https://events.ccc.de/congress/2011/Fahrplan/attachments/2022_11-ccc-qcombbdbg.pdf">Reverse engineering a Qualcomm baseband</a> by Guillaume Delugré</li>
+<li><a href="http://link.zhihu.com/?target=http://archive.hack.lu/2010/Weinmann-All-Your-Baseband-Are-Belong-To-Us-slides.pdf">All Your Baseband Are Belong To Us</a> by Ralf-Philipp Weinmann</li>
+<li><a href="http://link.zhihu.com/?target=https://comsecuris.com/slides/recon2016-breaking_band.pdf">Breaking Band - reverse engineering and exploiting the shannon baseband</a>by Nico Golde, Daniel Komaromy</li>
+<li><a href="http://link.zhihu.com/?target=https://comsecuris.com/blog/posts/path_of_least_resistance/">Path of Least Resistance: Cellular Baseband to Application Processor Escalation on Mediatek Devices</a> by György Miru</li>
+<li><a href="http://link.zhihu.com/?target=https://comsecuris.com/blog/posts/theres_life_in_the_old_dog_yet_tearing_new_holes_into_inteliphone_cellular_modems/">There’s Life in the Old Dog Yet: Tearing New Holes into Intel&#x2F;iPhone Cellular Modems</a> by Nico Golde</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/modem/" rel="tag"># modem</a>
+              <a href="/tags/x86/" rel="tag"># x86</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/11/xda-recover-huawei-magisk-support/" rel="prev" title="XDA开发者已修复华为设备的Magisk支持">
+                  <i class="fa fa-angle-left"></i> XDA开发者已修复华为设备的Magisk支持
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/18/how-to-build-fuchsia/" rel="next" title="（转）Fushsia编译指南">
+                  （转）Fushsia编译指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
