@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文汇总开源项目打包分发（RPM &#x2F; DEB &#x2F; Arch PKGBUILD &#x2F; Electron &#x2F; AppImage）、GitHub Actions CI 流水线以及桌面系统集成中积累的踩坑记录。适用于需要同时发布多个平台产物的个人与团队项目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨平台打包与 CI 发布实践踩坑集">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/09/17/packaging-ci-system-integration-pitfalls/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="本文汇总开源项目打包分发（RPM &#x2F; DEB &#x2F; Arch PKGBUILD &#x2F; Electron &#x2F; AppImage）、GitHub Actions CI 流水线以及桌面系统集成中积累的踩坑记录。适用于需要同时发布多个平台产物的个人与团队项目。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-16T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="arch-linux">
+<meta property="article:tag" content="ci">
+<meta property="article:tag" content="github-actions">
+<meta property="article:tag" content="kde">
+<meta property="article:tag" content="packaging">
+<meta property="article:tag" content="rpm">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/09/17/packaging-ci-system-integration-pitfalls/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/09/17/packaging-ci-system-integration-pitfalls/","path":"2026/09/17/packaging-ci-system-integration-pitfalls/","title":"跨平台打包与 CI 发布实践踩坑集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>跨平台打包与 CI 发布实践踩坑集 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Arch-Linux-%E6%89%93%E5%8C%85%EF%BC%9ALTO-%E6%A0%B9%E5%9B%A0%E6%8E%92%E6%9F%A5"><span class="nav-number">1.</span> <span class="nav-text">一、Arch Linux 打包：LTO 根因排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81RPM-DEB-%E6%89%93%E5%8C%85%E7%BB%86%E8%8A%82"><span class="nav-number">2.</span> <span class="nav-text">二、RPM &#x2F; DEB 打包细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81GitHub-Actions-CI-%E9%99%B7%E9%98%B1"><span class="nav-number">3.</span> <span class="nav-text">三、GitHub Actions CI 陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Electron-%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%EF%BC%88monorepo%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、Electron 应用打包（monorepo）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%A1%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90"><span class="nav-number">5.</span> <span class="nav-text">五、桌面系统集成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/09/17/packaging-ci-system-integration-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="跨平台打包与 CI 发布实践踩坑集 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          跨平台打包与 CI 发布实践踩坑集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-09-17 00:00:00" itemprop="dateCreated datePublished" datetime="2026-09-17T00:00:00+08:00">2026-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文汇总开源项目打包分发（RPM &#x2F; DEB &#x2F; Arch PKGBUILD &#x2F; Electron &#x2F; AppImage）、GitHub Actions CI 流水线以及桌面系统集成中积累的踩坑记录。适用于需要同时发布多个平台产物的个人与团队项目。</p>
+<span id="more"></span>
+
+<h2 id="一、Arch-Linux-打包：LTO-根因排查"><a href="#一、Arch-Linux-打包：LTO-根因排查" class="headerlink" title="一、Arch Linux 打包：LTO 根因排查"></a>一、Arch Linux 打包：LTO 根因排查</h2><p><strong>现象</strong>：PKGBUILD 在 CI 持续构建失败，报 <code>ld.lld: undefined symbol: sqlite3_errmsg</code> 等链接错误。</p>
+<p><strong>排查弯路</strong>：在 CI 上盲试了 5 轮、加了 3 个无依据的 workaround（换 rustup 工具链、改 linker、链系统 SQLite）都不解决。</p>
+<p><strong>正确的复现方法</strong>：本地 <code>podman run</code> 真实 <code>archlinux:base-devel</code> 容器，<code>makepkg</code> 逐步加标志复现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">干净构建成功 → 加基础 CFLAGS 仍成功 → 加 -flto=auto 立即复现</span><br></pre></td></tr></table></figure>
+
+<p><strong>根因</strong>：Arch 的 makepkg <strong>默认启用 LTO</strong>，把 <code>-flto=auto</code> 注入 CFLAGS，使 SQLite&#x2F;ring 的 C 对象带 LTO 位码，rustc 链接阶段无法解析符号。<strong>修复</strong>：PKGBUILD 清 LTO 标志 + <code>-C lto=off</code>。</p>
+<p><strong>教训</strong>：本地穷举时漏测了 LTOFLAGS，就该先在容器里完整复现再推 CI——“为什么要把 PKGBUILD 直接推上去盲试”。</p>
+<p><strong>Arch 包规则补充</strong>：</p>
+<ul>
+<li>Arch 没有独立的 <code>cargo</code> 包：<code>rust</code> 包 provides&#x2F;conflicts&#x2F;replaces cargo，<code>makedepends</code> 只列 <code>rust</code>（Fedora 相反：cargo&#x2F;rust 是独立包，两个都要列）；</li>
+<li>Arch 官方只支持 x86_64（arm64 无官方镜像），ARM 用户按 AUR 惯例本地编译。</li>
+</ul>
+<h2 id="二、RPM-DEB-打包细节"><a href="#二、RPM-DEB-打包细节" class="headerlink" title="二、RPM &#x2F; DEB 打包细节"></a>二、RPM &#x2F; DEB 打包细节</h2><ul>
+<li><strong><code>rpmbuild</code> 的 Source0</strong> 指向 GitHub tag tarball 时需自备 <code>SOURCES/v0.9.x.tar.gz</code>，且顶层目录必须叫 <code>&lt;name&gt;-&lt;version&gt;/</code>；</li>
+<li><strong><code>git archive</code> 只打已提交内容</strong>——改动未提交则包里没有新功能（打包前的”忘记提交”会被静默吞掉）；</li>
+<li><strong>删除”冗余副本”前先核实</strong>：<code>/usr/local/sbin</code> 是 <code>/usr/local/bin</code> 的软链接（usrmerge 布局），把它当冗余删掉时实际删除了 RPM 拥有的文件，导致命令失效——用 <code>rpm -qf</code> + 软链接解析确认；</li>
+<li><strong>DEB 构建 <code>dpkg-checkbuilddeps</code> 报缺 cargo&#x2F;rustc</strong>：CI 里 Rust 由 rustup 安装而非 apt 包，加 <code>-d</code> 跳过校验；</li>
+<li>RPM 卸载时被用户修改过的配置文件会另存为 <code>.rpmsave</code>——排查”配置不生效”时要检查。</li>
+</ul>
+<h2 id="三、GitHub-Actions-CI-陷阱"><a href="#三、GitHub-Actions-CI-陷阱" class="headerlink" title="三、GitHub Actions CI 陷阱"></a>三、GitHub Actions CI 陷阱</h2><ul>
+<li><strong>re-run 沿用旧 commit 的 workflow 定义</strong>：修改过的 job 无法靠 re-run 生效，必须打新 tag；</li>
+<li><strong><code>upload-artifact</code> 以通配符公共前缀为根保留子目录</strong>，publish 时 <code>files: artifacts/*</code> 不递归 → 产物静默丢失（<code>sha256sum *</code> 遇目录报错又被 grep 吞掉，CI 依然绿色）；</li>
+<li><strong>容器化打包四连坑</strong>：fpm 缺 rpmbuild&#x2F;bsdtar 后端；容器无 C++ 工具链导致 node-gyp 编译失败（补 build-essential）；无 arm64 镜像要移除对应目标；容器内 git <code>dubious ownership</code> 拒绝操作（加 <code>safe.directory</code>）；</li>
+<li><strong>容器 shell 是 dash</strong>：<code>[[</code> 与花括号展开均不可用；Debian 12 无 <code>magick</code>（只有 ImageMagick 6）——跨发行版脚本要按 POSIX 写；</li>
+<li><strong><code>setup-android</code> 类 action 可能执行已移除的 SDK 工具</strong>：某版本 action 执行已不存在的 <code>sdkmanager tools</code>，直接删掉该 action 即可；</li>
+<li><strong>workflow 里 YAML heredoc 缩进问题</strong>会报 “workflow file issue”——改单行 <code>python3 -c</code> 更稳；</li>
+<li><strong>Ubuntu 自带 setuptools 与打包工具依赖的 setuptools_scm 不兼容</strong>：<code>AttributeError: ignore_egg_info_in_manifest</code> → 钉 <code>setuptools_scm&lt;10</code>；</li>
+<li><strong>依赖源被墙</strong>：<code>dbus.freedesktop.org</code> 超时 → 换 gitlab.freedesktop.org；<code>raw.githubusercontent.com</code> 需代理时，<code>github.com</code> HTTPS git 不通可改 SSH 443。</li>
+</ul>
+<h2 id="四、Electron-应用打包（monorepo）"><a href="#四、Electron-应用打包（monorepo）" class="headerlink" title="四、Electron 应用打包（monorepo）"></a>四、Electron 应用打包（monorepo）</h2><ul>
+<li><strong>显示名与数据目录名解耦</strong>：改 exe 显示名时若连带改了 electron-builder 的 productName，userData 目录会随之改变，导致与旧版本的数据（配置&#x2F;凭据）不再共享；</li>
+<li><strong>四段版本号不可用</strong>：<code>semver.coerce(&#39;3.14.3.1&#39;)</code> 得到 <code>3.14.3</code>，更新检测失效——跟主线大版本 + patch 自增更安全；</li>
+<li><strong>CI 打包缺运行时身份</strong>：未显式设置生产环境标识时，产物是 Preview 身份、连的是测试后端（文件名还会带 <code>_TEST</code>）；</li>
+<li><strong>ImageMagick 写 ICNS 是假的</strong>：只改扩展名、内容仍是 PNG，macOS 上失效 → 用 Pillow 按标准 TOC 生成 ic07–ic14；</li>
+<li><strong>rpm 与官方包共存冲突</strong>：<code>/usr/lib/.build-id/*</code> 双份生成大量路径冲突 → fpm 传 <code>_build_id_links none</code>；</li>
+<li><strong>打包体积优化</strong>：删掉依赖自带的非发行平台 prebuild 目录，80MB → 61MB。</li>
+</ul>
+<h2 id="五、桌面系统集成"><a href="#五、桌面系统集成" class="headerlink" title="五、桌面系统集成"></a>五、桌面系统集成</h2><p><strong>KDE Plasma 小工具（QML + Python）</strong>：</p>
+<ul>
+<li>QML 内嵌 Python 用分号单行拼接 <code>; if ...:</code> 是语法错误，每次启动抛异常、下载从未执行——QML 里的 Python 代码必须真多行；</li>
+<li><strong><code>configuration</code> 运行时赋值不会自动落盘</strong> appletsrc，必须显式 <code>writeConfig()</code>（参照官方 slideshow 实现）；</li>
+<li><strong>改源码只是改仓库</strong>：plasmashell 实际加载安装目录 <code>~/.local/share/plasma/wallpapers/&lt;id&gt;/</code>，必须同步安装目录再重启 plasmashell；</li>
+<li>系统级旧版本会<strong>遮蔽</strong>用户级新版本（安装前清理系统级残留）。</li>
+</ul>
+<p><strong>发布流程</strong>：</p>
+<ul>
+<li>覆盖式发布：本地无对应 tag 时先打 tag 再 force push，然后删除重建 release；CI 由 release published 触发；</li>
+<li>双架构产物同名会互相覆盖，构建后先重命名。</li>
+</ul>
+<p><strong>PDF 生成管线</strong>（中文文档）：</p>
+<ul>
+<li>方案演进：xelatex 方案在 Fedora 的 texlive 细拆包生态里依赖地狱（<code>ctex</code>&#x2F;<code>xeCJK</code>&#x2F;<code>booktabs</code> 等都不随主包，且 <code>texlive-longtable</code> 这类包名根本不存在）→ 最终改为 <code>pandoc → 内嵌样式 HTML → Chrome headless 打印 PDF</code>；</li>
+<li>Chrome 无头打印要用 <code>--headless=new --no-sandbox</code>，图片相对路径要设 base 目录；固持 Letter 忽略 CSS 的 A4 时换 WeasyPrint 更能保住表格&#x2F;代码块；</li>
+<li>Markdown 表格单元格内裸 <code>|</code> 会被当列分隔符截断（改 <code>/</code> 绕开）；<code>table-layout: fixed</code> + 百分比列宽会文字叠印，撤销 fixed 改自动布局；</li>
+<li>ASCII 图含 CJK 双宽字符会破框——整体改表格；</li>
+<li>导出 PNG 随机抽查时注意文件名补零（<code>p-1.png</code> 没有前导零会读不到）。</li>
+</ul>
+<p><strong>其他系统级任务</strong>：</p>
+<ul>
+<li><strong>指纹驱动</strong>：设备在 libfprint 无驱动时，”No devices available”是驱动缺失而非配置问题；滑动式小传感器（出图仅 103×52）即使 enroll 成功，verify 也频繁失败——匹配算法处理不了小图（上游 MR 悬置多年）。KDE 锁屏原生支持指纹，但 SDDM 登录不支持（加了 PAM 模块会无提示失败+易误锁）；</li>
+<li><strong>PHP 老应用迁移 PHP 8</strong>：<code>@</code> 只能抑制 warning&#x2F;notice，<strong>不能抑制 <code>extract()</code> 的 TypeError</strong>——<code>@extract(null)</code> 直接 Fatal error 截断了原有”缓存缺失→重建”的自愈路径。修法：数组兜底 + 强制触发缓存重建；</li>
+<li><strong>Android 固件解包</strong>：tgz 是流式压缩，tar 必须读完整个数据流才结束（12GB 包不要用短超时命令）；动态分区（vendor_dlkm&#x2F;odm）不在包内，需从 <code>super.img</code> 用 <code>lpunpack -p</code> 提取；</li>
+<li><strong>AAPT2 会自动 gunzip 以 <code>.gz</code> 结尾的 assets</strong>：APK 内变纯文本，运行时 <code>GZIPInputStream</code> 读取直接崩溃——内置数据改纯文本 JSONL 存放。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>打包与分发的坑有两类：<strong>CI 的”静默吞”</strong>（产物丢失但 CI 绿色、re-run 不生效、未提交的改动没进包）与<strong>发行版差异</strong>（包名规则、LTO 默认值、工具链版本）。对策是：CI 里对关键产物加显式断言、本地容器先行复现、把”打包前的状态检查”（已提交、版本号一致）做成脚本。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/arch-linux/" rel="tag"># arch-linux</a>
+              <a href="/tags/packaging/" rel="tag"># packaging</a>
+              <a href="/tags/rpm/" rel="tag"># rpm</a>
+              <a href="/tags/kde/" rel="tag"># kde</a>
+              <a href="/tags/ci/" rel="tag"># ci</a>
+              <a href="/tags/github-actions/" rel="tag"># github-actions</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/08/10/rust-desktop-tool-pitfalls/" rel="prev" title="Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘">
+                  <i class="fa fa-angle-left"></i> Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">116</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,541 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/10/22/githubusercontent-github-fast-speed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/10/22/githubusercontent-github-fast-speed/" class="post-title-link" itemprop="url">githubusercontent、github加速镜像</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-10-22 00:00:00" itemprop="dateCreated datePublished" datetime="2022-10-22T00:00:00+08:00">2022-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="加速地址一览"><a href="#加速地址一览" class="headerlink" title="加速地址一览"></a>加速地址一览</h2><ul>
+<li><strong><a target="_blank" rel="noopener" href="https://hub.fastgit.org/">fastgit.org</a></strong>：<a target="_blank" rel="noopener" href="https://doc.fastgit.org/">https://doc.fastgit.org/</a></li>
+<li><strong><a target="_blank" rel="noopener" href="http://cnpmjs.org/">cnpmjs.org</a></strong>：<a target="_blank" rel="noopener" href="https://github.com.cnpmjs.org/">https://github.com.cnpmjs.org/</a></li>
+<li><strong><a target="_blank" rel="noopener" href="http://gitclone.com/">gitclone.com</a></strong>：<a target="_blank" rel="noopener" href="https://gitclone.com/">https://gitclone.com/</a></li>
+<li><strong>gitee</strong>：<a target="_blank" rel="noopener" href="https://gitee.com/mirrors">https://gitee.com/mirrors</a></li>
+<li>GitHub 文件加速：<a target="_blank" rel="noopener" href="https://gh.api.99988866.xyz/">https://gh.api.99988866.xyz/</a></li>
+<li>Github 仓库加速：<a target="_blank" rel="noopener" href="https://github.zhlh6.cn/">https://github.zhlh6.cn/</a></li>
+<li>Github 仓库加速：<a target="_blank" rel="noopener" href="http://toolwa.com/github/">http://toolwa.com/github/</a></li>
+</ul>
+<h2 id="加速-clone"><a href="#加速-clone" class="headerlink" title="加速 clone"></a>加速 clone</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一：手动替换地址</span></span><br><span class="line"><span class="comment"># 原地址</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 改为</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com.cnpmjs.org/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitclone.com/github.com/kubernetes/kubernetes.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二：配置 git 自动替换</span></span><br><span class="line">git config --global url.<span class="string">&quot;https://hub.fastgit.org&quot;</span>.insteadOf https://github.com</span><br><span class="line"><span class="comment"># 测试</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 查看 git 配置信息</span></span><br><span class="line">git config --global --list</span><br><span class="line"><span class="comment"># 取消设置</span></span><br><span class="line">git config --global --<span class="built_in">unset</span> url.https://github.com/.insteadof</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/10/22/githubusercontent-github-fast-speed/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/08/25/windows-10-11-auto-login/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/25/windows-10-11-auto-login/" class="post-title-link" itemprop="url">Windows 10/11自动登录设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-08-25T00:00:00+08:00">2022-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="找回自动登录复选框的办法"><a href="#找回自动登录复选框的办法" class="headerlink" title="找回自动登录复选框的办法"></a>找回自动登录复选框的办法</h2><p>要找回这个复选框其实也很简单，只需要修改注册表的一个小地方即可。</p>
+<p>打开注册表路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/25/windows-10-11-auto-login/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/05/24/extra-packages-for-enterprise-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/24/extra-packages-for-enterprise-linux/" class="post-title-link" itemprop="url">Extra Packages for Enterprise Linux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-24 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-24T00:00:00+08:00">2022-05-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="快速指南"><a href="#快速指南" class="headerlink" title="快速指南"></a>快速指南</h2><p>我们（Fedora EPEL）提供包含存储库配置文件和公共软件包签名密钥的发布包。使用与企业操作系统的主版本对应的版本。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm">epel-release-latest-9</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm">epel-release-latest-8</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm">epel-release-latest-7</a></li>
+</ul>
+<p>如果您使用的是 CentOS Stream，我们还建议您安装相应的 epel-next-release 软件包。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/24/extra-packages-for-enterprise-linux/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/05/10/unofficial-windows-vista-x64-extender-kernel-step-by-step-installation-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/10/unofficial-windows-vista-x64-extender-kernel-step-by-step-installation-guide/" class="post-title-link" itemprop="url">Unofficial Windows Vista x64 Extender Kernel step by step installation guide</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-10 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-10T00:00:00+08:00">2022-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://wiki.wenyinos.com/wp-content/uploads/2022/05/vistaexkernsetup_02042022.7z">vistaexkernsetup_02042022.7z</a></p>
+<p><strong>All the credits for the Extended Kernel go to <a target="_blank" rel="noopener" href="https://msfn.org/board/profile/424412-win32/">@win32</a>, not me.</strong></p>
+<p>Disclaimer: I take absolutely no responsibility for any damage to your PC (or laptop or whatever) caused by following&#x2F;misfollowing this tutorial. <strong>Backup everything before continuing.</strong></p>
+<p>Special thanks to <a target="_blank" rel="noopener" href="https://msfn.org/board/profile/429240-winvispixp/">@winvispixp</a> for guide improvement suggestions.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/10/unofficial-windows-vista-x64-extender-kernel-step-by-step-installation-guide/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/05/10/unofficial-windows-vistax64-extender-kernel-installation-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/10/unofficial-windows-vistax64-extender-kernel-installation-guide/" class="post-title-link" itemprop="url">非官方 Windows Vista x64 Extender Kernel 分步安装指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-10 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-10T00:00:00+08:00">2022-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>安装包下载：<a href="https://wiki.wenyinos.com/wp-content/uploads/2022/05/vistaexkernsetup_02042022.7z">vistaexkernsetup_02042022.7z</a></strong></p>
+<p><strong>原文：<a target="_blank" rel="noopener" href="https://msfn.org/board/topic/183046-guide-vista-extended-kernel-installation/vistaexkernsetup_02042022">https://msfn.org/board/topic/183046-guide-vista-extended-kernel-installation/vistaexkernsetup_02042022</a></strong></p>
+<p><strong>扩展内核的所有学分都转到<a target="_blank" rel="noopener" href="https://msfn.org/board/profile/424412-win32/">@win32</a>， 不是我。</strong></p>
+<p>免责声明：对于因遵循&#x2F;错误遵循本教程而对您的 PC（或笔记本电脑或其他任何东西）造成的任何损坏，我绝对不承担任何责任。<strong>在继续之前备份所有内容。</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/10/unofficial-windows-vistax64-extender-kernel-installation-guide/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/03/08/enable-kernel-bbr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/08/enable-kernel-bbr/" class="post-title-link" itemprop="url">内核开启BBR方法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-08T00:00:00+08:00">2022-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-修改系统变量"><a href="#1-修改系统变量" class="headerlink" title="1. 修改系统变量"></a>1. 修改系统变量</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> su</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc=fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control=bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-保存生效"><a href="#2-保存生效" class="headerlink" title="2. 保存生效"></a>2. 保存生效</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/08/enable-kernel-bbr/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -548,535 +1083,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2020/02/07/hi1620-permon-test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/07/hi1620-permon-test/" class="post-title-link" itemprop="url">华为鲲鹏920（hi1620）服务器简易性能测试</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-02-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-07T00:00:00+08:00">2020-02-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>更新：以下为热心网友总结的i3-2120与本文中测试数据的对比：<br><img src="/images/v2-f58852fd5ee846e5e73163ea9ecc4cd6_hd.jpg"></p>
-<hr>
-<p>如图配置为4核心，16G内存，40G存储，租用的华为云KC1公测版虚拟机。<br><img src="/images/v2-6df62cfd2ece96d38dcaacec246dfa69_hd.jpg"><br><img src="/images/v2-3ea01ce930d69f4afb2b1bd7a5d833ed_hd.jpg"><br>编译环境及测试数据：<br><img src="/images/v2-88da4114edb28d70b49f708e53686d6a_hd.jpg"><br><img src="/images/v2-d150f20bf2f61d136c3fd2b0461ca529_hd.jpg"><br><strong>测试软件为Phoronix Test Suite</strong><br><img src="/images/v2-40a2e5b9ae11aabb93f8c1905f85ee5b_hd.jpg"><br>前文中数据不容易理解，以下为网站给出的对比：</p>
-<p><strong>（Aircrack-ng）</strong><br><img src="/images/v2-ecd335a8d0d0a8cdb612b3f28056af8d_hd.jpg"><br><strong>（Botan x5）</strong><br><img src="/images/v2-31383deea59ca2986bf6c8733ee98bd8_hd.jpg"><br><img src="/images/v2-779376f574d809abd5d6d5da878f7908_hd.jpg"><br><img src="/images/v2-1149852c1383d501386055520215583b_hd.jpg"><br><img src="/images/v2-5db1cb9f4505552eb75e8c334e7348a1_hd.jpg"><br><img src="/images/v2-e2fc3a1d15d35693419b94fe97258ad8_hd.jpg"><br><strong>（gnupg——软件加密测试）</strong><br><img src="/images/v2-dcf9f1edff1e762da9e377601c84b14f_hd.jpg"><br><strong>（n-queens）</strong><br><img src="/images/v2-590d352541d3c63926e954acbb8c9fd3_hd.jpg"><br><strong>(openSSL)</strong><br><img src="/images/v2-1f8a610c41834b11271b57d3c315d5bf_hd.jpg"><br><strong>（scimark）</strong><br><img src="/images/v2-28bbafbf254410507c3c315266b348a6_hd.jpg"><br><strong>（smallpt）</strong><br><img src="/images/v2-8e00ac6e3c490015e923af951a727a5e_hd.jpg"><br><strong>（sysbench）</strong><br><img src="/images/v2-6e600fd9080c58fe467b7f65621a6423_hd.jpg"><br>完整测试报告见：<a href="https://link.zhihu.com/?target=https://openbenchmarking.org/result/1909129-HV-HI1620KP910">https://openbenchmarking.org/result/1909129-HV-HI1620KP910</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/07/hi1620-permon-test/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/08/02/how-to-overclock-raspberry-pi-4-to-2-0ghz/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/02/how-to-overclock-raspberry-pi-4-to-2-0ghz/" class="post-title-link" itemprop="url">将您的树莓派4超频至2.0GHz</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-02T00:00:00+08:00">2019-08-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>上次，我使用了新的”霜塔CPU冷却风扇”用于 Raspberry Pi 4 之上，它可以很好地冷却主板，但很显然超过了极限。读者和评论者提到，固件升级后，可以将 Raspberry Pi 4 超频到 2.0 GHz。这对于我的新粉丝来说，这看起来将会非常完美！</p>
-<p>我先升级了固件和操作系统：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> rpi-update</span><br><span class="line"><span class="built_in">sudo</span> apt dist-upgrade</span><br></pre></td></tr></table></figure>
-
-<p>然后，以 root 用户（sudo）编辑 <code>/boot/config.txt</code> 文件，添加以下代码，将最大频率提升到 2.0 GHz：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/08/02/how-to-overclock-raspberry-pi-4-to-2-0ghz/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/05/20/install-entware-on-synology-nas/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/20/install-entware-on-synology-nas/" class="post-title-link" itemprop="url">Install entware repository on Synology NAS</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-20T00:00:00+08:00">2019-05-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BA%91%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index"><span itemprop="name">云服务</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><a target="_blank" rel="noopener" href="http://forum.synology.com/wiki/index.php/What_kind_of_CPU_does_my_NAS_have">ARM &amp; intel based devices</a> are supported. DSM version must be 3.2 or higher. Use armv5 installer for Marvell Kirkwood mv6282 cpu, you can use armv7 installer for newer ARM cpu’s. Although armv7 repo was compiled with cortex-a9 optimization it was successfully tested on Marvell Armada XP based NAS.</p>
-<h2 id="Deploying-Entware-ng"><a href="#Deploying-Entware-ng" class="headerlink" title="Deploying Entware-ng"></a>Deploying Entware-ng</h2><h3 id="1-Create-a-folder-on-your-hdd-outside-rootfs"><a href="#1-Create-a-folder-on-your-hdd-outside-rootfs" class="headerlink" title="1. Create a folder on your hdd (outside rootfs)"></a>1. Create a folder on your hdd (outside rootfs)</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/20/install-entware-on-synology-nas/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/03/17/using-wifi-adapter-unas40/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/17/using-wifi-adapter-unas40/" class="post-title-link" itemprop="url">在万由U-NAS 4.0中使用无线网卡</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-03-17 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-17T00:00:00+08:00">2019-03-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>U-NAS 4.0 使用了 debian 9，内核版本提升到 4.9.0-8-amd64，支持的硬件更多，以前 3.0 的时候驱动很难编译过去（不知道系统内少了什么组件）。这里找到一块使用 MT7601u 的不知名无线网卡插在 nas 上面配置。</p>
-<h2 id="SSH-连接"><a href="#SSH-连接" class="headerlink" title="SSH 连接"></a>SSH 连接</h2><p>获取 root 权限：</p>
-<blockquote>
-<p>（root 密码 yutech，建议 adduser 创建个用户然后 visudo 写到 sudo 里面方便后续操作，自带 admin 账户连 &#x2F;home 主目录都没有）</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/17/using-wifi-adapter-unas40/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/03/17/windows-server-2019-intel-i211-driver/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/17/windows-server-2019-intel-i211-driver/" class="post-title-link" itemprop="url">Windows Server 2019安装Intel I211网卡驱动</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-03-17 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-17T00:00:00+08:00">2019-03-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>由于Windows系统原因，一般桌面主板自带的Intel网卡（典型的包括I211、I211-AT、I217-V、I218-V、I219-V）等，都无法在Windows Server系统上找到对应的驱动。但是，这些网卡几乎都有对应的服务器主板版本（例如I219-LM）。这些网卡其实并没有本质上的差别，只是在驱动层面，利用不同的驱动签名使得显卡不能通用。本文将详细说明如何在Windows Server系统上安装这些驱动。</p>
-<h3 id="1、驱动下载"><a href="#1、驱动下载" class="headerlink" title="1、驱动下载"></a>1、驱动下载</h3><p>首先，在Intel官网下载网卡驱动程序包，由于Windows Server 2019刚发布，所以目前没有2019的专门页面，但可以通用Windows Server 2016版本（<a target="_blank" rel="noopener" href="https://downloadcenter.intel.com/download/26092/Intel-Network-Adapter-Driver-for-Windows-Server-2016-">下载页面</a>）。下载完成后，得到一个PROWinx64.exe的自解压安装包，使用7zip或其他解压软件解压到任意文件夹。</p>
-<h3 id="2、修改驱动程序文件（以I211为例）"><a href="#2、修改驱动程序文件（以I211为例）" class="headerlink" title="2、修改驱动程序文件（以I211为例）"></a>2、修改驱动程序文件（以I211为例）</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/17/windows-server-2019-intel-i211-driver/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/" class="post-title-link" itemprop="url">Linux(CentOS 7)下使用mono+ArchiSteamFarm挂卡</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-04T00:00:00+08:00">2019-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>首先感谢@<a href="https://link.zhihu.com/?target=http://steamcn.com/suid-191936">zjmonk</a> 发现的ArchiSteamFarm这么好的挂卡软件，在他的帖子里还提醒我可以用mono在linux上玩，真是大好人啊</p>
-<p>补充下，本教程适用于服务器上24小时不间断挂卡，个人电脑不推荐安装linux桌面系统，自己家里还是用idle master更直观</p>
-<p>FAQ： 1. 什么是mono呢？ 简单的理解，可以认为是linux环境下的.net Framework，是个开源的项目，可以让C#程序运行在linux上面 2. 为什么要用linux？ 当然是因为linux轻便性能高啦，如果能用linux挂卡，各大低配魔法主机、家里闲置的电脑、公司的服务器，都能拿来24小时挂卡！不用非得租用昂贵的Windows服务器啦！ 3. 任何linux系统都可以吗？ 本人linux小白，只保证CentOS7 64位我是测试过的，理论上Redhat也能用本教程。linux版本众多，不保证所有环境都行。 此外，mono这个东西，以前想用来开泰拉瑞亚服务器的时候用过，遭到了无情的失败，所以在一些环境里用mono无法运行一些C#程序，也是正常的…</p>
-<p>下面是教程： 1. 首先ssh连接上远程主机，进入命令行 2. 安装mono(参考了<a href="https://link.zhihu.com/?target=http://www.cnblogs.com/shanyou/p/4509980.html">CentOS 7 上部署Mono 4 和Jexus 5.6</a>)，先添加yum源。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

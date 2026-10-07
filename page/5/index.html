@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">116</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,537 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/11/28/how-to-run-intel-arc-on-fedora/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/28/how-to-run-intel-arc-on-fedora/" class="post-title-link" itemprop="url">如何让Intel Arc在Fedora上面运行</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-28 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-28T00:00:00+08:00">2023-11-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这篇文章是为了帮助 Fedora 用户尝试让 Intel Arc Alchemist 正常工作。</p>
+<p>请注意，您不需要使用 6.0 或更高版本的内核来使其正常工作，它只是提供了更好的性能。根据邮件列表和 git pull，我们应该能够在内核 6.2 之后删除下面详细介绍的设置。在此之前，Arc&#x2F;图形支持是在 i915 实验下抛出的，我们需要添加内核参数来启用它。</p>
+<p>还有一个很好的小功能是你可以保持安全启动启用！不需要关闭它或做脚本黑客和设置自动内核模块签名一样，我们仍然需要做的 Nvidia。</p>
+<blockquote>
+<p><strong>警告：</strong> 永远不要相信网上的命令，在你运行它们之前阅读并理解命令，不要怪我。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/28/how-to-run-intel-arc-on-fedora/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/11/28/use-grubby-to-edit-grub/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/28/use-grubby-to-edit-grub/" class="post-title-link" itemprop="url">使用 grubby 工具在 GRUB 中进行永久更改</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-28 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-28T00:00:00+08:00">2023-11-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/11/Screenshot_20231128_223058.png"><img src="/images/Screenshot_20231128_223058-640x480.png"></a></p>
+<h2 id="7-1-先决条件"><a href="#7-1-先决条件" class="headerlink" title="7.1 先决条件"></a>7.1 先决条件</h2><ul>
+<li>您已在您的系统上成功安装了 RHEL。</li>
+<li>您有 root 权限。</li>
+</ul>
+<h2 id="7-2-列出默认的内核"><a href="#7-2-列出默认的内核" class="headerlink" title="7.2 列出默认的内核"></a>7.2 列出默认的内核</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/28/use-grubby-to-edit-grub/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/11/26/router-asus-merlin-reset-method/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/26/router-asus-merlin-reset-method/" class="post-title-link" itemprop="url">路由器梅林固件软件中心重置方法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-26 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-26T00:00:00+08:00">2023-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>路由器梅林固件软件中心重置方法</strong> 2021年6月4日 悟空</p>
+<p><strong>文章目录</strong> 1) 1. 软件中心重置方法</p>
+<p>    1.1) 1.1 界面重置：</p>
+<p>    1.2) 1.2 命令重置： 1.3) 1.3 一键重置： 2) 2. 释放jffs空间 3) 3. 重启软件中心</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/11/26/router-asus-merlin-reset-method/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/07/09/firefox-anable-hardware-decoder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/07/09/firefox-anable-hardware-decoder/" class="post-title-link" itemprop="url">Firefox 打开视频硬解码功能</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-09 00:00:00" itemprop="dateCreated datePublished" datetime="2023-07-09T00:00:00+08:00">2023-07-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Hardware-Video-Acceleration"><a href="#Hardware-Video-Acceleration" class="headerlink" title="Hardware Video Acceleration"></a>Hardware Video Acceleration</h2><p>This is for <strong>Debian 11 &#x2F; Bullseye</strong></p>
+<p>Setup your system and install required packages: <a target="_blank" rel="noopener" href="https://wiki.debian.org/HardwareVideoAcceleration">https://wiki.debian.org/HardwareVideoAcceleration</a></p>
+<p>Starting around version 95 Firefox has enabled hardware video acceleration via VA-API but still needs to be manually turned on. <a target="_blank" rel="noopener" href="https://packages.debian.org/firefox-esr">firefox-esr</a> version 102 is available from the <a target="_blank" rel="noopener" href="https://www.debian.org/security/">Debian Security</a> repositories for Debian 11 since 2022-09-23.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/09/firefox-anable-hardware-decoder/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/07/06/allow-ssh-port-on-selinux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/07/06/allow-ssh-port-on-selinux/" class="post-title-link" itemprop="url">Allow ssh port on SELinux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-06 00:00:00" itemprop="dateCreated datePublished" datetime="2023-07-06T00:00:00+08:00">2023-07-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Step-3-Allow-new-SSH-port-on-SELinux"><a href="#Step-3-Allow-new-SSH-port-on-SELinux" class="headerlink" title="Step 3: Allow new SSH port on SELinux"></a>Step 3: Allow new SSH port on SELinux</h2><p>The default port labelled for SSH is 22.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -l | grep ssh</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/06/allow-ssh-port-on-selinux/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/29/oh-my-zsh-install-in-china/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/29/oh-my-zsh-install-in-china/" class="post-title-link" itemprop="url">在国内安装 oh-my-zsh</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-29 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-29T00:00:00+08:00">2023-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="安装-zsh"><a href="#安装-zsh" class="headerlink" title="安装 zsh"></a>安装 zsh</h2><p>Ubuntu 下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install zsh</span><br></pre></td></tr></table></figure>
+
+<p>macOS 下：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/06/29/oh-my-zsh-install-in-china/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -544,539 +1075,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/05/17/install-docker-on-support-podman-only/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/17/install-docker-on-support-podman-only/" class="post-title-link" itemprop="url">在仅支持Podman的系统（如RHEL/Rocky）中安装Docker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-17 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-17T00:00:00+08:00">2023-05-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Docker 是一个应用程序，它使在容器中运行应用程序进程变得简单和容易，这就像虚拟机一样，只是更便携，更资源友好，更依赖于主机操作系统。有关 Docker 容器的不同组件的详细介绍，请查看 <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-an-introduction-to-common-components">Docker 生态系统：通用组件介绍</a>。</p>
-<p>在本教程中，您将学习如何在现有的 Rocky Linux 9 安装上安装和使用它。</p>
-<p>Rocky Linux 9 服务器的非 root 用户使用 <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/initial-server-setup-with-rocky-linux-9">Rocky Linux 9 的初始设置指南设置了 <code>sudo</code> 权限</a>，解释了如何设置。</p>
-<p>本教程中的所有命令都应以非 root 用户身份运行。如果该命令需要 root 访问权限，则它将以 <code>sudo</code> 开头。<a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/initial-server-setup-with-rocky-linux-9">Rocky Linux 9 的初始设置指南</a> 解释了如何添加用户并为他们提供 sudo 访问权限。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/17/install-docker-on-support-podman-only/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/05/06/intel-12-13-th-gen-use-win10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/06/intel-12-13-th-gen-use-win10/" class="post-title-link" itemprop="url">Intel 12、13代CPU在Win10、Win11系统大核调度方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-06 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-06T00:00:00+08:00">2023-05-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Intel 12、13代CPU部分U是大小核设计，操作系统Win11在调度使用核心时有一套基本规则，游戏等较重的任务交给大核的几率较高，偏重于后台或者较少人工干预的任务，交给小核或者说效能核的几率比较高，实际运行过程中，一般人更希望虚拟机或者编译等任务跑在大核上面.</p>
-<p>Win0系统的实际调度表现更加一般。经过不断的探索，微软雪藏的调度策略被人发掘，就是电源方案里隐藏有一个异构CPU调度策略，</p>
-<p>启用，并且设置优先调用大核心即性能核心、然后大核心超线程、最后小核心，Win11、Win10都可以使用，给大小核心使用者一个新的选择。至于选项显示、隐藏，电源方案复制、改名不作介绍。</p>
-<h3 id="节能模式"><a href="#节能模式" class="headerlink" title="节能模式"></a>节能模式</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/06/intel-12-13-th-gen-use-win10/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/26/fix-packagekit-switch-proxy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/26/fix-packagekit-switch-proxy/" class="post-title-link" itemprop="url">修复PackageKit无法正确切换代理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-26 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-26T00:00:00+08:00">2023-04-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>使用过代理在图形界面下安装软件包后，会出现这样的毛病：</p>
-<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/Screenshot_20230426_084431.png"><img src="/images/Screenshot_20230426_084431-1276x720.png"></a></p>
-<p>目前确认为 PackageKit 软件包的问题，无法正确切换代理，需要手动编辑配置（数据库）。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/26/fix-packagekit-switch-proxy/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/25/ubuntu-22-04-upgrade-online-remebers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/25/ubuntu-22-04-upgrade-online-remebers/" class="post-title-link" itemprop="url">Ubuntu 22.04在线升级注意事项</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-25 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-25T00:00:00+08:00">2023-04-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-某些云服务商使用自定义镜像源"><a href="#1-某些云服务商使用自定义镜像源" class="headerlink" title="1. 某些云服务商使用自定义镜像源"></a>1. 某些云服务商使用自定义镜像源</h3><p>在直接使用在线更新时会被禁用，需要使用下列命令更新：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RELEASE_UPGRADER_ALLOW_THIRD_PARTY=1 do-release-upgrade</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-新版搭载的-OpenSSH-软件包默认已拒绝-rsa-sha1-算法生成的密钥"><a href="#2-新版搭载的-OpenSSH-软件包默认已拒绝-rsa-sha1-算法生成的密钥" class="headerlink" title="2. 新版搭载的 OpenSSH 软件包默认已拒绝 rsa-sha1 算法生成的密钥"></a>2. 新版搭载的 OpenSSH 软件包默认已拒绝 rsa-sha1 算法生成的密钥</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/25/ubuntu-22-04-upgrade-online-remebers/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/22/how-to-move-wsl-dict/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/22/how-to-move-wsl-dict/" class="post-title-link" itemprop="url">如何将win10/win11的wsl子系统移动到其他位置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-22 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-22T00:00:00+08:00">2023-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><strong>建议使用</strong> <a target="_blank" rel="noopener" href="https://github.com/DDoSolitary/LxRunOffline">DDoSolitary&#x2F;LxRunOffline</a> 工具进行配置。</p>
-<p>但此工具长期未更新，在高版本 Win11 上面疑似失效（原因不明），在此提供使用 WSL 内置命令的方法。</p>
-</blockquote>
-<h2 id="适用于-Win10-11-支持-WSL1-和-WSL2-的所有版本"><a href="#适用于-Win10-11-支持-WSL1-和-WSL2-的所有版本" class="headerlink" title="适用于 Win10&#x2F;11 支持 WSL1 和 WSL2 的所有版本"></a>适用于 Win10&#x2F;11 支持 WSL1 和 WSL2 的所有版本</h2><p>首先按正常方法安装 WSL，并启动运行。</p>
-<p>确认安装好后，切换到系统的 cmd&#x2F;powershell，执行：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/22/how-to-move-wsl-dict/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/12/grub-boot-loader-customize/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/12/grub-boot-loader-customize/" class="post-title-link" itemprop="url">对 GRUB 引导装载程序进行永久性更改</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-12T00:00:00+08:00">2023-04-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="使用-grubby-工具在-GRUB-中进行永久更改。"><a href="#使用-grubby-工具在-GRUB-中进行永久更改。" class="headerlink" title="使用 grubby 工具在 GRUB 中进行永久更改。"></a>使用 grubby 工具在 GRUB 中进行永久更改。</h2><h3 id="先决条件"><a href="#先决条件" class="headerlink" title="先决条件"></a>先决条件</h3><ul>
-<li>您已在您的系统上成功安装了 RHEL。</li>
-<li>您有 root 权限。</li>
-</ul>
-<h3 id="列出默认的内核"><a href="#列出默认的内核" class="headerlink" title="列出默认的内核"></a>列出默认的内核</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/12/grub-boot-loader-customize/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

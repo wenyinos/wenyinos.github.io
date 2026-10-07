@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">116</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">162</span>
+        <span class="site-state-item-count">189</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,533 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2020/02/07/hi1620-permon-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/07/hi1620-permon-test/" class="post-title-link" itemprop="url">华为鲲鹏920（hi1620）服务器简易性能测试</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-07T00:00:00+08:00">2020-02-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>更新：以下为热心网友总结的i3-2120与本文中测试数据的对比：<br><img src="/images/v2-f58852fd5ee846e5e73163ea9ecc4cd6_hd.jpg"></p>
+<hr>
+<p>如图配置为4核心，16G内存，40G存储，租用的华为云KC1公测版虚拟机。<br><img src="/images/v2-6df62cfd2ece96d38dcaacec246dfa69_hd.jpg"><br><img src="/images/v2-3ea01ce930d69f4afb2b1bd7a5d833ed_hd.jpg"><br>编译环境及测试数据：<br><img src="/images/v2-88da4114edb28d70b49f708e53686d6a_hd.jpg"><br><img src="/images/v2-d150f20bf2f61d136c3fd2b0461ca529_hd.jpg"><br><strong>测试软件为Phoronix Test Suite</strong><br><img src="/images/v2-40a2e5b9ae11aabb93f8c1905f85ee5b_hd.jpg"><br>前文中数据不容易理解，以下为网站给出的对比：</p>
+<p><strong>（Aircrack-ng）</strong><br><img src="/images/v2-ecd335a8d0d0a8cdb612b3f28056af8d_hd.jpg"><br><strong>（Botan x5）</strong><br><img src="/images/v2-31383deea59ca2986bf6c8733ee98bd8_hd.jpg"><br><img src="/images/v2-779376f574d809abd5d6d5da878f7908_hd.jpg"><br><img src="/images/v2-1149852c1383d501386055520215583b_hd.jpg"><br><img src="/images/v2-5db1cb9f4505552eb75e8c334e7348a1_hd.jpg"><br><img src="/images/v2-e2fc3a1d15d35693419b94fe97258ad8_hd.jpg"><br><strong>（gnupg——软件加密测试）</strong><br><img src="/images/v2-dcf9f1edff1e762da9e377601c84b14f_hd.jpg"><br><strong>（n-queens）</strong><br><img src="/images/v2-590d352541d3c63926e954acbb8c9fd3_hd.jpg"><br><strong>(openSSL)</strong><br><img src="/images/v2-1f8a610c41834b11271b57d3c315d5bf_hd.jpg"><br><strong>（scimark）</strong><br><img src="/images/v2-28bbafbf254410507c3c315266b348a6_hd.jpg"><br><strong>（smallpt）</strong><br><img src="/images/v2-8e00ac6e3c490015e923af951a727a5e_hd.jpg"><br><strong>（sysbench）</strong><br><img src="/images/v2-6e600fd9080c58fe467b7f65621a6423_hd.jpg"><br>完整测试报告见：<a href="https://link.zhihu.com/?target=https://openbenchmarking.org/result/1909129-HV-HI1620KP910">https://openbenchmarking.org/result/1909129-HV-HI1620KP910</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/07/hi1620-permon-test/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/08/02/how-to-overclock-raspberry-pi-4-to-2-0ghz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/02/how-to-overclock-raspberry-pi-4-to-2-0ghz/" class="post-title-link" itemprop="url">将您的树莓派4超频至2.0GHz</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-02T00:00:00+08:00">2019-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>上次，我使用了新的”霜塔CPU冷却风扇”用于 Raspberry Pi 4 之上，它可以很好地冷却主板，但很显然超过了极限。读者和评论者提到，固件升级后，可以将 Raspberry Pi 4 超频到 2.0 GHz。这对于我的新粉丝来说，这看起来将会非常完美！</p>
+<p>我先升级了固件和操作系统：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> rpi-update</span><br><span class="line"><span class="built_in">sudo</span> apt dist-upgrade</span><br></pre></td></tr></table></figure>
+
+<p>然后，以 root 用户（sudo）编辑 <code>/boot/config.txt</code> 文件，添加以下代码，将最大频率提升到 2.0 GHz：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/02/how-to-overclock-raspberry-pi-4-to-2-0ghz/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/05/20/install-entware-on-synology-nas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/05/20/install-entware-on-synology-nas/" class="post-title-link" itemprop="url">Install entware repository on Synology NAS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-20T00:00:00+08:00">2019-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%91%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index"><span itemprop="name">云服务</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><a target="_blank" rel="noopener" href="http://forum.synology.com/wiki/index.php/What_kind_of_CPU_does_my_NAS_have">ARM &amp; intel based devices</a> are supported. DSM version must be 3.2 or higher. Use armv5 installer for Marvell Kirkwood mv6282 cpu, you can use armv7 installer for newer ARM cpu’s. Although armv7 repo was compiled with cortex-a9 optimization it was successfully tested on Marvell Armada XP based NAS.</p>
+<h2 id="Deploying-Entware-ng"><a href="#Deploying-Entware-ng" class="headerlink" title="Deploying Entware-ng"></a>Deploying Entware-ng</h2><h3 id="1-Create-a-folder-on-your-hdd-outside-rootfs"><a href="#1-Create-a-folder-on-your-hdd-outside-rootfs" class="headerlink" title="1. Create a folder on your hdd (outside rootfs)"></a>1. Create a folder on your hdd (outside rootfs)</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/05/20/install-entware-on-synology-nas/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/03/17/using-wifi-adapter-unas40/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/17/using-wifi-adapter-unas40/" class="post-title-link" itemprop="url">在万由U-NAS 4.0中使用无线网卡</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-17 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-17T00:00:00+08:00">2019-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>U-NAS 4.0 使用了 debian 9，内核版本提升到 4.9.0-8-amd64，支持的硬件更多，以前 3.0 的时候驱动很难编译过去（不知道系统内少了什么组件）。这里找到一块使用 MT7601u 的不知名无线网卡插在 nas 上面配置。</p>
+<h2 id="SSH-连接"><a href="#SSH-连接" class="headerlink" title="SSH 连接"></a>SSH 连接</h2><p>获取 root 权限：</p>
+<blockquote>
+<p>（root 密码 yutech，建议 adduser 创建个用户然后 visudo 写到 sudo 里面方便后续操作，自带 admin 账户连 &#x2F;home 主目录都没有）</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/17/using-wifi-adapter-unas40/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/03/17/windows-server-2019-intel-i211-driver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/17/windows-server-2019-intel-i211-driver/" class="post-title-link" itemprop="url">Windows Server 2019安装Intel I211网卡驱动</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-17 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-17T00:00:00+08:00">2019-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>由于Windows系统原因，一般桌面主板自带的Intel网卡（典型的包括I211、I211-AT、I217-V、I218-V、I219-V）等，都无法在Windows Server系统上找到对应的驱动。但是，这些网卡几乎都有对应的服务器主板版本（例如I219-LM）。这些网卡其实并没有本质上的差别，只是在驱动层面，利用不同的驱动签名使得显卡不能通用。本文将详细说明如何在Windows Server系统上安装这些驱动。</p>
+<h3 id="1、驱动下载"><a href="#1、驱动下载" class="headerlink" title="1、驱动下载"></a>1、驱动下载</h3><p>首先，在Intel官网下载网卡驱动程序包，由于Windows Server 2019刚发布，所以目前没有2019的专门页面，但可以通用Windows Server 2016版本（<a target="_blank" rel="noopener" href="https://downloadcenter.intel.com/download/26092/Intel-Network-Adapter-Driver-for-Windows-Server-2016-">下载页面</a>）。下载完成后，得到一个PROWinx64.exe的自解压安装包，使用7zip或其他解压软件解压到任意文件夹。</p>
+<h3 id="2、修改驱动程序文件（以I211为例）"><a href="#2、修改驱动程序文件（以I211为例）" class="headerlink" title="2、修改驱动程序文件（以I211为例）"></a>2、修改驱动程序文件（以I211为例）</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/17/windows-server-2019-intel-i211-driver/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/" class="post-title-link" itemprop="url">Linux(CentOS 7)下使用mono+ArchiSteamFarm挂卡</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-04T00:00:00+08:00">2019-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>首先感谢@<a href="https://link.zhihu.com/?target=http://steamcn.com/suid-191936">zjmonk</a> 发现的ArchiSteamFarm这么好的挂卡软件，在他的帖子里还提醒我可以用mono在linux上玩，真是大好人啊</p>
+<p>补充下，本教程适用于服务器上24小时不间断挂卡，个人电脑不推荐安装linux桌面系统，自己家里还是用idle master更直观</p>
+<p>FAQ： 1. 什么是mono呢？ 简单的理解，可以认为是linux环境下的.net Framework，是个开源的项目，可以让C#程序运行在linux上面 2. 为什么要用linux？ 当然是因为linux轻便性能高啦，如果能用linux挂卡，各大低配魔法主机、家里闲置的电脑、公司的服务器，都能拿来24小时挂卡！不用非得租用昂贵的Windows服务器啦！ 3. 任何linux系统都可以吗？ 本人linux小白，只保证CentOS7 64位我是测试过的，理论上Redhat也能用本教程。linux版本众多，不保证所有环境都行。 此外，mono这个东西，以前想用来开泰拉瑞亚服务器的时候用过，遭到了无情的失败，所以在一些环境里用mono无法运行一些C#程序，也是正常的…</p>
+<p>下面是教程： 1. 首先ssh连接上远程主机，进入命令行 2. 安装mono(参考了<a href="https://link.zhihu.com/?target=http://www.cnblogs.com/shanyou/p/4509980.html">CentOS 7 上部署Mono 4 和Jexus 5.6</a>)，先添加yum源。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -559,538 +1086,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/06/24/phicomm-n1-install-armbian-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/24/phicomm-n1-install-armbian-linux/" class="post-title-link" itemprop="url">在斐讯N1盒子上刷入armbian Linux系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在 N1 内置 eMMC 中刷入 Linux armbian，不需要外置 USB 设备启动，除了没有 GPIO 外和各种 Pi 功能完全一样，内置千兆以太网&#x2F;2.4+5G WiFi&#x2F;Bluetooth&#x2F;USB2.0*2&#x2F;HDMI，硬件配置为 Amlogic S905D 1.5GHz*4 Cortex-A53+2GB RAM+8GB eMMC（Linux 可用 5GB）。</p>
-<p>在二手平台收购全新已激活的 N1 仅需 80-90 元，未激活的 900 多元，三个月返现 1099（此处注意风险）可以说是很超值了。</p>
-<h2 id="一、拿到盒子，首先降级-Bootloader，刷入第三方固件"><a href="#一、拿到盒子，首先降级-Bootloader，刷入第三方固件" class="headerlink" title="一、拿到盒子，首先降级 Bootloader，刷入第三方固件"></a>一、拿到盒子，首先降级 Bootloader，刷入第三方固件</h2><p>参考资料：<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/thread-322736-1-1.html">N1盒子 2018-5-28 斐讯天天链N1 官改v2.0线刷包, 补丁patch1</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/24/phicomm-n1-install-armbian-linux/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/05/25/phicomm-k2t-openwrt/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/25/phicomm-k2t-openwrt/" class="post-title-link" itemprop="url">斐讯K2t免拆机刷入LEDE/OpenWRT的步骤</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-05-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-25T00:00:00+08:00">2018-05-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BD%91%E7%BB%9C%E4%B8%8E%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">网络与代理</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>首先感谢<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/home.php?mod=space&uid=389408">@phitools</a> 制作的telnet工具和<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/home.php?mod=space&uid=372524">@ptpt52</a> 制作的LEDE固件。</p>
-<p>之前忘了提一步，有人说要先刷官改打开ssh以后才能刷，不然会砖! <a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/forum.php?mod=viewthread&tid=321512">http://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=321512</a> 第一步是要先打开Telnet，进入终端操作，参考<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/%E4%BC%A0%E9%80%81%E9%97%A8">http://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=321483</a>即可（已刷官改的跳过）打开Telnet后，要使用ssh工具登录，用户名root，密码admin，需要sftp上传文件。 ssh工具推荐使用<a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/">MobaXterm</a>，可以在左侧窗格直接拖放文件，右侧窗口输入命令：</p>
-<p>OpenWRT&#x2F;LEDE下载地址：</p>
-<h4 id="本帖隐藏的内容"><a href="#本帖隐藏的内容" class="headerlink" title="本帖隐藏的内容"></a>本帖隐藏的内容</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/25/phicomm-k2t-openwrt/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/05/12/scripts-for-arch-linux-arm-for-raspberry-pi-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/12/scripts-for-arch-linux-arm-for-raspberry-pi-3/" class="post-title-link" itemprop="url">简易安装Arch Linux ARM for Raspberry Pi 3</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-05-12 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-12T00:00:00+08:00">2018-05-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>把下列代码保存为：rpi3-arch-linux-to-sdcard.sh</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># &lt;https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3&gt;</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n\nArch Linux ARM to SD Card&quot;</span><br><span class="line">echo -e &quot;For the Raspberry Pi 3, if you want to use the unofficial arm64 variant.&quot;</span><br><span class="line">echo -e &quot;(Otherwise use the Raspberry Pi 2 version of this script!)\n\n&quot;</span><br><span class="line"></span><br><span class="line">if [[ $EUID -ne 0 ]]; then</span><br><span class="line">   echo &quot;This script must be run as root&quot; 1&gt;&amp;2</span><br><span class="line">   exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nAll drives on this computer:\n&quot;</span><br><span class="line">ls -1 /dev/sd?</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nLast messages in syslog:\n&quot;</span><br><span class="line">dmesg | tail</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nChoose sd card (like /dev/sdX):\n&quot;</span><br><span class="line">read SDCARD</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n\nCurrent partitioning of $SDCARD:\n&quot;</span><br><span class="line">parted $SDCARD print</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n\nYou chose $SDCARD\nAre you sure to continue? Press Ctrl-C to abort!&quot;</span><br><span class="line">read</span><br><span class="line"></span><br><span class="line">cd /tmp</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nDownloading the Arch Linux ARM root filesystem (if needed):\n&quot;</span><br><span class="line">URL=https://mirrors.ustc.edu.cn/archlinuxarm/os/ArchLinuxARM-rpi-3-latest.tar.gz</span><br><span class="line"># Sometimes the download server is slow. In that case, try a different one instead:</span><br><span class="line">#URL=http://de7.mirror.archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz</span><br><span class="line">FNAME=$(basename &quot;$URL&quot;)</span><br><span class="line">FSIZE=$(curl --head --location --silent &quot;$URL&quot; --write-out &#x27;%&#123;http_code&#125; %&#123;size_download&#125; \n&#x27; | tac | grep -m1 Content-Length | cut -f 2 -d&#x27; &#x27; | tr -d &#x27;\r&#x27;)</span><br><span class="line">if [ -n &quot;$FNAME&quot; ]</span><br><span class="line">then</span><br><span class="line">  CURSIZE=$(wc -c &lt;&quot;$FNAME&quot;)</span><br><span class="line">  if [ $CURSIZE -ne $FSIZE ]; then</span><br><span class="line">    rm &quot;$FNAME&quot;</span><br><span class="line">    echo &quot;Removing any downloaded and leftover Arch Linux ARM image&quot;</span><br><span class="line">  fi</span><br><span class="line">fi</span><br><span class="line">curl --location --remote-name --time-cond &quot;$FNAME&quot; &quot;$URL&quot;</span><br><span class="line">if [ $? -ne 0 ]; then</span><br><span class="line">  echo &quot;Could not download the image file, please check the mirror&quot;</span><br><span class="line">  exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nUnmounting partitions found on $&#123;SDCARD&#125;\n&quot;</span><br><span class="line">for MOUNT in $&#123;SDCARD&#125;?</span><br><span class="line">do</span><br><span class="line">  echo $MOUNT</span><br><span class="line">  umount $MOUNT</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">parted -s $SDCARD unit s print</span><br><span class="line">parted -s $SDCARD mktable msdos</span><br><span class="line">parted -s $SDCARD mkpart primary fat32 8192s 128MiB</span><br><span class="line">parted -s $SDCARD mkpart primary 128MiB 100%</span><br><span class="line">parted -s $SDCARD unit s print</span><br><span class="line"></span><br><span class="line">mkfs.vfat $&#123;SDCARD&#125;1</span><br><span class="line">mkfs.ext4 $&#123;SDCARD&#125;2</span><br><span class="line"></span><br><span class="line">rm -rf boot</span><br><span class="line">rm -rf root</span><br><span class="line"></span><br><span class="line">mkdir boot</span><br><span class="line">mkdir root</span><br><span class="line"></span><br><span class="line">mount $&#123;SDCARD&#125;1 boot</span><br><span class="line">mount $&#123;SDCARD&#125;2 root</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nExtracting the root filesystem\n&quot;</span><br><span class="line">bsdtar -xpf ArchLinuxARM-rpi-3-latest.tar.gz -C root</span><br><span class="line">sync</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nMoving boot files to the first partition\n&quot;</span><br><span class="line">mv root/boot/* boot</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nUnmounting the two partitions\n&quot;</span><br><span class="line">umount boot root</span><br><span class="line"></span><br><span class="line">rmdir boot root</span><br><span class="line"></span><br><span class="line">echo &quot;Insert the SD card into the Raspberry Pi , connect ethernet, and apply 5V power.&quot;</span><br><span class="line">echo &quot;Use the serial console or SSH to the IP address given to the board by your router. The username/password combination is alarm/alarm. The default root password is &#x27;root&#x27;.&quot;</span><br><span class="line"></span><br><span class="line">cd -</span><br></pre></td></tr></table></figure>
-
-<p>如果网络较慢请先下载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/12/scripts-for-arch-linux-arm-for-raspberry-pi-3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/05/05/raspberry-pi-run-archisteamfarm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/05/05/raspberry-pi-run-archisteamfarm/" class="post-title-link" itemprop="url">使用Raspberry Pi等ARM迷你开发板运行ArchiSteamFarm挂卡程序</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-05-05 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-05T00:00:00+08:00">2018-05-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>首先启动树莓派或别的开发板，确定 CPU 架构，一般有 ARM32 和 ARM64 两种，因为运行的系统版本不同，下载的 dotnet 包有差别。先运行下列命令安装依赖包：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install curl libunwind8 gettext screen</span><br></pre></td></tr></table></figure>
-<p>sudo apt-get install curl libunwind8 gettext screen</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![](images/TIM图片20180505201923.png)</span><br><span class="line"></span><br><span class="line">然后运行 `lscpu` 或 `neofetch` 等命令确定当前使用的是什么系统版本。本人一个树莓派，一个香橙派，一个64位一个32位（注意树莓派官方系统是32位）。aarch64 为64位，armv7l 则为32位。</span><br><span class="line"></span><br><span class="line">![](images/TIM图片20180505201723.png) ![](images/TIM图片20180505201800.png)</span><br><span class="line"></span><br><span class="line">确定下系统时间是否准确方可进行下一步操作，因为 ARM 设备通常无时钟，断电情况下不会保持时间，使用：</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">sudo date -s &quot;2023-01-01 12:00:00&quot;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/05/raspberry-pi-run-archisteamfarm/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/03/30/mediatek-helio-p60-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/30/mediatek-helio-p60-analysis/" class="post-title-link" itemprop="url">MediaTek Helio P60一些详细参数的分析</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-03-30 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-30T00:00:00+08:00">2018-03-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下内容来自：</p>
-<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180327232950-300x250.png"></p>
-<p>芯片的总体结构 block diagram 图，首先确定是没有专用的神经网络 AI 单元，用什么部分跑 AI 暂时还不得而知。不过很奇怪为什么没有 CCI 总线用作 CPU 部分两个丛集之间的互联，这样同频可以节约成本吗？没有 CCI 确实可以降低簇间处理延迟。</p>
-<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180327233406-300x223.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/03/30/mediatek-helio-p60-analysis/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/03/20/run-opensuse-on-rpi3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/03/20/run-opensuse-on-rpi3/" class="post-title-link" itemprop="url">在树莓派 3 上运行 openSUSE：简单几步搭建一个实用系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-03-20 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-20T00:00:00+08:00">2018-03-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文由 SUSE 文档团队的技术作者 Dmitri Popov 撰写。</p>
-<blockquote>
-<p>在<a target="_blank" rel="noopener" href="https://www.raspberrypi.org/">树莓派 3</a> 上部署 <a target="_blank" rel="noopener" href="https://www.opensuse.org/">openSUSE</a> 系统不是很复杂，不过这儿有一些小技巧教你更好地完成这个过程。</p>
-</blockquote>
-<p>首先，你将会有一些版本可供选择。如果你打算使用树莓派 3 作为一个普通主机，那么带有图形界面的 openSUSE 将是你最好的选择。有几种不同的图形环境可供选择：<a target="_blank" rel="noopener" href="https://www.x.org/wiki/">X11</a>、<a target="_blank" rel="noopener" href="https://www.enlightenment.org/">Enlightenment</a>、<a target="_blank" rel="noopener" href="https://www.xfce.org/">Xfce</a> 或是 <a target="_blank" rel="noopener" href="http://lxqt.org/">LXQT</a>。openSUSE 还有一个 JeOS 版本能够提供最基础的系统，可以把树莓派 3 作为一个无显示器的服务器使用。更好的选择还有 openSUSE 的 <a target="_blank" rel="noopener" href="https://www.opensuse.org/#Leap">Leap</a> 或 <a target="_blank" rel="noopener" href="https://www.opensuse.org/#Tumbleweed">Tumbleweed</a> 版本。</p>
-<p>首先你需要从 <a target="_blank" rel="noopener" href="https://en.opensuse.org/HCL:Raspberry_Pi3">https://en.opensuse.org/HCL:Raspberry_Pi3</a> 下载所需的 openSUSE 镜像，然后制作一张可启动的 microSD 卡。虽然可以使用命令行工具将下载好的镜像写入 microSD 卡，但 <a target="_blank" rel="noopener" href="https://etcher.io/">Etcher</a> 可以使这个过程更轻松安全。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/03/20/run-opensuse-on-rpi3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/10/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

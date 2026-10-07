@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文汇总多个中后台系统（OA、进销存、ERP 类）开发过程中积累的服务端踩坑记录，技术栈为 NestJS + Prisma + MySQL 8 + Redis。内容集中在参数校验、并发事务、序列化、数据库结构管理与安全五个方向。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企业级后台开发踩坑实录：NestJS + Prisma + MySQL">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/06/29/nestjs-prisma-mysql-pitfalls/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="本文汇总多个中后台系统（OA、进销存、ERP 类）开发过程中积累的服务端踩坑记录，技术栈为 NestJS + Prisma + MySQL 8 + Redis。内容集中在参数校验、并发事务、序列化、数据库结构管理与安全五个方向。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-28T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="backend">
+<meta property="article:tag" content="concurrency">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="nestjs">
+<meta property="article:tag" content="prisma">
+<meta property="article:tag" content="security">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/06/29/nestjs-prisma-mysql-pitfalls/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/06/29/nestjs-prisma-mysql-pitfalls/","path":"2026/06/29/nestjs-prisma-mysql-pitfalls/","title":"企业级后台开发踩坑实录：NestJS + Prisma + MySQL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>企业级后台开发踩坑实录：NestJS + Prisma + MySQL | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C%EF%BC%9A%E9%9D%99%E9%BB%98%E5%89%94%E9%99%A4%E6%98%AF%E6%9C%80%E9%9A%90%E8%94%BD%E7%9A%84%E6%95%8C%E4%BA%BA"><span class="nav-number">1.</span> <span class="nav-text">一、参数校验：静默剔除是最隐蔽的敌人</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B9%B6%E5%8F%91%E4%B8%8E%E4%BA%8B%E5%8A%A1%EF%BC%9A%E4%BB%8E%E2%80%9D%E5%8F%8C%E8%B7%91%E5%85%A5%E8%B4%A6%E2%80%9D%E5%88%B0-CAS"><span class="nav-number">2.</span> <span class="nav-text">二、并发与事务：从”双跑入账”到 CAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BA%8F%E5%88%97%E5%8C%96%E9%99%B7%E9%98%B1"><span class="nav-number">3.</span> <span class="nav-text">三、序列化陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">四、数据库结构管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%89%E5%85%A8"><span class="nav-number">5.</span> <span class="nav-text">五、安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81nginx-%E9%99%90%E6%B5%81-503-%E6%8E%92%E6%9F%A5%E5%AE%9E%E5%BD%95"><span class="nav-number">6.</span> <span class="nav-text">六、nginx 限流 503 排查实录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/06/29/nestjs-prisma-mysql-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="企业级后台开发踩坑实录：NestJS + Prisma + MySQL | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          企业级后台开发踩坑实录：NestJS + Prisma + MySQL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-06-29 00:00:00" itemprop="dateCreated datePublished" datetime="2026-06-29T00:00:00+08:00">2026-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文汇总多个中后台系统（OA、进销存、ERP 类）开发过程中积累的服务端踩坑记录，技术栈为 NestJS + Prisma + MySQL 8 + Redis。内容集中在<strong>参数校验、并发事务、序列化、数据库结构管理与安全</strong>五个方向。</p>
+<span id="more"></span>
+
+<h2 id="一、参数校验：静默剔除是最隐蔽的敌人"><a href="#一、参数校验：静默剔除是最隐蔽的敌人" class="headerlink" title="一、参数校验：静默剔除是最隐蔽的敌人"></a>一、参数校验：静默剔除是最隐蔽的敌人</h2><p><code>ValidationPipe({ whitelist: true })</code> 会把<strong>没有挂 class-validator 装饰器的 DTO 字段静默剔除</strong>——接口不报错，参数却全部丢失：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下字段的装饰器缺失或不全时，参数会被静默丢掉</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">BatchStockPageDto</span> &#123;</span><br><span class="line">  <span class="meta">@IsOptional</span>() <span class="meta">@IsInt</span>()</span><br><span class="line">  <span class="attr">goodsId</span>?: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@IsOptional</span>() <span class="meta">@IsNumber</span>()   <span class="comment">// 注意：布尔类用 @IsNumber 而非 @IsInt</span></span><br><span class="line">  <span class="attr">onlyAvailable</span>?: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同源问题还有：</p>
+<ul>
+<li><strong>查询 DTO 写成 <code>interface</code> 不走管道</strong>：query 参数保持字符串类型，直接传给 Prisma 的 <code>take</code> 导致 500——查询 DTO 必须是 <code>class</code>；</li>
+<li><strong>数字字段缺 <code>@Min(0)</code></strong>：出库单数量传 <code>-100</code>，审核后库存反向增加、绕过负库存校验——DTO 要加下界，审核入口还应按单据方向复验符号；</li>
+<li><strong>分页参数缺边界</strong>：<code>limit=0</code>、深分页要加 <code>@Min(1)</code> &#x2F; <code>@Max(10000)</code>。</li>
+</ul>
+<h2 id="二、并发与事务：从”双跑入账”到-CAS"><a href="#二、并发与事务：从”双跑入账”到-CAS" class="headerlink" title="二、并发与事务：从”双跑入账”到 CAS"></a>二、并发与事务：从”双跑入账”到 CAS</h2><p><strong>审核并发双跑</strong>是最严重的一类事故：状态检查放在事务开头、落标记却无条件 update，同单并发请求会导致库存只扣一次、而账户&#x2F;积分&#x2F;流水入账两次；跨单并发则丢失更新导致超卖。</p>
+<p>修复模式：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用条件更新抢占状态，失败即返回 409</span></span><br><span class="line"><span class="keyword">const</span> r = <span class="keyword">await</span> tx.<span class="property">bill</span>.<span class="title function_">updateMany</span>(&#123;</span><br><span class="line">  <span class="attr">where</span>: &#123; id, <span class="attr">examine</span>: <span class="number">0</span> &#125;,</span><br><span class="line">  <span class="attr">data</span>: &#123; <span class="attr">examine</span>: <span class="number">1</span>, <span class="attr">examineAt</span>: now &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">if</span> (r.<span class="property">count</span> === <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ConflictException</span>(<span class="string">&#x27;单据状态已变更&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>其他同主题的坑：</p>
+<ul>
+<li><strong>扣卡 TOCTOU</strong>：余量校验与扣减之间无事务&#x2F;行锁，<code>quantity = quantity - $1</code> 无 <code>WHERE quantity &gt;= $1</code> 守卫 → 并发&#x2F;双击超扣成负。修复：同事务 + 预占守卫；</li>
+<li><strong>单号并发生成撞唯一约束</strong>：原用”当日实例数 +1”，删除记录后新号撞上残留旧号。改为 <code>max(序号)+1</code> + 6 位随机 + 查重重试；</li>
+<li><strong>流水号在事务内用原子 increment</strong>：<code>findFirst</code> 后单条原子 <code>increment</code>，靠 InnoDB 行锁串行化，实测并发 4 次得 4&#x2F;5&#x2F;6&#x2F;7 无重复无空洞；</li>
+<li><strong>自研 SQLite 适配层”UPDATE 后按原 WHERE 回查”极脆弱</strong>：WHERE 含状态谓词时更新后回查失败，出现”UPDATE 已执行但流水未动”的静默半执行——根治方案是改用 <code>UPDATE ... RETURNING id</code>。</li>
+</ul>
+<h2 id="三、序列化陷阱"><a href="#三、序列化陷阱" class="headerlink" title="三、序列化陷阱"></a>三、序列化陷阱</h2><ul>
+<li><strong>Prisma Decimal 序列化成字符串</strong>：<code>Float → Decimal</code> 后报文从 <code>1200</code> 变成 <code>&quot;1200.00&quot;</code>，<code>el-input-number</code> 等数字组件直接异常。在全局 <code>transform.interceptor.ts</code> 加 <code>normalizeDecimals()</code> 统一还原；</li>
+<li><strong><code>COUNT(*)</code> 返回 BigInt</strong>：JSON 序列化直接崩，报表接口报错；</li>
+<li><strong>业务错误走 HTTP 200 + <code>code!==0</code> 时响应体 <code>data</code> 被丢弃</strong>：前端拿不到错误详情里的数字（如信用超额的各项金额），只能正则解析后端文案——正确做法是给错误对象补 <code>data</code> 字段。</li>
+</ul>
+<h2 id="四、数据库结构管理"><a href="#四、数据库结构管理" class="headerlink" title="四、数据库结构管理"></a>四、数据库结构管理</h2><ul>
+<li><strong>富文本列建成 <code>varchar(191)</code></strong>（约 60 汉字）存不下正文，seed 数据直接 P2000 报错。注意 <code>TEXT</code> 列<strong>不能有默认值</strong>，须在代码里显式赋值；</li>
+<li><strong>MySQL 列名大小写不敏感</strong>：<code>userId</code> 与 <code>userid</code> 同时出现报重复列，迁移中途失败（踩了两次）——命名上刻意避开（如统一用 <code>uid</code>&#x2F;<code>userCode</code>）；</li>
+<li><strong><code>prisma migrate dev</code> 在无建库权限的账号下不可用</strong>（无法创建 shadow database），正确流程是：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">prisma migrate diff --from-schema-datasource --to-schema-datamodel --script</span><br><span class="line"><span class="comment"># 落进 prisma/migrations/ 后</span></span><br><span class="line">prisma migrate deploy &amp;&amp; prisma generate</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>数据库落后 schema 会引发大面积 500</strong>：<code>prisma db push</code> 前先用 <code>migrate diff</code> 离线核对纯增量，删表需 <code>--accept-data-loss</code>，操作前先快照备份；</li>
+<li><strong>schema 漂移</strong>：多处副本（schema.sql、ensure-app-tables、migrations）没有单一事实源，出现过”生产库缺列 → 特定查询 500”的事故。任何”从仓库重建库”的环境（CI&#x2F;灾备）都会大面积失败。</li>
+</ul>
+<h2 id="五、安全"><a href="#五、安全" class="headerlink" title="五、安全"></a>五、安全</h2><ul>
+<li><strong>SQL 列名拼接注入</strong>：多处 INSERT&#x2F;UPDATE 把客户端 JSON 的键名直接拼进 SQL 标识符（表名有白名单、列名没有）。修复：建列名白名单注册表，白名单外的键静默丢弃并告警；</li>
+<li><strong>跨租户越权</strong>：<code>distributor_id</code> 全取自 query&#x2F;body，从不与会话中的租户比对；不传参时 WHERE 为空直接返回全部数据。原则：租户维度一律取自会话，客户端传参只做校验；</li>
+<li><strong>路由前缀判断 bug</strong>：<code>pathname.startsWith(&#39;/api/distributor&#39;)</code> 会意外放行 <code>/api/distributors</code>（复数形式）；</li>
+<li><strong>审计绕过</strong>：日志落库判断用了含 query 的完整 URL，请求带 <code>?/auth/login</code> 即不落库——应使用 <code>req.path</code>；</li>
+<li><strong><code>@Roles</code> 漏挂</strong>：报表接口缺角色限制，任何登录用户可读财务汇总；扫描脚本只匹配方法级装饰器会漏掉类级 <code>@Roles(&#39;admin&#39;)</code>；</li>
+<li><strong>时间安全比较</strong>：内部令牌判断用 <code>===</code>（非常量时间）→ 应改 <code>crypto.timingSafeEqual</code>；</li>
+<li><strong>验证码的”人类可读、机器不可提取”</strong>：SVG 验证码曾在文本节点中明文包含答案（正则秒解，PoC 100% 破解）→ 改七段数码管<strong>几何绘制</strong>（无文本节点）+ 安全随机数。</li>
+</ul>
+<h2 id="六、nginx-限流-503-排查实录"><a href="#六、nginx-限流-503-排查实录" class="headerlink" title="六、nginx 限流 503 排查实录"></a>六、nginx 限流 503 排查实录</h2><p><strong>现象</strong>：外网偶发 503；排查路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&quot;limiting requests&quot;</span> /var/log/nginx/error.log</span><br><span class="line"><span class="comment"># 有输出才是限流；否则查 connect() failed / no live upstreams</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>根因</strong>：旧限流配置用 10 次&#x2F;分的 <code>auth_zone</code> 覆盖了整个 <code>/api/auth/</code> 路径。在 NAT 共享出口场景下，<strong>整个内网共用一个出口 IP</strong>，全组织共享额度，第 7 次登录即 503；且 <code>$binary_remote_addr</code> 不看 X-Forwarded-For。</p>
+<p>修复与配套措施：</p>
+<ul>
+<li>登录独占 <code>auth_zone</code>，profile&#x2F;menus&#x2F;captcha 归 <code>api_zone</code>，超限返回 429；</li>
+<li><code>location = /api/auth/login</code> 改 <code>^~</code> 防止带斜杠后缀绕过；</li>
+<li>前置 CDN&#x2F;WAF 时必须配 <code>set_real_ip_from</code> + <code>real_ip_header X-Forwarded-For</code> + <code>real_ip_recursive on</code>，否则限流桶永远数的是代理 IP；</li>
+<li><strong>原则</strong>：IP 维度只当粗粒度防洪，精确风控必须带账号维度；</li>
+<li><code>proxy_set_header Connection &quot;upgrade&quot;</code> 硬编码会让 <code>keepalive 64</code> 失效（每请求新建 TCP）→ 改用 <code>map $connection_upgrade</code>；</li>
+<li>校验 nginx 配置时非 root 绑 80 端口失败是权限问题而非配置错误，用高位端口可完成完整加载验证。</li>
+</ul>
+<p>复现手法：本地 nginx 沙箱 + 环回源 IP（127.0.0.2~127.0.0.4），旧配置第 7 次请求起稳定复现 503。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>企业后台的坑集中在两个词：<strong>静默</strong>与<strong>并发</strong>。参数静默丢失、序列化静默变形、状态静默漂移都是”不报错的错误”；而并发问题（双跑、TOCTOU、丢失更新）则必须靠条件更新、原子操作与事务边界来根治，靠”小心操作”是防不住的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+              <a href="/tags/nestjs/" rel="tag"># nestjs</a>
+              <a href="/tags/prisma/" rel="tag"># prisma</a>
+              <a href="/tags/backend/" rel="tag"># backend</a>
+              <a href="/tags/concurrency/" rel="tag"># concurrency</a>
+              <a href="/tags/security/" rel="tag"># security</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/06/26/ai-assisted-development-pitfalls/" rel="prev" title="AI 辅助开发踩坑录：跨项目反复出现的 8 类问题">
+                  <i class="fa fa-angle-left"></i> AI 辅助开发踩坑录：跨项目反复出现的 8 类问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/07/31/frontend-miniprogram-pitfalls/" rel="next" title="前端工程踩坑笔记：Vue 3、小程序与 Canvas 小游戏">
+                  前端工程踩坑笔记：Vue 3、小程序与 Canvas 小游戏 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

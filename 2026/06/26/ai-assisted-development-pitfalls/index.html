@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在多项目、长时间使用 AI 编程助手协作开发的过程中，一些同类型的坑反复出现——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 8 类问题，附具体现象、根因与修复方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 辅助开发踩坑录：跨项目反复出现的 8 类问题">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="在多项目、长时间使用 AI 编程助手协作开发的过程中，一些同类型的坑反复出现——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 8 类问题，附具体现象、根因与修复方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-25T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="code-review">
+<meta property="article:tag" content="coding-assistant">
+<meta property="article:tag" content="engineering-practices">
+<meta property="article:tag" content="pitfalls">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/","path":"2026/06/26/ai-assisted-development-pitfalls/","title":"AI 辅助开发踩坑录：跨项目反复出现的 8 类问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AI 辅助开发踩坑录：跨项目反复出现的 8 类问题 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81pkill-f-%E4%BC%9A%E6%9D%80%E6%8E%89%E6%89%A7%E8%A1%8C%E5%AE%83%E7%9A%84-shell-%E8%87%AA%E8%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">一、pkill -f 会杀掉执行它的 shell 自身</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%B6%E5%8C%BA%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、时间与时区处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2-%E6%AD%A3%E5%88%99%E6%94%B9%E5%86%99%E5%BF%85%E9%A1%BB%E5%9B%9E%E5%A4%B4%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">三、批量替换 &#x2F; 正则改写必须回头验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%9D%99%E9%BB%98%E5%A4%B1%E8%B4%A5%E6%AF%94%E6%8A%A5%E9%94%99%E6%9B%B4%E5%8D%B1%E9%99%A9"><span class="nav-number">4.</span> <span class="nav-text">四、静默失败比报错更危险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E2%80%9D%E6%9E%84%E5%BB%BA%E9%80%9A%E8%BF%87-URL-%E5%8F%AF%E8%BE%BE%E2%80%9D%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%9F%E8%83%BD%E5%8F%AF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">五、”构建通过 &#x2F; URL 可达”不等于功能可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%BC%93%E5%AD%98%E9%80%A0%E6%88%90%E7%9A%84%E5%81%87%E8%B1%A1"><span class="nav-number">6.</span> <span class="nav-text">六、开发环境缓存造成的假象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81npm-%E6%96%B0%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5"><span class="nav-number">7.</span> <span class="nav-text">七、npm 新安装脚本安全策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B1%82%E9%AB%98%E9%A2%91%E9%99%B7%E9%98%B1"><span class="nav-number">8.</span> <span class="nav-text">八、数据库层高频陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AI 辅助开发踩坑录：跨项目反复出现的 8 类问题 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI 辅助开发踩坑录：跨项目反复出现的 8 类问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-06-26 00:00:00" itemprop="dateCreated datePublished" datetime="2026-06-26T00:00:00+08:00">2026-06-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在多项目、长时间使用 AI 编程助手协作开发的过程中，一些<strong>同类型的坑反复出现</strong>——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 8 类问题，附具体现象、根因与修复方法。</p>
+<span id="more"></span>
+
+<h2 id="一、pkill-f-会杀掉执行它的-shell-自身"><a href="#一、pkill-f-会杀掉执行它的-shell-自身" class="headerlink" title="一、pkill -f 会杀掉执行它的 shell 自身"></a>一、<code>pkill -f</code> 会杀掉执行它的 shell 自身</h2><p><strong>现象</strong>：执行重启服务的命令后”没有任何输出”，命令像是被中断了，很容易误判为服务本身的问题。</p>
+<p><strong>根因</strong>：<code>pkill -f &quot;node dist/main.js&quot;</code> 会匹配<strong>所有命令行字符串包含该模式的进程</strong>——包括执行这条 pkill 的 shell 自己（它的命令行里就含有这个字符串）。</p>
+<p><strong>正确做法</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一：方括号技巧，让模式匹配不到自身</span></span><br><span class="line">pkill -f <span class="string">&quot;[n]ode dist/main.js&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二：按端口找 PID</span></span><br><span class="line">ss -lptn <span class="string">&#x27;sport = :3000&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法三：pkill 与启动命令分两条执行</span></span><br></pre></td></tr></table></figure>
+
+<p>这个坑在至少 8 个不同项目的备忘里出现过，属于”最简单也最容易重复踩”的一类。</p>
+<h2 id="二、时间与时区处理"><a href="#二、时间与时区处理" class="headerlink" title="二、时间与时区处理"></a>二、时间与时区处理</h2><p>三个方向都出过问题：</p>
+<ol>
+<li><strong><code>toISOString()</code> 是 UTC 时间</strong>：东八区凌晨 0–8 点执行时，日期会比本地”差一天”——单据日期、打卡记录、编号年月全部受影响；</li>
+<li><strong>字符串比较 <code>&#39; &#39; &lt; &#39;T&#39;</code> 是系统性问题</strong>：<code>2026-08-30T...</code>（ISO 格式）与 <code>2026-08-30 ...</code>（SQLite datetime 格式）直接做字符串比较，两个方向都会错——曾导致登录限流闸永远查不到记录、订单归因静默丢单、逾期预警提前误报；</li>
+<li><strong><code>date(completed_at)</code> 按 UTC 切天</strong>：北京 00:00–08:00 的完工被算进前一天，计件工资统计错位。</li>
+</ol>
+<p><strong>统一方案</strong>：所有业务时间处理走本地时区格式化函数（如 <code>todayLocal()</code>），或改用毫秒时间戳比较：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统一为同一种字符串格式再比较</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">toLocal</span> = (<span class="params">d</span>) =&gt; <span class="keyword">new</span> <span class="title class_">Date</span>(d).<span class="title function_">toISOString</span>().<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">19</span>).<span class="title function_">replace</span>(<span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27; &#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、批量替换-正则改写必须回头验证"><a href="#三、批量替换-正则改写必须回头验证" class="headerlink" title="三、批量替换 &#x2F; 正则改写必须回头验证"></a>三、批量替换 &#x2F; 正则改写必须回头验证</h2><p>批量文本替换的”静默失败”和”误伤”是两个方向的坑：</p>
+<ul>
+<li>批量 <code>sed</code> 把 helper 函数自身的实现替换成了对自身的调用 → <strong>无限递归</strong>（<code>RangeError: Maximum call stack size exceeded</code>），112 处建表函数全部失效；</li>
+<li>Python 批量替换因缩进不匹配（4 空格 vs 8 空格）<strong>静默失败</strong>，残留语法错误还照样提交；</li>
+<li>文本替换误吞相邻行，把 <code>const status</code>、函数声明整行弄丢。</li>
+</ul>
+<p><strong>做法</strong>：</p>
+<ol>
+<li>用<strong>带断言的替换</strong>（匹配失败立即报错，而不是静默跳过）；</li>
+<li>替换后<strong>读回整个文件校验</strong>；</li>
+<li>特别检查 helper 自身是否被波及。</li>
+</ol>
+<h2 id="四、静默失败比报错更危险"><a href="#四、静默失败比报错更危险" class="headerlink" title="四、静默失败比报错更危险"></a>四、静默失败比报错更危险</h2><ul>
+<li><code>ValidationPipe({ whitelist: true })</code> 会把<strong>未挂 class-validator 装饰器的字段静默剔除</strong>——筛选参数、查询条件全部失效，接口不报错但结果不对；</li>
+<li>前端 <code>catch(() =&gt; null)</code> 把接口错误吞成 null，UI 照常渲染（错误被完全掩盖）；</li>
+<li><code>saveChatMessage</code> 不检查 <code>response.ok</code>，落库失败静默发生，刷新即丢；</li>
+<li>小程序 toast 与 loading 共享原生气泡，批量上传中的失败提示被立即覆盖，用户完全无感知。</li>
+</ul>
+<p><strong>原则</strong>：凡是”失败后继续跑”的代码路径，必须有明确的错误信号（日志 &#x2F; 状态返回 &#x2F; UI 提示），宁可报错也不要静默。</p>
+<h2 id="五、”构建通过-URL-可达”不等于功能可用"><a href="#五、”构建通过-URL-可达”不等于功能可用" class="headerlink" title="五、”构建通过 &#x2F; URL 可达”不等于功能可用"></a>五、”构建通过 &#x2F; URL 可达”不等于功能可用</h2><ul>
+<li>自动化页面走查若只断言 URL 与”无横向溢出”，<strong>白屏页也会全部通过</strong>；</li>
+<li>构建产物未设置生产环境标识时，打出来的是 Preview 身份、连的是测试后端；</li>
+<li><code>vite build</code> 不会覆盖<strong>未注册路由</strong>的新页面——页面存在但构建图中没有它。</li>
+</ul>
+<p><strong>做法</strong>：断言页面<strong>内容</strong>而非 URL；用真实浏览器验证”能不能用”，而不是”能不能打开”。</p>
+<h2 id="六、开发环境缓存造成的假象"><a href="#六、开发环境缓存造成的假象" class="headerlink" title="六、开发环境缓存造成的假象"></a>六、开发环境缓存造成的假象</h2><ul>
+<li><code>vite</code> dev server 加载缓存旧模块，源码已改但页面不生效（重启 dev server 解决）；</li>
+<li>浏览器磁盘缓存旧 JS：<code>?v=2</code> 只作用在 HTML 上，<code>&lt;script src&gt;</code> 相对路径不带 query → 换端口（新 origin）才生效；</li>
+<li>Prisma 改 schema 后未 <code>generate</code> 就 build，报错信息与真实原因完全不匹配。</li>
+</ul>
+<p><strong>记忆点</strong>：改了没生效 → 先怀疑缓存，再怀疑代码。</p>
+<h2 id="七、npm-新安装脚本安全策略"><a href="#七、npm-新安装脚本安全策略" class="headerlink" title="七、npm 新安装脚本安全策略"></a>七、npm 新安装脚本安全策略</h2><p>较新的 npm 默认<strong>拦截依赖的 install&#x2F;postinstall 脚本</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单包放行（包名作为位置参数放在前面）</span></span><br><span class="line">npm install -g --allow-scripts=&lt;package&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 常驻白名单（注意：是白名单，会拦掉其他包）</span></span><br><span class="line"><span class="comment"># ~/.npmrc</span></span><br><span class="line">allow-scripts=&lt;package&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意 <code>~/.npmrc</code> 的 <code>allow-scripts=</code> 是<strong>白名单</strong>语义——写了 A 包，B 包的安装脚本也会被拦（bcrypt &#x2F; esbuild &#x2F; prisma 都受影响）。常驻方案建议只放行确实需要的单个包。</p>
+<h2 id="八、数据库层高频陷阱"><a href="#八、数据库层高频陷阱" class="headerlink" title="八、数据库层高频陷阱"></a>八、数据库层高频陷阱</h2><ul>
+<li><strong>Decimal 序列化成字符串</strong>：<code>1200</code> 变成 <code>&quot;1200.00&quot;</code>，前端数字输入组件与算术全部出错；</li>
+<li><strong><code>COUNT(*)</code> 返回 BigInt</strong>：JSON 序列化直接崩溃；</li>
+<li><strong>MySQL 列名大小写不敏感</strong>：<code>userId</code> 与 <code>userid</code> 同时出现即报重复列，迁移中途失败；</li>
+<li><strong><code>varchar(191)</code> 存不下富文本</strong>：公告&#x2F;公文正文会超长被拒，且 TEXT 列不能有默认值。</li>
+</ul>
+<p><strong>做法</strong>：金额字段在序列化层统一还原为数字；COUNT 结果显式转 Number；命名规范里提前规避大小写歧义；富文本列从一开始就上 TEXT。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这 8 类问题的共同点：<strong>它们都不在”正常路径”上，跑通一次就不会再注意到，直到在生产环境以更难排查的形态暴露</strong>。把它们固化成检查清单，在代码审查与验收时逐条对照，比每次重新踩一遍划算得多。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ai/" rel="tag"># ai</a>
+              <a href="/tags/coding-assistant/" rel="tag"># coding-assistant</a>
+              <a href="/tags/pitfalls/" rel="tag"># pitfalls</a>
+              <a href="/tags/engineering-practices/" rel="tag"># engineering-practices</a>
+              <a href="/tags/code-review/" rel="tag"># code-review</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/08/home-space-migration-fstab-adjustment/" rel="prev" title="&#x2F;home 空间迁移与 fstab 调整记录">
+                  <i class="fa fa-angle-left"></i> /home 空间迁移与 fstab 调整记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/06/29/nestjs-prisma-mysql-pitfalls/" rel="next" title="企业级后台开发踩坑实录：NestJS + Prisma + MySQL">
+                  企业级后台开发踩坑实录：NestJS + Prisma + MySQL <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

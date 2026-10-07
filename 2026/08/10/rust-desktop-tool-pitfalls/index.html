@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文汇总多个 Rust 桌面工具（余额监控、壁纸应用、命令行 AI 助手）开发中积累的踩坑记录，覆盖 TLS 与网络、MSRV 兼容性、Win32&#x2F;系统集成、SQLite 与进程管理几个方向。这些项目普遍有”支持老旧系统”与”跨 Windows&#x2F;Linux”的硬约束，坑尤其密集。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/08/10/rust-desktop-tool-pitfalls/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="本文汇总多个 Rust 桌面工具（余额监控、壁纸应用、命令行 AI 助手）开发中积累的踩坑记录，覆盖 TLS 与网络、MSRV 兼容性、Win32&#x2F;系统集成、SQLite 与进程管理几个方向。这些项目普遍有”支持老旧系统”与”跨 Windows&#x2F;Linux”的硬约束，坑尤其密集。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-09T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="desktop">
+<meta property="article:tag" content="gui">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="rust">
+<meta property="article:tag" content="tls">
+<meta property="article:tag" content="windows">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/08/10/rust-desktop-tool-pitfalls/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/08/10/rust-desktop-tool-pitfalls/","path":"2026/08/10/rust-desktop-tool-pitfalls/","title":"Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81TLS-%E6%8C%87%E7%BA%B9%EF%BC%9A%E4%B8%8D%E6%98%AF%E6%89%80%E6%9C%89-TLS-%E9%83%BD%E4%B8%80%E6%A0%B7"><span class="nav-number">1.</span> <span class="nav-text">一、TLS 指纹：不是所有 TLS 都一样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81MSRV-%E9%92%89%E5%AD%90%EF%BC%9A%E4%BE%9D%E8%B5%96%E6%A0%91%E7%9A%84%E6%9A%97%E9%9B%B7"><span class="nav-number">2.</span> <span class="nav-text">二、MSRV 钉子：依赖树的暗雷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Win32-%E5%8E%9F%E7%94%9F%E6%8E%A7%E4%BB%B6%EF%BC%88native-windows-gui%EF%BC%89%E7%9A%84%E5%9D%91"><span class="nav-number">3.</span> <span class="nav-text">三、Win32 原生控件（native-windows-gui）的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%B3%BB%E7%BB%9F%E6%89%98%E7%9B%98%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%88%E8%B7%A8%E5%B9%B3%E5%8F%B0%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、系统托盘与窗口生命周期（跨平台）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81SQLite-%E5%B9%B6%E5%8F%91%E4%B8%8E%E8%BF%81%E7%A7%BB"><span class="nav-number">5.</span> <span class="nav-text">五、SQLite 并发与迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%BF%9B%E7%A8%8B%E6%B8%85%E7%90%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%AF%AF%E4%BC%A4"><span class="nav-number">6.</span> <span class="nav-text">六、进程清理的两种误伤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E5%AE%89%E5%85%A8"><span class="nav-number">7.</span> <span class="nav-text">七、文件路径安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81CI-%E4%B8%8E%E6%9E%84%E5%BB%BA%E7%9A%84%E8%A1%A5%E5%85%85%E6%95%99%E8%AE%AD"><span class="nav-number">8.</span> <span class="nav-text">八、CI 与构建的补充教训</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/08/10/rust-desktop-tool-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Rust 桌面工具开发踩坑：从 TLS 指纹到系统托盘
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-08-10 00:00:00" itemprop="dateCreated datePublished" datetime="2026-08-10T00:00:00+08:00">2026-08-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文汇总多个 Rust 桌面工具（余额监控、壁纸应用、命令行 AI 助手）开发中积累的踩坑记录，覆盖 <strong>TLS 与网络、MSRV 兼容性、Win32&#x2F;系统集成、SQLite 与进程管理</strong>几个方向。这些项目普遍有”支持老旧系统”与”跨 Windows&#x2F;Linux”的硬约束，坑尤其密集。</p>
+<span id="more"></span>
+
+<h2 id="一、TLS-指纹：不是所有-TLS-都一样"><a href="#一、TLS-指纹：不是所有-TLS-都一样" class="headerlink" title="一、TLS 指纹：不是所有 TLS 都一样"></a>一、TLS 指纹：不是所有 TLS 都一样</h2><p><strong>现象</strong>：某个 HTTPS 状态接口永远连接失败（<code>Connection reset by peer (os error 104)</code>），但 curl&#x2F;Go 请求同一接口完全正常。</p>
+<p><strong>根因</strong>：该接口要求 TLS 握手的第一个密钥交换组为<strong>后量子混合组 X25519MLKEM768</strong>，而旧版 rustls（0.21，随 reqwest 0.11）不支持——curl&#x2F;Go 能通只是 TLS 指纹不同。</p>
+<p><strong>修复</strong>：升级 rustls 0.23 + <code>prefer-post-quantum</code> 特性 + reqwest 0.12（aws-lc-rs 后端不需要 cmake，Windows 自带 NASM）。</p>
+<p><strong>Windows 兼容的反向坑</strong>：为支持 Win7 改用 rustls + webpki-roots 后，<strong>企业 MITM 代理&#x2F;HTTPS 扫描杀软会校验失败</strong>——老系统兼容与网络环境兼容有时是互斥的，需要按用户群体取舍。</p>
+<h2 id="二、MSRV-钉子：依赖树的暗雷"><a href="#二、MSRV-钉子：依赖树的暗雷" class="headerlink" title="二、MSRV 钉子：依赖树的暗雷"></a>二、MSRV 钉子：依赖树的暗雷</h2><p>固定旧版 Rust（如 1.77.2）的项目，依赖升级风暴随时可能引爆：</p>
+<ul>
+<li><strong>edition2024 传染</strong>：<code>icu_normalizer</code> 新版本要求 edition2024（Cargo 1.85+），它位于 <code>reqwest → url → idna → idna_adapter</code> 链上。<code>cargo generate-lockfile</code> <strong>不校验 manifest</strong>，本机生成”成功”不代表能编译；</li>
+<li>一次连环钉死了 9 个依赖版本（idna_adapter、home、indexmap、time、litemap、zerofrom、jobserver、unicode-segmentation、winresource）；</li>
+<li><strong><code>generate-lockfile</code> 会重置手工钉子</strong>——版本钉子必须写进 <code>Cargo.toml</code> 的依赖声明（<code>=版本</code>），不能只靠 lock；</li>
+<li>缺少目标平台工具链时（如本机是 Linux、只出 Windows 包），用 <code>cargo check</code> + <code>cargo fetch --locked</code> 覆盖跨平台依赖超集，把大部分 MSRV&#x2F;edition 问题在本地消掉。</li>
+</ul>
+<h2 id="三、Win32-原生控件（native-windows-gui）的坑"><a href="#三、Win32-原生控件（native-windows-gui）的坑" class="headerlink" title="三、Win32 原生控件（native-windows-gui）的坑"></a>三、Win32 原生控件（native-windows-gui）的坑</h2><ul>
+<li><strong><code>LabelFlags::NONE</code> 等于隐形空白</strong>：编译能过、界面全白——所有 Label 必须显式 <code>VISIBLE</code>；</li>
+<li><strong>“能显示窗口但一秒自动关闭”</strong>：<code>RefCell</code> 借用嵌套（借用守卫未释放又去加载预览）导致崩溃——先取状态快照释放借用再分步操作；同时加 panic 钩子写日志，崩溃现场必入日志；</li>
+<li><strong>语言切换崩溃实为死锁</strong>：持有配置锁时调用会再次加同一把不可重入 <code>std::sync::Mutex</code> 的函数，UI 线程永久挂起——先在独立作用域释放锁再执行；</li>
+<li><strong>高 DPI 缩放</strong>：manifest 声明 DPI 感知后按物理像素渲染，固定布局在 125%&#x2F;150% 屏上过小——用 <code>GetDeviceCaps(LOGPIXELSX)</code> 查询 DPI，以 96 为基准线性缩放全部坐标；</li>
+<li><strong>“无法定位程序输入点 GetWindowSubclass”</strong>：exe 缺 Common-Controls v6 manifest，老系统加载的是 system32 的旧版 comctl32。修复：<code>build.rs</code> 嵌入 manifest，声明 Common Controls 6.0 + supportedOS GUID + DPI 感知。</li>
+</ul>
+<h2 id="四、系统托盘与窗口生命周期（跨平台）"><a href="#四、系统托盘与窗口生命周期（跨平台）" class="headerlink" title="四、系统托盘与窗口生命周期（跨平台）"></a>四、系统托盘与窗口生命周期（跨平台）</h2><ul>
+<li><strong>托盘图标创建失败被静默吞掉</strong>：<code>Shell_NotifyIconW</code> 失败只等 TaskbarCreated 广播——“进程在跑、没有图标”。需要重试与兜底；</li>
+<li><strong>气泡通知的编号偏移</strong>：builder 会占用一个编号，通知必须按 2 指认，写死 1 则永远不出现；</li>
+<li><strong>开机自启早于外壳</strong>：窗口自藏会变成隐形——应等托盘确实持有（最多 15 秒）再隐藏；</li>
+<li><strong>Wayland 限制</strong>：<code>set_visible</code> 空实现、禁止取消最小化、无输入序列号的后台激活被 KWin 拒绝——默认策略选 <code>prefer_x11()</code>；</li>
+<li><strong>X11 图标尺寸上限</strong>：<code>_NET_WM_ICON</code> 单次属性请求上限 65535 个 32 位字，256×256 需要 65538 → 静默失败窗口无图标，改用 128px；</li>
+<li><strong>托盘库的默认 feature 会拉入完整 Tokio</strong>：无 Tokio runtime 时 panic——用 <code>default-features = false</code> + <code>async-io</code>。</li>
+</ul>
+<h2 id="五、SQLite-并发与迁移"><a href="#五、SQLite-并发与迁移" class="headerlink" title="五、SQLite 并发与迁移"></a>五、SQLite 并发与迁移</h2><ul>
+<li><strong>无 <code>busy_timeout</code>&#x2F;WAL 时多线程报 <code>database is locked</code></strong>；</li>
+<li><strong>迁移竞态</strong>：<code>ensure_window_column</code> 先查后 ALTER，升级后首启时监控线程与界面线程同时 ALTER → 一边报 <code>duplicate column name</code>、<code>open_db</code> 返回 Err → 表现像”密钥丢失”，重启即好。迁移要用幂等 ALTER（先探测列）并串行化；</li>
+<li><strong>迁移顺序</strong>：ALTER 迁移排在 CREATE TABLE 之前 → 全新安装报 <code>no such table</code>；</li>
+<li><strong>测试写真实目录是灾难</strong>：crypto 测试直接改写用户状态目录里的密钥文件，而搬迁规则”目标已存在就跳过”→ 密钥解不开像数据全丢。修复：测试状态&#x2F;配置指向 <code>/tmp/&lt;app&gt;-tests-&lt;pid&gt;/</code>，新测试必须先调”隔离目录”辅助函数。</li>
+</ul>
+<h2 id="六、进程清理的两种误伤"><a href="#六、进程清理的两种误伤" class="headerlink" title="六、进程清理的两种误伤"></a>六、进程清理的两种误伤</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 误杀同名旧版本进程</span></span><br><span class="line">pkill -x dsmon</span><br><span class="line"><span class="comment"># 自匹配杀掉执行命令的 shell</span></span><br><span class="line">pkill -f dsmon</span><br><span class="line"><span class="comment"># 正确做法：完整路径匹配取 PID 再 kill</span></span><br><span class="line">pgrep -f <span class="string">&#x27;/usr/local/bin/dsmon&#x27;</span> | xargs <span class="built_in">kill</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="七、文件路径安全"><a href="#七、文件路径安全" class="headerlink" title="七、文件路径安全"></a>七、文件路径安全</h2><p>从远程返回的 ID 直接拼路径可写&#x2F;删任意文件（路径遍历，高危）。三层拦截：</p>
+<ol>
+<li>ID 白名单校验（ASCII、拒绝 <code>..</code>、长度 ≤128）；</li>
+<li>路径边界断言（拼接结果必须在目标目录内）；</li>
+<li>下载限额（大小上限 + Content-Length 预检 + 强制 HTTPS + 图片 magic bytes 校验）。</li>
+</ol>
+<h2 id="八、CI-与构建的补充教训"><a href="#八、CI-与构建的补充教训" class="headerlink" title="八、CI 与构建的补充教训"></a>八、CI 与构建的补充教训</h2><ul>
+<li><strong>CI 只有 fmt+build、没有 <code>cargo test</code></strong>：安全回归单测从未在任何环境执行过，补上门禁后首跑即失败（期望值漏目录段、硬编码 <code>/</code> 分隔符在 Windows 不成立）；</li>
+<li><strong>双架构产物同名</strong>：x64&#x2F;x86 产物同名会在 Release 上互相覆盖，构建后先重命名；</li>
+<li><strong>本地能过、CI 失败的常见原因</strong>：陈旧 <code>*.tsbuildinfo</code>（大量 TS6305 报错，清理即过）、本地残留的构建产物造成假象。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Rust 桌面工具开发的坑集中在”<strong>边界条件</strong>“：老旧系统、企业网络环境、高 DPI、跨平台窗口系统、多线程数据库访问——每一项都有隐藏的窄路径。策略是：把兼容性约束写进 CI 门禁、把平台差异封装成显式的探测与降级，而不是”出问题再补”。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/rust/" rel="tag"># rust</a>
+              <a href="/tags/windows/" rel="tag"># windows</a>
+              <a href="/tags/desktop/" rel="tag"># desktop</a>
+              <a href="/tags/tls/" rel="tag"># tls</a>
+              <a href="/tags/gui/" rel="tag"># gui</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/08/08/ai-api-integration-pitfalls/" rel="prev" title="对接多家大模型 API 的踩坑与治理经验">
+                  <i class="fa fa-angle-left"></i> 对接多家大模型 API 的踩坑与治理经验
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/09/17/packaging-ci-system-integration-pitfalls/" rel="next" title="跨平台打包与 CI 发布实践踩坑集">
+                  跨平台打包与 CI 发布实践踩坑集 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
