@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这里只保留主线思路——每一类问题在考什么、答题的骨架是什么。原来的完整题库（200+ 题，每题含「面试官为什么问」＋「参考口语化回答」）与 26 张流程图已整理到独立仓库： 完整内容：https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community&#x2F;AI_Interview 需要逐题打磨时看仓库；需要快速回忆”该说什么”时看这篇。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 应用工程师面试题纲（精简版）">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/01/01/ai-interview-guide/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="这里只保留主线思路——每一类问题在考什么、答题的骨架是什么。原来的完整题库（200+ 题，每题含「面试官为什么问」＋「参考口语化回答」）与 26 张流程图已整理到独立仓库： 完整内容：https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community&#x2F;AI_Interview 需要逐题打磨时看仓库；需要快速回忆”该说什么”时看这篇。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-31T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="agent">
+<meta property="article:tag" content="ai-engineer">
+<meta property="article:tag" content="interview">
+<meta property="article:tag" content="llm">
+<meta property="article:tag" content="rag">
+<meta property="article:tag" content="system-design">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-guide/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/01/01/ai-interview-guide/","path":"2026/01/01/ai-interview-guide/","title":"AI 应用工程师面试题纲（精简版）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AI 应用工程师面试题纲（精简版） | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%9C%8B%E9%9D%A2%E8%AF%95%E7%9A%84%E8%AF%84%E5%88%86%E9%AA%A8%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">一、先看面试的评分骨架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B2%97%E4%BD%8D%E8%AE%A4%E7%9F%A5"><span class="nav-number">2.</span> <span class="nav-text">二、岗位认知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Python"><span class="nav-number">3.</span> <span class="nav-text">三、Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81PyTorch"><span class="nav-number">4.</span> <span class="nav-text">四、PyTorch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Transformer"><span class="nav-number">5.</span> <span class="nav-text">五、Transformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%A4%9A%E6%A8%A1%E6%80%81"><span class="nav-number">6.</span> <span class="nav-text">六、多模态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81Agent-%E7%94%9F%E6%80%81"><span class="nav-number">7.</span> <span class="nav-text">七、Agent 生态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E9%83%A8%E7%BD%B2"><span class="nav-number">8.</span> <span class="nav-text">八、部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E7%9B%91%E6%8E%A7"><span class="nav-number">9.</span> <span class="nav-text">九、监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81HR-%E5%88%9D%E7%AD%9B"><span class="nav-number">10.</span> <span class="nav-text">十、HR 初筛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%87%A0%E6%9D%A1%E9%80%9A%E7%94%A8%E7%AD%94%E9%A2%98%E5%8E%9F%E5%88%99"><span class="nav-number">11.</span> <span class="nav-text">十一、几条通用答题原则</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">176</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AI 应用工程师面试题纲（精简版） | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI 应用工程师面试题纲（精简版）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-01T00:00:00+08:00">2026-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">AI工程师面试题</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这里只保留<strong>主线思路</strong>——每一类问题在考什么、答题的骨架是什么。原来的完整题库（200+ 题，每题含「面试官为什么问」＋「参考口语化回答」）与 26 张流程图已整理到独立仓库：</p>
+<p><strong>完整内容：<a target="_blank" rel="noopener" href="https://github.com/WenYin-Community/AI_Interview">https://github.com/WenYin-Community/AI_Interview</a></strong></p>
+<p>需要逐题打磨时看仓库；需要快速回忆”该说什么”时看这篇。</p>
+<span id="more"></span>
+
+<h2 id="一、先看面试的评分骨架"><a href="#一、先看面试的评分骨架" class="headerlink" title="一、先看面试的评分骨架"></a>一、先看面试的评分骨架</h2><p>整套题库共用同一个”五层”结构，这个顺序本身就是面试官的考察路径：</p>
+<ol>
+<li><strong>基础认知（Why &#x2F; What）</strong>——岗位边界、概念分层、工程价值观</li>
+<li><strong>核心技术能力（How）</strong>——你能不能讲清机制，而不是背结论</li>
+<li><strong>工程化与系统能力</strong>——上线、监控、成本、兜底</li>
+<li><strong>真实项目与业务场景</strong>——你做过什么、你的角色、结果如何</li>
+<li><strong>进阶与加分项</strong>——架构判断、技术选型、未来视野</li>
+</ol>
+<p>答题时把「是什么 → 为什么 → 工程上怎么落地 → 我实际怎么做的」四段走完，基本就不会失分。</p>
+<h2 id="二、岗位认知"><a href="#二、岗位认知" class="headerlink" title="二、岗位认知"></a>二、岗位认知</h2><ul>
+<li>AI 应用开发 ≠ 调模型、写 Prompt，本质是<strong>产品级 AI 能力的交付</strong>。</li>
+<li>四层结构要分清：模型与算法（能力来源）→ AI 应用（能力封装）→ AI 系统（权限、流程、日志、监控、兜底）→ 业务场景。</li>
+<li>企业真正的瓶颈通常不在模型，而在应用设计：Prompt、上下文、数据、流程控制。</li>
+<li>“能上线”的标准不是效果好，而是：<strong>可评估、成本可控、故障可兜底、有人能维护</strong>。</li>
+</ul>
+<h2 id="三、Python"><a href="#三、Python" class="headerlink" title="三、Python"></a>三、Python</h2><ul>
+<li>区分”脚本代码”与”工程代码”：边界清晰、异常有策略、配置不写死、可测试。</li>
+<li>几个高频细节：生成器与惰性求值、深浅拷贝（AI 项目里真踩过）、可变&#x2F;不可变对象、lambda 与推导式的可读性边界。</li>
+<li>依赖与版本管理：锁版本、区分运行期与开发期依赖。</li>
+<li>中大型项目的目录结构，比”用了什么库”更能说明工程能力。</li>
+</ul>
+<h2 id="四、PyTorch"><a href="#四、PyTorch" class="headerlink" title="四、PyTorch"></a>四、PyTorch</h2><ul>
+<li>Tensor 与计算图：动态图意味着什么，它对调试和部署的影响分别是什么。</li>
+<li>训练流程的四个要素：数据管道、损失、优化器、显存。</li>
+<li>工程上真正常踩的：显存泄漏（图没断开）、忘记 <code>no_grad</code>、DataLoader 多进程问题、随机种子不可复现。</li>
+<li>调优的第一步不是调超参，而是<strong>先定位瓶颈</strong>（数据、算力还是显存）。</li>
+</ul>
+<h2 id="五、Transformer"><a href="#五、Transformer" class="headerlink" title="五、Transformer"></a>五、Transformer</h2><ul>
+<li>用工程语言解释 Self-Attention：它不是”算权重”，而是”信息路由”。</li>
+<li>三个必答的”为什么”：为什么要除以 <code>√d</code>、为什么要多头、为什么需要位置编码。</li>
+<li>Encoder-only &#x2F; Decoder-only &#x2F; Encoder-Decoder 的取舍，落到”你的场景需要什么”。</li>
+<li>Masked Attention 在训练与推理中的角色不同，别混着讲。</li>
+<li>KV Cache：省了什么、代价是什么（显存换延迟）。</li>
+<li>长上下文为什么难：注意力复杂度 + 训练成本 + 有效利用率的衰减。</li>
+<li>为什么会”自信地胡说”：概率生成本质；工程上的解法是收窄自由度（RAG、约束输出、校验）。</li>
+</ul>
+<h2 id="六、多模态"><a href="#六、多模态" class="headerlink" title="六、多模态"></a>六、多模态</h2><ul>
+<li>多模态不是”文本模型加个图片编码器”，核心是<strong>模态间的语义对齐</strong>。</li>
+<li>工程约束集中在三个地方：分辨率&#x2F;帧率、长视频的 token 预算、模态缺失时的降级。</li>
+<li>评估最难：跨模态任务没有单一指标，”好”要先定义清楚。</li>
+</ul>
+<h2 id="七、Agent-生态"><a href="#七、Agent-生态" class="headerlink" title="七、Agent 生态"></a>七、Agent 生态</h2><ul>
+<li>Agent &#x3D; LLM + 工具 + 记忆 + 规划。<strong>不是所有场景都适合做 Agent</strong>。</li>
+<li>一句话要能说清：Agent 是能力放大器，也是风险放大器。</li>
+<li><strong>LangChain</strong>：Chain &#x2F; Tool &#x2F; Agent &#x2F; Memory 的职责边界要分清。</li>
+<li><strong>LangGraph</strong>：把 Agent 变成有状态的图，适合步骤明确、需要可控流程的场景。</li>
+<li><strong>LlamaIndex</strong>：以数据与检索为中心，索引与查询的抽象更直接。</li>
+<li><strong>MCP</strong>：工具与上下文的标准化协议；Server &#x2F; Client 分工，Tool &#x2F; Resource &#x2F; Prompt 三类抽象，重点在权限与治理。</li>
+<li><strong>多智能体</strong>：不是银弹。核心难点是分工边界、通信与上下文共享、冲突裁决、成本失控。</li>
+<li>通用风险清单：无限循环、工具误调用、上下文膨胀、权限滥用。</li>
+</ul>
+<h2 id="八、部署"><a href="#八、部署" class="headerlink" title="八、部署"></a>八、部署</h2><ul>
+<li>部署的不是”模型”，是<strong>服务</strong>：镜像、配置与密钥、健康检查、优雅退出、资源限额。</li>
+<li>单机 &#x2F; 多实例 &#x2F; 多卡三种形态的差异主要在显存管理与并发模型。</li>
+<li>必须设计四件事：超时、重试、降级、灰度与回滚。</li>
+<li>为什么很多 Demo 上不了生产：没有并发设计、没有重试、没有配额、没有观测。</li>
+</ul>
+<h2 id="九、监控"><a href="#九、监控" class="headerlink" title="九、监控"></a>九、监控</h2><ul>
+<li>AI 监控 ≠ Web 监控：<strong>要监控”效果”，不只是”可用”</strong>。</li>
+<li>四类核心信号：延迟、token 与成本、检索质量（RAG）、Agent 行为轨迹。</li>
+<li>幻觉要可量化：异常输出率、兜底触发率、人工介入率、用户纠正率。</li>
+<li>日志 &#x2F; 指标 &#x2F; Trace 分工清楚，并且提前设计告警分级，避免告警风暴。</li>
+</ul>
+<h2 id="十、HR-初筛"><a href="#十、HR-初筛" class="headerlink" title="十、HR 初筛"></a>十、HR 初筛</h2><p>五个维度，每项 0–4 分，总分 24：</p>
+<ol>
+<li>岗位动机与角色认知</li>
+<li>项目真实性与参与深度</li>
+<li>是否理解 AI 是”系统工程”而非单点模型</li>
+<li>工程型岗位的成长潜力</li>
+<li>是否值得占用一次技术面名额</li>
+</ol>
+<p><strong>风险信号</strong>：只说”风口&#x2F;好找工作”；把工作理解为”接个 API 写个聊天框”；排斥数据清洗、评估、上线后维护这类脏活。</p>
+<h2 id="十一、几条通用答题原则"><a href="#十一、几条通用答题原则" class="headerlink" title="十一、几条通用答题原则"></a>十一、几条通用答题原则</h2><ul>
+<li><strong>先给结论，再给依据</strong>——面试官的时间比你想的少。</li>
+<li>讲<strong>取舍</strong>比讲方案值钱：为什么不用另一种，你在权衡什么。</li>
+<li>每个技术点绑定一个真实场景，否则听起来像背的。</li>
+<li>承认边界：做不到的说做不到，比硬编一个答案可信得多。</li>
+<li>准备一个失败案例：原因、你做了什么、后来怎么改的。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/llm/" rel="tag"># llm</a>
+              <a href="/tags/ai-engineer/" rel="tag"># ai-engineer</a>
+              <a href="/tags/interview/" rel="tag"># interview</a>
+              <a href="/tags/system-design/" rel="tag"># system-design</a>
+              <a href="/tags/agent/" rel="tag"># agent</a>
+              <a href="/tags/rag/" rel="tag"># rag</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/18/rk3588-update-uefi-edk2/" rel="prev" title="RK3588设备更新UEFI edk2固件">
+                  <i class="fa fa-angle-left"></i> RK3588设备更新UEFI edk2固件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/01/18/cargo-package-management/" rel="next" title="Cargo 包管理器完全指南">
+                  Cargo 包管理器完全指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
