@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">199</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,342 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/27/kde-dolphin-run-as-root/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/27/kde-dolphin-run-as-root/" class="post-title-link" itemprop="url">KDE Dolphin文件管理器以root访问</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-27 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-27T00:00:00+08:00">2023-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>把下列代码保存为 <code>open_as_root.desktop</code>，放置于 <code>~/.local/share/kservices5/ServiceMenus/</code> 目录（无此目录请手动创建）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Type</span>=Service</span><br><span class="line"><span class="attr">Icon</span>=system-file-manager</span><br><span class="line"><span class="attr">Actions</span>=OpenAsRootKDE5</span><br><span class="line"><span class="attr">ServiceTypes</span>=KonqPopupMenu/Plugin,inode/directory,inode/directory-locked</span><br><span class="line"></span><br><span class="line"><span class="section">[Desktop Action OpenAsRootKDE5]</span></span><br><span class="line"><span class="attr">Exec</span>=/usr/bin/pkexec env DISPLAY=<span class="variable">$DISPLAY</span> XAUTHORITY=<span class="variable">$XAUTHORITY</span> KDE_SESSION_VERSION=<span class="number">5</span> KDE_FULL_SESSION=<span class="literal">true</span> dolphin</span><br><span class="line"><span class="attr">Icon</span>=system-file-manager-root</span><br><span class="line"><span class="attr">Icon</span>=system-file-manager</span><br><span class="line"><span class="attr">Name</span>=Open as Root</span><br><span class="line">Name<span class="section">[ru]</span>=Открыть папку с правами рут</span><br><span class="line">Name<span class="section">[ua]</span>=Відкрити папку з правами рут</span><br><span class="line">Name<span class="section">[zh_CN]</span>=打开具有根权限的文件夹</span><br><span class="line">Name<span class="section">[zh_TW]</span>=打開具有根許可權的資料夾</span><br><span class="line">Name<span class="section">[de]</span>=Öffnen des Ordners mit Root-Berechtigungen</span><br><span class="line">Name<span class="section">[ja]</span>=ルート権限を持つフォルダを開く</span><br><span class="line">Name<span class="section">[ko]</span>=루트 권한이 있는 폴더 열기</span><br><span class="line">Name<span class="section">[fr]</span>=Ouvrez le dossier avec les privilèges root</span><br><span class="line">Name<span class="section">[el]</span>=Ανοίξτε ως Root</span><br><span class="line">Name<span class="section">[es]</span>=Abrir la carpeta con privilegios de root</span><br><span class="line">Name<span class="section">[tr]</span>=Kök ayrıcalıkları olan klasörü açma</span><br><span class="line">Name<span class="section">[he]</span>=פתח תיקיה עם הרשאות שורש</span><br><span class="line">Name<span class="section">[it]</span>=Aprire la cartella con privilegi radice</span><br><span class="line">Name<span class="section">[ar]</span>=فتح المجلد بامتيازات الجذر</span><br><span class="line">Name<span class="section">[pt_BR]</span>=Abrir pasta com privilégios de root</span><br><span class="line">Name<span class="section">[pt_PT]</span>=Abrir pasta com privilégios de root</span><br><span class="line">Name<span class="section">[sv]</span>=Öppna mapp med root-behörigheter</span><br><span class="line">Name<span class="section">[nb]</span>=Åpne mappen med rotprivilegier</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/06/6fc092541a11c86ddf1d928f0e61301ec5a3.png"><img src="/images/6fc092541a11c86ddf1d928f0e61301ec5a3.png"></a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/25/kde-connect-repair/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/25/kde-connect-repair/" class="post-title-link" itemprop="url">KDE Connect 故障修复</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-25 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-25T00:00:00+08:00">2023-06-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/06/Screenshot_20230629_200122.png"><img src="/images/Screenshot_20230629_200122-640x480.png"></a></p>
+<h2 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a>故障处理</h2><h3 id="我有两个设备运行-KDE-Connect-但他们不能发现对方"><a href="#我有两个设备运行-KDE-Connect-但他们不能发现对方" class="headerlink" title="我有两个设备运行 KDE Connect 但他们不能发现对方"></a>我有两个设备运行 KDE Connect 但他们不能发现对方</h3><p><strong>KDE Connect</strong> 在 1714-1764 内的动态端口使用 UDP 和 TCP 协议。因此，如果你在防火墙后面，确保为 TCP 和 UDP 打开这个端口范围。否则，请确保你的网络没有阻挡 UDP 广播数据包。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/06/25/kde-connect-repair/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/20/l4d2-graphics-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/20/l4d2-graphics-config/" class="post-title-link" itemprop="url">求生之路2图形设定</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-20 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-20T00:00:00+08:00">2023-06-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>steamapps\common\Left 4 Dead 2\left4dead2\cfg\video.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&quot;VideoConfig&quot;</span><br><span class="line">&#123;</span><br><span class="line">&quot;setting.cpu_level&quot; &quot;2&quot;</span><br><span class="line">&quot;setting.gpu_level&quot; &quot;0&quot;</span><br><span class="line">&quot;setting.mat_antialias&quot; &quot;1&quot;</span><br><span class="line">&quot;setting.mat_aaquality&quot; &quot;0&quot;</span><br><span class="line">&quot;setting.mat_forceaniso&quot; &quot;1&quot;</span><br><span class="line">&quot;setting.mat_vsync&quot; &quot;1&quot;</span><br><span class="line">&quot;setting.mat_triplebuffered&quot; &quot;0&quot;</span><br><span class="line">&quot;setting.mat_grain_scale_override&quot; &quot;0.000000&quot;</span><br><span class="line">&quot;setting.mat_monitorgamma&quot; &quot;2.196800&quot;</span><br><span class="line">&quot;setting.gpu_mem_level&quot; &quot;2&quot;</span><br><span class="line">&quot;setting.mem_level&quot; &quot;2&quot;</span><br><span class="line">&quot;setting.mat_queue_mode&quot; &quot;-1&quot;</span><br><span class="line">&quot;setting.defaultres&quot; &quot;1920&quot;</span><br><span class="line">&quot;setting.defaultresheight&quot; &quot;1080&quot;</span><br><span class="line">&quot;setting.aspectratiomode&quot; &quot;1&quot;</span><br><span class="line">&quot;setting.fullscreen&quot; &quot;0&quot;</span><br><span class="line">&quot;setting.nowindowborder&quot; &quot;1&quot;</span><br><span class="line">&quot;setting.mat_tonemapping_occlusion_use_stencil&quot; &quot;1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/QQ%E5%9B%BE%E7%89%8720230406191836.jpg"><img src="/images/QQ%E5%9B%BE%E7%89%8720230406191836-640x480.jpg"></a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/10/intel-graphics-best-practices-and-settings-for-hardware-acceleration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/10/intel-graphics-best-practices-and-settings-for-hardware-acceleration/" class="post-title-link" itemprop="url">优化新型号英特尔显卡在Linux下的多媒体加速</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-10 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-10T00:00:00+08:00">2023-06-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在比较新的 Linux 发行版上为英特尔显卡获得硬件加速需要一些修改，因为默认值是面向最大稳定性而不是性能的，即使在内核和相关软件包中支持的较新硬件上也是如此。</p>
+<p>我一直在尝试记录在较新的硬件上首次安装 Fedora 时要采取的步骤（例如：Intel gen11+（比如我的 Thinkpad X1 Carbon Gen 9，带 Iris Xe 显卡），并希望了解社区对它们的看法：</p>
+<p>查看显卡型号：</p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/06/QQ%E5%9B%BE%E7%89%8720230707133452.png"><img src="/images/QQ%E5%9B%BE%E7%89%8720230707133452-640x108.png"></a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/06/10/intel-graphics-best-practices-and-settings-for-hardware-acceleration/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -717,359 +1053,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/04/12/grub-boot-loader-customize/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/" class="post-title-link" itemprop="url">在RedHat/Fedora KDE桌面使用fcitx5/ibus输入法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-11T00:00:00+08:00">2023-04-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/Screenshot_20230411_162013.png"><img src="/images/Screenshot_20230411_162013.png"></a></p>
-<h2 id="安装-Fcitx5"><a href="#安装-Fcitx5" class="headerlink" title="安装 Fcitx5"></a>安装 Fcitx5</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install fcitx5-gtk2 fcitx5-gtk3 fcitx5-gtk4 fcitx5-gtk fcitx5-data fcitx5 fcitx5-qt-libfcitx5qtdbus fcitx5-qt-module fcitx5-lua fcitx5-qt-libfcitx5qt5widgets fcitx5-chinese-addons fcitx5-chinese-addons-data fcitx5-qt kcm-fcitx5 fcitx5-rime</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装-ibus"><a href="#安装-ibus" class="headerlink" title="安装 ibus"></a>安装 ibus</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/09/fedora-rhel-cpu-tuned-mode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/09/fedora-rhel-cpu-tuned-mode/" class="post-title-link" itemprop="url">Fedora/RHEL动态调优CPU性能模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-09 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-09T00:00:00+08:00">2023-04-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>主要依赖 Tuned。</p>
-<p>在 CentOS &#x2F; RHEL 7 和 Fedora 上，默认情况下已预先安装并激活了 tuned，但在较旧版本的 CentOS &#x2F; RHEL 6.x 上，需要使用以下 yum 命令进行安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> yum install tuned -y</span><br></pre></td></tr></table></figure>
-
-<p>安装后，您将找到以下重要的调整配置文件：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/09/fedora-rhel-cpu-tuned-mode/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/09/installing-kde-plasma-on-rhel-based-9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/09/installing-kde-plasma-on-rhel-based-9/" class="post-title-link" itemprop="url">在基于RHEL的系统上安装KDE Plasma桌面环境</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-09 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-09T00:00:00+08:00">2023-04-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/QQ%E5%9B%BE%E7%89%8720230410095846.png"><img src="/images/QQ%E5%9B%BE%E7%89%8720230410095846.png"></a>这大概也适用于Rocky&#x2F;Alma和CentOS（Stream）。</p>
-<p>我需要为某个项目创建一个AlmaLinux 9.1（注：译者在RHEL9.1测试通过）工作站。</p>
-<p>我唯一的抱怨是，我不是GNOME桌面的忠实粉丝。 除了“标准”桌面或GNOME桌面之外，如果有另一种选择就好了。<br>我最近不得不为一个项目创建一个AlmaLinux 9.1工作站。我唯一的抱怨是，我不是Gnome桌面的忠实粉丝。 除了“标准”桌面或Gnome桌面之外，如果有另一种选择就好了。</p>
-<p>这就是如何在基于RHEL9的系统上安装KDE Plasma的方法。<br>这就是如何在基于RHEL9的系统上安装KDE Plasma。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/09/installing-kde-plasma-on-rhel-based-9/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/01/how-to-clean-mysql-binary-log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/01/how-to-clean-mysql-binary-log/" class="post-title-link" itemprop="url">mysql日志文件mysql-bin太大怎么办</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-04-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-01T00:00:00+08:00">2023-04-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>宝塔面板的临时存储文件&#x2F;www&#x2F;server&#x2F;data&#x2F;太大,50G磁盘，用了近30G ，那么如何腾空这些无用文件呢？</p>
-<p>解决方式：</p>
-<p>1.禁用MySQL日志：修改&#x2F;etc&#x2F;my.cnf 文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">log-bin=mysql-bin</span><br><span class="line">binlog_format=mixed</span><br><span class="line">server-id = 1</span><br><span class="line">expire_logs_days = 10</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/01/how-to-clean-mysql-binary-log/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

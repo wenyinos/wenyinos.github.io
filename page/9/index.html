@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">199</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,346 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/02/26/beast-ancestors-cpp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/26/beast-ancestors-cpp/" class="post-title-link" itemprop="url">野兽先辈计算器.cpp</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-26T00:00:00+08:00">2022-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%96%87%E5%8C%96%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">文化杂谈</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ConsoleApplication4.cpp: 定义控制台应用程序的入口点。</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdafx.h&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a, num = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">start</span><span class="params">(<span class="type">char</span> *s, <span class="type">int</span> a)</span></span>;</span><br><span class="line"><span class="type">bool</span> END; <span class="comment">//找到符合要求的式子的标记</span></span><br><span class="line"><span class="comment">//预留三个括号位</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DIGIT_1 3</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DIGIT_2 11</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DIGIT_3 19</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DIGIT_4 27</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DIGIT_5 35</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DIGIT_6 43</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NEGATIVE 126 <span class="comment">//126表示负数</span></span></span><br><span class="line"><span class="type">bool</span> operator_flag[<span class="number">5</span>] = &#123;&#125;;</span><br><span class="line"><span class="type">char</span> expression[<span class="number">47</span>] = &#123;&#125;; <span class="comment">//表达式数组，0表示缺省</span></span><br><span class="line"><span class="type">char</span> operator_list[<span class="number">4</span>] = &#123; <span class="string">&#x27;+&#x27;</span>,<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;*&#x27;</span>,<span class="string">&#x27;^&#x27;</span> &#125;; <span class="comment">//运算符种类</span></span><br><span class="line">array &lt;<span class="type">char</span>, 5&gt; pre_list_tmp;</span><br><span class="line">vector &lt;array&lt;<span class="type">char</span>, 5&gt;&gt; pre_list; <span class="comment">//全部运算符排列的列表</span></span><br><span class="line">vector &lt;<span class="type">int</span>&gt; bracket_set; <span class="comment">//括号标记</span></span><br><span class="line">vector &lt;vector&lt;<span class="type">int</span>&gt;&gt; bracket_list; <span class="comment">//全部括号列表</span></span><br><span class="line">map &lt;<span class="type">long</span> <span class="type">long</span>, <span class="type">bool</span>&gt; flag; <span class="comment">//枚举状态标记，用于去重</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(expression, <span class="number">0</span>, <span class="built_in">sizeof</span>(expression));</span><br><span class="line">    flag.<span class="built_in">clear</span>();</span><br><span class="line">    END = <span class="literal">false</span>;</span><br><span class="line">    expression[DIGIT_1] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    expression[DIGIT_2] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    expression[DIGIT_3] = <span class="string">&#x27;4&#x27;</span>;</span><br><span class="line">    expression[DIGIT_4] = <span class="string">&#x27;5&#x27;</span>;</span><br><span class="line">    expression[DIGIT_5] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    expression[DIGIT_6] = <span class="string">&#x27;4&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">operator_add</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bracket_add</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bracket_add_1</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//void bracket_add_2(int);</span></span><br><span class="line"><span class="comment">//void bracket_add_3(int);</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">calculate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">d_pow</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>; <span class="comment">//整数乘方函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">operator_add</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">bracket_add</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; a)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">init</span>();</span><br><span class="line">        <span class="built_in">bracket_add_1</span>();</span><br><span class="line">        <span class="keyword">if</span> (END)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        expression[DIGIT_1] = NEGATIVE; <span class="comment">//把第一个数变为负数</span></span><br><span class="line">        flag.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="built_in">bracket_add_1</span>();</span><br><span class="line">        <span class="keyword">if</span> (!END)</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Can not find!&quot;</span> &lt;&lt; num &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">operator_add</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="type">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span> &amp;&amp; flag; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!operator_flag[i])</span><br><span class="line">            flag = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">        pre_list.<span class="built_in">push_back</span>(pre_list_tmp);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    operator_flag[x] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        pre_list_tmp[x] = operator_list[i];</span><br><span class="line">        <span class="built_in">operator_add</span>(x + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    operator_flag[x] = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bracket_add</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &gt; <span class="number">7</span>) &#123; <span class="comment">//可插入括号的位置总数。</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (bracket_set.<span class="built_in">size</span>() == <span class="number">2</span>) &#123;</span><br><span class="line">        vector &lt;<span class="type">int</span>&gt; tmp;</span><br><span class="line">        <span class="keyword">switch</span> (bracket_set[<span class="number">0</span>])</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_1);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_2);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_3);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_4);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_5);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_6);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">switch</span> (bracket_set[<span class="number">1</span>])</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_1);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_2);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_3);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_4);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_5);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(DIGIT_6);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        bracket_list.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    bracket_set.<span class="built_in">push_back</span>(x);</span><br><span class="line">    <span class="built_in">bracket_add</span>(x + <span class="number">1</span>);</span><br><span class="line">    bracket_set.<span class="built_in">pop_back</span>();</span><br><span class="line">    <span class="built_in">bracket_add</span>(x + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bracket_add_1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> size = <span class="number">21</span>; <span class="comment">//21 is bracket_list.size()</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        *去重思路:左右括号各有6个可能出现的位置，每个位置出现的括号最多为2个，</span></span><br><span class="line"><span class="comment">        *因此用一个至少12位的十进制整数来储存状态，把每个括号的位置的信息储存在</span></span><br><span class="line"><span class="comment">        *十进制位之中。</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        sum += <span class="built_in">d_pow</span>(<span class="number">10</span>, <span class="number">6</span> + (bracket_list[i][<span class="number">0</span>] - <span class="number">3</span>) / <span class="number">8</span>);</span><br><span class="line">        sum += <span class="built_in">d_pow</span>(<span class="number">10</span>, (bracket_list[i][<span class="number">1</span>] - <span class="number">3</span>) / <span class="number">8</span>);</span><br><span class="line">        expression[bracket_list[i][<span class="number">0</span>] - <span class="number">1</span>] = <span class="string">&#x27;(&#x27;</span>;</span><br><span class="line">        expression[bracket_list[i][<span class="number">1</span>] + <span class="number">1</span>] = <span class="string">&#x27;)&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; size; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            sum += <span class="built_in">d_pow</span>(<span class="number">10</span>, <span class="number">6</span> + (bracket_list[j][<span class="number">0</span>] - <span class="number">3</span>) / <span class="number">8</span>);</span><br><span class="line">            sum += <span class="built_in">d_pow</span>(<span class="number">10</span>, (bracket_list[j][<span class="number">1</span>] - <span class="number">3</span>) / <span class="number">8</span>);</span><br><span class="line">            expression[bracket_list[j][<span class="number">0</span>] - <span class="number">2</span>] = <span class="string">&#x27;(&#x27;</span>;</span><br><span class="line">            expression[bracket_list[j][<span class="number">1</span>] + <span class="number">2</span>] = <span class="string">&#x27;)&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (!flag[sum]) &#123;</span><br><span class="line">                flag[sum] = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">calculate</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (END)</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            expression[bracket_list[j][<span class="number">0</span>] - <span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">            expression[bracket_list[j][<span class="number">1</span>] + <span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        expression[bracket_list[i][<span class="number">0</span>] - <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        expression[bracket_list[i][<span class="number">1</span>] + <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">calculate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> size = pre_list.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">switch</span> (j)</span><br><span class="line">            &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                expression[DIGIT_1 + <span class="number">4</span>] = pre_list[i][j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                expression[DIGIT_2 + <span class="number">4</span>] = pre_list[i][j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                expression[DIGIT_3 + <span class="number">4</span>] = pre_list[i][j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                expression[DIGIT_4 + <span class="number">4</span>] = pre_list[i][j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">                expression[DIGIT_5 + <span class="number">4</span>] = pre_list[i][j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*string input;</span></span><br><span class="line"><span class="comment">        for (int j = 0; j &lt; 47; j++)</span></span><br><span class="line"><span class="comment">        &#123;</span></span><br><span class="line"><span class="comment">            if (expression[j])</span></span><br><span class="line"><span class="comment">                input.push_back(expression[j]);</span></span><br><span class="line"><span class="comment">        &#125;*/</span></span><br><span class="line">        <span class="comment">//计算器接口</span></span><br><span class="line">        END = <span class="built_in">start</span>(expression, a);</span><br><span class="line">        num++;</span><br><span class="line">        <span class="keyword">if</span> (END)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2022/02/20/recsue-grub-for-win10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/20/recsue-grub-for-win10/" class="post-title-link" itemprop="url">系统｜ chroot | 修复Grub 引导 for Win10</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-20 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-20T00:00:00+08:00">2022-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近被人安利了 <code>Win10 LTSC</code> (适用于低配电脑的 Win10)，就在我的破电脑上尝试了一下。交代一下我的条件：我的电脑上一块 1T 的硬盘，分了 18 个 MBR 分区，安装了 N 多个 Linux 系统。忘了什么时候，把第五个分区标识为引导分区，结果装 <code>Win10</code> 的时候，<code>Win10</code> 不能识别，装完之后，不能引导。</p>
+<hr>
+<h2 id="修复过程"><a href="#修复过程" class="headerlink" title="修复过程"></a>修复过程</h2><p>首先尝试安装 grub：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/20/recsue-grub-for-win10/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2020/04/12/mediatek-has-been-caught-cheating-on-benchmarks-and-its-not-pretty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/04/12/mediatek-has-been-caught-cheating-on-benchmarks-and-its-not-pretty/" class="post-title-link" itemprop="url">联发科芯片被指疑似在基准测试中作弊</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-12T00:00:00+08:00">2020-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>过去，曾有人指责个别手机厂商在基准测试上作弊，但这通常是一个相对本土的问题：只有少数公司的某些终端在运行某些应用程序时，不明智地使用性能更高的模式。但是，根据Anandtech的报告，联发科已经将这种“作弊”功能集成到了系统固件中，该固件可以使手机厂商使用在其芯片组上。运行某些（特定）芯片组的所有联发科手机，都在基准测试上“作弊”。</p>
+<p>这是一个漫长而伟大的故事，我鼓励任何对技术细节感兴趣的人阅读。</p>
+<p>简短的版本是，Anandtech注意到，在OPPO Reno3 Pro中，较老的低端Helio P95，性能指标上优于新款的Dimensity 1000L。修改Benchmark程序的一个版本号以防止系统识别它时，系统被确认返回给P95以较低的结果。这意味着在使用Helio P95的手机中，针对Benchmark程序“优化”的出现，其性能得到了极大的提高。 <img src="/images/chrome_2020-04-08_14-39-18-1-1.png"></p>
+<p>这并不是一个小小的差异，Anandtech观察到一般测试下降了30％，特定工作负载变化了多达70％。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/12/mediatek-has-been-caught-cheating-on-benchmarks-and-its-not-pretty/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2020/03/06/linux-game-server-running-on-boot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/03/06/linux-game-server-running-on-boot/" class="post-title-link" itemprop="url">Linux Game Server Running on Boot</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-06 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-06T00:00:00+08:00">2020-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Using-systemd"><a href="#Using-systemd" class="headerlink" title="Using systemd"></a>Using systemd</h2><p>systemd is the default init system for most modern distros.</p>
+<p>You need to create a service file in <code>/etc/systemd/system/</code></p>
+<p>Example <code>ts3server.service</code>:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/06/linux-game-server-running-on-boot/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -713,357 +1053,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/03/04/using-mono-archisteamfarm-to-hang-card-under-linuxcentos7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/12/19/remove_aliyun_tencentyun_monitoring_processes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/19/remove_aliyun_tencentyun_monitoring_processes/" class="post-title-link" itemprop="url">卸载阿里/腾讯云Linux主机监控进程，屏蔽云盾功能</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-12-19 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-19T00:00:00+08:00">2018-12-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BA%91%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index"><span itemprop="name">云服务</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="卸载阿里云盾监控"><a href="#卸载阿里云盾监控" class="headerlink" title="卸载阿里云盾监控"></a>卸载阿里云盾监控</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://update.aegis.aliyun.com/download/uninstall.sh</span><br><span class="line"><span class="built_in">chmod</span> +x uninstall.sh</span><br><span class="line"><span class="built_in">sudo</span> ./uninstall.sh</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh</span><br><span class="line"><span class="built_in">chmod</span> +x quartz_uninstall.sh</span><br><span class="line"><span class="built_in">sudo</span> ./quartz_uninstall.sh</span><br></pre></td></tr></table></figure>
-
-<h3 id="删除残留"><a href="#删除残留" class="headerlink" title="删除残留"></a>删除残留</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/19/remove_aliyun_tencentyun_monitoring_processes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/12/18/how-to-build-fuchsia/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/18/how-to-build-fuchsia/" class="post-title-link" itemprop="url">（转）Fushsia编译指南</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-18T00:00:00+08:00">2018-12-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>来源：</p>
-<p><a href="http://link.zhihu.com/?target=http://locez.com/fuchsia/fuchsia-compile-tutorial/">http://locez.com/fuchsia/fuchsia-compile-tutorial/</a></p>
-<h2 id="Fuchsia-简介"><a href="#Fuchsia-简介" class="headerlink" title="Fuchsia 简介"></a><strong>Fuchsia 简介</strong></h2><p>在进入本文正文之前，有必要简单介绍一下 Fuchsia 是个什么东西。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/18/how-to-build-fuchsia/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/12/18/x86-arch-enter-your-iphone/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/18/x86-arch-enter-your-iphone/" class="post-title-link" itemprop="url">x86架构进入你的iPhone</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-18T00:00:00+08:00">2018-12-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>来源：<a href="http://link.zhihu.com/?target=https://lcq2.github.io/x86_iphone/">https://lcq2.github.io/x86_iphone&#x2F;</a></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>生活中，我是一名从事基带开发的漏洞研究员。正如每个漏洞研究人员都知道的那样，了解最新技术发展对于您的工作成功是至关重要的。当然，在Apple宣布其<strong>新的，闪亮的，大的，更大的和最大的</strong>iPhone智能手机系列之后，我从<a href="http://link.zhihu.com/?target=http://ipsw.me">http://ipsw.me</a>下载了一些OTA固件并开始研究新的基带固件。</p>
-<p>我发现的东西在我的脊椎上发出一阵惊骇，那种只在夜间玩Doom的恐怖，独自在你的房间，没有灯光，可以产生。忍受我，我会告诉你我发现了什么……</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/18/x86-arch-enter-your-iphone/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/10/11/xda-recover-huawei-magisk-support/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/10/11/xda-recover-huawei-magisk-support/" class="post-title-link" itemprop="url">XDA开发者已修复华为设备的Magisk支持</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-10-11 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-11T00:00:00+08:00">2018-10-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>原文：<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/huawei-update-broke-magisk-fix/">Huawei rolled out an update which broke Magisk, but it can be easily fixed</a></p>
-<p>尽管最近美国和澳大利亚市场出现了问题，但华为继续在全球范围内拓展业务。该公司迅速成长到主导中国市场，现在正在挑战苹果和三星等公司。他们的<a href="https://link.zhihu.com/?target=https://forum.xda-developers.com/huawei-p20">华为P20</a>旗舰产品阵容证明了他们的成功，评论家们对它的相机，产品质量和功能表示赞赏，并且他们必将于<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/huawei-mate-20-notch-render-specifications/">华为Mate 20</a>再次掀起波澜。该公司的子品牌荣耀提供 <a href="https://link.zhihu.com/?target=https://www.xda-developers.com/hands-on-with-the-honor-play/">Honor Play</a> 和<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/honor-10-mini-review-two-months-later/">Honor 10等设备，</a> 以在中端市场竞争。正是因为像这样的智能手机，许多XDA开发者都是华为和Honor设备的粉丝，但是很多人都知道，华为决定在令人惊讶的反消费者行动中<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/huawei-honor-request-bootloader-unlock-code/">停止提供引导加载程序解锁代码</a>，可以有效阻止开发者对手机的大多数开发和修改。</p>
-<p><a href="https://link.zhihu.com/?target=https://www.xda-developers.com/xda-huawei-decision-stop-bootloader-unlocking/">我们之前已经在门户网站上解决了这个问题</a>，我们仍然对此决定感到非常失望。让像华为这样的巨头改变他们的决定或者至少提出妥协并不容易，虽然在这<a href="https://link.zhihu.com/?target=https://forum.xda-developers.com/honor-view-10/development/honor-bootloader-unlocking-limited-t3837880">方面取得了一些进展</a>，但对于爱好者来说情况依然严峻。最近的更新让人们对公司失去了更多的信心，因为更新导致使用**<a href="https://link.zhihu.com/?target=https://forum.xda-developers.com/apps/magisk">Magisk进行root的</a><strong>手机</strong>不再启动，除非重新刷入原始的ramdisk映像**。因此，华为和Honor设备所有者不仅无法解锁他们的bootloader，而且那些已经这样做的人变得无法root他们的设备。许多公司对这个似乎（又一个）反爱好者的举动<strong>感到震惊</strong>，但对更新的调查显示，软件变砖是<strong>更新的副作用，而不是故意阻止Magisk &#x2F; root</strong>。以下是我们对此更新的所有了解。</p>
-<h2 id="华为的“Patch01”更新阻止了Magisk-rooted手机的启动"><a href="#华为的“Patch01”更新阻止了Magisk-rooted手机的启动" class="headerlink" title="华为的“Patch01”更新阻止了Magisk-rooted手机的启动"></a>华为的“Patch01”更新阻止了Magisk-rooted手机的启动</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/10/11/xda-recover-huawei-magisk-support/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

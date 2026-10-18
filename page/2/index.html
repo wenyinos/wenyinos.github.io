@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">120</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">189</span>
+        <span class="site-state-item-count">199</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,353 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/05/08/home-space-migration-fstab-adjustment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/08/home-space-migration-fstab-adjustment/" class="post-title-link" itemprop="url">/home 空间迁移与 fstab 调整记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-08 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-08T00:00:00+08:00">2026-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文记录一次 <code>/home</code> 空间压力处理：没有直接调整 XFS 分区，而是把部分用户目录迁移到 <code>/opt/home-offload/zemi</code>，再通过 bind mount 挂回原路径。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>系统未使用 LVM，<code>/</code> 与 <code>/home</code> 均为 XFS。XFS 不支持原地缩小，因此不适合直接缩小 <code>/</code> 后扩展 <code>/home</code>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/      XFS，约 75G，空闲较多</span><br><span class="line">/home  XFS，约 50G，空间压力较大</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/05/08/home-space-migration-fstab-adjustment/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/28/disable-intel-dg1-discrete-gpu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/28/disable-intel-dg1-discrete-gpu/" class="post-title-link" itemprop="url">彻底禁用 DG1 独立显卡</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-28 00:00:00" itemprop="dateCreated datePublished" datetime="2026-04-28T00:00:00+08:00">2026-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>彻底禁用 DG1 独立显卡有几种方法，取决于你是想<strong>完全切断电源&#x2F;驱动加载</strong>（最彻底），还是仅仅<strong>不让图形应用使用它</strong>。</p>
+<p>鉴于你遇到的 <code>MMIO</code> 和 <code>GuC</code> 崩溃问题，推荐按以下顺序操作：</p>
+<h3 id="方法一：通过内核参数黑名单禁用-i915-对-DG1-的支持（推荐，最稳定）"><a href="#方法一：通过内核参数黑名单禁用-i915-对-DG1-的支持（推荐，最稳定）" class="headerlink" title="方法一：通过内核参数黑名单禁用 i915 对 DG1 的支持（推荐，最稳定）"></a>方法一：通过内核参数黑名单禁用 i915 对 DG1 的支持（推荐，最稳定）</h3><p>这种方法会让内核完全忽略 DG1 显卡，不加载驱动，不分配资源。这是解决驱动崩溃最彻底的方法。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/28/disable-intel-dg1-discrete-gpu/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/17/clean-vscode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/17/clean-vscode/" class="post-title-link" itemprop="url">清理 VS Code</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-17 00:00:00" itemprop="dateCreated datePublished" datetime="2026-04-17T00:00:00+08:00">2026-04-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="删除所有已安装的插件"><a href="#删除所有已安装的插件" class="headerlink" title="删除所有已安装的插件"></a>删除所有已安装的插件</h1><p><code>rm -rf ~/.vscode/extensions</code></p>
+<h1 id="删除插件的全局存储数据（如数据库、缓存状态等）"><a href="#删除插件的全局存储数据（如数据库、缓存状态等）" class="headerlink" title="删除插件的全局存储数据（如数据库、缓存状态等）"></a>删除插件的全局存储数据（如数据库、缓存状态等）</h1><p><code>rm -rf ~/.config/Code/User/globalStorage</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/17/clean-vscode/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/04/fedora-rebuild-grub-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/04/fedora-rebuild-grub-config/" class="post-title-link" itemprop="url">在 Fedora 下重建 GRUB 配置文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-04 00:00:00" itemprop="dateCreated datePublished" datetime="2026-04-04T00:00:00+08:00">2026-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在 Fedora 下，重建（更新）GRUB 配置文件的命令取决于你的系统启动模式（UEFI 或 Legacy BIOS）以及安装方式。</p>
+<p>对于绝大多数现代 Fedora 系统（UEFI 启动），请使用以下命令：</p>
+<h3 id="1-标准-UEFI-系统（最常见）"><a href="#1-标准-UEFI-系统（最常见）" class="headerlink" title="1. 标准 UEFI 系统（最常见）"></a>1. 标准 UEFI 系统（最常见）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/04/fedora-rebuild-grub-config/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -718,351 +1065,6 @@
 <li><code>pkg set -A 0 &lt;pkg&gt;</code>：把包改成手动安装，避免被 autoremove 删除。<br>如果包当初不是用 -A 安装的<br>可以先把它和依赖标成自动，再卸载主包并 autoremove。但要小心不要误删你需要的包。<br>查看包的依赖：<br><code>pkg info -d &lt;pkgname&gt;</code><br>查看哪些包依赖它：<br><code>pkg info -r &lt;pkgname&gt;</code><br>把某个包标记为自动安装：<br><code>pkg set -A 1 &lt;pkgname&gt;</code><br>把某个包标记为手动安装：<br><code>pkg set -A 0 &lt;pkgname&gt;</code><br>CI&#x2F;临时环境推荐<br>在 GitHub Actions &#x2F; VM 里安装构建依赖时：<br><code>pkg install -A -y &lt;deps...&gt;</code><br>构建完成后清理：<br><code>pkg delete -y &lt;top-level-build-pkg&gt;</code><br><code>pkg autoremove -y</code><br><code>pkg clean -ay</code><br>如果只是一次性 CI VM，通常不需要清理；但如果有缓存或镜像复用，建议用<br><code>pkg autoremove -y &amp;&amp; pkg clean -ay</code></li>
 </ul>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/18/cargo-package-management/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/18/cargo-package-management/" class="post-title-link" itemprop="url">Cargo 包管理器完全指南</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-18T00:00:00+08:00">2026-01-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Cargo-包管理器完全指南"><a href="#Cargo-包管理器完全指南" class="headerlink" title="Cargo 包管理器完全指南"></a>Cargo 包管理器完全指南</h1><p><strong>TL;DR</strong>: Cargo 是 Rust 的构建系统和包管理器，处理代码构建、依赖管理和任务自动化。本指南涵盖从安装到高级使用的完整流程。</p>
-<hr>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/01/18/cargo-package-management/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-00-ai-engineer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/01/ai-interview-00-ai-engineer/" class="post-title-link" itemprop="url">AI面试题 - AI应用开发工程师综合题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-01T00:00:00+08:00">2026-01-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">AI工程师面试题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-你怎么理解”AI-应用开发工程师”这个岗位？和算法工程师有什么本质区别？"><a href="#Q1-你怎么理解”AI-应用开发工程师”这个岗位？和算法工程师有什么本质区别？" class="headerlink" title="Q1. 你怎么理解”AI 应用开发工程师”这个岗位？和算法工程师有什么本质区别？"></a>Q1. 你怎么理解”AI 应用开发工程师”这个岗位？和算法工程师有什么本质区别？</h3><p>面试官为什么问这个问题：<br>这道题不是考你会不会用模型，而是看你有没有”岗位自我认知”。很多候选人会把 AI 应用开发说成”调模型、写 Prompt”，这是明显不够的。面试官想确认你是不是工程导向、交付导向的人。</p>
-<p>参考口语化回答：<br>如果我来回答，我会说 AI 应用开发工程师本质上是做”产品级 AI 能力交付”的。<br>算法工程师更关注模型本身，比如训练、微调、指标；而 AI 应用开发更关心的是：模型怎么被业务用起来、怎么稳定运行、怎么控制成本和风险。<br>我更多是在模型之上，做系统设计、Prompt、RAG、Agent、接口、监控这些，把 AI 变成一个真正能用、敢用、可维护的系统。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/01/01/ai-interview-00-ai-engineer/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-01-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/01/ai-interview-01-python/" class="post-title-link" itemprop="url">AI面试题 - Python 基础与工程实践</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-01T00:00:00+08:00">2026-01-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">AI工程师面试题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="第一层：Python-基础认知（Why-What）【5-题】"><a href="#第一层：Python-基础认知（Why-What）【5-题】" class="headerlink" title="第一层：Python 基础认知（Why &#x2F; What）【5 题】"></a>第一层：Python 基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-在-AI-应用开发中，你为什么首选-Python？"><a href="#Q1-在-AI-应用开发中，你为什么首选-Python？" class="headerlink" title="Q1. 在 AI 应用开发中，你为什么首选 Python？"></a>Q1. 在 AI 应用开发中，你为什么首选 Python？</h3><p>面试官为什么问这个问题：<br>这道题不是让你说”因为生态好”，而是看你是否真正理解 Python 在 AI 工程中的角色，以及它的边界。</p>
-<p>参考口语化回答：<br>我选择 Python 主要是因为它在 AI 应用层的”效率优势”。<br>不是性能最强，但开发速度快、生态完整，尤其在模型调用、数据处理、编排逻辑上非常合适。<br>在 AI 应用里，瓶颈通常不在 CPU 算力，而在模型和 IO，Python 足够用了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/01/01/ai-interview-01-python/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-02-pytorch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/01/ai-interview-02-pytorch/" class="post-title-link" itemprop="url">AI面试题 - PyTorch 深度学习框架</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-01T00:00:00+08:00">2026-01-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">AI工程师面试题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-为什么在深度学习工程中，你更倾向使用-PyTorch-而不是其他框架？"><a href="#Q1-为什么在深度学习工程中，你更倾向使用-PyTorch-而不是其他框架？" class="headerlink" title="Q1. 为什么在深度学习工程中，你更倾向使用 PyTorch 而不是其他框架？"></a>Q1. 为什么在深度学习工程中，你更倾向使用 PyTorch 而不是其他框架？</h3><p>面试官为什么问这个问题：<br>这题不是让你对比 API，而是考你是否理解 PyTorch 的工程定位，以及它为什么在工业界被广泛采用。</p>
-<p>参考口语化回答：<br>我更倾向 PyTorch，主要是因为它的计算图是动态的，调试体验非常接近原生 Python。<br>在真实工程里，模型结构经常调整，动态计算图能让我快速定位问题，而不是反复重建静态图。<br>对工程效率来说，这一点非常关键。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/01/01/ai-interview-02-pytorch/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

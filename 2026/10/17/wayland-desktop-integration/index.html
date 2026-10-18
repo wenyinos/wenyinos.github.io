@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在 Wayland 上跑虚拟机的桌面集成（剪贴板同步、拖放、指针注入、分辨率自适应），常会遇到一种尴尬处境：功能看着有、实际不工作；翻文档，上游明确写着”不支持 Wayland，请用 X11”。 本文记录一次完整的补全过程。结论先放这里：这类问题很少是”缺一段代码”，多数是”架构上刻意绕开了 Wayland”，所以第一步永远不是写代码，而是搞清楚上游到底绕在哪。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="把桌面集成从 X11 搬到 Wayland：一次完整的补全实录">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/10/17/wayland-desktop-integration/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="在 Wayland 上跑虚拟机的桌面集成（剪贴板同步、拖放、指针注入、分辨率自适应），常会遇到一种尴尬处境：功能看着有、实际不工作；翻文档，上游明确写着”不支持 Wayland，请用 X11”。 本文记录一次完整的补全过程。结论先放这里：这类问题很少是”缺一段代码”，多数是”架构上刻意绕开了 Wayland”，所以第一步永远不是写代码，而是搞清楚上游到底绕在哪。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="clipboard">
+<meta property="article:tag" content="desktop">
+<meta property="article:tag" content="libei">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="portal">
+<meta property="article:tag" content="wayland">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/10/17/wayland-desktop-integration/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/10/17/wayland-desktop-integration/","path":"2026/10/17/wayland-desktop-integration/","title":"把桌面集成从 X11 搬到 Wayland：一次完整的补全实录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>把桌面集成从 X11 搬到 Wayland：一次完整的补全实录 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%A1%AE%E8%AE%A4%E4%B8%8A%E6%B8%B8%E2%80%9D%E4%B8%8D%E6%94%AF%E6%8C%81%E2%80%9D%E6%98%AF%E5%93%AA%E4%B8%80%E7%A7%8D"><span class="nav-number">1.</span> <span class="nav-text">一、先确认上游”不支持”是哪一种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%89%AA%E8%B4%B4%E6%9D%BF%EF%BC%9A%E4%B8%A4%E4%B8%AA%E5%8D%8F%E8%AE%AE%EF%BC%8C%E4%B8%80%E4%BB%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">二、剪贴板：两个协议，一份实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%8C%87%E9%92%88%EF%BC%9Aportal-%E8%83%BD%E6%8E%88%E6%9D%83%EF%BC%8C%E4%BD%86%E6%B3%A8%E5%85%A5%E5%BE%97%E6%8D%A2%E6%9D%A1%E8%B7%AF"><span class="nav-number">3.</span> <span class="nav-text">三、指针：portal 能授权，但注入得换条路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%9A%E4%B8%A4%E4%B8%AA%E7%BB%84%E4%BB%B6%E6%8A%A2%E5%90%8C%E4%B8%80%E4%B8%AA%E8%A7%92%E8%89%B2"><span class="nav-number">4.</span> <span class="nav-text">四、分辨率：两个组件抢同一个角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%80%E4%B8%AA-gtk-init-%E8%AE%A9%E6%95%B4%E4%B8%AA%E6%8F%92%E4%BB%B6%E5%8D%B8%E8%BD%BD"><span class="nav-number">5.</span> <span class="nav-text">五、一个 gtk_init 让整个插件卸载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%85%8D%E5%BC%B9%E7%AA%97%E6%8E%88%E6%9D%83%EF%BC%9A%E6%B3%A8%E5%86%8C%E4%B8%80%E4%B8%AA%E7%9C%9F%E6%AD%A3%E7%9A%84-app-id"><span class="nav-number">6.</span> <span class="nav-text">六、免弹窗授权：注册一个真正的 app_id</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%AA%8C%E8%AF%81%E6%80%8E%E4%B9%88%E6%89%8D%E7%AE%97%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text">七、验证怎么才算数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E8%BF%98%E5%89%A9%E4%B8%8B%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="nav-number">8.</span> <span class="nav-text">八、还剩下的边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">120</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">199</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/17/wayland-desktop-integration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="把桌面集成从 X11 搬到 Wayland：一次完整的补全实录 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          把桌面集成从 X11 搬到 Wayland：一次完整的补全实录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-17 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-17T00:00:00+08:00">2026-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在 Wayland 上跑虚拟机的桌面集成（剪贴板同步、拖放、指针注入、分辨率自适应），常会遇到一种尴尬处境：功能看着有、实际不工作；翻文档，上游明确写着”不支持 Wayland，请用 X11”。</p>
+<p>本文记录一次完整的补全过程。结论先放这里：<strong>这类问题很少是”缺一段代码”，多数是”架构上刻意绕开了 Wayland”</strong>，所以第一步永远不是写代码，而是搞清楚上游到底绕在哪。</p>
+<span id="more"></span>
+
+<h2 id="一、先确认上游”不支持”是哪一种"><a href="#一、先确认上游”不支持”是哪一种" class="headerlink" title="一、先确认上游”不支持”是哪一种"></a>一、先确认上游”不支持”是哪一种</h2><p>“不支持”有三种，处理方式完全不同：</p>
+<ol>
+<li><strong>没实现</strong>——接口在，里面是 <code>return;</code>；</li>
+<li><strong>实现了一半</strong>——有分支，但只覆盖部分协议；</li>
+<li><strong>刻意禁用</strong>——代码里显式把后端切成 X11。</li>
+</ol>
+<p>这套工具属于第三种。搜索整个仓库，<code>wl_display</code>、<code>wl_data_device</code>、libei、xdg-desktop-portal 一个都没有；反而在一处初始化函数里找到一行<strong>无条件</strong>调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdk_set_allowed_backends(<span class="string">&quot;x11&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>它不是”忘记加 Wayland 支持”，而是主动声明”我只跑在 X11 上”。维护者在 issue 里的回复也很直接：Wayland 尚未支持，请使用 X11。</p>
+<p>这个结论决定了后面的所有工作：<strong>不是给已有后端打补丁，而是补齐一个从未存在过的后端</strong>。先摸清”哪些能力依赖 X11、依赖在哪一层”，比急着写代码重要得多。</p>
+<h2 id="二、剪贴板：两个协议，一份实现"><a href="#二、剪贴板：两个协议，一份实现" class="headerlink" title="二、剪贴板：两个协议，一份实现"></a>二、剪贴板：两个协议，一份实现</h2><p>剪贴板是第一个硬骨头。社区有现成补丁集，但它只绑定 <code>ext-data-control-v1</code>——这个协议要 <code>wayland-protocols &gt;= 1.39</code>，2024 年才出现。</p>
+<p>问题在于：主流的 LTS 发行版还在用旧协议 <code>zwlr_data_control</code>。这意味着补丁集在”很新的发行版”上能用，在”企业还在跑的 LTS”上剪贴板完全失效。</p>
+<p>两条路：复制一份 900 行的实现，或者写一层适配。对比两个协议后发现，它们的<strong>四层接口、请求／事件 opcode、listener 布局是一一对应的</strong>，唯一的差别是”创建对象时用哪个接口指针”。于是写了一层薄适配：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 用 opcode 直接驱动，同一份实现跑在两套协议上 */</span></span><br><span class="line">wl_proxy_marshal_flags(manager, DATA_CONTROL_OPCODE_CREATE_SOURCE, ...);</span><br></pre></td></tr></table></figure>
+
+<p>好处是只有一份逻辑，坏处是可读性下降——所以额外加了一个环境变量用于强制指定走哪条协议，方便在同时提供两个协议的合成器上做交叉验证。</p>
+<p><strong>验证方法</strong>：不要只看”绑定成功”。开一个独立进程，用 <code>wl-paste</code> 把数据读回来，<strong>逐字节比对</strong>——中文、变音符号、换行都要覆盖。绑定成功但内容错位，是这类协议实现最常见的失败形态。</p>
+<h2 id="三、指针：portal-能授权，但注入得换条路"><a href="#三、指针：portal-能授权，但注入得换条路" class="headerlink" title="三、指针：portal 能授权，但注入得换条路"></a>三、指针：portal 能授权，但注入得换条路</h2><p>指针注入原本在 Wayland 后端是空实现。用 xdg-desktop-portal 的 RemoteDesktop 界面走了一遍授权流程，看起来很顺：</p>
+<p><code>CreateSession</code> → <code>SelectDevices</code> → <code>Start</code> → <code>ConnectToEIS</code></p>
+<p>然后踩到第一个坑：<strong><code>Start</code> 漏一个参数就静默失败</strong>。它的真实签名是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Start(session_handle, parent_window, options)</span><br></pre></td></tr></table></figure>
+
+<p>少传 <code>parent_window</code> 时，portal 不会报”参数错误”，而是直接拒绝，会话永远不会进入 started 状态。更麻烦的是，<strong>同样的 bug 也存在于当时写进正式代码的那一版里</strong>——单元测试覆盖不到，只有真机跑起来才暴露。</p>
+<p>第二个坑更根本：纯 portal 路线<strong>注入不了指针</strong>。调用 <code>NotifyPointerMotionAbsolute</code> 报 <code>Invalid position</code>。读 portal 的实现才发现，它在注入前会遍历 <strong>screencast streams</strong> 校验坐标范围——没有屏幕流，坐标校验永远返回假。</p>
+<p>所以正确路径是：portal 只负责”授权”，真正注入必须走 <code>ConnectToEIS</code> 拿到 fd，再交给 libei。</p>
+<p>第三个坑是能力边界：libei 的 <strong>sender 上下文只能发送事件、不能接收</strong>（官方头文件写得很明白）。而 portal 也没有查询指针位置的接口。所以”把客体里的指针位置回报给宿主”这件事，在这个架构下<strong>技术上做不到</strong>——不是没写，是链路不存在。早先文档里写的”能读回位置”属于想当然，实测后改成了明确说明。</p>
+<h2 id="四、分辨率：两个组件抢同一个角色"><a href="#四、分辨率：两个组件抢同一个角色" class="headerlink" title="四、分辨率：两个组件抢同一个角色"></a>四、分辨率：两个组件抢同一个角色</h2><p>多显示器循环切换失效，查了很久。</p>
+<p>根因是两个组件都会向系统声明自己是”分辨率服务”：一个跑在用户会话（X11 插件），一个跑在系统服务（KMS 后端）。声明机制是”后写者赢”。</p>
+<p>在 X11 会话里，用户会话那个启动得早，先占位；在 Wayland 会话里，它启动得晚，却能通过 XWayland <strong>抢走已经属于别人的角色</strong>，于是 KMS 那条链路被顶掉，”循环切换”再也没有响应。</p>
+<p>修法是加一个会话类型判断（<code>WAYLAND_DISPLAY</code> 存在且 <code>XDG_SESSION_TYPE != x11</code>），让 X11 插件在 Wayland 会话下<strong>主动退让</strong>，复用代码里已有的”能否使用 KMS”早退分支即可。</p>
+<p>这类问题的通用教训：<strong>“后写者赢”的注册机制在混合图形栈里一定会出问题</strong>，因为两边的启动顺序和可见性不一样。</p>
+<h2 id="五、一个-gtk-init-让整个插件卸载"><a href="#五、一个-gtk-init-让整个插件卸载" class="headerlink" title="五、一个 gtk_init 让整个插件卸载"></a>五、一个 <code>gtk_init</code> 让整个插件卸载</h2><p>有一条看起来和 Wayland 无关的代码：单实例互斥锁用 <code>gtk_init()</code> 初始化，失败就退出进程。</p>
+<p>在 X11 下它只是”检查显示器在不在”；在纯 Wayland 会话里，没有 X display，<code>gtk_init()</code> 直接失败——于是<strong>整个桌面事件插件被卸载</strong>，不只是锁没拿到。</p>
+<p>修法是分支处理：X11 会话保持原行为，非 X11 会话改用文件锁：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$XDG_RUNTIME_DIR/&lt;app&gt;.lock + flock</span><br></pre></td></tr></table></figure>
+
+<p>文件锁的好处是持有者进程退出后内核自动释放，不需要额外的清理逻辑。</p>
+<p><strong>排查手法</strong>：反汇编确认分支位置——单靠读源码容易误判”这个函数只用于锁”，实际它同时承担了环境探测。</p>
+<h2 id="六、免弹窗授权：注册一个真正的-app-id"><a href="#六、免弹窗授权：注册一个真正的-app-id" class="headerlink" title="六、免弹窗授权：注册一个真正的 app_id"></a>六、免弹窗授权：注册一个真正的 app_id</h2><p>portal 的 RemoteDesktop 每次授权都要用户点确认，对无人值守场景是灾难。</p>
+<p>三个要点：</p>
+<ul>
+<li>用 <code>Registry.Register</code> 注册一个 app_id，<strong>必须能匹配到一个真实存在的 <code>.desktop</code> 文件</strong>，否则注册无效；</li>
+<li>注册后要<strong>重启 portal 服务</strong>，否则它还在用旧的桌面文件缓存；</li>
+<li>授权请求带上 <code>persist_mode=2</code>（持久化），并且在第一次授权后保存 restore token。</li>
+</ul>
+<p>还有一个细节：<code>SelectDevices</code> 是”后端内部方法”，不会产生 Response 信号；但它的 options 里<strong>必须带 <code>handle_token</code></strong>，否则响应回不到正确的请求路径上。</p>
+<h2 id="七、验证怎么才算数"><a href="#七、验证怎么才算数" class="headerlink" title="七、验证怎么才算数"></a>七、验证怎么才算数</h2><p>这类协议层改动，”单元测试通过”说明不了什么。有效的验证组合是：</p>
+<ol>
+<li><strong>真机跑在真实合成器上</strong>（KDE Wayland）——剪贴板用独立进程读回并逐字节比对；</li>
+<li><strong>嵌套一个合成器做交叉验证</strong>——用同时提供新旧两个协议的合成器，分别强制走两条实现，各跑一遍；</li>
+<li><strong>反向验证</strong>——故意把优先级反过来，确认它确实会失败（证明”选错了会坏”，而不是”两条路都能走”）；</li>
+<li><strong>无 Wayland 构建</strong>——<code>--without-&lt;feature&gt;</code> 编译必须通过并落到 stub，避免把新依赖变成硬依赖。</li>
+</ol>
+<h2 id="八、还剩下的边界"><a href="#八、还剩下的边界" class="headerlink" title="八、还剩下的边界"></a>八、还剩下的边界</h2><p>有些事这个架构下就是做不到，写清楚比假装解决更有价值：</p>
+<ul>
+<li>指针位置无法回报（libei sender 单向）；</li>
+<li>拖放仍依赖 <code>/dev/uinput</code>（需要提权包装器），且仍依赖 XWayland；</li>
+<li>平铺式合成器需要手动把工具窗口设为浮动；</li>
+<li>某些桌面环境的拖放时序问题，根治需要合成器实现对应协议，应用侧只能缓解。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>把桌面集成搬到 Wayland，难点不在”写多少行”，而在<strong>先分清上游是没实现、半实现、还是刻意禁用</strong>：</p>
+<ul>
+<li>刻意禁用的情况下，要补的是一个完整后端，不是补丁；</li>
+<li>协议差异优先用适配层收敛，而不是复制实现；</li>
+<li>portal 只解决授权，真正的设备操作要走 EIS&#x2F;libei；</li>
+<li>混合图形栈里，”后写者赢”的角色注册一定会冲突；</li>
+<li>验证必须到”读回的数据逐字节一致”这个粒度。</li>
+</ul>
+<p>最后一条经验：<strong>文档里写的”不支持”，往往比代码里的实现更诚实</strong>——但也要自己验证一遍，因为”不支持”的边界在哪里，文档通常不会写。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/desktop/" rel="tag"># desktop</a>
+              <a href="/tags/wayland/" rel="tag"># wayland</a>
+              <a href="/tags/clipboard/" rel="tag"># clipboard</a>
+              <a href="/tags/portal/" rel="tag"># portal</a>
+              <a href="/tags/libei/" rel="tag"># libei</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/16/php8-legacy-system-migration/" rel="prev" title="PHP 8 下维护一套老系统：静默失效与致命错误实录">
+                  <i class="fa fa-angle-left"></i> PHP 8 下维护一套老系统：静默失效与致命错误实录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/10/17/self-hosted-mcp-server-security/" rel="next" title="自建 MCP 服务端：认证、冒充与删除端点的坑">
+                  自建 MCP 服务端：认证、冒充与删除端点的坑 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
