@@ -109,7 +109,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -258,6 +258,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -344,6 +352,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -358,92 +374,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/01/01/ai-interview-06-deployment/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-07-monitoring/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/01/ai-interview-07-monitoring/" class="post-title-link" itemprop="url">AI面试题 - 监控与可观测性</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-01T00:00:00+08:00">2026-01-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">AI工程师面试题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-【为什么-AI-应用的监控不能等同于传统-Web-服务监控？】"><a href="#Q1-【为什么-AI-应用的监控不能等同于传统-Web-服务监控？】" class="headerlink" title="Q1. 【为什么 AI 应用的监控不能等同于传统 Web 服务监控？】"></a>Q1. 【为什么 AI 应用的监控不能等同于传统 Web 服务监控？】</h3><p>面试官为什么问这个问题：<br>想确认候选人是否意识到：AI 应用的失败，很多时候不是”服务挂了”，而是”结果开始不可信”。如果还停留在 QPS &#x2F; RT &#x2F; 5xx，那基本没经历过真实 AI 事故。</p>
-<p>参考口语化回答：<br>我一开始也用 Web 的思路看 AI 服务，后来发现根本兜不住。Web 服务只要接口通、返回码对，业务大概率是 OK 的；但 AI 应用就算 200 返回，内容也可能已经在”悄悄变坏”。<br>比如 LLM 开始输出越来越啰嗦、RAG 明显没用到检索内容、Agent 卡在某个工具循环里，这些在 Web 指标上完全是”健康”的。如果不单独监控 AI 行为和输出质量，等用户反馈时，问题已经扩散很久了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/01/01/ai-interview-07-monitoring/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -516,6 +446,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -548,6 +486,100 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/01/01/ai-interview-08-hr-screening/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-07-monitoring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/01/01/ai-interview-07-monitoring/" class="post-title-link" itemprop="url">AI面试题 - 监控与可观测性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-01T00:00:00+08:00">2026-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">AI工程师面试题</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="第一层：基础认知（Why-What）【5-题】"><a href="#第一层：基础认知（Why-What）【5-题】" class="headerlink" title="第一层：基础认知（Why &#x2F; What）【5 题】"></a>第一层：基础认知（Why &#x2F; What）【5 题】</h2><h3 id="Q1-【为什么-AI-应用的监控不能等同于传统-Web-服务监控？】"><a href="#Q1-【为什么-AI-应用的监控不能等同于传统-Web-服务监控？】" class="headerlink" title="Q1. 【为什么 AI 应用的监控不能等同于传统 Web 服务监控？】"></a>Q1. 【为什么 AI 应用的监控不能等同于传统 Web 服务监控？】</h3><p>面试官为什么问这个问题：<br>想确认候选人是否意识到：AI 应用的失败，很多时候不是”服务挂了”，而是”结果开始不可信”。如果还停留在 QPS &#x2F; RT &#x2F; 5xx，那基本没经历过真实 AI 事故。</p>
+<p>参考口语化回答：<br>我一开始也用 Web 的思路看 AI 服务，后来发现根本兜不住。Web 服务只要接口通、返回码对，业务大概率是 OK 的；但 AI 应用就算 200 返回，内容也可能已经在”悄悄变坏”。<br>比如 LLM 开始输出越来越啰嗦、RAG 明显没用到检索内容、Agent 卡在某个工具循环里，这些在 Web 指标上完全是”健康”的。如果不单独监控 AI 行为和输出质量，等用户反馈时，问题已经扩散很久了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/01/01/ai-interview-07-monitoring/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -620,6 +652,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -698,6 +738,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -787,6 +835,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -874,6 +930,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -961,6 +1025,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
@@ -1048,6 +1120,14 @@
     </span>
 
   
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
 </div>
 
         </div>
