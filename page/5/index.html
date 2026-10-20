@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-count">182</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,95 +207,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/27/kde-dolphin-run-as-root/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/27/kde-dolphin-run-as-root/" class="post-title-link" itemprop="url">KDE Dolphin文件管理器以root访问</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-06-27 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-27T00:00:00+08:00">2023-06-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>把下列代码保存为 <code>open_as_root.desktop</code>，放置于 <code>~/.local/share/kservices5/ServiceMenus/</code> 目录（无此目录请手动创建）：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Type</span>=Service</span><br><span class="line"><span class="attr">Icon</span>=system-file-manager</span><br><span class="line"><span class="attr">Actions</span>=OpenAsRootKDE5</span><br><span class="line"><span class="attr">ServiceTypes</span>=KonqPopupMenu/Plugin,inode/directory,inode/directory-locked</span><br><span class="line"></span><br><span class="line"><span class="section">[Desktop Action OpenAsRootKDE5]</span></span><br><span class="line"><span class="attr">Exec</span>=/usr/bin/pkexec env DISPLAY=<span class="variable">$DISPLAY</span> XAUTHORITY=<span class="variable">$XAUTHORITY</span> KDE_SESSION_VERSION=<span class="number">5</span> KDE_FULL_SESSION=<span class="literal">true</span> dolphin</span><br><span class="line"><span class="attr">Icon</span>=system-file-manager-root</span><br><span class="line"><span class="attr">Icon</span>=system-file-manager</span><br><span class="line"><span class="attr">Name</span>=Open as Root</span><br><span class="line">Name<span class="section">[ru]</span>=Открыть папку с правами рут</span><br><span class="line">Name<span class="section">[ua]</span>=Відкрити папку з правами рут</span><br><span class="line">Name<span class="section">[zh_CN]</span>=打开具有根权限的文件夹</span><br><span class="line">Name<span class="section">[zh_TW]</span>=打開具有根許可權的資料夾</span><br><span class="line">Name<span class="section">[de]</span>=Öffnen des Ordners mit Root-Berechtigungen</span><br><span class="line">Name<span class="section">[ja]</span>=ルート権限を持つフォルダを開く</span><br><span class="line">Name<span class="section">[ko]</span>=루트 권한이 있는 폴더 열기</span><br><span class="line">Name<span class="section">[fr]</span>=Ouvrez le dossier avec les privilèges root</span><br><span class="line">Name<span class="section">[el]</span>=Ανοίξτε ως Root</span><br><span class="line">Name<span class="section">[es]</span>=Abrir la carpeta con privilegios de root</span><br><span class="line">Name<span class="section">[tr]</span>=Kök ayrıcalıkları olan klasörü açma</span><br><span class="line">Name<span class="section">[he]</span>=פתח תיקיה עם הרשאות שורש</span><br><span class="line">Name<span class="section">[it]</span>=Aprire la cartella con privilegi radice</span><br><span class="line">Name<span class="section">[ar]</span>=فتح المجلد بامتيازات الجذر</span><br><span class="line">Name<span class="section">[pt_BR]</span>=Abrir pasta com privilégios de root</span><br><span class="line">Name<span class="section">[pt_PT]</span>=Abrir pasta com privilégios de root</span><br><span class="line">Name<span class="section">[sv]</span>=Öppna mapp med root-behörigheter</span><br><span class="line">Name<span class="section">[nb]</span>=Åpne mappen med rotprivilegier</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/06/6fc092541a11c86ddf1d928f0e61301ec5a3.png"><img src="/images/6fc092541a11c86ddf1d928f0e61301ec5a3.png"></a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -1133,6 +1044,102 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/04/12/grub-boot-loader-customize/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/" class="post-title-link" itemprop="url">在RedHat/Fedora KDE桌面使用fcitx5/ibus输入法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-11T00:00:00+08:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/Screenshot_20230411_162013.png"><img src="/images/Screenshot_20230411_162013.png"></a></p>
+<h2 id="安装-Fcitx5"><a href="#安装-Fcitx5" class="headerlink" title="安装 Fcitx5"></a>安装 Fcitx5</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install fcitx5-gtk2 fcitx5-gtk3 fcitx5-gtk4 fcitx5-gtk fcitx5-data fcitx5 fcitx5-qt-libfcitx5qtdbus fcitx5-qt-module fcitx5-lua fcitx5-qt-libfcitx5qt5widgets fcitx5-chinese-addons fcitx5-chinese-addons-data fcitx5-qt kcm-fcitx5 fcitx5-rime</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装-ibus"><a href="#安装-ibus" class="headerlink" title="安装 ibus"></a>安装 ibus</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/04/11/redhat-fedora-kde-use-fcitx5-ibus-input-method/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
