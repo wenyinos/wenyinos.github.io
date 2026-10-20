@@ -174,18 +174,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">182</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -216,7 +216,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/05/08/storage-and-disk-space/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon/wenyin-logo.png">
@@ -234,7 +234,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/06/26/ai-assisted-development-pitfalls/" class="post-title-link" itemprop="url">AI 辅助开发踩坑录：跨项目反复出现的 8 类问题</a>
+          <a href="/2026/05/08/storage-and-disk-space/" class="post-title-link" itemprop="url">存储、文件系统与空间回收合集</a>
         </h2>
 
         <div class="post-meta-container">
@@ -245,7 +245,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-06-26 00:00:00" itemprop="dateCreated datePublished" datetime="2026-06-26T00:00:00+08:00">2026-06-26</time>
+      <time title="创建时间：2026-05-08 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-08T00:00:00+08:00">2026-05-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -275,10 +275,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>在多项目、长时间使用 AI 编程助手协作开发的过程中，一些<strong>同类型的坑反复出现</strong>——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 8 类问题，附具体现象、根因与修复方法。</p>
+          <p>把空间要回来的几种做法：迁移 &#x2F;home 并改 fstab、清 MySQL binlog、压缩虚拟机磁盘镜像。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/06/26/ai-assisted-development-pitfalls/#more" rel="contents">
+              <a class="btn" href="/2026/05/08/storage-and-disk-space/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -309,7 +309,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/05/08/home-space-migration-fstab-adjustment/">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/28/graphics-and-hardware-acceleration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon/wenyin-logo.png">
@@ -327,102 +327,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/08/home-space-migration-fstab-adjustment/" class="post-title-link" itemprop="url">/home 空间迁移与 fstab 调整记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-05-08 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-08T00:00:00+08:00">2026-05-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文记录一次 <code>/home</code> 空间压力处理：没有直接调整 XFS 分区，而是把部分用户目录迁移到 <code>/opt/home-offload/zemi</code>，再通过 bind mount 挂回原路径。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>系统未使用 LVM，<code>/</code> 与 <code>/home</code> 均为 XFS。XFS 不支持原地缩小，因此不适合直接缩小 <code>/</code> 后扩展 <code>/home</code>。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/      XFS，约 75G，空闲较多</span><br><span class="line">/home  XFS，约 50G，空间压力较大</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/05/08/home-space-migration-fstab-adjustment/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/28/disable-intel-dg1-discrete-gpu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/28/disable-intel-dg1-discrete-gpu/" class="post-title-link" itemprop="url">彻底禁用 DG1 独立显卡</a>
+          <a href="/2026/04/28/graphics-and-hardware-acceleration/" class="post-title-link" itemprop="url">显卡、显示与硬件加速合集</a>
         </h2>
 
         <div class="post-meta-container">
@@ -441,7 +346,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
         </span>
     </span>
 
@@ -463,12 +368,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>彻底禁用 DG1 独立显卡有几种方法，取决于你是想<strong>完全切断电源&#x2F;驱动加载</strong>（最彻底），还是仅仅<strong>不让图形应用使用它</strong>。</p>
-<p>鉴于你遇到的 <code>MMIO</code> 和 <code>GuC</code> 崩溃问题，推荐按以下顺序操作：</p>
-<h3 id="方法一：通过内核参数黑名单禁用-i915-对-DG1-的支持（推荐，最稳定）"><a href="#方法一：通过内核参数黑名单禁用-i915-对-DG1-的支持（推荐，最稳定）" class="headerlink" title="方法一：通过内核参数黑名单禁用 i915 对 DG1 的支持（推荐，最稳定）"></a>方法一：通过内核参数黑名单禁用 i915 对 DG1 的支持（推荐，最稳定）</h3><p>这种方法会让内核完全忽略 DG1 显卡，不加载驱动，不分配资源。这是解决驱动崩溃最彻底的方法。</p>
+          <p>Intel 核显&#x2F;独显在 Linux 下的驱动与加速、浏览器硬解、XWayland 缩放，以及几款游戏的图形设置。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/04/28/disable-intel-dg1-discrete-gpu/#more" rel="contents">
+              <a class="btn" href="/2026/04/28/graphics-and-hardware-acceleration/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -499,7 +402,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/17/clean-vscode/">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/17/package-manager-and-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon/wenyin-logo.png">
@@ -517,7 +420,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/17/clean-vscode/" class="post-title-link" itemprop="url">清理 VS Code</a>
+          <a href="/2026/04/17/package-manager-and-cache/" class="post-title-link" itemprop="url">包管理器、缓存与工具链合集</a>
         </h2>
 
         <div class="post-meta-container">
@@ -558,11 +461,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="删除所有已安装的插件"><a href="#删除所有已安装的插件" class="headerlink" title="删除所有已安装的插件"></a>删除所有已安装的插件</h1><p><code>rm -rf ~/.vscode/extensions</code></p>
-<h1 id="删除插件的全局存储数据（如数据库、缓存状态等）"><a href="#删除插件的全局存储数据（如数据库、缓存状态等）" class="headerlink" title="删除插件的全局存储数据（如数据库、缓存状态等）"></a>删除插件的全局存储数据（如数据库、缓存状态等）</h1><p><code>rm -rf ~/.config/Code/User/globalStorage</code></p>
+          <p>清理缓存、换软件源、装社区仓库、升级发行版、编译工具链——这些「环境维护」动作每次都要重查一遍。这篇把散在各处的记录收在一起。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/04/17/clean-vscode/#more" rel="contents">
+              <a class="btn" href="/2026/04/17/package-manager-and-cache/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -593,7 +495,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/04/fedora-rebuild-grub-config/">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/04/grub-and-boot-repair/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon/wenyin-logo.png">
@@ -611,7 +513,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/04/fedora-rebuild-grub-config/" class="post-title-link" itemprop="url">在 Fedora 下重建 GRUB 配置文件</a>
+          <a href="/2026/04/04/grub-and-boot-repair/" class="post-title-link" itemprop="url">GRUB 与系统引导修复合集</a>
         </h2>
 
         <div class="post-meta-container">
@@ -630,7 +532,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
         </span>
     </span>
 
@@ -652,12 +554,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>在 Fedora 下，重建（更新）GRUB 配置文件的命令取决于你的系统启动模式（UEFI 或 Legacy BIOS）以及安装方式。</p>
-<p>对于绝大多数现代 Fedora 系统（UEFI 启动），请使用以下命令：</p>
-<h3 id="1-标准-UEFI-系统（最常见）"><a href="#1-标准-UEFI-系统（最常见）" class="headerlink" title="1. 标准 UEFI 系统（最常见）"></a>1. 标准 UEFI 系统（最常见）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg</span><br></pre></td></tr></table></figure>
+          <p>GRUB 的配置文件是自动生成的，手改容易丢；这几篇记录的是「怎么改才对、引导坏了怎么救」——从重建配置、用 grubby 做永久更改，到 chroot 修 Win10 双系统的引导。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/04/04/fedora-rebuild-grub-config/#more" rel="contents">
+              <a class="btn" href="/2026/04/04/grub-and-boot-repair/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -783,7 +683,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/03/14/aur-submit-guide/">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/03/14/packaging-and-distribution/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon/wenyin-logo.png">
@@ -801,7 +701,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/03/14/aur-submit-guide/" class="post-title-link" itemprop="url">AUR 提交指南</a>
+          <a href="/2026/03/14/packaging-and-distribution/" class="post-title-link" itemprop="url">打包与分发合集（RPM / AUR）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -842,15 +742,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>用户可以使用 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org.cn/title/Arch_User_Repository" title="Arch User Repository">Arch 用户仓库 (AUR)</a> <strong>分享</strong> <a target="_blank" rel="noopener" href="https://wiki.archlinux.org.cn/title/PKGBUILD" title="PKGBUILD">PKGBUILD</a> 脚本。AUR 不包含任何二进制软件包，但允许用户上传可以被他人下载的 <code>PKGBUILD</code>。这些 <code>PKGBUILD</code> 完全是非官方的，且未经彻底审查，因此使用风险自担。</p>
-<h2 id="提交软件包"><a href="#提交软件包" class="headerlink" title="提交软件包"></a>提交软件包</h2><p><strong>警告</strong></p>
-<ul>
-<li>在尝试提交软件包之前，您应当熟悉 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org.cn/title/Arch_package_guidelines" title="Arch package guidelines">Arch 软件包指南</a> 和 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org.cn/title/PKGBUILD" title="PKGBUILD">PKGBUILD</a>。</li>
-<li><strong>仔细核实</strong>您上传的内容是否正确。<strong>违反规则</strong>的软件包可能会在<strong>不经通知的情况下被删除</strong>。</li>
-</ul>
+          <p>把自己的软件做成别人能装的东西：从零写 RPM spec，以及往 AUR 提交包。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/03/14/aur-submit-guide/#more" rel="contents">
+              <a class="btn" href="/2026/03/14/packaging-and-distribution/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -881,7 +776,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/03/03/clean-cargo-cache-and-build-artifacts/">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/02/19/network-proxy-and-acceleration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon/wenyin-logo.png">
@@ -899,7 +794,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/03/03/clean-cargo-cache-and-build-artifacts/" class="post-title-link" itemprop="url">清理 Cargo 缓存和构建产物</a>
+          <a href="/2026/02/19/network-proxy-and-acceleration/" class="post-title-link" itemprop="url">网络、代理与加速合集</a>
         </h2>
 
         <div class="post-meta-container">
@@ -910,7 +805,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-03-03 00:00:00" itemprop="dateCreated datePublished" datetime="2026-03-03T00:00:00+08:00">2026-03-03</time>
+      <time title="创建时间：2026-02-19 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-19T00:00:00+08:00">2026-02-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -940,12 +835,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="清理-Cargo-缓存和构建产物"><a href="#清理-Cargo-缓存和构建产物" class="headerlink" title="清理 Cargo 缓存和构建产物"></a>清理 Cargo 缓存和构建产物</h1><p><strong>TL;DR</strong>: 使用 <code>cargo clean</code> 清理项目构建产物，删除 <code>~/.cargo/registry</code> 清理全局缓存，或使用 <code>cargo-cache</code>&#x2F;<code>cargo-sweep</code> 工具进行更精细的管理。</p>
-<hr>
-<h2 id="快速清理命令"><a href="#快速清理命令" class="headerlink" title="快速清理命令"></a>快速清理命令</h2>
+          <p>命令行代理、GitHub 加速、防火墙与 SSH 配置，以及两种把内核网络栈调快的做法（BBR）。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/03/03/clean-cargo-cache-and-build-artifacts/#more" rel="contents">
+              <a class="btn" href="/2026/02/19/network-proxy-and-acceleration/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -976,7 +869,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/02/19/powershell-command-line-proxy/">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/01/01/ai-interview-guide/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icon/wenyin-logo.png">
@@ -994,7 +887,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/02/19/powershell-command-line-proxy/" class="post-title-link" itemprop="url">PowerShell 配置命令行代理</a>
+          <a href="/2026/01/01/ai-interview-guide/" class="post-title-link" itemprop="url">AI 应用工程师面试题纲（精简版）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1005,7 +898,195 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-02-19 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-19T00:00:00+08:00">2026-02-19</time>
+      <time title="创建时间：2026-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-01T00:00:00+08:00">2026-01-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">AI工程师面试题</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这里只保留<strong>主线思路</strong>——每一类问题在考什么、答题的骨架是什么。原来的完整题库（200+ 题，每题含「面试官为什么问」＋「参考口语化回答」）与 26 张流程图已整理到独立仓库：</p>
+<p><strong>完整内容：<a target="_blank" rel="noopener" href="https://github.com/WenYin-Community/AI_Interview">https://github.com/WenYin-Community/AI_Interview</a></strong></p>
+<p>需要逐题打磨时看仓库；需要快速回忆”该说什么”时看这篇。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/01/01/ai-interview-guide/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2025/11/18/raspberry-pi-and-arm-boards/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/11/18/raspberry-pi-and-arm-boards/" class="post-title-link" itemprop="url">树莓派、开发板与路由器合集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-11-18 00:00:00" itemprop="dateCreated datePublished" datetime="2025-11-18T00:00:00+08:00">2025-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>ARM 小机器的折腾记录：树莓派超频与换系统、RK3588 固件、斐讯盒子和路由器固件。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/18/raspberry-pi-and-arm-boards/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2025/08/18/create-moon-server-zerotier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/18/create-moon-server-zerotier/" class="post-title-link" itemprop="url">架设moon服务器加快zerotier的访问速度</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-18T00:00:00+08:00">2025-08-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1035,111 +1116,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>我们将通过创建 PowerShell 函数来实现快速开启和关闭代理的功能。</p>
-<h3 id="步骤-1：找到并编辑-PowerShell-配置文件"><a href="#步骤-1：找到并编辑-PowerShell-配置文件" class="headerlink" title="步骤 1：找到并编辑 PowerShell 配置文件"></a><strong>步骤 1：找到并编辑 PowerShell <a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=252477125&content_type=Article&match_order=1&q=%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6&zhida_source=entity">配置文件</a></strong></h3><p>首先，我们需要找到 PowerShell 的配置文件。如果你还没有创建过，可以用以下命令创建：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!(<span class="built_in">Test-Path</span> <span class="literal">-Path</span> <span class="variable">$PROFILE</span>)) &#123;</span><br><span class="line">    <span class="built_in">New-Item</span> <span class="literal">-ItemType</span> File <span class="literal">-Path</span> <span class="variable">$PROFILE</span> <span class="literal">-Force</span></span><br><span class="line">&#125;</span><br><span class="line">notepad <span class="variable">$PROFILE</span></span><br></pre></td></tr></table></figure>
+          <h2 id="1-使用服务器安装-zerotier-客户端"><a href="#1-使用服务器安装-zerotier-客户端" class="headerlink" title="1. 使用服务器安装 zerotier 客户端"></a>1. 使用服务器安装 zerotier 客户端</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://install.zerotier.com/ | <span class="built_in">sudo</span> bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-zerotier-服务"><a href="#启动-zerotier-服务" class="headerlink" title="启动 zerotier 服务"></a>启动 zerotier 服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start zerotier-one.service</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> zerotier-one.service</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/02/19/powershell-command-line-proxy/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/02/06/npm-pnpm-clean-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/02/06/npm-pnpm-clean-cache/" class="post-title-link" itemprop="url">npm 和 pnpm 清理缓存</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-02-06 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-06T00:00:00+08:00">2026-02-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下是 npm、pnpm 和 yarn 清理软件包缓存的标准命令：</p>
-<h3 id="npm"><a href="#npm" class="headerlink" title="npm"></a><strong>npm</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理本地缓存（默认位于 ~/.npm）</span></span><br><span class="line">npm cache clean --force</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>--force</code> 参数是必需的，因为 npm 默认会提示确认。</li>
-<li>清理后，下次安装包时会重新下载。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/02/06/npm-pnpm-clean-cache/#more" rel="contents">
+              <a class="btn" href="/2025/08/18/create-moon-server-zerotier/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1163,7 +1145,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

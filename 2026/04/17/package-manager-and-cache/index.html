@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="清理缓存、换软件源、装社区仓库、升级发行版、编译工具链——这些「环境维护」动作每次都要重查一遍。这篇把散在各处的记录收在一起。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="包管理器、缓存与工具链合集">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/04/17/package-manager-and-cache/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="清理缓存、换软件源、装社区仓库、升级发行版、编译工具链——这些「环境维护」动作每次都要重查一遍。这篇把散在各处的记录收在一起。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/Screenshot_20230426_084431-1276x720.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/Screenshot_20230426_085129-640x480.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/Screenshot_20230426_085146-640x480.png">
+<meta property="article:published_time" content="2026-04-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-16T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="cache">
+<meta property="article:tag" content="fedora">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="package-management">
+<meta property="article:tag" content="rhel">
+<meta property="article:tag" content="ubuntu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/Screenshot_20230426_084431-1276x720.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/04/17/package-manager-and-cache/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/04/17/package-manager-and-cache/","path":"2026/04/17/package-manager-and-cache/","title":"包管理器、缓存与工具链合集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>包管理器、缓存与工具链合集 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86-VS-Code"><span class="nav-number">1.</span> <span class="nav-text">清理 VS Code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E5%B7%B2%E5%AE%89%E8%A3%85%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">删除所有已安装的插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%8F%92%E4%BB%B6%E7%9A%84%E5%85%A8%E5%B1%80%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%EF%BC%88%E5%A6%82%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%81%E7%BC%93%E5%AD%98%E7%8A%B6%E6%80%81%E7%AD%89%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">删除插件的全局存储数据（如数据库、缓存状态等）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%8F%92%E4%BB%B6%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8C%BA%E7%8A%B6%E6%80%81"><span class="nav-number">4.</span> <span class="nav-text">删除插件的工作区状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%88%A0%E9%99%A4%E6%8F%92%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">1. 删除插件目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E5%92%8C%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95-%E5%8C%85%E5%90%AB-settings-json-keybindings-json-%E7%BC%93%E5%AD%98%E7%AD%89"><span class="nav-number">6.</span> <span class="nav-text">2. 删除用户配置和数据目录 (包含 settings.json, keybindings.json, 缓存等)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86-Cargo-%E7%BC%93%E5%AD%98%E5%92%8C%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9"><span class="nav-number">6.1.</span> <span class="nav-text">清理 Cargo 缓存和构建产物</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E7%90%86-Cargo-%E7%BC%93%E5%AD%98%E5%92%8C%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9-1"><span class="nav-number">7.</span> <span class="nav-text">清理 Cargo 缓存和构建产物</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%B8%85%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">7.1.</span> <span class="nav-text">快速清理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E5%BD%93%E5%89%8D%E9%A1%B9%E7%9B%AE"><span class="nav-number">7.1.1.</span> <span class="nav-text">清理当前项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E5%85%A8%E5%B1%80%E7%BC%93%E5%AD%98"><span class="nav-number">7.1.2.</span> <span class="nav-text">清理全局缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E5%B7%A5%E5%85%B7"><span class="nav-number">7.2.</span> <span class="nav-text">推荐工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cargo-cache"><span class="nav-number">7.2.1.</span> <span class="nav-text">cargo-cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cargo-sweep"><span class="nav-number">7.2.2.</span> <span class="nav-text">cargo-sweep</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%B8%85%E7%90%86%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="nav-number">7.3.</span> <span class="nav-text">批量清理多个项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rust-%E5%B7%A5%E5%85%B7%E9%93%BE%E7%AE%A1%E7%90%86"><span class="nav-number">7.4.</span> <span class="nav-text">Rust 工具链管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E6%9C%AA%E4%BD%BF%E7%94%A8%E4%BE%9D%E8%B5%96"><span class="nav-number">7.5.</span> <span class="nav-text">清理未使用依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BD-Rust"><span class="nav-number">7.6.</span> <span class="nav-text">完全卸载 Rust</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">7.7.</span> <span class="nav-text">环境变量配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E7%AD%96%E7%95%A5%E5%AF%B9%E6%AF%94"><span class="nav-number">7.8.</span> <span class="nav-text">清理策略对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.9.</span> <span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-%E5%92%8C-pnpm-%E6%B8%85%E7%90%86%E7%BC%93%E5%AD%98"><span class="nav-number">7.10.</span> <span class="nav-text">npm 和 pnpm 清理缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm"><span class="nav-number">7.10.1.</span> <span class="nav-text">npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm"><span class="nav-number">7.10.2.</span> <span class="nav-text">pnpm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-Classic-1-x"><span class="nav-number">7.10.3.</span> <span class="nav-text">yarn (Classic, 1.x)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-Berry-2"><span class="nav-number">7.10.4.</span> <span class="nav-text">yarn (Berry, 2+)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cargo-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="nav-number">7.11.</span> <span class="nav-text">Cargo 包管理器完全指南</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cargo-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97-1"><span class="nav-number">8.</span> <span class="nav-text">Cargo 包管理器完全指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">8.1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">8.2.</span> <span class="nav-text">安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">8.2.1.</span> <span class="nav-text">自动安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">8.2.2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%AE%89%E8%A3%85%EF%BC%88Linux%EF%BC%89"><span class="nav-number">8.2.3.</span> <span class="nav-text">包管理器安装（Linux）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="nav-number">8.3.</span> <span class="nav-text">创建第一个项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%A1%B9%E7%9B%AE%EF%BC%88%E9%BB%98%E8%AE%A4%EF%BC%89"><span class="nav-number">8.3.1.</span> <span class="nav-text">二进制项目（默认）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%93%E9%A1%B9%E7%9B%AE"><span class="nav-number">8.3.2.</span> <span class="nav-text">库项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4"><span class="nav-number">8.4.</span> <span class="nav-text">核心命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="nav-number">8.4.1.</span> <span class="nav-text">构建与运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%AF%B9%E6%AF%94%E7%A4%BA%E4%BE%8B"><span class="nav-number">8.4.2.</span> <span class="nav-text">时间对比示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86"><span class="nav-number">8.5.</span> <span class="nav-text">依赖管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="nav-number">8.5.1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E4%BE%9D%E8%B5%96"><span class="nav-number">8.5.2.</span> <span class="nav-text">更新依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6"><span class="nav-number">8.5.3.</span> <span class="nav-text">依赖解析机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%B1%BB%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="nav-number">8.6.</span> <span class="nav-text">项目类型对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%8E%E6%A3%80%E6%9F%A5"><span class="nav-number">8.7.</span> <span class="nav-text">测试与检查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">8.7.1.</span> <span class="nav-text">运行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E6%B5%8B%E8%AF%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">8.7.2.</span> <span class="nav-text">默认测试示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B"><span class="nav-number">8.7.3.</span> <span class="nav-text">测试输出示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%9E%84%E5%BB%BA"><span class="nav-number">8.8.</span> <span class="nav-text">优化构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9E%84%E5%BB%BA%EF%BC%88%E9%BB%98%E8%AE%A4%EF%BC%89"><span class="nav-number">8.8.1.</span> <span class="nav-text">开发构建（默认）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E6%9E%84%E5%BB%BA"><span class="nav-number">8.8.2.</span> <span class="nav-text">发布构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-number">8.8.3.</span> <span class="nav-text">性能对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7"><span class="nav-number">8.9.</span> <span class="nav-text">高级技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.9.1.</span> <span class="nav-text">详细模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%A4%96%E9%83%A8%E5%8C%85"><span class="nav-number">8.9.2.</span> <span class="nav-text">构建外部包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E9%87%8F%E7%BC%96%E8%AF%91"><span class="nav-number">8.9.3.</span> <span class="nav-text">增量编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E5%91%BD%E4%BB%A4%E9%9B%86%E5%90%88"><span class="nav-number">8.9.4.</span> <span class="nav-text">实用命令集合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-1"><span class="nav-number">8.10.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="nav-number">8.10.1.</span> <span class="nav-text">开发流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%B4%E6%8A%A4"><span class="nav-number">8.10.2.</span> <span class="nav-text">项目维护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="nav-number">8.10.3.</span> <span class="nav-text">磁盘管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">8.11.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81%EF%BC%9F"><span class="nav-number">8.11.1.</span> <span class="nav-text">如何处理版本冲突？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BC%96%E8%AF%91%E8%BF%99%E4%B9%88%E6%85%A2%EF%BC%9F"><span class="nav-number">8.11.2.</span> <span class="nav-text">为什么编译这么慢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%8A%A0%E9%80%9F-CI-CD-%E6%9E%84%E5%BB%BA%EF%BC%9F"><span class="nav-number">8.11.3.</span> <span class="nav-text">如何加速 CI&#x2F;CD 构建？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-Linux-%E4%B8%AD%E7%A7%BB%E9%99%A4-Snap-%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">8.12.</span> <span class="nav-text">Ubuntu Linux 中移除 Snap 软件包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Ubuntu-Linux-%E7%A7%BB%E9%99%A4-Snap-%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">8.13.</span> <span class="nav-text">在 Ubuntu Linux 移除 Snap 软件包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E-Ubuntu-%E7%A7%BB%E9%99%A4-Snap-%E5%90%8E%E4%BD%BF%E7%94%A8-deb-%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%95%86%E5%BA%97%E5%92%8C-Firefox"><span class="nav-number">8.14.</span> <span class="nav-text">从 Ubuntu 移除 Snap 后使用 deb 文件安装软件商店和 Firefox</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-Ubuntu-%E7%B3%BB%E7%BB%9F%E6%81%A2%E5%A4%8D%E5%88%B0-Snap-%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">8.15.</span> <span class="nav-text">在 Ubuntu 系统恢复到 Snap 软件包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extra-Packages-for-Enterprise-Linux"><span class="nav-number">8.16.</span> <span class="nav-text">Extra Packages for Enterprise Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%8C%87%E5%8D%97"><span class="nav-number">8.17.</span> <span class="nav-text">快速指南</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-epel-next%EF%BC%9F"><span class="nav-number">8.17.1.</span> <span class="nav-text">什么是 epel-next？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS-Stream-10"><span class="nav-number">8.18.</span> <span class="nav-text">CentOS Stream 10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EL9"><span class="nav-number">8.19.</span> <span class="nav-text">EL9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-Stream-9"><span class="nav-number">8.19.1.</span> <span class="nav-text">CentOS Stream 9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RHEL-9"><span class="nav-number">8.19.2.</span> <span class="nav-text">RHEL 9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AlmaLinux-9"><span class="nav-number">8.19.3.</span> <span class="nav-text">AlmaLinux 9</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EL8"><span class="nav-number">8.20.</span> <span class="nav-text">EL8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-Stream-8"><span class="nav-number">8.20.1.</span> <span class="nav-text">CentOS Stream 8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RHEL-8"><span class="nav-number">8.20.2.</span> <span class="nav-text">RHEL 8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AlmaLinux-8-Rocky-Linux-8"><span class="nav-number">8.20.3.</span> <span class="nav-text">AlmaLinux 8, Rocky Linux 8</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EL7"><span class="nav-number">8.21.</span> <span class="nav-text">EL7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RHEL-7"><span class="nav-number">8.21.1.</span> <span class="nav-text">RHEL 7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-7"><span class="nav-number">8.21.2.</span> <span class="nav-text">CentOS 7</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8DPackageKit%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E5%88%87%E6%8D%A2%E4%BB%A3%E7%90%86"><span class="nav-number">8.22.</span> <span class="nav-text">修复PackageKit无法正确切换代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">8.23.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C"><span class="nav-number">8.23.1.</span> <span class="nav-text">命令行操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E6%93%8D%E4%BD%9C"><span class="nav-number">8.23.2.</span> <span class="nav-text">图形界面操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FreeBSD-pkg-%E8%87%AA%E5%8A%A8%E5%8D%B8%E8%BD%BD%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">8.24.</span> <span class="nav-text">FreeBSD pkg 自动卸载安装依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-22-04%E5%9C%A8%E7%BA%BF%E5%8D%87%E7%BA%A7%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">8.25.</span> <span class="nav-text">Ubuntu 22.04在线升级注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9F%90%E4%BA%9B%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%95%86%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">8.25.1.</span> <span class="nav-text">1. 某些云服务商使用自定义镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%96%B0%E7%89%88%E6%90%AD%E8%BD%BD%E7%9A%84-OpenSSH-%E8%BD%AF%E4%BB%B6%E5%8C%85%E9%BB%98%E8%AE%A4%E5%B7%B2%E6%8B%92%E7%BB%9D-rsa-sha1-%E7%AE%97%E6%B3%95%E7%94%9F%E6%88%90%E7%9A%84%E5%AF%86%E9%92%A5"><span class="nav-number">8.25.2.</span> <span class="nav-text">2. 新版搭载的 OpenSSH 软件包默认已拒绝 rsa-sha1 算法生成的密钥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%87%E7%BA%A7gcc-14-2-0"><span class="nav-number">8.26.</span> <span class="nav-text">升级gcc 14.2.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91-GMP%EF%BC%8CMPFR%EF%BC%8CMPC"><span class="nav-number">8.27.</span> <span class="nav-text">编译 GMP，MPFR，MPC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BC%96%E8%AF%91GMP"><span class="nav-number">8.27.1.</span> <span class="nav-text">2.1. 编译GMP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%BC%96%E8%AF%91MPFR"><span class="nav-number">8.27.2.</span> <span class="nav-text">2.2. 编译MPFR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%BC%96%E8%AF%91MPC"><span class="nav-number">8.27.3.</span> <span class="nav-text">2.3. 编译MPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E9%85%8D%E7%BD%AE%E5%8A%A8%E6%80%81%E5%BA%93-so-%E5%88%B0-LD-LIBRARY-PATH-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">8.27.4.</span> <span class="nav-text">2.4. 配置动态库 (so)到 LD_LIBRARY_PATH 环境变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85GCC"><span class="nav-number">8.28.</span> <span class="nav-text">3. 源代码编译安装GCC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%B8%8B%E8%BD%BD%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84GCC"><span class="nav-number">8.28.1.</span> <span class="nav-text">3.1. 下载最新版的GCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-GCC"><span class="nav-number">8.28.2.</span> <span class="nav-text">3.2. 编译安装 GCC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">8.29.</span> <span class="nav-text">4. 环境变量的配置</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/17/package-manager-and-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="包管理器、缓存与工具链合集 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          包管理器、缓存与工具链合集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-17 00:00:00" itemprop="dateCreated datePublished" datetime="2026-04-17T00:00:00+08:00">2026-04-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>清理缓存、换软件源、装社区仓库、升级发行版、编译工具链——这些「环境维护」动作每次都要重查一遍。这篇把散在各处的记录收在一起。</p>
+<span id="more"></span>
+
+<p><a id="clean-vscode"></a></p>
+<h2 id="清理-VS-Code"><a href="#清理-VS-Code" class="headerlink" title="清理 VS Code"></a>清理 VS Code</h2><h1 id="删除所有已安装的插件"><a href="#删除所有已安装的插件" class="headerlink" title="删除所有已安装的插件"></a>删除所有已安装的插件</h1><p><code>rm -rf ~/.vscode/extensions</code></p>
+<h1 id="删除插件的全局存储数据（如数据库、缓存状态等）"><a href="#删除插件的全局存储数据（如数据库、缓存状态等）" class="headerlink" title="删除插件的全局存储数据（如数据库、缓存状态等）"></a>删除插件的全局存储数据（如数据库、缓存状态等）</h1><p><code>rm -rf ~/.config/Code/User/globalStorage</code></p>
+<h1 id="删除插件的工作区状态"><a href="#删除插件的工作区状态" class="headerlink" title="删除插件的工作区状态"></a>删除插件的工作区状态</h1><p><code>rm -rf ~/.config/Code/User/workspaceStorage</code></p>
+<h1 id="1-删除插件目录"><a href="#1-删除插件目录" class="headerlink" title="1. 删除插件目录"></a>1. 删除插件目录</h1><p><code>rm -rf ~/.vscode/extensions</code></p>
+<h1 id="2-删除用户配置和数据目录-包含-settings-json-keybindings-json-缓存等"><a href="#2-删除用户配置和数据目录-包含-settings-json-keybindings-json-缓存等" class="headerlink" title="2. 删除用户配置和数据目录 (包含 settings.json, keybindings.json, 缓存等)"></a>2. 删除用户配置和数据目录 (包含 settings.json, keybindings.json, 缓存等)</h1><p><code>rm -rf ~/.config/Code 9d6b25a544a0e129df7ad4761de21fd4</code></p>
+<p><a id="clean-cargo-cache-and-build-artifacts"></a></p>
+<h2 id="清理-Cargo-缓存和构建产物"><a href="#清理-Cargo-缓存和构建产物" class="headerlink" title="清理 Cargo 缓存和构建产物"></a>清理 Cargo 缓存和构建产物</h2><h1 id="清理-Cargo-缓存和构建产物-1"><a href="#清理-Cargo-缓存和构建产物-1" class="headerlink" title="清理 Cargo 缓存和构建产物"></a>清理 Cargo 缓存和构建产物</h1><p><strong>TL;DR</strong>: 使用 <code>cargo clean</code> 清理项目构建产物，删除 <code>~/.cargo/registry</code> 清理全局缓存，或使用 <code>cargo-cache</code>&#x2F;<code>cargo-sweep</code> 工具进行更精细的管理。</p>
+<hr>
+<h2 id="快速清理命令"><a href="#快速清理命令" class="headerlink" title="快速清理命令"></a>快速清理命令</h2><h3 id="清理当前项目"><a href="#清理当前项目" class="headerlink" title="清理当前项目"></a>清理当前项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理所有构建产物 (debug + release)</span></span><br><span class="line">cargo clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅清理 release 构建</span></span><br><span class="line">cargo clean --release</span><br></pre></td></tr></table></figure>
+
+<h3 id="清理全局缓存"><a href="#清理全局缓存" class="headerlink" title="清理全局缓存"></a>清理全局缓存</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理 crate 注册表缓存</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/.cargo/registry</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理 git 依赖缓存</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/.cargo/git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理所有 cargo 缓存（谨慎使用）</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/.cargo</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="推荐工具"><a href="#推荐工具" class="headerlink" title="推荐工具"></a>推荐工具</h2><h3 id="cargo-cache"><a href="#cargo-cache" class="headerlink" title="cargo-cache"></a>cargo-cache</h3><p>功能强大的缓存管理工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">cargo install cargo-cache</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看缓存统计</span></span><br><span class="line">cargo cache</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理所有缓存</span></span><br><span class="line">cargo cache --remove-dir all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理未引用的 crate</span></span><br><span class="line">cargo cache clean-unref</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理 30 天前的缓存</span></span><br><span class="line">cargo cache --remove-if-older-than 30</span><br></pre></td></tr></table></figure>
+
+<h3 id="cargo-sweep"><a href="#cargo-sweep" class="headerlink" title="cargo-sweep"></a>cargo-sweep</h3><p>清理旧构建产物，支持按时间和工具链过滤。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">cargo install cargo-sweep</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预览模式（推荐先执行）</span></span><br><span class="line">cargo sweep --dry-run --<span class="keyword">time</span> 30</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理 30 天前的构建文件</span></span><br><span class="line">cargo sweep --<span class="keyword">time</span> 30</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理非当前工具链的构建</span></span><br><span class="line">cargo sweep --installed</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理指定项目</span></span><br><span class="line">cargo sweep --<span class="keyword">time</span> 30 /path/to/project</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="批量清理多个项目"><a href="#批量清理多个项目" class="headerlink" title="批量清理多个项目"></a>批量清理多个项目</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 递归删除所有项目的 target 目录</span></span><br><span class="line">find /path/to/projects -<span class="built_in">type</span> d -name target -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; +</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除当前目录下所有 target 文件夹</span></span><br><span class="line">find . -name <span class="string">&quot;target&quot;</span> -<span class="built_in">type</span> d -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; + 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Rust-工具链管理"><a href="#Rust-工具链管理" class="headerlink" title="Rust 工具链管理"></a>Rust 工具链管理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看已安装的工具链</span></span><br><span class="line">rustup show</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载不需要的工具链</span></span><br><span class="line">rustup uninstall nightly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理旧版本</span></span><br><span class="line">rustup self update</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="清理未使用依赖"><a href="#清理未使用依赖" class="headerlink" title="清理未使用依赖"></a>清理未使用依赖</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装工具</span></span><br><span class="line">cargo install cargo-machete cargo-udeps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查并移除未使用依赖</span></span><br><span class="line">cargo machete</span><br><span class="line">cargo udeps --all-targets</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="完全卸载-Rust"><a href="#完全卸载-Rust" class="headerlink" title="完全卸载 Rust"></a>完全卸载 Rust</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载 rustup 及工具链</span></span><br><span class="line">rustup self uninstall</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动清理残留</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/.rustup</span><br><span class="line"><span class="built_in">rm</span> -rf ~/.cargo</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="环境变量配置"><a href="#环境变量配置" class="headerlink" title="环境变量配置"></a>环境变量配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用清华镜像源（添加到 ~/.bashrc 或 ~/.zshrc）</span></span><br><span class="line"><span class="built_in">export</span> RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup</span><br><span class="line"><span class="built_in">export</span> RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup</span><br><span class="line"><span class="built_in">export</span> CARGO_HOME=<span class="string">&quot;<span class="variable">$HOME</span>/.cargo&quot;</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$CARGO_HOME</span>/bin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="清理策略对比"><a href="#清理策略对比" class="headerlink" title="清理策略对比"></a>清理策略对比</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>清理范围</th>
+<th>推荐场景</th>
+<th>风险等级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cargo clean</code></td>
+<td>当前项目构建产物</td>
+<td>快速释放项目空间</td>
+<td>低</td>
+</tr>
+<tr>
+<td><code>rm -rf ~/.cargo/registry</code></td>
+<td>全局 crate 缓存</td>
+<td>急需释放大量空间</td>
+<td>中</td>
+</tr>
+<tr>
+<td><code>cargo-cache</code></td>
+<td>可定制缓存清理</td>
+<td>精细化管理</td>
+<td>低</td>
+</tr>
+<tr>
+<td><code>cargo-sweep</code></td>
+<td>旧构建产物</td>
+<td>多项目开发环境</td>
+<td>中</td>
+</tr>
+<tr>
+<td><code>rustup uninstall</code></td>
+<td>工具链</td>
+<td>切换版本后清理</td>
+<td>低</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ul>
+<li><strong>日常开发</strong>：使用 <code>cargo sweep --time 7</code> 每周清理一次</li>
+<li><strong>CI&#x2F;CD 环境</strong>：每次构建前执行 <code>cargo clean</code></li>
+<li><strong>磁盘空间紧张</strong>：优先清理 <code>~/.cargo/registry</code> 和 <code>~/.rustup</code></li>
+<li><strong>安全第一</strong>：执行删除前使用 <code>--dry-run</code> 预览效果</li>
+</ul>
+<hr>
+<p><strong>Tags</strong>: #rust #cargo #cleanup #disk-space #development-tools</p>
+<p><a id="npm-pnpm-clean-cache"></a></p>
+<h2 id="npm-和-pnpm-清理缓存"><a href="#npm-和-pnpm-清理缓存" class="headerlink" title="npm 和 pnpm 清理缓存"></a>npm 和 pnpm 清理缓存</h2><p>以下是 npm、pnpm 和 yarn 清理软件包缓存的标准命令：</p>
+<h3 id="npm"><a href="#npm" class="headerlink" title="npm"></a><strong>npm</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理本地缓存（默认位于 ~/.npm）</span></span><br><span class="line">npm cache clean --force</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--force</code> 参数是必需的，因为 npm 默认会提示确认。</li>
+<li>清理后，下次安装包时会重新下载。</li>
+</ul>
+<h3 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a><strong>pnpm</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理存储库中未使用的包（默认位于 ~/.pnpm-store）</span></span><br><span class="line">pnpm store prune</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>prune</code> 命令会删除存储库中<strong>未被任何项目使用</strong>的包，是更安全的清理方式。</p>
+</li>
+<li><p>如果想彻底清空整个存储库（不推荐，会导致所有项目重新下载），可以使用：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm store prune --force</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="yarn-Classic-1-x"><a href="#yarn-Classic-1-x" class="headerlink" title="yarn (Classic, 1.x)"></a><strong>yarn (Classic, 1.x)</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理全局缓存（默认位于 ~/.cache/yarn 或 ~/.yarn/cache）</span></span><br><span class="line">yarn cache clean</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 Yarn 1.x 中，此命令会删除整个缓存文件夹。</li>
+</ul>
+<h3 id="yarn-Berry-2"><a href="#yarn-Berry-2" class="headerlink" title="yarn (Berry, 2+)"></a><strong>yarn (Berry, 2+)</strong></h3><p>Yarn 2+ 的缓存管理略有不同，通常通过其插件系统管理。最常用的清理命令同样是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn cache clean</span><br></pre></td></tr></table></figure>
+
+<p>其行为与 Yarn 1 类似，会清理全局缓存。</p>
+<p>在 Bun 中，清理缓存非常简单，只需执行以下命令即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bun pm cache <span class="built_in">rm</span></span><br></pre></td></tr></table></figure>
+
+<p><code>bun pm cache dir</code></p>
+<p>这条命令会删除 Bun 的全局缓存目录（默认位于 <code>~/.bun/cache</code>），让你在下次安装或运行时重新下载所需的包。<br>如果你想更彻底地清空缓存，可以加上 <code>--force</code> 选项：</p>
+<blockquote>
+<p><strong>提示</strong></p>
+<ul>
+<li>运行 <code>bun cache clean</code> 后，Bun 会在下一次需要时自动重新下载缺失的依赖。</li>
+<li>该命令不会影响已安装的本地项目依赖，只会清理全局缓存。</li>
+</ul>
+</blockquote>
+<p><a id="cargo-package-management"></a></p>
+<h2 id="Cargo-包管理器完全指南"><a href="#Cargo-包管理器完全指南" class="headerlink" title="Cargo 包管理器完全指南"></a>Cargo 包管理器完全指南</h2><h1 id="Cargo-包管理器完全指南-1"><a href="#Cargo-包管理器完全指南-1" class="headerlink" title="Cargo 包管理器完全指南"></a>Cargo 包管理器完全指南</h1><p><strong>TL;DR</strong>: Cargo 是 Rust 的构建系统和包管理器，处理代码构建、依赖管理和任务自动化。本指南涵盖从安装到高级使用的完整流程。</p>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE">安装与配置</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE">创建第一个项目</a></li>
+<li><a href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4">核心命令</a></li>
+<li><a href="#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86">依赖管理</a></li>
+<li><a href="#%E9%A1%B9%E7%9B%AE%E7%B1%BB%E5%9E%8B">项目类型</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E4%B8%8E%E6%A3%80%E6%9F%A5">测试与检查</a></li>
+<li><a href="#%E4%BC%98%E5%8C%96%E6%9E%84%E5%BB%BA">优化构建</a></li>
+<li><a href="#%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7">高级技巧</a></li>
+</ol>
+<hr>
+<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><h3 id="自动安装"><a href="#自动安装" class="headerlink" title="自动安装"></a>自动安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载安装脚本</span></span><br><span class="line">curl https://sh.rustup.rs -sSf | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或手动下载后检查</span></span><br><span class="line">sh ./rustup.rs</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 立即生效</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$HOME</span>/.cargo/env</span><br><span class="line"></span><br><span class="line"><span class="comment"># 永久配置（添加到 ~/.bashrc 或 ~/.zshrc）</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$HOME</span>/.cargo/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">rustc --version</span><br><span class="line">cargo --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="包管理器安装（Linux）"><a href="#包管理器安装（Linux）" class="headerlink" title="包管理器安装（Linux）"></a>包管理器安装（Linux）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian/Ubuntu</span></span><br><span class="line"><span class="built_in">sudo</span> apt install rust cargo</span><br><span class="line"></span><br><span class="line"><span class="comment"># RHEL/Fedora</span></span><br><span class="line"><span class="built_in">sudo</span> dnf install rust cargo</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="创建第一个项目"><a href="#创建第一个项目" class="headerlink" title="创建第一个项目"></a>创建第一个项目</h2><h3 id="二进制项目（默认）"><a href="#二进制项目（默认）" class="headerlink" title="二进制项目（默认）"></a>二进制项目（默认）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cargo new hello_opensource</span><br><span class="line"><span class="built_in">cd</span> hello_opensource</span><br></pre></td></tr></table></figure>
+
+<p>项目结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hello_opensource/</span><br><span class="line">├── Cargo.toml          # 项目配置</span><br><span class="line">└── src/</span><br><span class="line">    └── main.rs         # 入口文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="库项目"><a href="#库项目" class="headerlink" title="库项目"></a>库项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo new --lib libhello</span><br></pre></td></tr></table></figure>
+
+<p>结构差异：</p>
+<ul>
+<li>生成 <code>src/lib.rs</code> 而非 <code>src/main.rs</code></li>
+<li>包含默认测试示例</li>
+</ul>
+<hr>
+<h2 id="核心命令"><a href="#核心命令" class="headerlink" title="核心命令"></a>核心命令</h2><h3 id="构建与运行"><a href="#构建与运行" class="headerlink" title="构建与运行"></a>构建与运行</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+<th>输出目录</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cargo build</code></td>
+<td>编译项目</td>
+<td><code>target/debug/</code></td>
+<td>开发调试</td>
+</tr>
+<tr>
+<td><code>cargo run</code></td>
+<td>编译并运行</td>
+<td><code>target/debug/</code></td>
+<td>快速执行</td>
+</tr>
+<tr>
+<td><code>cargo check</code></td>
+<td>仅检查语法</td>
+<td>无二进制文件</td>
+<td>快速验证</td>
+</tr>
+<tr>
+<td><code>cargo clean</code></td>
+<td>清理构建产物</td>
+<td>删除 <code>target/</code></td>
+<td>释放空间</td>
+</tr>
+</tbody></table>
+<h3 id="时间对比示例"><a href="#时间对比示例" class="headerlink" title="时间对比示例"></a>时间对比示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build 耗时</span></span><br><span class="line"><span class="keyword">time</span> cargo build  <span class="comment"># ~0.4s</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># check 耗时（显著更快）</span></span><br><span class="line"><span class="keyword">time</span> cargo check  <span class="comment"># ~0.15s</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="依赖管理"><a href="#依赖管理" class="headerlink" title="依赖管理"></a>依赖管理</h2><h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><p>编辑 <code>Cargo.toml</code>：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">rand</span> = <span class="string">&quot;0.3.14&quot;</span>  <span class="comment"># 指定版本</span></span><br><span class="line"><span class="attr">serde</span> = <span class="string">&quot;1.0&quot;</span>    <span class="comment"># 语义化版本</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更新依赖"><a href="#更新依赖" class="headerlink" title="更新依赖"></a>更新依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新所有依赖</span></span><br><span class="line">cargo update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新特定包</span></span><br><span class="line">cargo update -p rand</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看依赖树</span></span><br><span class="line">cargo tree</span><br></pre></td></tr></table></figure>
+
+<h3 id="依赖解析机制"><a href="#依赖解析机制" class="headerlink" title="依赖解析机制"></a>依赖解析机制</h3><ul>
+<li><code>Cargo.lock</code>：锁定精确版本，确保可重现构建</li>
+<li>自动处理传递依赖（如 <code>rand</code> 依赖 <code>libc</code>）</li>
+</ul>
+<hr>
+<h2 id="项目类型对比"><a href="#项目类型对比" class="headerlink" title="项目类型对比"></a>项目类型对比</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>命令</th>
+<th>入口文件</th>
+<th>输出</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>二进制</td>
+<td><code>cargo new</code></td>
+<td><code>main.rs</code></td>
+<td>可执行文件</td>
+<td>应用程序</td>
+</tr>
+<tr>
+<td>库</td>
+<td><code>cargo new --lib</code></td>
+<td><code>lib.rs</code></td>
+<td>库文件</td>
+<td>共享代码</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="测试与检查"><a href="#测试与检查" class="headerlink" title="测试与检查"></a>测试与检查</h2><h3 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行所有测试</span></span><br><span class="line">cargo <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行特定测试</span></span><br><span class="line">cargo <span class="built_in">test</span> test_name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 包含文档测试</span></span><br><span class="line">cargo <span class="built_in">test</span> --doc</span><br></pre></td></tr></table></figure>
+
+<h3 id="默认测试示例"><a href="#默认测试示例" class="headerlink" title="默认测试示例"></a>默认测试示例</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[cfg(test)]</span></span><br><span class="line"><span class="keyword">mod</span> tests &#123;</span><br><span class="line">    <span class="meta">#[test]</span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">it_works</span>() &#123;</span><br><span class="line">        <span class="built_in">assert_eq!</span>(<span class="number">2</span> + <span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试输出示例"><a href="#测试输出示例" class="headerlink" title="测试输出示例"></a>测试输出示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">running 1 test</span><br><span class="line">test tests::it_works ... ok</span><br><span class="line"></span><br><span class="line">test result: ok. 1 passed; 0 failed; 0 ignored</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="优化构建"><a href="#优化构建" class="headerlink" title="优化构建"></a>优化构建</h2><h3 id="开发构建（默认）"><a href="#开发构建（默认）" class="headerlink" title="开发构建（默认）"></a>开发构建（默认）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cargo build</span><br><span class="line"><span class="comment"># 输出: [unoptimized + debuginfo]</span></span><br><span class="line"><span class="comment"># 包含调试信息，未优化性能</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="发布构建"><a href="#发布构建" class="headerlink" title="发布构建"></a>发布构建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cargo build --release</span><br><span class="line"><span class="comment"># 输出: [optimized]</span></span><br><span class="line"><span class="comment"># 优化性能，移除调试信息</span></span><br><span class="line"><span class="comment"># 编译时间更长，运行时更快</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h3><table>
+<thead>
+<tr>
+<th>构建类型</th>
+<th>编译时间</th>
+<th>运行时性能</th>
+<th>二进制大小</th>
+<th>调试信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Debug</td>
+<td>快</td>
+<td>较慢</td>
+<td>较大</td>
+<td>包含</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>慢</td>
+<td>快</td>
+<td>小</td>
+<td>移除</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h2><h3 id="详细模式"><a href="#详细模式" class="headerlink" title="详细模式"></a>详细模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看底层命令</span></span><br><span class="line">cargo build -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看清理操作</span></span><br><span class="line">cargo clean -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="构建外部包"><a href="#构建外部包" class="headerlink" title="构建外部包"></a>构建外部包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> &lt;repo-url&gt;</span><br><span class="line"><span class="built_in">cd</span> &lt;package-folder&gt;</span><br><span class="line">cargo build</span><br></pre></td></tr></table></figure>
+
+<h3 id="增量编译"><a href="#增量编译" class="headerlink" title="增量编译"></a>增量编译</h3><ul>
+<li>默认启用，加速重新编译</li>
+<li>缓存位于 <code>target/debug/incremental/</code></li>
+</ul>
+<h3 id="实用命令集合"><a href="#实用命令集合" class="headerlink" title="实用命令集合"></a>实用命令集合</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式化代码</span></span><br><span class="line">cargo <span class="built_in">fmt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 代码检查</span></span><br><span class="line">cargo clippy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成文档</span></span><br><span class="line">cargo doc --open</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布到 crates.io</span></span><br><span class="line">cargo publish</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="最佳实践-1"><a href="#最佳实践-1" class="headerlink" title="最佳实践"></a>最佳实践</h2><h3 id="开发流程"><a href="#开发流程" class="headerlink" title="开发流程"></a>开发流程</h3><ol>
+<li><strong>编码阶段</strong>：使用 <code>cargo check</code> 快速验证</li>
+<li><strong>调试阶段</strong>：使用 <code>cargo build</code> 生成调试信息</li>
+<li><strong>发布阶段</strong>：使用 <code>cargo build --release</code> 优化性能</li>
+<li><strong>测试阶段</strong>：使用 <code>cargo test</code> 确保质量</li>
+</ol>
+<h3 id="项目维护"><a href="#项目维护" class="headerlink" title="项目维护"></a>项目维护</h3><ul>
+<li>定期运行 <code>cargo update</code> 更新依赖</li>
+<li>使用 <code>cargo outdated</code> 检查过期依赖</li>
+<li>发布前执行 <code>cargo clean &amp;&amp; cargo build --release</code></li>
+</ul>
+<h3 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h3><ul>
+<li>使用 <code>cargo clean</code> 清理中间文件</li>
+<li>定期清理 <code>~/.cargo/registry</code> 缓存</li>
+<li>使用 <code>cargo sweep</code> 清理旧构建产物</li>
+</ul>
+<hr>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="如何处理版本冲突？"><a href="#如何处理版本冲突？" class="headerlink" title="如何处理版本冲突？"></a>如何处理版本冲突？</h3><p>Cargo 自动解决依赖版本冲突，遵循语义化版本规则。使用 <code>cargo tree</code> 查看依赖关系图。</p>
+<h3 id="为什么编译这么慢？"><a href="#为什么编译这么慢？" class="headerlink" title="为什么编译这么慢？"></a>为什么编译这么慢？</h3><ul>
+<li>首次构建需下载和编译依赖</li>
+<li>Release 模式优化级别高</li>
+<li>解决方案：使用 <code>cargo check</code> 快速验证</li>
+</ul>
+<h3 id="如何加速-CI-CD-构建？"><a href="#如何加速-CI-CD-构建？" class="headerlink" title="如何加速 CI&#x2F;CD 构建？"></a>如何加速 CI&#x2F;CD 构建？</h3><ul>
+<li>缓存 <code>~/.cargo</code> 和 <code>target/</code> 目录</li>
+<li>使用 <code>cargo check</code> 代替 <code>cargo build</code> 进行快速验证</li>
+</ul>
+<hr>
+<p><strong>Tags</strong>: #rust #cargo #package-manager #build-system #development #tutorial #dependency-management</p>
+<p><a id="ubuntu-linux-remove-snap-packages"></a></p>
+<h2 id="Ubuntu-Linux-中移除-Snap-软件包"><a href="#Ubuntu-Linux-中移除-Snap-软件包" class="headerlink" title="Ubuntu Linux 中移除 Snap 软件包"></a>Ubuntu Linux 中移除 Snap 软件包</h2><p>这个指南阐述了你如何从 Ubuntu 系统中完全移除 Snap。</p>
+<p>这些步骤在 <a target="_blank" rel="noopener" href="https://www.debugpoint.com/2022/01/ubuntu-22-04-lts/">Ubuntu 22.04 LTS Jammy Jellyfish</a> 中进行了测试。然而，它应该也适用于所有的 Ubuntu 系统版本。</p>
+<blockquote>
+<p><strong>警告：这些步骤将会移除 Ubuntu 系统中两个关键的程序：软件商店和 Firefox。尝试这些步骤之前确认你已经对书签和 Firefox 的其它设置做了备份。</strong></p>
+</blockquote>
+<h2 id="在-Ubuntu-Linux-移除-Snap-软件包"><a href="#在-Ubuntu-Linux-移除-Snap-软件包" class="headerlink" title="在 Ubuntu Linux 移除 Snap 软件包"></a>在 Ubuntu Linux 移除 Snap 软件包</h2><ol>
+<li>在你的系统中打开一个终端，使用以下命令查看已经安装的 Snap 软件包的列表：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snap list</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>按照以下的顺序移除 Snap 软件包。首先移除 Firefox。然后是软件商店，和用以上命令看到的你的系统中的其它软件包：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> snap remove --purge firefox</span><br><span class="line"><span class="built_in">sudo</span> snap remove --purge snap-store</span><br><span class="line"><span class="built_in">sudo</span> snap remove --purge gnome-3-38-2004</span><br><span class="line"><span class="built_in">sudo</span> snap remove --purge gtk-common-themes</span><br><span class="line"><span class="built_in">sudo</span> snap remove --purge snapd-desktop-integration</span><br><span class="line"><span class="built_in">sudo</span> snap remove --purge bare</span><br><span class="line"><span class="built_in">sudo</span> snap remove --purge core20</span><br><span class="line"><span class="built_in">sudo</span> snap remove --purge snapd</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>最后，通过 <code>apt</code> 命令移除 Snap 服务：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt remove --autoremove snapd</span><br></pre></td></tr></table></figure>
+
+<p>这还没完，即使你用以上命令移除了 Snap 软件包，但是如果你没有关闭 apt 触发器，<code>sudo apt update</code> 命令会再一次将 Snap 安装回来。</p>
+<ol start="4">
+<li>所以，要关闭它，我们需要在 <code>/etc/apt/preferences.d/</code> 目录下创建一个 apt 设置文件 <code>nosnap.pref</code> 来关闭 Snap 服务：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> gedit /etc/apt/preferences.d/nosnap.pref</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>添加以下的命令行，并保存该文件：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Package: snapd</span><br><span class="line">Pin: release a=*</span><br><span class="line">Pin-Priority: -10</span><br></pre></td></tr></table></figure>
+
+<p>如果你知道如何使用它，那么这个 apt 设置文件是一个潜在的工具。举个例子，在以上的状态中，<code>Pin-Priority -10</code> 意思就是阻止 Snap 软件包的安装。</p>
+<p>与此教程不相关的，举个例子，如果你想给所有发行版代号为 “bullseye” 的软件包超高优先权的话，那么就可以查看这些设置文件。如果你想了解更多，你可以访问 <a target="_blank" rel="noopener" href="https://manpages.ubuntu.com/manpages/focal/man5/apt_preferences.5.html">apt 手册页</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Package: *</span><br><span class="line">Pin: release n=bullseye</span><br><span class="line">Pin-Priority: 900</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>回到我们的主题，一旦你已经保存和关闭以上文件，从终端中再次运行以下命令：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>最后，从 Ubuntu 中移除 Snap 的步骤全部完成。</li>
+</ol>
+<h2 id="从-Ubuntu-移除-Snap-后使用-deb-文件安装软件商店和-Firefox"><a href="#从-Ubuntu-移除-Snap-后使用-deb-文件安装软件商店和-Firefox" class="headerlink" title="从 Ubuntu 移除 Snap 后使用 deb 文件安装软件商店和 Firefox"></a>从 Ubuntu 移除 Snap 后使用 deb 文件安装软件商店和 Firefox</h2><p>你已经移除了 Firefox 和软件商店，但是你的工作还需要它们。</p>
+<p>要安装 apt 版的 GNOME 软件商店，你可以使用以下命令。确保使用 <code>--install-suggests</code> 参数。否则，将会再次安装上 Snap 版本的软件包管理器！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install --install-suggests gnome-software</span><br></pre></td></tr></table></figure>
+
+<p>要安装 Firefox，通过以下命令使用官方 PPA 仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> add-apt-repository ppa:mozillateam/ppa</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -t <span class="string">&#x27;o=LP-PPA-mozillateam&#x27;</span> firefox</span><br></pre></td></tr></table></figure>
+
+<p>一旦你已经安装完 Firefox，使用以下命令开启自动更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;Unattended-Upgrade::Allowed-Origins:: &quot;LP-PPA-mozillateam:$&#123;distro_codename&#125;&quot;;&#x27;</span> | <span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/apt/apt.conf.d/51unattended-upgrades-firefox</span><br></pre></td></tr></table></figure>
+
+<p>最后但同样重要，当运行 <code>apt</code> 时，为 Firefox 创建另一个设置文件给予以上 PPA 仓库超高优先权。如果你不这么做，<code>apt update</code> 命令会再次安装 Snap 版本 Firefox，并把它的”Snap 朋友们”带回来。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> gedit /etc/apt/preferences.d/mozillateamppa</span><br></pre></td></tr></table></figure>
+
+<p>最后，添加这些命令行并保存文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Package: firefox*</span><br><span class="line">Pin: release o=LP-PPA-mozillateam</span><br><span class="line">Pin-Priority: 501</span><br></pre></td></tr></table></figure>
+
+<p>完成。</p>
+<h2 id="在-Ubuntu-系统恢复到-Snap-软件包"><a href="#在-Ubuntu-系统恢复到-Snap-软件包" class="headerlink" title="在 Ubuntu 系统恢复到 Snap 软件包"></a>在 Ubuntu 系统恢复到 Snap 软件包</h2><p>如果你改变想法，移除该设置文件，并通过以下命令再次启动安装程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /etc/apt/preferences.d/nosnap.pref</span><br><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt upgrade</span><br><span class="line"><span class="built_in">sudo</span> snap install snap-store</span><br><span class="line"><span class="built_in">sudo</span> apt install firefox</span><br></pre></td></tr></table></figure>
+
+<p><a id="extra-packages-for-enterprise-linux"></a></p>
+<h2 id="Extra-Packages-for-Enterprise-Linux"><a href="#Extra-Packages-for-Enterprise-Linux" class="headerlink" title="Extra Packages for Enterprise Linux"></a>Extra Packages for Enterprise Linux</h2><h2 id="快速指南"><a href="#快速指南" class="headerlink" title="快速指南"></a>快速指南</h2><p>我们（Fedora EPEL）提供包含存储库配置文件和公共软件包签名密钥的发布包。使用与企业操作系统的主版本对应的版本。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm">epel-release-latest-9</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm">epel-release-latest-8</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm">epel-release-latest-7</a></li>
+</ul>
+<p>如果您使用的是 CentOS Stream，我们还建议您安装相应的 epel-next-release 软件包。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-9.noarch.rpm">epel-next-release-latest-9</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-8.noarch.rpm">epel-next-release-latest-8</a></li>
+</ul>
+<h3 id="什么是-epel-next？"><a href="#什么是-epel-next？" class="headerlink" title="什么是 epel-next？"></a>什么是 epel-next？</h3><p>EPEL 软件包是针对 RHEL 构建的。EPEL Next 是一个额外的存储库，允许软件包维护者根据 CentOS Stream 进行构建。当 CentOS Stream 包含即将到来的 RHEL 库 rebase 时，或者如果 EPEL 包具有 CentOS Stream 中已经存在但尚未在 RHEL 中的最低版本构建要求，则有时需要这样做。EPEL Next 有自己的 distgit 分支、koji build 目标和 bodhi releases。EPEL Next 软件包的 disttag 后附加了 <code>.next</code>（例如 el8.next，epel 8-next 的 disttag 为 <code>.www.example.com</code>），以提供从同一 distgit 提交构建的 EPEL 软件包的升级路径。包维护者可以为 EPEL 和 EPEL Next 重建相同的提交，并在 koji 中获得两个不同的 NVR。在六个月内，需要在 EPEL Next 中构建的构建需求应该在 RHEL 中，并且那时软件包维护者可以在 EPEL 分支中进行正常的发布 bump 提交，并获得比先前的 EPEL 和 EPEL Next 软件包都更新的 NVR。要开始使用 EPEL Next，请为您的目标 EPEL 版本请求相应的分支。</p>
+<p>为了方便起见，一些发行版在其默认存储库中包含了这些发布包，允许您按名称安装它们，而无需完整的 URL。</p>
+<h2 id="CentOS-Stream-10"><a href="#CentOS-Stream-10" class="headerlink" title="CentOS Stream 10"></a>CentOS Stream 10</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm</span><br><span class="line"><span class="built_in">sudo</span> crb <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="EL9"><a href="#EL9" class="headerlink" title="EL9"></a>EL9</h2><h3 id="CentOS-Stream-9"><a href="#CentOS-Stream-9" class="headerlink" title="CentOS Stream 9"></a>CentOS Stream 9</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf config-manager --set-enabled crb</span><br><span class="line">dnf install epel-release epel-next-release</span><br></pre></td></tr></table></figure>
+
+<h3 id="RHEL-9"><a href="#RHEL-9" class="headerlink" title="RHEL 9"></a>RHEL 9</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> subscription-manager repos --<span class="built_in">enable</span> codeready-builder-for-rhel-9-$(<span class="built_in">arch</span>)-rpms</span><br><span class="line"><span class="built_in">sudo</span> dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="AlmaLinux-9"><a href="#AlmaLinux-9" class="headerlink" title="AlmaLinux 9"></a>AlmaLinux 9</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf config-manager --set-enabled crb</span><br><span class="line">dnf install epel-release</span><br></pre></td></tr></table></figure>
+
+<h2 id="EL8"><a href="#EL8" class="headerlink" title="EL8"></a>EL8</h2><h3 id="CentOS-Stream-8"><a href="#CentOS-Stream-8" class="headerlink" title="CentOS Stream 8"></a>CentOS Stream 8</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf config-manager --set-enabled powertools</span><br><span class="line">dnf install epel-release epel-next-release</span><br></pre></td></tr></table></figure>
+
+<h3 id="RHEL-8"><a href="#RHEL-8" class="headerlink" title="RHEL 8"></a>RHEL 8</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">subscription-manager repos --<span class="built_in">enable</span> codeready-builder-for-rhel-8-$(<span class="built_in">arch</span>)-rpms</span><br><span class="line">dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm</span><br><span class="line">crb <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="AlmaLinux-8-Rocky-Linux-8"><a href="#AlmaLinux-8-Rocky-Linux-8" class="headerlink" title="AlmaLinux 8, Rocky Linux 8"></a>AlmaLinux 8, Rocky Linux 8</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf config-manager --set-enabled powertools</span><br><span class="line">dnf install epel-release</span><br></pre></td></tr></table></figure>
+
+<h2 id="EL7"><a href="#EL7" class="headerlink" title="EL7"></a>EL7</h2><h3 id="RHEL-7"><a href="#RHEL-7" class="headerlink" title="RHEL 7"></a>RHEL 7</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">subscription-manager repos --<span class="built_in">enable</span> rhel-*-optional-rpms \</span><br><span class="line">                           --<span class="built_in">enable</span> rhel-*-extras-rpms \</span><br><span class="line">                           --<span class="built_in">enable</span> rhel-ha-for-rhel-*-server-rpms</span><br><span class="line">yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="CentOS-7"><a href="#CentOS-7" class="headerlink" title="CentOS 7"></a>CentOS 7</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install epel-release</span><br></pre></td></tr></table></figure>
+
+<p>来源：<a target="_blank" rel="noopener" href="https://docs.fedoraproject.org/en-US/epel/">EPEL 文档</a></p>
+<p><a id="fix-packagekit-switch-proxy"></a></p>
+<h2 id="修复PackageKit无法正确切换代理"><a href="#修复PackageKit无法正确切换代理" class="headerlink" title="修复PackageKit无法正确切换代理"></a>修复PackageKit无法正确切换代理</h2><p>使用过代理在图形界面下安装软件包后，会出现这样的毛病：</p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/Screenshot_20230426_084431.png"><img src="/images/Screenshot_20230426_084431-1276x720.png"></a></p>
+<p>目前确认为 PackageKit 软件包的问题，无法正确切换代理，需要手动编辑配置（数据库）。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h3><ol>
+<li>安装 sqlite3：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf/apt install sqlite3</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>删除代理设置：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sqlite3 /var/lib/PackageKit/transactions.db</span><br><span class="line">DELETE FROM proxy;</span><br><span class="line">.<span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启 packagekit：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart packagekit</span><br></pre></td></tr></table></figure>
+
+<h3 id="图形界面操作"><a href="#图形界面操作" class="headerlink" title="图形界面操作"></a>图形界面操作</h3><ol>
+<li>安装 sqlitebrowser：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf/apt install sqlitebrowser</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>删除代理设定：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sqlitebrowser /var/lib/PackageKit/transactions.db</span><br></pre></td></tr></table></figure>
+
+<p>点击浏览数据页面，选择表名 proxy 并删除所有数据。</p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/Screenshot_20230426_085129.png"><img src="/images/Screenshot_20230426_085129-640x480.png"></a></p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/Screenshot_20230426_085146.png"><img src="/images/Screenshot_20230426_085146-640x480.png"></a></p>
+<ol start="3">
+<li>重启 packagekit：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart packagekit</span><br></pre></td></tr></table></figure>
+
+<p>来源：<a target="_blank" rel="noopener" href="https://github.com/PackageKit/PackageKit/issues/392#issuecomment-1077478068">PackageKit Issue #392</a></p>
+<p><a id="freebsd-pkg-autoremove-dependencies"></a></p>
+<h2 id="FreeBSD-pkg-自动卸载安装依赖"><a href="#FreeBSD-pkg-自动卸载安装依赖" class="headerlink" title="FreeBSD pkg 自动卸载安装依赖"></a>FreeBSD pkg 自动卸载安装依赖</h2><p><code>pkg delete &lt;pkgname&gt;</code><br><code>pkg autoremove</code><br>例如：<br><code>pkg delete py311-qt5-pyqt</code><br><code>pkg autoremove</code><br>推荐做法<br>如果你希望依赖包在安装时就被标记为“自动安装”，安装时加 -A：<br><code>pkg install -A py311-qt5-pyqt</code><br>之后卸载主包：<br><code>pkg delete py311-qt5-pyqt</code><br><code>pkg autoremove</code><br>pkg autoremove 会删除不再被任何手动安装包需要的自动依赖。<br>查看会删除什么<br>先 dry-run：<br><code>pkg autoremove -n</code><br>或者：<br><code>pkg delete -n py311-qt5-pyqt</code><br><code>pkg autoremove -n</code><br>关键区别</p>
+<ul>
+<li><code>pkg delete &lt;pkg&gt;</code>：只删除指定包，除非有依赖关系阻止。</li>
+<li><code>pkg autoremove</code>：删除“自动安装且已无其他包依赖”的包。</li>
+<li><code>pkg install -A &lt;pkg&gt;</code>：把包标记为自动安装。</li>
+<li><code>pkg set -A 1 &lt;pkg&gt;</code>：把已安装包改成自动安装。</li>
+<li><code>pkg set -A 0 &lt;pkg&gt;</code>：把包改成手动安装，避免被 autoremove 删除。<br>如果包当初不是用 -A 安装的<br>可以先把它和依赖标成自动，再卸载主包并 autoremove。但要小心不要误删你需要的包。<br>查看包的依赖：<br><code>pkg info -d &lt;pkgname&gt;</code><br>查看哪些包依赖它：<br><code>pkg info -r &lt;pkgname&gt;</code><br>把某个包标记为自动安装：<br><code>pkg set -A 1 &lt;pkgname&gt;</code><br>把某个包标记为手动安装：<br><code>pkg set -A 0 &lt;pkgname&gt;</code><br>CI&#x2F;临时环境推荐<br>在 GitHub Actions &#x2F; VM 里安装构建依赖时：<br><code>pkg install -A -y &lt;deps...&gt;</code><br>构建完成后清理：<br><code>pkg delete -y &lt;top-level-build-pkg&gt;</code><br><code>pkg autoremove -y</code><br><code>pkg clean -ay</code><br>如果只是一次性 CI VM，通常不需要清理；但如果有缓存或镜像复用，建议用<br><code>pkg autoremove -y &amp;&amp; pkg clean -ay</code></li>
+</ul>
+<p><a id="ubuntu-22-04-upgrade-online-remebers"></a></p>
+<h2 id="Ubuntu-22-04在线升级注意事项"><a href="#Ubuntu-22-04在线升级注意事项" class="headerlink" title="Ubuntu 22.04在线升级注意事项"></a>Ubuntu 22.04在线升级注意事项</h2><h3 id="1-某些云服务商使用自定义镜像源"><a href="#1-某些云服务商使用自定义镜像源" class="headerlink" title="1. 某些云服务商使用自定义镜像源"></a>1. 某些云服务商使用自定义镜像源</h3><p>在直接使用在线更新时会被禁用，需要使用下列命令更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RELEASE_UPGRADER_ALLOW_THIRD_PARTY=1 do-release-upgrade</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-新版搭载的-OpenSSH-软件包默认已拒绝-rsa-sha1-算法生成的密钥"><a href="#2-新版搭载的-OpenSSH-软件包默认已拒绝-rsa-sha1-算法生成的密钥" class="headerlink" title="2. 新版搭载的 OpenSSH 软件包默认已拒绝 rsa-sha1 算法生成的密钥"></a>2. 新版搭载的 OpenSSH 软件包默认已拒绝 rsa-sha1 算法生成的密钥</h3><p>请提前配置 sha2 密钥，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa-sha2-512 -b 4096</span><br></pre></td></tr></table></figure>
+
+<p>如果您无法在本地计算机上更改任何内容，或者不想使用新密钥，并且希望在本地计算机上重新启用 RSA，请在远程计算机上编辑文件 <code>/etc/ssh/sshd_config</code> 并添加以下行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HostKeyAlgorithms +ssh-rsa</span><br><span class="line">PubkeyAcceptedKeyTypes +ssh-rsa</span><br></pre></td></tr></table></figure>
+
+<p>这将允许使用您已经拥有的不安全 RSA 密钥。</p>
+<p>请记住通过以下方式重新启动 sshd 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+<p>否则，您必须重新启动计算机才能使更改生效。</p>
+<p><a id="update-gcc-14_2"></a></p>
+<h2 id="升级gcc-14-2-0"><a href="#升级gcc-14-2-0" class="headerlink" title="升级gcc 14.2.0"></a>升级gcc 14.2.0</h2><h2 id="编译-GMP，MPFR，MPC"><a href="#编译-GMP，MPFR，MPC" class="headerlink" title="编译 GMP，MPFR，MPC"></a>编译 GMP，MPFR，MPC</h2><p>注意三个库编译的顺序 (gmp -&gt; mpfr -&gt; mpc)。因为编译 mpfr 时需要依赖于 gmp，编译mpc时候又需要依赖于 gmp 和 mpfr，所以需要最先编译 gmp，然后编译 mpfr，最后编译 mpc。编译过程中需要在 configure 配置时设置好 gmp，mpfr 的 include 和 lib 路径，不然就会遇见 <strong><em>configure: error: libgmp not found or uses a different ABI (including static vs shared). configure: error: libmpfr not found or uses a different ABI (including static vs shared).</em></strong> 这两个 <strong><em>configure: error</em></strong>。</p>
+<h3 id="2-1-编译GMP"><a href="#2-1-编译GMP" class="headerlink" title="2.1. 编译GMP"></a>2.1. 编译GMP</h3><p>编译的时候需要记录下 <code>--prefix</code> 参数的值，也就是我们自定义的gmp的安装目录，后面编译其他两个库和gcc的时候需要使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -xvjf gmp-6.2.1.tar.bz2</span><br><span class="line"><span class="built_in">cd</span> gmp-6.2.1/</span><br><span class="line">./configure --prefix=$(<span class="built_in">pwd</span>)</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-编译MPFR"><a href="#2-2-编译MPFR" class="headerlink" title="2.2. 编译MPFR"></a>2.2. 编译MPFR</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tar -xvjf mpfr-4.1.0.tar.bz2</span><br><span class="line"><span class="built_in">cd</span> mpfr-4.1.0/</span><br><span class="line">./configure --prefix=$(<span class="built_in">pwd</span>) \</span><br><span class="line">--with-gmp-include=/home/test/deps/gmp-6.2.1/include \</span><br><span class="line">--with-gmp-lib=/home/test/deps/gmp-6.2.1/lib</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-编译MPC"><a href="#2-3-编译MPC" class="headerlink" title="2.3. 编译MPC"></a>2.3. 编译MPC</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf mpc-1.2.1.tar.gz</span><br><span class="line"><span class="built_in">cd</span> mpc-1.2.1/</span><br><span class="line">./configure --prefix=$(<span class="built_in">pwd</span>) \</span><br><span class="line">--with-gmp-include=/home/test/deps/gmp-6.2.1/include \</span><br><span class="line">--with-gmp-lib=/home/test/deps/gmp-6.2.1/lib \</span><br><span class="line">--with-mpfr-include=/home/test/deps/mpfr-4.1.0/include \</span><br><span class="line">--with-mpfr-lib=/home/test/deps/mpfr-4.1.0/lib</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-配置动态库-so-到-LD-LIBRARY-PATH-环境变量"><a href="#2-4-配置动态库-so-到-LD-LIBRARY-PATH-环境变量" class="headerlink" title="2.4. 配置动态库 (so)到 LD_LIBRARY_PATH 环境变量"></a>2.4. 配置动态库 (so)到 LD_LIBRARY_PATH 环境变量</h3><p>在终端运行下面命令可以将上面所编译好的三个库的动态库 (so)文件配置到 LD_LIBRARY_PATH 环境变量中，如果需要让配置永久生效，则需将下面的代码添加到 ~&#x2F;.bashrc 文件中 并运行 <code>source ~/.bashrc</code> 命令即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/home/test/deps/gmp-6.2.1/lib:/home/test/deps/mpfr-4.1.0/lib:/home/test/deps/mpc-1.2.1/lib:<span class="variable">$LD_LIBRARY_PATH</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-源代码编译安装GCC"><a href="#3-源代码编译安装GCC" class="headerlink" title="3. 源代码编译安装GCC"></a>3. 源代码编译安装GCC</h2><h3 id="3-1-下载最新版的GCC"><a href="#3-1-下载最新版的GCC" class="headerlink" title="3.1. 下载最新版的GCC"></a>3.1. 下载最新版的GCC</h3><p>可以直接从 <a href="https://link.zhihu.com/?target=https://gcc.gnu.org/">GCC, the GNU Compiler Collection</a> 下载最新版本的 GCC 源码压缩包，在这里我通过 <code>wget</code>命令从<a href="https://link.zhihu.com/?target=https://gcc.gnu.org/mirrors.html">GCC mirror sites</a> 服务器下载当前最新版本 GCC 源码压缩包。 关于 <a href="https://link.zhihu.com/?target=https://gcc.gnu.org/mirrors.html">GCC mirror sites</a> 的选择可以浏览下面的网页：</p>
+<p><a href="https://link.zhihu.com/?target=https://gcc.gnu.org/mirrors.html">GCC mirror sites​gcc.gnu.org&#x2F;mirrors.html</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-13.1.0/gcc-13.1.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-编译安装-GCC"><a href="#3-2-编译安装-GCC" class="headerlink" title="3.2. 编译安装 GCC"></a>3.2. 编译安装 GCC</h3><p>详细的 <code>configure</code> 参数设置可以参考：<a href="https://link.zhihu.com/?target=https://gcc.gnu.org/install/configure.html">Installing GCC: Configuration</a>，这里我没有设置过多的参数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf gcc-13.1.0.tar.gz</span><br><span class="line"><span class="built_in">cd</span> gcc-13.1.0</span><br><span class="line">./configure \</span><br><span class="line">--disable-multilib \</span><br><span class="line">--prefix=$(<span class="built_in">pwd</span>)/ \</span><br><span class="line">--with-gmp-include=/home/test/deps/gmp-6.2.1/include \</span><br><span class="line">--with-gmp-lib=/home/test/deps/gmp-6.2.1/lib \</span><br><span class="line">--with-mpfr-include=/home/test/deps/mpfr-4.1.0/include \</span><br><span class="line">--with-mpfr-lib=/home/test/deps/mpfr-4.1.0/lib \</span><br><span class="line">--with-mpc-include=/home/test/deps/mpc-1.2.1/include \</span><br><span class="line">--with-mpc-lib=/home/test/deps/mpc-1.2.1/lib</span><br><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>如果在make的过程遇见 <code># error GATHER_STATISTICS must be defined</code> 这个错误,则只需通过在终端运行<code>export CPLUS_INCLUDE_PATH=</code> 命令暂时的清除CPLUS_INCLUDE_PATH 变量即可。</p>
+<h2 id="4-环境变量的配置"><a href="#4-环境变量的配置" class="headerlink" title="4. 环境变量的配置"></a>4. 环境变量的配置</h2><p>安装完 GCC 之后，我们需要将其配置到系统的环境变量中，如果需要长久生效，则需要将下面内容添加到 <code>~/.bashrc</code>中即可。也可以通过构建软链接的方式替换成老版本的GCC。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/home/test/gcc-14.2.0/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> LIBRARY_PATH=/home/test/gcc-14.2.0/lib64:<span class="variable">$LIBRARY_PATH</span></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/home/test/gcc-14.2.0/lib64:<span class="variable">$LD_LIBRARY_PATH</span></span><br><span class="line"><span class="built_in">export</span> C_INCLUDE_PATH=/home/test/gcc-14.2.0/include:<span class="variable">$C_INCLUDE_PATH</span></span><br><span class="line"><span class="built_in">export</span> CPLUS_INCLUDE_PATH=/home/test/gcc-14.2.0/include:<span class="variable">$CPLUS_INCLUDE_PATH</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/fedora/" rel="tag"># fedora</a>
+              <a href="/tags/rhel/" rel="tag"># rhel</a>
+              <a href="/tags/package-management/" rel="tag"># package-management</a>
+              <a href="/tags/cache/" rel="tag"># cache</a>
+              <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/04/grub-and-boot-repair/" rel="prev" title="GRUB 与系统引导修复合集">
+                  <i class="fa fa-angle-left"></i> GRUB 与系统引导修复合集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/04/28/graphics-and-hardware-acceleration/" rel="next" title="显卡、显示与硬件加速合集">
+                  显卡、显示与硬件加速合集 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

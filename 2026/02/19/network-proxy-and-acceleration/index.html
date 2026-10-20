@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="命令行代理、GitHub 加速、防火墙与 SSH 配置，以及两种把内核网络栈调快的做法（BBR）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络、代理与加速合集">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/02/19/network-proxy-and-acceleration/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="命令行代理、GitHub 加速、防火墙与 SSH 配置，以及两种把内核网络栈调快的做法（BBR）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/HAGKQL4V1F3W7U59_OUL-640x121.png">
+<meta property="article:published_time" content="2026-02-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-18T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="firewall">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="proxy">
+<meta property="article:tag" content="ssh">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/HAGKQL4V1F3W7U59_OUL-640x121.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/02/19/network-proxy-and-acceleration/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/02/19/network-proxy-and-acceleration/","path":"2026/02/19/network-proxy-and-acceleration/","title":"网络、代理与加速合集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>网络、代理与加速合集 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PowerShell-%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BB%A3%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">PowerShell 配置命令行代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1%EF%BC%9A%E6%89%BE%E5%88%B0%E5%B9%B6%E7%BC%96%E8%BE%91-PowerShell-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">步骤 1：找到并编辑 PowerShell 配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">步骤 2：添加代理函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3%EF%BC%9A%E4%BF%9D%E5%AD%98%E5%B9%B6%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">步骤 3：保存并重新加载配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">如何使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash-zsh"><span class="nav-number">4.</span> <span class="nav-text">bash&#x2F;zsh:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cURL-%E6%9F%A5%E8%AF%A2%E5%85%AC%E7%BD%91%E5%87%BA%E5%8F%A3-IP"><span class="nav-number">5.</span> <span class="nav-text">cURL 查询公网出口 IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E7%BD%91%E5%9D%80"><span class="nav-number">6.</span> <span class="nav-text">几个网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E4%BE%8B"><span class="nav-number">7.</span> <span class="nav-text">样例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-api-com"><span class="nav-number">7.1.</span> <span class="nav-text">ip-api.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ipecho-net"><span class="nav-number">7.2.</span> <span class="nav-text">ipecho.net</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ipinfo-io"><span class="nav-number">7.3.</span> <span class="nav-text">ipinfo.io</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cip-cc"><span class="nav-number">7.4.</span> <span class="nav-text">cip.cc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#myip-ipip-net"><span class="nav-number">7.5.</span> <span class="nav-text">myip.ipip.net</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ifconfig-me"><span class="nav-number">7.6.</span> <span class="nav-text">ifconfig.me</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#members-3322-org-dyndns-getip"><span class="nav-number">7.7.</span> <span class="nav-text">members.3322.org&#x2F;dyndns&#x2F;getip</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub-Proxy"><span class="nav-number">8.</span> <span class="nav-text">GitHub Proxy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#https-git-951959483-xyz"><span class="nav-number">8.1.</span> <span class="nav-text">https:&#x2F;&#x2F;git.951959483.xyz&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-number">8.2.</span> <span class="nav-text">终端命令行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone"><span class="nav-number">9.</span> <span class="nav-text">git clone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone-%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93"><span class="nav-number">10.</span> <span class="nav-text">git clone 私有仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wget-curl"><span class="nav-number">11.</span> <span class="nav-text">wget &amp; curl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E4%B8%8B%E8%BD%BD"><span class="nav-number">12.</span> <span class="nav-text">首页下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raw-%E6%96%87%E4%BB%B6"><span class="nav-number">13.</span> <span class="nav-text">Raw 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E6%BA%90%E7%A0%81"><span class="nav-number">14.</span> <span class="nav-text">分支源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Releases-%E6%BA%90%E7%A0%81"><span class="nav-number">15.</span> <span class="nav-text">Releases 源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Releases-%E6%96%87%E4%BB%B6"><span class="nav-number">16.</span> <span class="nav-text">Releases 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#githubusercontent%E3%80%81github%E5%8A%A0%E9%80%9F%E9%95%9C%E5%83%8F"><span class="nav-number">17.</span> <span class="nav-text">githubusercontent、github加速镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E5%9C%B0%E5%9D%80%E4%B8%80%E8%A7%88"><span class="nav-number">18.</span> <span class="nav-text">加速地址一览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F-clone"><span class="nav-number">19.</span> <span class="nav-text">加速 clone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F-release"><span class="nav-number">20.</span> <span class="nav-text">加速 release</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F-raw"><span class="nav-number">21.</span> <span class="nav-text">加速 raw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fedora-CentOS%E4%B8%8B%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AEShadowsocks%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86"><span class="nav-number">22.</span> <span class="nav-text">Fedora&#x2F;CentOS下命令行配置Shadowsocks全局代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fedora-RHEL"><span class="nav-number">23.</span> <span class="nav-text">Fedora &amp; RHEL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-from-source-with-CentOS"><span class="nav-number">23.1.</span> <span class="nav-text">Build from source with CentOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArchLinux-Manjaro"><span class="nav-number">23.2.</span> <span class="nav-text">ArchLinux &#x2F; Manjaro</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenVZ-%E5%B9%B3%E5%8F%B0-Google-BBR-%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="nav-number">24.</span> <span class="nav-text">OpenVZ 平台 Google BBR 一键安装脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">25.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E8%AF%B4%E6%98%8E"><span class="nav-number">26.</span> <span class="nav-text">错误说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%AB%AF%E5%8F%A3%E5%8A%A0%E9%80%9F"><span class="nav-number">27.</span> <span class="nav-text">多端口加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-glibc"><span class="nav-number">28.</span> <span class="nav-text">更新 glibc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD-BBR-%E5%B7%B2%E6%AD%A3%E5%B8%B8%E5%B7%A5%E4%BD%9C"><span class="nav-number">29.</span> <span class="nav-text">判断 BBR 已正常工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%BC%80%E5%90%AFBBR%E6%96%B9%E6%B3%95"><span class="nav-number">30.</span> <span class="nav-text">内核开启BBR方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BF%AE%E6%94%B9%E7%B3%BB%E7%BB%9F%E5%8F%98%E9%87%8F"><span class="nav-number">31.</span> <span class="nav-text">1. 修改系统变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BF%9D%E5%AD%98%E7%94%9F%E6%95%88"><span class="nav-number">32.</span> <span class="nav-text">2. 保存生效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%9F%A5%E7%9C%8B%E5%86%85%E6%A0%B8%E6%98%AF%E5%90%A6%E5%B7%B2%E5%BC%80%E5%90%AF-BBR"><span class="nav-number">33.</span> <span class="nav-text">3. 查看内核是否已开启 BBR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%9F%A5%E7%9C%8B-BBR-%E6%98%AF%E5%90%A6%E5%90%AF%E5%8A%A8"><span class="nav-number">34.</span> <span class="nav-text">4. 查看 BBR 是否启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E4%B8%8BfirewallD%E7%AE%80%E5%8D%95%E4%B8%8A%E6%89%8B"><span class="nav-number">35.</span> <span class="nav-text">Linux下firewallD简单上手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FirewallD-%E6%9C%8D%E5%8A%A1"><span class="nav-number">36.</span> <span class="nav-text">FirewallD 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8-FirewallD-%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">37.</span> <span class="nav-text">用 FirewallD 配置防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allow-ssh-port-on-SELinux"><span class="nav-number">38.</span> <span class="nav-text">Allow ssh port on SELinux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-Allow-new-SSH-port-on-SELinux"><span class="nav-number">39.</span> <span class="nav-text">Step 3: Allow new SSH port on SELinux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4-Open-SSH-port-on-Firewalld"><span class="nav-number">40.</span> <span class="nav-text">Step 4: Open SSH port on Firewalld</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-SSH-%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95"><span class="nav-number">41.</span> <span class="nav-text">设置 SSH 通过密钥登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%B6%E4%BD%9C%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="nav-number">42.</span> <span class="nav-text">1. 制作密钥对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%AE%89%E8%A3%85%E5%85%AC%E9%92%A5"><span class="nav-number">43.</span> <span class="nav-text">2. 在服务器上安装公钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AE%BE%E7%BD%AE-SSH%EF%BC%8C%E6%89%93%E5%BC%80%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD"><span class="nav-number">44.</span> <span class="nav-text">3. 设置 SSH，打开密钥登录功能</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/02/19/network-proxy-and-acceleration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="网络、代理与加速合集 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络、代理与加速合集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-19 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-19T00:00:00+08:00">2026-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>命令行代理、GitHub 加速、防火墙与 SSH 配置，以及两种把内核网络栈调快的做法（BBR）。</p>
+<span id="more"></span>
+
+<p><a id="powershell-command-line-proxy"></a></p>
+<h2 id="PowerShell-配置命令行代理"><a href="#PowerShell-配置命令行代理" class="headerlink" title="PowerShell 配置命令行代理"></a>PowerShell 配置命令行代理</h2><p>我们将通过创建 PowerShell 函数来实现快速开启和关闭代理的功能。</p>
+<h3 id="步骤-1：找到并编辑-PowerShell-配置文件"><a href="#步骤-1：找到并编辑-PowerShell-配置文件" class="headerlink" title="步骤 1：找到并编辑 PowerShell 配置文件"></a><strong>步骤 1：找到并编辑 PowerShell <a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=252477125&content_type=Article&match_order=1&q=%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6&zhida_source=entity">配置文件</a></strong></h3><p>首先，我们需要找到 PowerShell 的配置文件。如果你还没有创建过，可以用以下命令创建：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!(<span class="built_in">Test-Path</span> <span class="literal">-Path</span> <span class="variable">$PROFILE</span>)) &#123;</span><br><span class="line">    <span class="built_in">New-Item</span> <span class="literal">-ItemType</span> File <span class="literal">-Path</span> <span class="variable">$PROFILE</span> <span class="literal">-Force</span></span><br><span class="line">&#125;</span><br><span class="line">notepad <span class="variable">$PROFILE</span></span><br></pre></td></tr></table></figure>
+
+<p>这会打开你的 PowerShell 配置文件。配置文件的默认路径通常是： <code>C:\Users\你的用户名\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</code></p>
+<h3 id="步骤-2：添加代理函数"><a href="#步骤-2：添加代理函数" class="headerlink" title="步骤 2：添加代理函数"></a><strong>步骤 2：添加代理函数</strong></h3><p>在打开的配置文件中，添加以下函数：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">proxy</span></span> &#123;</span><br><span class="line">    <span class="variable">$env:http_proxy</span> = <span class="string">&quot;http://127.0.0.1:7890&quot;</span></span><br><span class="line">    <span class="variable">$env:https_proxy</span> = <span class="string">&quot;http://127.0.0.1:7890&quot;</span></span><br><span class="line">    [<span class="type">System.Net.WebRequest</span>]::DefaultWebProxy = <span class="built_in">New-Object</span> System.Net.WebProxy(<span class="string">&quot;http://127.0.0.1:10809&quot;</span>)</span><br><span class="line">    <span class="built_in">Write-Host</span> <span class="string">&quot;Proxy enabled: http://127.0.0.1:10809&quot;</span> <span class="literal">-ForegroundColor</span> Green</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unproxy</span></span> &#123;</span><br><span class="line">    <span class="variable">$env:http_proxy</span> = <span class="variable">$null</span></span><br><span class="line">    <span class="variable">$env:https_proxy</span> = <span class="variable">$null</span></span><br><span class="line">    [<span class="type">System.Net.WebRequest</span>]::DefaultWebProxy = <span class="variable">$null</span></span><br><span class="line">    <span class="built_in">Write-Host</span> <span class="string">&quot;Proxy disabled&quot;</span> <span class="literal">-ForegroundColor</span> Yellow</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check-proxy</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$env:http_proxy</span> <span class="operator">-or</span> <span class="variable">$env:https_proxy</span>) &#123;</span><br><span class="line">        <span class="built_in">Write-Host</span> <span class="string">&quot;Current proxy settings:&quot;</span> <span class="literal">-ForegroundColor</span> Cyan</span><br><span class="line">        <span class="built_in">Write-Host</span> <span class="string">&quot;HTTP Proxy: <span class="variable">$env:http_proxy</span>&quot;</span></span><br><span class="line">        <span class="built_in">Write-Host</span> <span class="string">&quot;HTTPS Proxy: <span class="variable">$env:https_proxy</span>&quot;</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">Write-Host</span> <span class="string">&quot;No proxy is currently set.&quot;</span> <span class="literal">-ForegroundColor</span> Cyan</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="步骤-3：保存并重新加载配置"><a href="#步骤-3：保存并重新加载配置" class="headerlink" title="步骤 3：保存并重新加载配置"></a><strong>步骤 3：保存并重新加载配置</strong></h3><p>保存文件，然后重新启动 PowerShell 或运行 <code>. $PROFILE</code> 来重新加载配置文件。</p>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a><strong>如何使用</strong></h2><p>现在，你可以在 PowerShell 中使用以下命令：</p>
+<ul>
+<li>输入 <code>proxy</code> 来启用代理</li>
+<li>输入 <code>unproxy</code> 来禁用代理</li>
+<li>输入 <code>check-proxy</code> 来查看当前的<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=252477125&content_type=Article&match_order=1&q=%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE&zhida_source=entity">代理设置</a></li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a><strong>注意事项</strong></h2><ol>
+<li>这个设置只影响当前的 PowerShell 会话，不会影响其他应用程序或系统级的代理设置。</li>
+<li>如果你的代理地址和端口不是 <code>127.0.0.1:7890</code>，请相应地修改函数中的 URL。</li>
+<li>如果你的代理需要认证，你需要修改函数来包含用户名和密码。</li>
+</ol>
+<h2 id="bash-zsh"><a href="#bash-zsh" class="headerlink" title="bash&#x2F;zsh:"></a>bash&#x2F;zsh:</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">proxy</span><br><span class="line">  proxy () &#123;</span><br><span class="line">  export http_proxy=&quot;http://127.0.0.1:7890&quot;</span><br><span class="line">  export https_proxy=$http_proxy</span><br><span class="line">  export socks5_proxy=&quot;socks5://127.0.0.1:7890&quot;</span><br><span class="line">  echo &quot;HTTP Proxy on&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">noproxy</span><br><span class="line">  noproxy () &#123;</span><br><span class="line">  unset http_proxy</span><br><span class="line">  unset https_proxy</span><br><span class="line">  echo &quot;HTTP Proxy off&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a id="curl-query-wan-ip"></a></p>
+<h2 id="cURL-查询公网出口-IP"><a href="#cURL-查询公网出口-IP" class="headerlink" title="cURL 查询公网出口 IP"></a>cURL 查询公网出口 IP</h2><h2 id="几个网址"><a href="#几个网址" class="headerlink" title="几个网址"></a>几个网址</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://ip-api.com/json/">ip-api.com</a>（推荐，速度快）</li>
+<li><a target="_blank" rel="noopener" href="https://ipecho.net/plain">ipecho.net</a>（推荐）</li>
+<li><a target="_blank" rel="noopener" href="https://qifu-api.baidubce.com/ip/local/geo/v1/district">百度</a>（效果也不错）</li>
+<li><a target="_blank" rel="noopener" href="http://ip.cn/">ip.cn</a>（不支持 cURL）</li>
+<li><a target="_blank" rel="noopener" href="http://ipinfo.io/">ipinfo.io</a></li>
+<li><a target="_blank" rel="noopener" href="http://cip.cc/">cip.cc</a></li>
+<li><a target="_blank" rel="noopener" href="http://ifconfig.me/">ifconfig.me</a></li>
+<li><a target="_blank" rel="noopener" href="http://myip.ipip.net/">myip.ipip.net</a></li>
+</ul>
+<h2 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h2><h3 id="ip-api-com"><a href="#ip-api-com" class="headerlink" title="ip-api.com"></a>ip-api.com</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&#x27;http://ip-api.com/json/?lang=zh-CN&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>返回结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;success&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;country&quot;</span><span class="punctuation">:</span> <span class="string">&quot;德国&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;countryCode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;DE&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;region&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HE&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;regionName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Hesse&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span> <span class="string">&quot;法兰克福&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;zip&quot;</span><span class="punctuation">:</span> <span class="string">&quot;60313&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;lat&quot;</span><span class="punctuation">:</span> <span class="number">50.1188</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;lon&quot;</span><span class="punctuation">:</span> <span class="number">8.6843</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;timezone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Europe/Berlin&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;isp&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linode, LLC&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;org&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Linode, LLC&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;as&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AS63949 Linode, LLC&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;query&quot;</span><span class="punctuation">:</span> <span class="string">&quot;192.46.239.172&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="ipecho-net"><a href="#ipecho-net" class="headerlink" title="ipecho.net"></a>ipecho.net</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl ipecho.net/plain</span><br></pre></td></tr></table></figure>
+
+<p>返回结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">168.63.213.70</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="ipinfo-io"><a href="#ipinfo-io" class="headerlink" title="ipinfo.io"></a>ipinfo.io</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl ipinfo.io</span><br></pre></td></tr></table></figure>
+
+<p>返回结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span> <span class="string">&quot;111.30.233.219&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Tianjin&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;region&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Tianjin&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;country&quot;</span><span class="punctuation">:</span> <span class="string">&quot;CN&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;loc&quot;</span><span class="punctuation">:</span> <span class="string">&quot;39.1422,117.1767&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;org&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AS38019 tianjin Mobile Communication Company Limited&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;timezone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Asia/Shanghai&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;readme&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://ipinfo.io/missingauth&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="cip-cc"><a href="#cip-cc" class="headerlink" title="cip.cc"></a>cip.cc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl cip.cc</span><br></pre></td></tr></table></figure>
+
+<p>返回结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IP  : 111.30.233.219</span><br><span class="line">地址  : 中国  天津</span><br><span class="line">运营商 : 移动</span><br><span class="line"></span><br><span class="line">数据二 : 天津市 | 移动</span><br><span class="line"></span><br><span class="line">数据三 : 中国天津天津 | 移动</span><br><span class="line"></span><br><span class="line">URL : http://www.cip.cc/111.30.233.219</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="myip-ipip-net"><a href="#myip-ipip-net" class="headerlink" title="myip.ipip.net"></a>myip.ipip.net</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl myip.ipip.net</span><br></pre></td></tr></table></figure>
+
+<p>返回结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当前 IP：111.30.233.219  来自于：中国 天津 天津  移动</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="ifconfig-me"><a href="#ifconfig-me" class="headerlink" title="ifconfig.me"></a>ifconfig.me</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl ifconfig.me</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">111.30.233.219</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="members-3322-org-dyndns-getip"><a href="#members-3322-org-dyndns-getip" class="headerlink" title="members.3322.org&#x2F;dyndns&#x2F;getip"></a>members.3322.org&#x2F;dyndns&#x2F;getip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl members.3322.org/dyndns/getip</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">111.30.233.219</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>作者：舌尖上的大胖<br>链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/09363560a833">https://www.jianshu.com/p/09363560a833</a></p>
+<p><a id="github-proxy"></a></p>
+<h2 id="GitHub-Proxy"><a href="#GitHub-Proxy" class="headerlink" title="GitHub Proxy"></a>GitHub Proxy</h2><h3 id="https-git-951959483-xyz"><a href="#https-git-951959483-xyz" class="headerlink" title="https://git.951959483.xyz/"></a><a target="_blank" rel="noopener" href="https://git.951959483.xyz/">https://git.951959483.xyz/</a></h3><h3 id="终端命令行"><a href="#终端命令行" class="headerlink" title="终端命令行"></a>终端命令行</h3><p>支持终端命令行 git clone、wget、curl 等工具下载。支持 raw.githubusercontent.com、gist.github.com、gist.githubusercontent.com 文件下载。</p>
+<blockquote>
+<p>**注意：**不支持 SSH Key 方式 git clone 下载。</p>
+</blockquote>
+<hr>
+<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://git.951959483.xyz/https://github.com/stilleshan/ServerStatus</span><br></pre></td></tr></table></figure>
+
+<h2 id="git-clone-私有仓库"><a href="#git-clone-私有仓库" class="headerlink" title="git clone 私有仓库"></a>git clone 私有仓库</h2><p>Clone 私有仓库需要在 <a target="_blank" rel="noopener" href="https://github.com/settings/tokens">Personal access tokens</a> 申请 Token 配合使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://user:your_token@git.951959483.xyz/https://github.com/your_name/your_private_repo</span><br></pre></td></tr></table></figure>
+
+<h2 id="wget-curl"><a href="#wget-curl" class="headerlink" title="wget &amp; curl"></a>wget &amp; curl</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://git.951959483.xyz/https://github.com/stilleshan/ServerStatus/archive/master.zip</span><br><span class="line">wget https://git.951959483.xyz/https://raw.githubusercontent.com/stilleshan/ServerStatus/master/Dockerfile</span><br><span class="line">curl -O https://git.951959483.xyz/https://github.com/stilleshan/ServerStatus/archive/master.zip</span><br><span class="line">curl -O https://git.951959483.xyz/https://raw.githubusercontent.com/stilleshan/ServerStatus/master/Dockerfile</span><br></pre></td></tr></table></figure>
+
+<h2 id="首页下载"><a href="#首页下载" class="headerlink" title="首页下载"></a>首页下载</h2><p>在本页地址栏输入合规链接（参考以下链接）点击下载按钮，支持 raw.githubusercontent.com、gist.github.com、gist.githubusercontent.com 文件下载。</p>
+<hr>
+<h2 id="Raw-文件"><a href="#Raw-文件" class="headerlink" title="Raw 文件"></a>Raw 文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://raw.githubusercontent.com/stilleshan/ServerStatus/master/Dockerfile</span><br></pre></td></tr></table></figure>
+
+<h2 id="分支源码"><a href="#分支源码" class="headerlink" title="分支源码"></a>分支源码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/stilleshan/ServerStatus/archive/master.zip</span><br></pre></td></tr></table></figure>
+
+<h2 id="Releases-源码"><a href="#Releases-源码" class="headerlink" title="Releases 源码"></a>Releases 源码</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/stilleshan/ServerStatus/archive/v1.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="Releases-文件"><a href="#Releases-文件" class="headerlink" title="Releases 文件"></a>Releases 文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><a id="githubusercontent-github-fast-speed"></a></p>
+<h2 id="githubusercontent、github加速镜像"><a href="#githubusercontent、github加速镜像" class="headerlink" title="githubusercontent、github加速镜像"></a>githubusercontent、github加速镜像</h2><h2 id="加速地址一览"><a href="#加速地址一览" class="headerlink" title="加速地址一览"></a>加速地址一览</h2><ul>
+<li><strong><a target="_blank" rel="noopener" href="https://hub.fastgit.org/">fastgit.org</a></strong>：<a target="_blank" rel="noopener" href="https://doc.fastgit.org/">https://doc.fastgit.org/</a></li>
+<li><strong><a target="_blank" rel="noopener" href="http://cnpmjs.org/">cnpmjs.org</a></strong>：<a target="_blank" rel="noopener" href="https://github.com.cnpmjs.org/">https://github.com.cnpmjs.org/</a></li>
+<li><strong><a target="_blank" rel="noopener" href="http://gitclone.com/">gitclone.com</a></strong>：<a target="_blank" rel="noopener" href="https://gitclone.com/">https://gitclone.com/</a></li>
+<li><strong>gitee</strong>：<a target="_blank" rel="noopener" href="https://gitee.com/mirrors">https://gitee.com/mirrors</a></li>
+<li>GitHub 文件加速：<a target="_blank" rel="noopener" href="https://gh.api.99988866.xyz/">https://gh.api.99988866.xyz/</a></li>
+<li>Github 仓库加速：<a target="_blank" rel="noopener" href="https://github.zhlh6.cn/">https://github.zhlh6.cn/</a></li>
+<li>Github 仓库加速：<a target="_blank" rel="noopener" href="http://toolwa.com/github/">http://toolwa.com/github/</a></li>
+</ul>
+<h2 id="加速-clone"><a href="#加速-clone" class="headerlink" title="加速 clone"></a>加速 clone</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一：手动替换地址</span></span><br><span class="line"><span class="comment"># 原地址</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 改为</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com.cnpmjs.org/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">git <span class="built_in">clone</span> https://hub.fastgit.org/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">git <span class="built_in">clone</span> https://gitclone.com/github.com/kubernetes/kubernetes.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二：配置 git 自动替换</span></span><br><span class="line">git config --global url.<span class="string">&quot;https://hub.fastgit.org&quot;</span>.insteadOf https://github.com</span><br><span class="line"><span class="comment"># 测试</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/kubernetes/kubernetes.git</span><br><span class="line"><span class="comment"># 查看 git 配置信息</span></span><br><span class="line">git config --global --list</span><br><span class="line"><span class="comment"># 取消设置</span></span><br><span class="line">git config --global --<span class="built_in">unset</span> url.https://github.com/.insteadof</span><br></pre></td></tr></table></figure>
+
+<h2 id="加速-release"><a href="#加速-release" class="headerlink" title="加速 release"></a>加速 release</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 原地址</span></span><br><span class="line">wget https://github.com/goharbor/harbor/releases/download/v2.0.2/harbor-offline-installer-v2.0.2.tgz</span><br><span class="line"><span class="comment"># 加速下载方法一</span></span><br><span class="line">wget https://download.fastgit.org/goharbor/harbor/releases/download/v2.0.2/harbor-offline-installer-v2.0.2.tgz</span><br><span class="line"><span class="comment"># 加速下载方法二</span></span><br><span class="line">wget https://hub.fastgit.org/goharbor/harbor/releases/download/v2.0.2/harbor-offline-installer-v2.0.2.tgz</span><br></pre></td></tr></table></figure>
+
+<h2 id="加速-raw"><a href="#加速-raw" class="headerlink" title="加速 raw"></a>加速 raw</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 原地址</span></span><br><span class="line">wget https://raw.githubusercontent.com/kubernetes/kubernetes/master/README.md</span><br><span class="line"><span class="comment"># 加速下载方法一</span></span><br><span class="line">wget https://raw.staticdn.net/kubernetes/kubernetes/master/README.md</span><br><span class="line"><span class="comment"># 加速下载方法二</span></span><br><span class="line">wget https://raw.fastgit.org/kubernetes/kubernetes/master/README.md</span><br></pre></td></tr></table></figure>
+
+<p><a id="fedora-centos-configure-shadowsocks-on-commandline-mode"></a></p>
+<h2 id="Fedora-CentOS下命令行配置Shadowsocks全局代理"><a href="#Fedora-CentOS下命令行配置Shadowsocks全局代理" class="headerlink" title="Fedora&#x2F;CentOS下命令行配置Shadowsocks全局代理"></a>Fedora&#x2F;CentOS下命令行配置Shadowsocks全局代理</h2><p>输入以下内容，创建 Shadowsocks 配置文件 <code>/etc/shadowsocks.json</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;********&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;server_port&quot;</span><span class="punctuation">:</span> ****<span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span> <span class="string">&quot;******&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;aes-256-cfb&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;remarks&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;auth&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;timeout&quot;</span><span class="punctuation">:</span> <span class="number">5</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用以下命令启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sslocal -c /etc/shadowsocks.json &amp;</span><br></pre></td></tr></table></figure>
+
+<p>下面开始配置 privoxy 做全局代理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vi /etc/privoxy/config</span><br></pre></td></tr></table></figure>
+
+<p>找到并修改以下配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listen-address 127.0.0.1:8118</span><br></pre></td></tr></table></figure>
+
+<p>去掉注释，保证端口 8118 不与系统变量冲突即可，可自由设定。</p>
+<p>找到并修改：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forward-socks5t / 127.0.0.1:1080 .</span><br></pre></td></tr></table></figure>
+
+<p>去掉注释，要求和 ss 端口号相同，注意最后一位英文句号不可丢！</p>
+<p>保存并退出即可。</p>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> privoxy /etc/privoxy/config</span><br></pre></td></tr></table></figure>
+
+<p>无报错则正确启动。</p>
+<p>Shell 下使用 http 代理需执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://127.0.0.1:8118</span><br><span class="line"><span class="built_in">export</span> ftp_proxy=http://127.0.0.1:8118</span><br></pre></td></tr></table></figure>
+
+<p>运行 <code>w3m www.google.com</code> 可访问则说明代理已配置成功。</p>
+<h2 id="Fedora-RHEL"><a href="#Fedora-RHEL" class="headerlink" title="Fedora &amp; RHEL"></a>Fedora &amp; RHEL</h2><p>Supported distributions:</p>
+<ul>
+<li>Recent Fedora versions (until EOL)</li>
+<li>RHEL 6, 7 and derivatives (including CentOS, Scientific Linux)</li>
+</ul>
+<h3 id="Build-from-source-with-CentOS"><a href="#Build-from-source-with-CentOS" class="headerlink" title="Build from source with CentOS"></a>Build from source with CentOS</h3><p>If you are using CentOS 7, you need to install these prerequirements to build from source code:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install epel-release -y</span><br><span class="line">yum install gcc gettext autoconf libtool automake make pcre-devel asciidoc xmlto c-ares-devel libev-devel libsodium-devel mbedtls-devel -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="ArchLinux-Manjaro"><a href="#ArchLinux-Manjaro" class="headerlink" title="ArchLinux &#x2F; Manjaro"></a>ArchLinux &#x2F; Manjaro</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -sL https://raw.githubusercontent.com/hijkpw/scripts/master/centos_install_ss.sh)</span><br></pre></td></tr></table></figure>
+
+<p><a id="openvz-with-google-bbr"></a></p>
+<h2 id="OpenVZ-平台-Google-BBR-一键安装脚本"><a href="#OpenVZ-平台-Google-BBR-一键安装脚本" class="headerlink" title="OpenVZ 平台 Google BBR 一键安装脚本"></a>OpenVZ 平台 Google BBR 一键安装脚本</h2><p>更新了 liblkl-hijack.so 并打上了最近网上很火的“魔改版” BBR 补丁，同时更新了 haproxy。老版本的朋友可以重新下载安装脚本再安装一遍，需要先停止当前的服务。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>已测试通过的系统： Ubuntu 14.04 x64、Ubuntu 16.04 x64、CentOS 6 x64、CentOS 7 x64 只支持 64 位系统，要求 glibc 版本 2.14 以上。</p>
+<table>
+<thead>
+<tr>
+<th>1  2  3</th>
+<th>wget <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/kuoruan/shell-scripts/master/ovz-bbr/ovz-bbr-installer.sh">https://raw.githubusercontent.com/kuoruan/shell-scripts/master/ovz-bbr/ovz-bbr-installer.sh</a>  chmod +x ovz-bbr-installer.sh  .&#x2F;ovz-bbr-installer.sh</th>
+</tr>
+</thead>
+</table>
+<p>需要配置的有如下几个选项：</p>
+<p>1.需要加速的端口，即的 SS 端口。加速开启之后，流量会先经过 BBR 处理，之后再发送给后端的 SS。</p>
+<p>2.可能需要配置 “公网接口名称”，即你服务器上具有公网 IP 的接口名称。搬瓦工 OpenVZ 上默认都是 venet0，但是有朋友可能需要安装在其他服务器上，所以我加入了此选项。</p>
+<p>需要注意的是，在有 firewalld 的服务器上安装的时候，firewalld 会干扰 iptables 的规则，造成网络不通（现在具体原因未知，谁有解决方案可以提示一下）。所以在装有 firewalld 的服务器上需要先退出 firewalld：</p>
+<table>
+<thead>
+<tr>
+<th>1  2</th>
+<th>systemctl disable firewalld  systemctl stop firewalld</th>
+</tr>
+</thead>
+</table>
+<p>如需卸载，请使用：</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>.&#x2F;ovz-bbr-installer.sh uninstall</th>
+</tr>
+</thead>
+</table>
+<h2 id="错误说明"><a href="#错误说明" class="headerlink" title="错误说明"></a>错误说明</h2><p>有些机器一切正常，但是加速失败。从网友的反馈来看，可能需要将 SS 的监听地址从 vps IP 改到 127.0.0.1 或者 0.0.0.0，具体未测试，加速失败的朋友可以试一试</p>
+<h2 id="多端口加速"><a href="#多端口加速" class="headerlink" title="多端口加速"></a>多端口加速</h2><p>安装的时候只配置了一个加速端口，但是你可以配置多端口加速，配置方法非常简单。 修改文件</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th># vi &#x2F;usr&#x2F;local&#x2F;haproxy-lkl&#x2F;etc&#x2F;port-rules</th>
+</tr>
+</thead>
+</table>
+<p>在文件里添加需要加速的端口，每行一条，可以配置单个端口或者端口范围，以 # 开头的行将被忽略。 例如：8800 或者 8800-8810 配置完成之后，只需要重启 haproxy-lkl 即可。</p>
+<p>注： 最初版本的实现是需要再开一个新端口，后来经人提醒，我又看了一下 HAproxy 的配置说明，可以直接代理后端端口，不必再开新端口。请注意，使用该方法后，如果 HAproxy 进程异常退出，会造成无法连接原有端口。所以，请确保在退出 HAproxy 时是通过命令正常退出的，在退出时会自动清理原有的防火墙规则。</p>
+<p>使用 systemctl 或者 service 命令来启动、停止和重启 HAporxy-lkl：</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>systemctl {start|stop|restart} haproxy-lkl</th>
+</tr>
+</thead>
+</table>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>service haproxy-lkl {start|stop|restart}</th>
+</tr>
+</thead>
+</table>
+<p>&#x2F;usr&#x2F;local&#x2F;haproxy-lkl&#x2F;etc&#x2F;haproxy.cfg 这个文件是通过 port-rules 自动生成的，每次启动都会重新生成，所以直接修改它的配置没用。 如果想要自定义配置，请修改启动文件：</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>&#x2F;usr&#x2F;local&#x2F;haproxy-lkl&#x2F;sbin&#x2F;haproxy-lkl</th>
+</tr>
+</thead>
+</table>
+<h2 id="更新-glibc"><a href="#更新-glibc" class="headerlink" title="更新 glibc"></a>更新 glibc</h2><p>CentOS 6 更新 glibc，首先下载如下几个文件：</p>
+<table>
+<thead>
+<tr>
+<th>1  2  3  4  5</th>
+<th>wget <a target="_blank" rel="noopener" href="http://ftp.redsleeve.org/pub/steam/glibc-2.15-60.el6.x86/_64.rpm">http://ftp.redsleeve.org/pub/steam/glibc-2.15-60.el6.x86\_64.rpm</a> \  <a target="_blank" rel="noopener" href="http://ftp.redsleeve.org/pub/steam/glibc-common-2.15-60.el6.x86/_64.rpm">http://ftp.redsleeve.org/pub/steam/glibc-common-2.15-60.el6.x86\_64.rpm</a> \  <a target="_blank" rel="noopener" href="http://ftp.redsleeve.org/pub/steam/glibc-devel-2.15-60.el6.x86/_64.rpm">http://ftp.redsleeve.org/pub/steam/glibc-devel-2.15-60.el6.x86\_64.rpm</a> \  <a target="_blank" rel="noopener" href="http://ftp.redsleeve.org/pub/steam/glibc-headers-2.15-60.el6.x86/_64.rpm">http://ftp.redsleeve.org/pub/steam/glibc-headers-2.15-60.el6.x86\_64.rpm</a> \  <a target="_blank" rel="noopener" href="http://ftp.redsleeve.org/pub/steam/nscd-2.15-60.el6.x86/_64.rpm">http://ftp.redsleeve.org/pub/steam/nscd-2.15-60.el6.x86\_64.rpm</a></th>
+</tr>
+</thead>
+</table>
+<p>然后安装：</p>
+<table>
+<thead>
+<tr>
+<th>1  2  3  4  5</th>
+<th># rpm -Uvh glibc-2.15-60.el6.x86_64.rpm \  glibc-common-2.15-60.el6.x86_64.rpm \  glibc-devel-2.15-60.el6.x86_64.rpm \  glibc-headers-2.15-60.el6.x86_64.rpm \  nscd-2.15-60.el6.x86_64.rpm</th>
+</tr>
+</thead>
+</table>
+<p>如果以上步骤无法更新，可以手动编译更新（来自网友的方法）</p>
+<table>
+<thead>
+<tr>
+<th>1  2  3  4  5  6  7  8  9</th>
+<th>wget <a target="_blank" rel="noopener" href="http://ftp.gnu.org/gnu/glibc/glibc-2.15.tar.gz">http://ftp.gnu.org/gnu/glibc/glibc-2.15.tar.gz</a>  wget <a target="_blank" rel="noopener" href="http://ftp.gnu.org/gnu/glibc/glibc-ports-2.15.tar.gz">http://ftp.gnu.org/gnu/glibc/glibc-ports-2.15.tar.gz</a>  tar -zxf glibc-2.15.tar.gz  tar -zxf glibc-ports-2.15.tar.gz  mv glibc-ports-2.15 glibc-2.15&#x2F;ports  mkdir glibc-build-2.15  cd glibc-build-2.15  ..&#x2F;glibc-2.15&#x2F;configure --prefix=&#x2F;usr --disable-profile --enable-add-ons --with-headers=&#x2F;usr&#x2F;include --with-binutils=&#x2F;usr&#x2F;bin  make all &amp;&amp; make install</th>
+</tr>
+</thead>
+</table>
+<p>检查一下：</p>
+<table>
+<thead>
+<tr>
+<th>1  2  3  4  5  6</th>
+<th># ldd –version  ldd (GNU libc) 2.15  Copyright (C) 2012 Free Software Foundation, Inc.  This is free software; see the source for copying conditions.  There is NO  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  Written by Roland McGrath and Ulrich Drepper.</th>
+</tr>
+</thead>
+</table>
+<p>已经升级到 glibc 2.15 了。</p>
+<h2 id="判断-BBR-已正常工作"><a href="#判断-BBR-已正常工作" class="headerlink" title="判断 BBR 已正常工作"></a>判断 BBR 已正常工作</h2><p>判断 bbr 是否正常启动可以尝试 ping 10.0.0.2，如果能通，说明 bbr 已经启动。</p>
+<p>然后检查 iptables 规则</p>
+<table>
+<thead>
+<tr>
+<th>1  2  3  4  5  6  7  8  9  10  11  12  13  14</th>
+<th>iptables -t nat -nL  Chain PREROUTING (policy ACCEPT)  target     prot opt source               destination  LKL_IN     all  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0  Chain POSTROUTING (policy ACCEPT)  target     prot opt source               destination  Chain OUTPUT (policy ACCEPT)  target     prot opt source               destination  Chain LKL_IN (1 references)  target     prot opt source               destination  DNAT       tcp  --  0.0.0.0&#x2F;0            0.0.0.0&#x2F;0            tcp dpt:8989 to:10.0.0.2</th>
+</tr>
+</thead>
+</table>
+<p>里边会看到多了一张链表 LKL_IN，里边有相应的端口规则。</p>
+<ul>
+<li>转载请注明: <a target="_blank" rel="noopener" href="https://blog.kuoruan.com/author/admin" title="由Index发布">Index</a> 2017年4月10日 于 <a target="_blank" rel="noopener" href="https://blog.kuoruan.com/" title="访问扩软博客">扩软博客</a> 发表</li>
+</ul>
+<p><a id="enable-kernel-bbr"></a></p>
+<h2 id="内核开启BBR方法"><a href="#内核开启BBR方法" class="headerlink" title="内核开启BBR方法"></a>内核开启BBR方法</h2><h2 id="1-修改系统变量"><a href="#1-修改系统变量" class="headerlink" title="1. 修改系统变量"></a>1. 修改系统变量</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> su</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc=fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control=bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-保存生效"><a href="#2-保存生效" class="headerlink" title="2. 保存生效"></a>2. 保存生效</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-查看内核是否已开启-BBR"><a href="#3-查看内核是否已开启-BBR" class="headerlink" title="3. 查看内核是否已开启 BBR"></a>3. 查看内核是否已开启 BBR</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>显示以下即已开启：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># sysctl net.ipv4.tcp_available_congestion_control</span><br><span class="line">net.ipv4.tcp_available_congestion_control = bbr cubic reno</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-查看-BBR-是否启动"><a href="#4-查看-BBR-是否启动" class="headerlink" title="4. 查看 BBR 是否启动"></a>4. 查看 BBR 是否启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+
+<p>显示以下即启动成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># lsmod | grep bbr</span><br><span class="line">tcp_bbr 20480 14</span><br></pre></td></tr></table></figure>
+
+<p><a id="linux-configure-firewalld"></a></p>
+<h2 id="Linux下firewallD简单上手"><a href="#Linux下firewallD简单上手" class="headerlink" title="Linux下firewallD简单上手"></a>Linux下firewallD简单上手</h2><table>
+<thead>
+<tr>
+<th>导读</th>
+<th>FirewallD 是 <a target="_blank" rel="noopener" href="https://www.linuxprobe.com/" title="centos">CentOS</a> 7 服务器上默认可用的防火墙管理工具。基本上，它是 iptables 的封装，有图形配置工具 firewall-config 和命令行工具 firewall-cmd。使用 iptables 服务，每次改动都要求刷新旧规则，并且从 &#x2F;etc&#x2F;sysconfig&#x2F;iptables 读取新规则，然而 firewalld 只应用改动了的不同部分。</th>
+</tr>
+</thead>
+</table>
+<p>FirewallD 使用服务（service） 和区域（zone）来代替 iptables 的规则（rule）和链（chain）。</p>
+<p>默认情况下，有以下的区域（zone）可用：</p>
+<ol>
+<li><strong>drop</strong> – 丢弃所有传入的网络数据包并且无回应，只有传出网络连接可用。</li>
+<li><strong>block</strong> — 拒绝所有传入网络数据包并回应一条主机禁止的 ICMP 消息，只有传出网络连接可用。</li>
+<li><strong>public</strong> — 只接受被选择的传入网络连接，用于公共区域。</li>
+<li><strong>external</strong> — 用于启用了地址伪装的外部网络，只接受选定的传入网络连接。</li>
+<li><strong>dmz</strong> — DMZ 隔离区，外部受限地访问内部网络，只接受选定的传入网络连接。</li>
+<li><strong>work</strong> — 对于处在你工作区域内的计算机，只接受被选择的传入网络连接。</li>
+<li><strong>home</strong> — 对于处在你家庭区域内的计算机，只接受被选择的传入网络连接。</li>
+<li><strong>internal</strong> — 对于处在你内部网络的计算机，只接受被选择的传入网络连接。</li>
+<li><strong>trusted</strong> — 所有网络连接都接受。</li>
+</ol>
+<p>要列出所有可用的区域，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-zones</span><br></pre></td></tr></table></figure>
+
+<p>列出默认的区域：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-default-zone</span><br></pre></td></tr></table></figure>
+
+<p>改变默认的区域：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --set-default-zone=dmz</span><br><span class="line">firewall-cmd --get-default-zone</span><br></pre></td></tr></table></figure>
+
+<h2 id="FirewallD-服务"><a href="#FirewallD-服务" class="headerlink" title="FirewallD 服务"></a>FirewallD 服务</h2><p>FirewallD 服务使用 XML 配置文件，记录了 firewalld 服务信息。</p>
+<p>列出所有可用的服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-services</span><br></pre></td></tr></table></figure>
+
+<p>XML 配置文件存储在 <code>/usr/lib/firewalld/services/</code> 和 <code>/etc/firewalld/services/</code> 目录下。</p>
+<h2 id="用-FirewallD-配置防火墙"><a href="#用-FirewallD-配置防火墙" class="headerlink" title="用 FirewallD 配置防火墙"></a>用 FirewallD 配置防火墙</h2><p>作为一个例子，假设你正在运行一个 web 服务器，SSH 服务端口为 7022，以及邮件服务，你可以利用 FirewallD 这样配置你的服务器：</p>
+<p>首先设置默认区为 dmz：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --set-default-zone=dmz</span><br><span class="line">firewall-cmd --get-default-zone</span><br></pre></td></tr></table></figure>
+
+<p>为 dmz 区添加持久性的 HTTP 和 HTTPS 规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=dmz --add-service=http --permanent</span><br><span class="line">firewall-cmd --zone=dmz --add-service=https --permanent</span><br></pre></td></tr></table></figure>
+
+<p>开启端口 25 (SMTP) 和端口 465 (SMTPS)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=dmz --add-service=smtp --permanent</span><br><span class="line">firewall-cmd --zone=dmz --add-service=smtps --permanent</span><br></pre></td></tr></table></figure>
+
+<p>开启 IMAP、IMAPS、POP3 和 POP3S 端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=dmz --add-service=imap --permanent</span><br><span class="line">firewall-cmd --zone=dmz --add-service=imaps --permanent</span><br><span class="line">firewall-cmd --zone=dmz --add-service=pop3 --permanent</span><br><span class="line">firewall-cmd --zone=dmz --add-service=pop3s --permanent</span><br></pre></td></tr></table></figure>
+
+<p>因为将 SSH 端口改到了 7022，所以要移除 ssh 服务（端口 22），开启端口 7022：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --remove-service=ssh --permanent</span><br><span class="line">firewall-cmd --add-port=7022/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<p>要应用这些更改，我们需要重新加载防火墙：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p>最后可以列出这些规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>via: <a target="_blank" rel="noopener" href="https://www.rosehosting.com/blog/set-up-and-configure-a-firewall-with-firewalld-on-centos-7/">Set Up and Configure a Firewall with FirewallD on CentOS 7</a></p>
+<p>译者简介：</p>
+<p><a target="_blank" rel="noopener" href="http://locez.com/">Locez</a> 是一个喜欢技术，喜欢折腾的 Linuxer，靠着对 Linux 的兴趣自学了很多 Linux 相关的知识，并且志在于为 Linux 在中国普及出一份力。</p>
+<p>作者：<a target="_blank" rel="noopener" href="https://www.rosehosting.com/blog/set-up-and-configure-a-firewall-with-firewalld-on-centos-7/">rosehosting.com</a> 译者：<a target="_blank" rel="noopener" href="https://github.com/locez">Locez</a> 校对：<a target="_blank" rel="noopener" href="https://github.com/jasminepeng">jasminepeng</a></p>
+<p>本文由 <a target="_blank" rel="noopener" href="https://github.com/LCTT/TranslateProject">LCTT</a> 原创编译，<a target="_blank" rel="noopener" href="https://linux.cn/">Linux中国</a> 荣誉推出</p>
+<p><a id="allow-ssh-port-on-selinux"></a></p>
+<h2 id="Allow-ssh-port-on-SELinux"><a href="#Allow-ssh-port-on-SELinux" class="headerlink" title="Allow ssh port on SELinux"></a>Allow ssh port on SELinux</h2><h2 id="Step-3-Allow-new-SSH-port-on-SELinux"><a href="#Step-3-Allow-new-SSH-port-on-SELinux" class="headerlink" title="Step 3: Allow new SSH port on SELinux"></a>Step 3: Allow new SSH port on SELinux</h2><p>The default port labelled for SSH is 22.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -l | grep ssh</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                     tcp      22</span><br></pre></td></tr></table></figure>
+
+<p>If you want to allow <strong>sshd</strong> to bind to network port configured, then you need to modify the port type to <strong>ssh_port_t</strong>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> semanage port -a -t ssh_port_t -p tcp 2200</span><br></pre></td></tr></table></figure>
+
+<p>Confirm that the new port has been added to list of allowed ports for ssh:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -l | grep ssh</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                     tcp      2200, 22</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/07/HAGKQL4V1F3W7U59_OUL.png"><img src="/images/HAGKQL4V1F3W7U59_OUL-640x121.png"></a></p>
+<h2 id="Step-4-Open-SSH-port-on-Firewalld"><a href="#Step-4-Open-SSH-port-on-Firewalld" class="headerlink" title="Step 4: Open SSH port on Firewalld"></a>Step 4: Open SSH port on Firewalld</h2><p>It is always recommended to keep the Firewall service running and only allow trusted services.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> firewall-cmd --add-port=2200/tcp --permanent</span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p><a id="set-ssh-key-login"></a></p>
+<h2 id="设置-SSH-通过密钥登录"><a href="#设置-SSH-通过密钥登录" class="headerlink" title="设置 SSH 通过密钥登录"></a>设置 SSH 通过密钥登录</h2><p>我们一般使用 PuTTY 等 SSH 客户端来远程管理 Linux 服务器。但是，一般的密码方式登录，容易有密码被暴力破解的问题。所以，一般我们会将 SSH 的端口设置为默认的 22 以外的端口，或者禁用 root 账户登录。其实，有一个更好的办法来保证安全，而且让你可以放心地用 root 账户从远程登录——那就是通过密钥方式登录。</p>
+<p>密钥形式登录的原理是：利用密钥生成器制作一对密钥——一只公钥和一只私钥。将公钥添加到服务器的某个账户上，然后在客户端利用私钥即可完成认证并登录。这样一来，没有私钥，任何人都无法通过 SSH 暴力破解你的密码来远程登录到系统。此外，如果将公钥复制到其他账户甚至主机，利用私钥也可以登录。</p>
+<p>下面来讲解如何在 Linux 服务器上制作密钥对，将公钥添加给账户，设置 SSH，最后通过客户端登录。</p>
+<h2 id="1-制作密钥对"><a href="#1-制作密钥对" class="headerlink" title="1. 制作密钥对"></a>1. 制作密钥对</h2><p>首先在服务器上制作密钥对。首先用密码登录到你打算使用密钥登录的账户，然后执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen   &lt;== 建立密钥对</span><br></pre></td></tr></table></figure>
+
+<p>运行输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa): &lt;== 按 Enter</span><br><span class="line">Created directory &#x27;/root/.ssh&#x27;.</span><br><span class="line">Enter passphrase (empty for no passphrase): &lt;== 输入密钥锁码，或直接按 Enter 留空</span><br><span class="line">Enter same passphrase again: &lt;== 再输入一遍密钥锁码</span><br><span class="line">Your identification has been saved in /root/.ssh/id_rsa. &lt;== 私钥</span><br><span class="line">Your public key has been saved in /root/.ssh/id_rsa.pub. &lt;== 公钥</span><br><span class="line">The key fingerprint is:</span><br><span class="line">0f:d3:e7:1a:1c:bd:5c:03:f1:19:f1:22:df:9b:cc:08 root@host</span><br></pre></td></tr></table></figure>
+
+<p>密钥锁码在使用私钥时必须输入，这样就可以保护私钥不被盗用。当然，也可以留空，实现无密码登录。</p>
+<p>现在，在 root 用户的家目录中生成了一个 .ssh 的隐藏目录，内含两个密钥文件。id_rsa 为私钥，id_rsa.pub 为公钥。</p>
+<h2 id="2-在服务器上安装公钥"><a href="#2-在服务器上安装公钥" class="headerlink" title="2. 在服务器上安装公钥"></a>2. 在服务器上安装公钥</h2><p>键入以下命令，在服务器上安装公钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line"><span class="built_in">cat</span> id_rsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>如此便完成了公钥的安装。为了确保连接成功，请保证以下文件权限正确：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 600 authorized_keys</span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-设置-SSH，打开密钥登录功能"><a href="#3-设置-SSH，打开密钥登录功能" class="headerlink" title="3. 设置 SSH，打开密钥登录功能"></a>3. 设置 SSH，打开密钥登录功能</h2><p>编辑 <code>/etc/ssh/sshd_config</code> 文件，进行如下设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RSAAuthentication <span class="built_in">yes</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<p>另外，请留意 root 用户能否通过 SSH 登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<p>当你完成全部设置，并以密钥方式登录成功后，再禁用密码登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PasswordAuthentication no</span><br></pre></td></tr></table></figure>
+
+<p>最后，重启 SSH 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/network/" rel="tag"># network</a>
+              <a href="/tags/proxy/" rel="tag"># proxy</a>
+              <a href="/tags/ssh/" rel="tag"># ssh</a>
+              <a href="/tags/firewall/" rel="tag"># firewall</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/01/ai-interview-guide/" rel="prev" title="AI 应用工程师面试题纲（精简版）">
+                  <i class="fa fa-angle-left"></i> AI 应用工程师面试题纲（精简版）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/03/14/packaging-and-distribution/" rel="next" title="打包与分发合集（RPM &#x2F; AUR）">
+                  打包与分发合集（RPM / AUR） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

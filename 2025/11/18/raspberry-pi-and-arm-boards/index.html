@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="ARM 小机器的折腾记录：树莓派超频与换系统、RK3588 固件、斐讯盒子和路由器固件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派、开发板与路由器合集">
+<meta property="og:url" content="https://wiki.wenyinos.com/2025/11/18/raspberry-pi-and-arm-boards/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="ARM 小机器的折腾记录：树莓派超频与换系统、RK3588 固件、斐讯盒子和路由器固件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-6d2fc9846fdaeaa32052daf6166a7913_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-f5353cf4759be1f73ea217962dbf2615_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-fa0ceb5976002fe08e215153a43d0a37_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180624230645.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180624230657.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625104922.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625142012.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625142112.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/TIM%E5%9B%BE%E7%89%8720180625142900.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/haha.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720231126144627-640x480.png">
+<meta property="article:published_time" content="2025-11-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-17T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="arm">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="raspberry-pi">
+<meta property="article:tag" content="router">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/v2-6d2fc9846fdaeaa32052daf6166a7913_hd.jpg">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2025/11/18/raspberry-pi-and-arm-boards/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2025/11/18/raspberry-pi-and-arm-boards/","path":"2025/11/18/raspberry-pi-and-arm-boards/","title":"树莓派、开发板与路由器合集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>树莓派、开发板与路由器合集 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E6%82%A8%E7%9A%84%E6%A0%91%E8%8E%93%E6%B4%BE4%E8%B6%85%E9%A2%91%E8%87%B32-0GHz"><span class="nav-number">1.</span> <span class="nav-text">将您的树莓派4超频至2.0GHz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85Arch-Linux-ARM-for-Raspberry-Pi-3"><span class="nav-number">2.</span> <span class="nav-text">简易安装Arch Linux ARM for Raspberry Pi 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%A0%91%E8%8E%93%E6%B4%BE-3-%E4%B8%8A%E8%BF%90%E8%A1%8C-openSUSE%EF%BC%9A%E7%AE%80%E5%8D%95%E5%87%A0%E6%AD%A5%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AE%9E%E7%94%A8%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">在树莓派 3 上运行 openSUSE：简单几步搭建一个实用系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Raspberry-Pi%E7%AD%89ARM%E8%BF%B7%E4%BD%A0%E5%BC%80%E5%8F%91%E6%9D%BF%E8%BF%90%E8%A1%8CArchiSteamFarm%E6%8C%82%E5%8D%A1%E7%A8%8B%E5%BA%8F"><span class="nav-number">4.</span> <span class="nav-text">使用Raspberry Pi等ARM迷你开发板运行ArchiSteamFarm挂卡程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%96%90%E8%AE%AFN1%E7%9B%92%E5%AD%90%E4%B8%8A%E5%88%B7%E5%85%A5armbian-Linux%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">在斐讯N1盒子上刷入armbian Linux系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%8B%BF%E5%88%B0%E7%9B%92%E5%AD%90%EF%BC%8C%E9%A6%96%E5%85%88%E9%99%8D%E7%BA%A7-Bootloader%EF%BC%8C%E5%88%B7%E5%85%A5%E7%AC%AC%E4%B8%89%E6%96%B9%E5%9B%BA%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">一、拿到盒子，首先降级 Bootloader，刷入第三方固件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%88%B6%E4%BD%9C-Linux-%E5%90%AF%E5%8A%A8%E7%9B%98"><span class="nav-number">7.</span> <span class="nav-text">二、制作 Linux 启动盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%B0%86%E7%B3%BB%E7%BB%9F%E5%86%99%E5%85%A5-eMMC"><span class="nav-number">8.</span> <span class="nav-text">三、将系统写入 eMMC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9AN1%E5%88%B7%E5%85%A5Linux%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%88%A0%E9%99%A4%E6%8E%89%E7%9A%84%E5%8E%9F%E5%88%86%E5%8C%BA%E5%8F%8A%E5%86%85%E5%AE%B9"><span class="nav-number">9.</span> <span class="nav-text">补充：N1刷入Linux后可以删除掉的原分区及内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%90%E8%AE%AFK2t%E5%85%8D%E6%8B%86%E6%9C%BA%E5%88%B7%E5%85%A5LEDE-OpenWRT%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">10.</span> <span class="nav-text">斐讯K2t免拆机刷入LEDE&#x2F;OpenWRT的步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%B8%96%E9%9A%90%E8%97%8F%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">10.1.</span> <span class="nav-text">本帖隐藏的内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E6%A2%85%E6%9E%97%E5%9B%BA%E4%BB%B6%E8%BD%AF%E4%BB%B6%E4%B8%AD%E5%BF%83%E9%87%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">11.</span> <span class="nav-text">路由器梅林固件软件中心重置方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2025/11/18/raspberry-pi-and-arm-boards/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="树莓派、开发板与路由器合集 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          树莓派、开发板与路由器合集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-11-18 00:00:00" itemprop="dateCreated datePublished" datetime="2025-11-18T00:00:00+08:00">2025-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>ARM 小机器的折腾记录：树莓派超频与换系统、RK3588 固件、斐讯盒子和路由器固件。</p>
+<span id="more"></span>
+
+<p><a id="how-to-overclock-raspberry-pi-4-to-2-0ghz"></a></p>
+<h2 id="将您的树莓派4超频至2-0GHz"><a href="#将您的树莓派4超频至2-0GHz" class="headerlink" title="将您的树莓派4超频至2.0GHz"></a>将您的树莓派4超频至2.0GHz</h2><p>上次，我使用了新的”霜塔CPU冷却风扇”用于 Raspberry Pi 4 之上，它可以很好地冷却主板，但很显然超过了极限。读者和评论者提到，固件升级后，可以将 Raspberry Pi 4 超频到 2.0 GHz。这对于我的新粉丝来说，这看起来将会非常完美！</p>
+<p>我先升级了固件和操作系统：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> rpi-update</span><br><span class="line"><span class="built_in">sudo</span> apt dist-upgrade</span><br></pre></td></tr></table></figure>
+
+<p>然后，以 root 用户（sudo）编辑 <code>/boot/config.txt</code> 文件，添加以下代码，将最大频率提升到 2.0 GHz：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">force_turbo</span>=<span class="number">0</span></span><br><span class="line"><span class="attr">arm_freq</span>=<span class="number">2000</span></span><br><span class="line"><span class="attr">over_voltage</span>=<span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>不要试图设置 <code>force_turbo = 1</code>，<strong>因为此选项会允许进一步提升电压，它会改变芯片中的保险结构，</strong><a target="_blank" rel="noopener" href="https://www.raspberrypi.org/documentation/configuration/config-txt/overclocking.md">这将使您的保修失效</a>。</strong></p>
+</blockquote>
+<p>我们现在可以重新启动主板以验证设置，并检查是否应用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vcgencmd get_config int | grep <span class="string">&quot;arm\|over&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arm_freq=2000</span><br><span class="line">over_voltage=6</span><br></pre></td></tr></table></figure>
+
+<p>好的。在 idle 状态下频率较低，但正常情况下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vcgencmd measure_clock arm</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frequency(48)=666826176</span><br></pre></td></tr></table></figure>
+
+<p>此时电压设置为 1.0335V：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vcgencmd measure_volts</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volt=1.0335V</span><br></pre></td></tr></table></figure>
+
+<p><code>over_voltage</code> 将以 0.025V 步进的递减&#x2F;递增降低或增加最大电压，范围 -16 至 8，或 0.8V 至 1.4V。</p>
+<p>运行之前的 <code>sbc-bench.sh</code>，用 rpi-monitor 监控温度：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> /bin/bash ./sbc-bench.sh -c</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">WARNING: this tool is meant to run only on Debian Stretch or Ubuntu Bionic.</span><br><span class="line">When running on other distros results are partially meaningless or can&#x27;t be collected.</span><br><span class="line">Press [ctrl]-[c] to stop or [enter] to continue.</span><br><span class="line"></span><br><span class="line">sbc-bench v0.6.7</span><br><span class="line"></span><br><span class="line">Installing needed tools. This may take some time... Done.</span><br><span class="line">Checking cpufreq OPP... Done.</span><br><span class="line">Executing tinymembench. This will take a long time... Done.</span><br><span class="line">Executing OpenSSL benchmark. This will take 3 minutes... Done.</span><br><span class="line">Executing 7-zip benchmark. This will take a long time....</span><br><span class="line">Done.</span><br><span class="line">Checking cpufreq OPP... Done.</span><br><span class="line"></span><br><span class="line">It seems neither throttling nor frequency capping has occured.</span><br><span class="line"></span><br><span class="line">Memory performance:</span><br><span class="line">memcpy: 2547.2 MB/s</span><br><span class="line">memset: 3651.0 MB/s (0.8%)</span><br><span class="line"></span><br><span class="line">7-zip total scores (3 consecutive runs): 6900,6877,6939</span><br><span class="line"></span><br><span class="line">OpenSSL results:</span><br><span class="line">type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes  16384 bytes</span><br><span class="line">aes-128-cbc      83479.79k   102077.25k   110821.72k   112916.14k   113631.23k   113541.12k</span><br><span class="line">aes-128-cbc      83514.12k   102155.14k   110784.17k   112935.59k   113573.89k   113382.74k</span><br><span class="line">aes-192-cbc      67566.13k    86925.76k    95294.38k    97361.58k    98189.31k    98331.31k</span><br><span class="line">aes-192-cbc      75028.43k    90016.62k    96037.97k    97670.83k    98301.27k    98178.39k</span><br><span class="line">aes-256-cbc      68036.63k    79945.09k    84813.82k    86112.60k    86035.11k    86338.22k</span><br><span class="line">aes-256-cbc      61634.20k    77697.69k    84171.18k    85799.89k    86406.49k    86474.75k</span><br><span class="line"></span><br><span class="line">Full results uploaded to http://ix.io/1PxG. Please check the log for anomalies (e.g. swapping or throttling happenend) and otherwise share this URL.</span><br></pre></td></tr></table></figure>
+
+<p>从日志中查看 7-zip 测试期间的最高温度和实际频率：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">System health while running 7-zip multi core benchmark:</span><br><span class="line"> </span><br><span class="line">Time        fake/real   load %cpu %sys %usr %nice %io %irq   Temp   VCore</span><br><span class="line">15:11:29: 2000/2000MHz  3.17  14%   1%  12%   0%   0%   0%  48.7°C  1.0335V</span><br><span class="line">15:11:52: 2000/2000MHz  3.28  85%   2%  83%   0%   0%   0%  52.1°C  1.0335V</span><br><span class="line">15:12:34: 2000/2000MHz  4.43  96%  48%  47%   0%   0%   0%  53.1°C  1.0335V</span><br><span class="line">15:12:54: 2000/2001MHz  4.21  83%   3%  79%   0%   0%   0%  52.6°C  1.0335V</span><br><span class="line">15:13:37: 2000/2000MHz  4.96  95%  40%  54%   0%   0%   0%  52.1°C  1.0335V</span><br><span class="line">15:13:57: 2000/2000MHz  4.61  82%   3%  79%   0%   0%   0%  52.6°C  1.0335V</span><br><span class="line">15:14:39: 2000/2000MHz  4.92  95%  37%  57%   0%   0%   0%  52.1°C  1.0335V</span><br></pre></td></tr></table></figure>
+
+<p>Broadcom BCM2711 处理器，ARM Cortex-A72 2.0 GHz，目前温度高达 53.1°C，我们仍然具有良好的安全余量。</p>
+<p><img src="/images/v2-6d2fc9846fdaeaa32052daf6166a7913_hd.jpg"></p>
+<p>rpi-monitor 的图表中，在 55°C 时显示最高值，但仍与处理器的 85°C 硬件温控限制相差 30°C。</p>
+<p>让我们看看，相比默认的 1.5 GHz 频率下运行的 Raspberry Pi 4，可以提升多少性能：</p>
+<p><img src="/images/v2-f5353cf4759be1f73ea217962dbf2615_hd.jpg"></p>
+<p><img src="/images/v2-fa0ceb5976002fe08e215153a43d0a37_hd.jpg"></p>
+<p>内存基准测试性能基本相同，意味着带宽不受处理器频率的限制。</p>
+<p>但对于其他类型基准测试，我们可以获得 27% 至 33% 的性能提升，这大概与预期的 33% 的理论性能提升相匹配。</p>
+<p>如果出于某些原因，您希望拥有更高的内存带宽，那么您可能会遇到 <code>sdram_freq</code> 和 <code>over_voltage_sdram</code> 选项的设置，如 RPi <a target="_blank" rel="noopener" href="https://www.raspberrypi.org/documentation/configuration/config-txt/overclocking.md">超频选项中所述</a>。</p>
+<p>翻译来源：<a target="_blank" rel="noopener" href="https://www.cnx-software.com/2019/07/26/how-to-overclock-raspberry-pi-4/">How to Overclock Raspberry Pi 4 to 2.0 GHz</a></p>
+<p><a id="scripts-for-arch-linux-arm-for-raspberry-pi-3"></a></p>
+<h2 id="简易安装Arch-Linux-ARM-for-Raspberry-Pi-3"><a href="#简易安装Arch-Linux-ARM-for-Raspberry-Pi-3" class="headerlink" title="简易安装Arch Linux ARM for Raspberry Pi 3"></a>简易安装Arch Linux ARM for Raspberry Pi 3</h2><p>把下列代码保存为：rpi3-arch-linux-to-sdcard.sh</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># &lt;https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3&gt;</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n\nArch Linux ARM to SD Card&quot;</span><br><span class="line">echo -e &quot;For the Raspberry Pi 3, if you want to use the unofficial arm64 variant.&quot;</span><br><span class="line">echo -e &quot;(Otherwise use the Raspberry Pi 2 version of this script!)\n\n&quot;</span><br><span class="line"></span><br><span class="line">if [[ $EUID -ne 0 ]]; then</span><br><span class="line">   echo &quot;This script must be run as root&quot; 1&gt;&amp;2</span><br><span class="line">   exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nAll drives on this computer:\n&quot;</span><br><span class="line">ls -1 /dev/sd?</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nLast messages in syslog:\n&quot;</span><br><span class="line">dmesg | tail</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nChoose sd card (like /dev/sdX):\n&quot;</span><br><span class="line">read SDCARD</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n\nCurrent partitioning of $SDCARD:\n&quot;</span><br><span class="line">parted $SDCARD print</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n\nYou chose $SDCARD\nAre you sure to continue? Press Ctrl-C to abort!&quot;</span><br><span class="line">read</span><br><span class="line"></span><br><span class="line">cd /tmp</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nDownloading the Arch Linux ARM root filesystem (if needed):\n&quot;</span><br><span class="line">URL=https://mirrors.ustc.edu.cn/archlinuxarm/os/ArchLinuxARM-rpi-3-latest.tar.gz</span><br><span class="line"># Sometimes the download server is slow. In that case, try a different one instead:</span><br><span class="line">#URL=http://de7.mirror.archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz</span><br><span class="line">FNAME=$(basename &quot;$URL&quot;)</span><br><span class="line">FSIZE=$(curl --head --location --silent &quot;$URL&quot; --write-out &#x27;%&#123;http_code&#125; %&#123;size_download&#125; \n&#x27; | tac | grep -m1 Content-Length | cut -f 2 -d&#x27; &#x27; | tr -d &#x27;\r&#x27;)</span><br><span class="line">if [ -n &quot;$FNAME&quot; ]</span><br><span class="line">then</span><br><span class="line">  CURSIZE=$(wc -c &lt;&quot;$FNAME&quot;)</span><br><span class="line">  if [ $CURSIZE -ne $FSIZE ]; then</span><br><span class="line">    rm &quot;$FNAME&quot;</span><br><span class="line">    echo &quot;Removing any downloaded and leftover Arch Linux ARM image&quot;</span><br><span class="line">  fi</span><br><span class="line">fi</span><br><span class="line">curl --location --remote-name --time-cond &quot;$FNAME&quot; &quot;$URL&quot;</span><br><span class="line">if [ $? -ne 0 ]; then</span><br><span class="line">  echo &quot;Could not download the image file, please check the mirror&quot;</span><br><span class="line">  exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nUnmounting partitions found on $&#123;SDCARD&#125;\n&quot;</span><br><span class="line">for MOUNT in $&#123;SDCARD&#125;?</span><br><span class="line">do</span><br><span class="line">  echo $MOUNT</span><br><span class="line">  umount $MOUNT</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">parted -s $SDCARD unit s print</span><br><span class="line">parted -s $SDCARD mktable msdos</span><br><span class="line">parted -s $SDCARD mkpart primary fat32 8192s 128MiB</span><br><span class="line">parted -s $SDCARD mkpart primary 128MiB 100%</span><br><span class="line">parted -s $SDCARD unit s print</span><br><span class="line"></span><br><span class="line">mkfs.vfat $&#123;SDCARD&#125;1</span><br><span class="line">mkfs.ext4 $&#123;SDCARD&#125;2</span><br><span class="line"></span><br><span class="line">rm -rf boot</span><br><span class="line">rm -rf root</span><br><span class="line"></span><br><span class="line">mkdir boot</span><br><span class="line">mkdir root</span><br><span class="line"></span><br><span class="line">mount $&#123;SDCARD&#125;1 boot</span><br><span class="line">mount $&#123;SDCARD&#125;2 root</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nExtracting the root filesystem\n&quot;</span><br><span class="line">bsdtar -xpf ArchLinuxARM-rpi-3-latest.tar.gz -C root</span><br><span class="line">sync</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nMoving boot files to the first partition\n&quot;</span><br><span class="line">mv root/boot/* boot</span><br><span class="line"></span><br><span class="line">echo -e &quot;\nUnmounting the two partitions\n&quot;</span><br><span class="line">umount boot root</span><br><span class="line"></span><br><span class="line">rmdir boot root</span><br><span class="line"></span><br><span class="line">echo &quot;Insert the SD card into the Raspberry Pi , connect ethernet, and apply 5V power.&quot;</span><br><span class="line">echo &quot;Use the serial console or SSH to the IP address given to the board by your router. The username/password combination is alarm/alarm. The default root password is &#x27;root&#x27;.&quot;</span><br><span class="line"></span><br><span class="line">cd -</span><br></pre></td></tr></table></figure>
+
+<p>如果网络较慢请先下载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>放置到&#x2F;tmp下面，按提示运行即可。</p>
+<p>来源：<a target="_blank" rel="noopener" href="https://gist.github.com/pklaus/0e90aaa2d91064edd731fa30f44fce3f">https://gist.github.com/pklaus/0e90aaa2d91064edd731fa30f44fce3f</a></p>
+<p><a id="run-opensuse-on-rpi3"></a></p>
+<h2 id="在树莓派-3-上运行-openSUSE：简单几步搭建一个实用系统"><a href="#在树莓派-3-上运行-openSUSE：简单几步搭建一个实用系统" class="headerlink" title="在树莓派 3 上运行 openSUSE：简单几步搭建一个实用系统"></a>在树莓派 3 上运行 openSUSE：简单几步搭建一个实用系统</h2><p>本文由 SUSE 文档团队的技术作者 Dmitri Popov 撰写。</p>
+<blockquote>
+<p>在<a target="_blank" rel="noopener" href="https://www.raspberrypi.org/">树莓派 3</a> 上部署 <a target="_blank" rel="noopener" href="https://www.opensuse.org/">openSUSE</a> 系统不是很复杂，不过这儿有一些小技巧教你更好地完成这个过程。</p>
+</blockquote>
+<p>首先，你将会有一些版本可供选择。如果你打算使用树莓派 3 作为一个普通主机，那么带有图形界面的 openSUSE 将是你最好的选择。有几种不同的图形环境可供选择：<a target="_blank" rel="noopener" href="https://www.x.org/wiki/">X11</a>、<a target="_blank" rel="noopener" href="https://www.enlightenment.org/">Enlightenment</a>、<a target="_blank" rel="noopener" href="https://www.xfce.org/">Xfce</a> 或是 <a target="_blank" rel="noopener" href="http://lxqt.org/">LXQT</a>。openSUSE 还有一个 JeOS 版本能够提供最基础的系统，可以把树莓派 3 作为一个无显示器的服务器使用。更好的选择还有 openSUSE 的 <a target="_blank" rel="noopener" href="https://www.opensuse.org/#Leap">Leap</a> 或 <a target="_blank" rel="noopener" href="https://www.opensuse.org/#Tumbleweed">Tumbleweed</a> 版本。</p>
+<p>首先你需要从 <a target="_blank" rel="noopener" href="https://en.opensuse.org/HCL:Raspberry_Pi3">https://en.opensuse.org/HCL:Raspberry_Pi3</a> 下载所需的 openSUSE 镜像，然后制作一张可启动的 microSD 卡。虽然可以使用命令行工具将下载好的镜像写入 microSD 卡，但 <a target="_blank" rel="noopener" href="https://etcher.io/">Etcher</a> 可以使这个过程更轻松安全。</p>
+<ol>
+<li>从项目网站上获取 Etcher 程序，解压下载的 .zip 文件，并使用以下命令把得到的 .AppImage 文件设置为可执行：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x Etcher-x.x.x-linux-x64.AppImage</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>将 microSD 卡插入电脑，双击运行 Etcher 软件，选择下载好的 .raw.xz 镜像文件，点击 <strong>Flash!</strong> 按钮。</li>
+</ol>
+<p>然后将显示器和键盘连接到树莓派 3，插入 microSD 卡，启动树莓派。第一次启动时，openSUSE 会自动扩展文件系统以充分利用 microSD 卡上的剩余空间。这时你将看到以下信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GPT data structures destroyed! You may now partition the disk using fdisk or other utilities</span><br><span class="line">GPT 数据结构被破坏！您需要使用 fdisk 或其它工具对磁盘分区。</span><br></pre></td></tr></table></figure>
+
+<p>不用担心，稍等两分钟，openSUSE 将继续正常启动。当看到提示时，输入默认用户名 <code>root</code> 和默认密码 <code>linux</code> 登录系统。</p>
+<p>如果你选择在树莓派 3 上部署 JeOS 版本，第一次启动时你不会看到屏幕上有任何输出。屏幕会一直保持空白，直到系统完成对文件系统的扩展。你可以通过配置内核参数来显示输出，不过没有必要做这麻烦事。只需稍等片刻，你就能看到命令行提示。</p>
+<p>由于 openSUSE 已经启用并且配置了 SSH 服务，所以启动树莓派时你可以不用显示器。这样的话，你就需要使用网卡接口将树莓派连接到网络中。给树莓派足够的时间来启动和扩展系统后，你就能够从同一网络中的其他主机，使用 <code>ssh root@linux.local</code> 命令，通过 SSH 服务连接树莓派。</p>
+<p>默认情况下你将以 <code>root</code> 用户登录系统，所以创建一个普通用户是个不错的主意。你可以使用 YaST 配置工具轻松完成这件事。运行 <code>yast2</code> 命令，选择 <strong>安全与用户</strong> -&gt; <strong>用户与用户组管理</strong> 选项，就可以创建新用户了。你还可以选择 <strong>系统</strong> -&gt; <strong>在线升级</strong> 选项来更新系统。完成之后，退出 YaST，重启树莓派，然后使用新创建的用户登录系统。</p>
+<p>一切搞定，不过还有一个重要的系统组件不能正常工作，那就是无线接口。当然，这个问题也可以轻松解决。首先使用以下命令安装 nano 文本编辑器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> zypper <span class="keyword">in</span> nano</span><br></pre></td></tr></table></figure>
+
+<p>然后运行以下命令修改 <code>raspberrypi_modules.conf</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/dracut.conf.d/raspberrypi_modules.conf</span><br></pre></td></tr></table></figure>
+
+<p>删除文件第一行的 <code>sdhci_iproc</code>，再取消最后一行的注释。运行以下命令保存修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkinitrd -f</span><br></pre></td></tr></table></figure>
+
+<p>最后，重启树莓派。</p>
+<p>再次运行 YaST，在 <strong>系统</strong> -&gt; <strong>网络设置</strong> 区域，你应该能在网络接口列表中看到 <code>BCM43430 WLAN Card</code> 项。选择这一项，点击 <strong>编辑</strong> 按钮。开启 <strong>动态地址分配 DHCP</strong> 选项，点击 <strong>下一步</strong>，选择你想要连接的无线网络，配置所需的连接设置。点击 <strong>下一步</strong> 和 <strong>确定</strong> 保存设置。重启树莓派，它应该就能连接上特定的 Wi-Fi 网络了。</p>
+<p>至此，你就完成了树莓派上的系统部署。</p>
+<hr>
+<p>via: <a target="_blank" rel="noopener" href="https://www.suse.com/communities/blog/opensuse-raspberry-pi-3-zero-functional-system-easy-steps/">openSUSE on Raspberry Pi 3: Zero Functional System in Easy Steps</a></p>
+<p>作者：<a target="_blank" rel="noopener" href="https://www.suse.com/communities/blog/author/chabowski/">chabowski</a> 译者：<a target="_blank" rel="noopener" href="https://github.com/Cathon">Cathon</a> 校对：<a target="_blank" rel="noopener" href="https://github.com/jasminepeng">jasminepeng</a></p>
+<p><a id="raspberry-pi-run-archisteamfarm"></a></p>
+<h2 id="使用Raspberry-Pi等ARM迷你开发板运行ArchiSteamFarm挂卡程序"><a href="#使用Raspberry-Pi等ARM迷你开发板运行ArchiSteamFarm挂卡程序" class="headerlink" title="使用Raspberry Pi等ARM迷你开发板运行ArchiSteamFarm挂卡程序"></a>使用Raspberry Pi等ARM迷你开发板运行ArchiSteamFarm挂卡程序</h2><p>首先启动树莓派或别的开发板，确定 CPU 架构，一般有 ARM32 和 ARM64 两种，因为运行的系统版本不同，下载的 dotnet 包有差别。先运行下列命令安装依赖包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install curl libunwind8 gettext screen</span><br></pre></td></tr></table></figure>
+<p>sudo apt-get install curl libunwind8 gettext screen</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![](images/TIM图片20180505201923.png)</span><br><span class="line"></span><br><span class="line">然后运行 `lscpu` 或 `neofetch` 等命令确定当前使用的是什么系统版本。本人一个树莓派，一个香橙派，一个64位一个32位（注意树莓派官方系统是32位）。aarch64 为64位，armv7l 则为32位。</span><br><span class="line"></span><br><span class="line">![](images/TIM图片20180505201723.png) ![](images/TIM图片20180505201800.png)</span><br><span class="line"></span><br><span class="line">确定下系统时间是否准确方可进行下一步操作，因为 ARM 设备通常无时钟，断电情况下不会保持时间，使用：</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">sudo date -s &quot;2023-01-01 12:00:00&quot;</span><br></pre></td></tr></table></figure>
+
+<p>设置当前时间。</p>
+<hr>
+<p>下载 dotnet 环境：</p>
+<p>32 位系统（大多数开发板）运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL -o dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>64 位系统运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL -o dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>创建目标文件夹并将下载的包解压到其中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /opt/dotnet &amp;&amp; <span class="built_in">sudo</span> tar zxf dotnet.tar.gz -C /opt/dotnet</span><br></pre></td></tr></table></figure>
+
+<p>设置符号链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /opt/dotnet/dotnet /usr/local/bin</span><br></pre></td></tr></table></figure>
+
+<p>输入以下命令测试安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dotnet --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+<p>curl -sSL -o dotnet.tar.gz <a target="_blank" rel="noopener" href="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm.tar.gz">https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm.tar.gz</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">64位系统运行：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>curl -sSL -o dotnet.tar.gz <a target="_blank" rel="noopener" href="https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm64.tar.gz">https://dotnetcli.blob.core.windows.net/dotnet/Runtime/release/2.0.0/dotnet-runtime-latest-linux-arm64.tar.gz</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Run ：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>sudo mkdir -p &#x2F;opt&#x2F;dotnet &amp;&amp; sudo tar zxf dotnet.tar.gz -C &#x2F;opt&#x2F;dotnet</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">to create a destination folder and extract the downloaded package into it.</span><br><span class="line"></span><br><span class="line">Run：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>sudo ln -s &#x2F;opt&#x2F;dotnet&#x2F;dotnet &#x2F;usr&#x2F;local&#x2F;bin</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">to set up a symbolic link...a shortcut to you Windows folks ? to the **dotnet** executable.</span><br><span class="line"></span><br><span class="line">Test the installation by typing</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>dotnet –help</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">出现下面的内容则提示安装成功：</span><br><span class="line"></span><br><span class="line">![](images/TIM图片20180505203020.png)</span><br><span class="line"></span><br><span class="line">然后按照常规步骤配置 ArchiSteamFarm 并运行即可，如图所示：</span><br><span class="line"></span><br><span class="line">![](images/TIM图片20180505203225.png)</span><br><span class="line"></span><br><span class="line">&lt;a id=&quot;rk3588-update-uefi-edk2&quot;&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">## RK3588设备更新UEFI edk2固件</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">sudo dd if=rock-5b_UEFI_Release_v1.1.img of=/dev/mtdblock0 conv=notrunc</span><br><span class="line">sync</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p><a id="phicomm-n1-install-armbian-linux"></a></p>
+<h2 id="在斐讯N1盒子上刷入armbian-Linux系统"><a href="#在斐讯N1盒子上刷入armbian-Linux系统" class="headerlink" title="在斐讯N1盒子上刷入armbian Linux系统"></a>在斐讯N1盒子上刷入armbian Linux系统</h2><p>在 N1 内置 eMMC 中刷入 Linux armbian，不需要外置 USB 设备启动，除了没有 GPIO 外和各种 Pi 功能完全一样，内置千兆以太网&#x2F;2.4+5G WiFi&#x2F;Bluetooth&#x2F;USB2.0*2&#x2F;HDMI，硬件配置为 Amlogic S905D 1.5GHz*4 Cortex-A53+2GB RAM+8GB eMMC（Linux 可用 5GB）。</p>
+<p>在二手平台收购全新已激活的 N1 仅需 80-90 元，未激活的 900 多元，三个月返现 1099（此处注意风险）可以说是很超值了。</p>
+<h2 id="一、拿到盒子，首先降级-Bootloader，刷入第三方固件"><a href="#一、拿到盒子，首先降级-Bootloader，刷入第三方固件" class="headerlink" title="一、拿到盒子，首先降级 Bootloader，刷入第三方固件"></a>一、拿到盒子，首先降级 Bootloader，刷入第三方固件</h2><p>参考资料：<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/thread-322736-1-1.html">N1盒子 2018-5-28 斐讯天天链N1 官改v2.0线刷包, 补丁patch1</a></p>
+<h2 id="二、制作-Linux-启动盘"><a href="#二、制作-Linux-启动盘" class="headerlink" title="二、制作 Linux 启动盘"></a>二、制作 Linux 启动盘</h2><p>按照说明，制作好 Linux 启动盘，插入 N1 正常启动，并配置好用户名密码，网络连接等。请使用 8G 以上，质量可靠的 U 盘。</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/thread-322991-1-1.html">N1盒子 应广大人民群众要求,搞个N1通过U盘跑LINUX(armbian)的教程</a></p>
+<blockquote>
+<ol start="6">
+<li>打开 n1 的 adb</li>
+<li>通过 adb 连接 n1 (<code>adb connect ip</code>)</li>
+<li>输入 <code>adb shell reboot update</code></li>
+<li>喝口茶等待启动</li>
+</ol>
+</blockquote>
+<p>注：原文中以上操作可改为在 N1 盒子内部的终端模拟器输入 <code>su</code> 回车然后 <code>reboot update</code></p>
+<h2 id="三、将系统写入-eMMC"><a href="#三、将系统写入-eMMC" class="headerlink" title="三、将系统写入 eMMC"></a>三、将系统写入 eMMC</h2><p>将配置好的 U 盘中的 armbian 系统写入到内置 eMMC，并修改引导，直接从内置 eMMC 启动，不再需要插入 U 盘。</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/thread-327496-1-1.html">N1盒子 成功！把Armbian 安装到 emmc并直接从 emmc 启动</a></p>
+<p>安装步骤为：</p>
+<ol>
+<li><p>下载原文中附件 install.gz 脚本，上传释放到 N1 的 &#x2F;root 目录下，名称为 install.sh，并赋予执行权限；</p>
+</li>
+<li><p>以 root 用户执行（第二行操作时间较长请耐心等待执行完成）：</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/cmdline</span><br><span class="line">nand-sata-install</span><br><span class="line"><span class="comment"># 取消U盘上第二分区的 ROOTFS 标签，并给 emmc 上的 data 分区打上 ROOTFS 的标签</span></span><br><span class="line">e2label /dev/sda2 <span class="string">&quot;&quot;</span></span><br><span class="line">e2label /dev/data <span class="string">&quot;ROOTFS&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>关机并拔下 U 盘，重新上电，正常情况下可启动到 Linux。</li>
+</ol>
+<blockquote>
+<p><strong>原理说明：</strong><br>基本原理：uboot 命令中支持读取 ext4 文件系统，所以：</p>
+<ol>
+<li>在把 root 系统安装到 eMMC</li>
+<li>设置 uboot 里面的环境变量，让系统先尝试从 U 盘启动，如果没有 U 盘的话，再尝试 eMMC 的 data 分区上的 armbian 相关文件</li>
+<li>如果都没有，再尝试启动盒子上的 android 系统。</li>
+</ol>
+<p>**风险：**不会破坏系统上原先的 android 系统，但是安装了 armbian 系统之后，没有一定的 linux 基础知识，你可以回不去 android 系统。</p>
+<p>基于某些测试，ext4load 命令偶尔会读取不了文件，所以想尝试的同学，需要一个大心脏，有一定的机率失败。</p>
+<p>系统是直接启动到 armbian 了，想回到 android 怎么办？android 和 armbian 可以自由切换。很简单，启动到 armbian 系统后，只需要把 &#x2F;boot&#x2F;s905_autoscript 改个名字，重新启动就会跑到 android 系统去了。如果想回到 armbian 系统，只需要在 android 系统里面，把 &#x2F;data&#x2F;boot&#x2F; 下面 s905_autoscript 名字改回来就行了。</p>
+</blockquote>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180624230645.png"><img src="/images/TIM%E5%9B%BE%E7%89%8720180624230657.png"></p>
+<p>内置 eMMC 读取速度，比采用 SD 卡做根文件系统的 Pi 不知高到哪里去了。</p>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625104922.png"></p>
+<hr>
+<h2 id="补充：N1刷入Linux后可以删除掉的原分区及内容"><a href="#补充：N1刷入Linux后可以删除掉的原分区及内容" class="headerlink" title="补充：N1刷入Linux后可以删除掉的原分区及内容"></a>补充：N1刷入Linux后可以删除掉的原分区及内容</h2><p>以下操作会完全破坏掉 Android 系统，只能用 Linux，不过随时可以线刷回来，不要动 eMMC 的分区结构：</p>
+<ol>
+<li>&#x2F;dev&#x2F;data 里面的内容：先 cd 到 &#x2F; 下，删除以下目录中内容，占用空间比较多。</li>
+</ol>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625142012.png"></p>
+<ol start="2">
+<li>格式化掉 android 的 system 分区，记得先挂载上看看内容对不对再 mkfs，为了安全起见：</li>
+</ol>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625142112.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mkfs.ext4 /dev/system</span><br></pre></td></tr></table></figure>
+
+<p>然后把 &#x2F;dev&#x2F;system 随便挂载到什么地方就可以用了。</p>
+<p>不知道哪些分区还能干掉，目前不敢动别的，希望各位补充。</p>
+<p>最终容量如图所示：</p>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180625142900.png"></p>
+<p><img src="/images/haha.png"></p>
+<p><a id="phicomm-k2t-openwrt"></a></p>
+<h2 id="斐讯K2t免拆机刷入LEDE-OpenWRT的步骤"><a href="#斐讯K2t免拆机刷入LEDE-OpenWRT的步骤" class="headerlink" title="斐讯K2t免拆机刷入LEDE&#x2F;OpenWRT的步骤"></a>斐讯K2t免拆机刷入LEDE&#x2F;OpenWRT的步骤</h2><p>首先感谢<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/home.php?mod=space&uid=389408">@phitools</a> 制作的telnet工具和<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/home.php?mod=space&uid=372524">@ptpt52</a> 制作的LEDE固件。</p>
+<p>之前忘了提一步，有人说要先刷官改打开ssh以后才能刷，不然会砖! <a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/forum.php?mod=viewthread&tid=321512">http://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=321512</a> 第一步是要先打开Telnet，进入终端操作，参考<a target="_blank" rel="noopener" href="http://www.right.com.cn/forum/%E4%BC%A0%E9%80%81%E9%97%A8">http://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=321483</a>即可（已刷官改的跳过）打开Telnet后，要使用ssh工具登录，用户名root，密码admin，需要sftp上传文件。 ssh工具推荐使用<a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/">MobaXterm</a>，可以在左侧窗格直接拖放文件，右侧窗口输入命令：</p>
+<p>OpenWRT&#x2F;LEDE下载地址：</p>
+<h4 id="本帖隐藏的内容"><a href="#本帖隐藏的内容" class="headerlink" title="本帖隐藏的内容"></a>本帖隐藏的内容</h4><p><a target="_blank" rel="noopener" href="https://router-sh.ptpt52.com/rom/">https://router-sh.ptpt52.com/rom/</a> 寻找Phicomm K2T A1&#x2F;A2&#x2F;A3 board (16MB flash)这个东西点击下载。</p>
+<p>固件由@ptpt52 出品，代号：NATCAP</p>
+<p>固件无线默认名称：NATCAP_XXXX，密码：88888888 固件管理界面：<a target="_blank" rel="noopener" href="http://192.168.15.1/">http://192.168.15.1/</a> 管理界面账户&#x2F;密码：root&#x2F;admin</p>
+<p>把下载的固件natcap-3.0.0-build201805181759-ar71xx-generic-k2t-16M-squashfs-sysupgrade.bin重命名为lede.bin</p>
+<p>传送到路由器 <code>/tmp</code> 目录下，运行刷入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mtd -r write /tmp/lede.bin firmware</span><br></pre></td></tr></table></figure>
+
+<p>在出现rebooting…之前切勿断电，等待刷机完成自动重启即可，正常情况下可以登录配置。</p>
+<p>注意某些情况下有一定概率初次刷机出现找不到5G信号的情况，拔电重启一下就可以了。</p>
+<p><a id="router-asus-merlin-reset-method"></a></p>
+<h2 id="路由器梅林固件软件中心重置方法"><a href="#路由器梅林固件软件中心重置方法" class="headerlink" title="路由器梅林固件软件中心重置方法"></a>路由器梅林固件软件中心重置方法</h2><p><strong>路由器梅林固件软件中心重置方法</strong> 2021年6月4日 悟空</p>
+<p><strong>文章目录</strong> 1) 1. 软件中心重置方法</p>
+<p>    1.1) 1.1 界面重置：</p>
+<p>    1.2) 1.2 命令重置： 1.3) 1.3 一键重置： 2) 2. 释放jffs空间 3) 3. 重启软件中心</p>
+<p> </p>
+<p>最近刷了华硕固件，但是软件中心页面出了点问题，</p>
+<p>似乎是&#x2F;jffs&#x2F;db目录下的数据库损毁导致skipd服务启动不了了，</p>
+<p>解决方法就是重置软件中心数据库，下面是找到的资料，留下来保存一下。</p>
+<p><strong>1. 软件中心重置方法</strong></p>
+<p>软件中心出现问题需要重置软件中心的，可以解决大部分问题；</p>
+<p>由于jffs坏块或者硬件问题导致的软件中心问题，重置是不管用的，建议及时换机。</p>
+<p><strong>1.1 界面重置：</strong></p>
+<p>在【系统管理 】–【 系统设置】内勾选：</p>
+<p>Format JFFS partition at next boot 和 Enable JFFS custom scripts and configs</p>
+<p>然后点击应用本页面设置，成功应用后重启路由器即可，</p>
+<p>此操作可以清除jffs分区中的所有数据，包括安装在jffs分区的软件中心和所有插件。</p>
+<p>重启路由后，软件中心会自动重新完成初始安装，然后将路由器连上网络，</p>
+<p>进入软件中心将软件中心更新到最新即完成软件中心重置。</p>
+<p>软件中心一直显示更新中怎么办？ 可以尝试通过运行命令service restart_skipd来重启skipd服务。</p>
+<p>如果运行重启skipd的命令后，再次运行ps|grep skipd|grep -v grep仍然没有输出，</p>
+<p>说明储存在jffs分区的skipd数据库可能遭到了损坏，</p>
+<p>此时可以请参考 软件中心重置方法 （见下文：重要命令部分）</p>
+<p><strong>1.2 命令重置：</strong></p>
+<p>需要开启固件的ssh功能（【系统管理 】-【 系统设置】-【启用 SSH】），</p>
+<p>然后使用ssh客户端（Putty、Xshell、SecureCRT等软件均可）登录进路由器，</p>
+<p>依次输入以下命令，即可重置软件中心。</p>
+<p># 1. 关闭软件中心相关进程，删除软件中心文件 kill -9 $(pidof skipd) cd &#x2F;koolshare&#x2F;perp &amp;&amp; sh perp.sh stop cd &#x2F; &amp;&amp; rm -rf &#x2F;jffs&#x2F;.asusrouter &#x2F;jffs&#x2F;.koolshare &#x2F;jffs&#x2F;db #2. 重置软件中心 jffsinit.sh cd &#x2F;koolshare&#x2F;perp &amp;&amp; sh perp.sh start service restart_skipd # 3. 重启路由器（可选） reboot # 4.浏览器进入软件中心，将软件中心版本更新到最新，安装插件… <strong>1.3 一键重置：</strong></p>
+<p>如果你刷的梅林固件是384.10_0及其以上版本，</p>
+<p>直接在ssh客户端内运行koolshare-reset命令即可，</p>
+<p>其效果等同上面手动输入命令。</p>
+<p><strong>2. 释放jffs空间</strong></p>
+<p>注意，此操作会删除jffs分区内的所有文件，</p>
+<p>包括但不限于：软件中心本身、软件中心所有的插件、</p>
+<p>安装的证书、TrafficAnalyzer的数据库、自定义的设备图标等</p>
+<p>kill -9 $(pidof skipd) rm -rf &#x2F;jffs&#x2F;.asusrouter &#x2F;jffs&#x2F;.koolshare &#x2F;jffs&#x2F;.cert &#x2F;jffs&#x2F;.sys &#x2F;jffs&#x2F;.wtfast &#x2F;jffs&#x2F;* reboot</p>
+<p><strong>3. 重启软件中心</strong></p>
+<p>当httpd进程挂掉的时候（FAQ中第3个问题），此时可以用ssh进入路由器后台，输入以下命令重启</p>
+<p>cd &#x2F;koolshare&#x2F;perp sh perp.sh stop sh perp.sh start</p>
+<blockquote>
+<p>转载本文时请注明出处及本文链接地址<a target="_blank" rel="noopener" href="https://www.learnhard.cn/articles/797.html">路由器梅林固件软件中心重置方法</a></p>
+</blockquote>
+<blockquote>
+<p> <strong>1，解决Merlin 380 老固件软件中心显示 0.0</strong></p>
+</blockquote>
+<p>很多用户反馈，重新刷固件，或者重置系统之后，软件中心显示 0.0，并且无法显示任何插件，解决方法: 打开路由器的 ssh（如何打开 ssh 终端请自己参考下相关方法） 复制下面的脚本，修复服务器地址 sed -i ‘s&#x2F;koolshare.ngrok.wang&#x2F;ks.ddnsto.com&#x2F;g’ &#x2F;koolshare&#x2F;scripts&#x2F;ks_app_install.sh sed -i ‘s&#x2F;koolshare.ngrok.wang&#x2F;ks.ddnsto.com&#x2F;g’ &#x2F;koolshare&#x2F;webs&#x2F;Main_Soft_center.asp <strong>2，Koolshare软件中心1.5.8增加了对安装包名称的检测，屏蔽了科学插件，无法离线安装。</strong> 如果提示检测到离线安装包名有非法关键词，开启路由器的SSH功能， 登录并输入以下命令后，再进行离线安装。 sed -i ‘s&#x2F;\tdetect_package&#x2F;\t# detect_package&#x2F;g’ &#x2F;koolshare&#x2F;scripts&#x2F;ks_tar_install.sh</p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/11/QQ%E5%9B%BE%E7%89%8720231126144627.png"><img src="/images/QQ%E5%9B%BE%E7%89%8720231126144627-640x480.png"></a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/raspberry-pi/" rel="tag"># raspberry-pi</a>
+              <a href="/tags/arm/" rel="tag"># arm</a>
+              <a href="/tags/router/" rel="tag"># router</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/18/create-moon-server-zerotier/" rel="prev" title="架设moon服务器加快zerotier的访问速度">
+                  <i class="fa fa-angle-left"></i> 架设moon服务器加快zerotier的访问速度
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/01/01/ai-interview-guide/" rel="next" title="AI 应用工程师面试题纲（精简版）">
+                  AI 应用工程师面试题纲（精简版） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

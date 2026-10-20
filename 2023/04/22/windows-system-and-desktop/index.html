@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Windows 侧的实用设置：自动登录、应用商店、WSL 的搬运与替换、以及服务器系统装网卡驱动。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows 系统与桌面技巧合集">
+<meta property="og:url" content="https://wiki.wenyinos.com/2023/04/22/windows-system-and-desktop/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="Windows 侧的实用设置：自动登录、应用商店、WSL 的搬运与替换、以及服务器系统装网卡驱动。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720230422112015.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720230422112512.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-2cca5c6cb05073257b314d2789a45904_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-dc6672c4832e0cc868c74773e3844fb2_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-dc60a779d382e282ce227088f78f3ff9_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-ef2553af48c02afcb550ec0daecccaf3_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-57c0763b25bcbfab5089185fb8c9ab7d_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-be82c82f23911120d08100a4c54e4cd4_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-c01449479e03bc1965349b31f4e02e20_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-62e4bc2331b3de481d97a6268b37f289_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-668184389409cb757518f3395c8cd77c_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-77ab22cf069233899d221d51ef0ece8b_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-95ba234d8c3411a516eb03dbeed662e5_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/1.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/5.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/6.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/7.png">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-d8653857f6d2c1083669a146a5d53b71_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-e4c6030ab2a109ba842f47e803a99e3f_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-b84a6107729b61768eafc6c942728e2e_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-9ead8f27148a39af1b6cb5001ee85975_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-341dbe0607e8736850470b653b344502_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-7e9efcca2285595a671521e21af3334d_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-040643458ffc6ab8ad6e3fa4dad6751e_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-8e310bf3dfc466b283d853b74df26dc6_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-458da2227961bb3ac1e430f16a69256c_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-ad157b48f4226fd47dad1f5bf5a2fa85_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-938eb10b8030e575ab70b47820825376_hd.jpg">
+<meta property="og:image" content="https://wiki.wenyinos.com/images/v2-8dd751b55cf0ae185b3cd16e37bcf4dd_hd.jpg">
+<meta property="article:published_time" content="2023-04-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-21T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="windows-server">
+<meta property="article:tag" content="wsl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wiki.wenyinos.com/images/QQ%E5%9B%BE%E7%89%8720230422112015.png">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2023/04/22/windows-system-and-desktop/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2023/04/22/windows-system-and-desktop/","path":"2023/04/22/windows-system-and-desktop/","title":"Windows 系统与桌面技巧合集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows 系统与桌面技巧合集 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-10-11%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">Windows 10&#x2F;11自动登录设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E5%9B%9E%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95%E5%A4%8D%E9%80%89%E6%A1%86%E7%9A%84%E5%8A%9E%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">找回自动登录复选框的办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8Windows-10-%E4%BC%81%E4%B8%9A%E7%89%88%E9%95%BF%E6%9C%9F%E6%9C%8D%E5%8A%A1%E8%AE%A1%E5%88%92%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8%E5%95%86%E5%BA%97"><span class="nav-number">3.</span> <span class="nav-text">在Windows 10 企业版长期服务计划版本部署应用商店</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%B0%86win10-win11%E7%9A%84wsl%E5%AD%90%E7%B3%BB%E7%BB%9F%E7%A7%BB%E5%8A%A8%E5%88%B0%E5%85%B6%E4%BB%96%E4%BD%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">如何将win10&#x2F;win11的wsl子系统移动到其他位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E4%BA%8E-Win10-11-%E6%94%AF%E6%8C%81-WSL1-%E5%92%8C-WSL2-%E7%9A%84%E6%89%80%E6%9C%89%E7%89%88%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">适用于 Win10&#x2F;11 支持 WSL1 和 WSL2 的所有版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E9%9C%80%E8%A6%81%E7%A7%BB%E5%8A%A8%E6%88%96%E5%A4%87%E4%BB%BD%E7%9A%84%E5%8F%91%E8%A1%8C%E7%89%88"><span class="nav-number">6.</span> <span class="nav-text">导出需要移动或备份的发行版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%89%E6%AD%A4%E6%96%B9%E6%B3%95%E4%BF%AE%E6%94%B9%E4%BD%8D%E7%BD%AE%E5%90%8E%EF%BC%8C%E9%BB%98%E8%AE%A4%E5%B0%86%E4%BD%BF%E7%94%A8-root-%E7%99%BB%E5%BD%95%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BF%AE%E5%A4%8D%EF%BC%9F"><span class="nav-number">7.</span> <span class="nav-text">按此方法修改位置后，默认将使用 root 登录，如何修复？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-1"><span class="nav-number">7.1.</span> <span class="nav-text">方法 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-2"><span class="nav-number">7.2.</span> <span class="nav-text">方法 2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BAWindows-Server-2016%E6%AD%A3%E5%BC%8F%E7%89%88%E7%A7%BB%E6%A4%8DWSL%E7%BB%84%E4%BB%B6%E5%B9%B6%E5%B0%86%E5%85%B6%E6%9B%BF%E6%8D%A2%E4%B8%BAArch-Linux"><span class="nav-number">8.</span> <span class="nav-text">为Windows Server 2016正式版移植WSL组件并将其替换为Arch Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A6%81%E6%8D%A2%E5%9B%9E%E4%B9%9F%E7%AE%80%E5%8D%95%EF%BC%8C%E5%9C%A8-cmd-%E4%B8%8B%E6%89%A7%E8%A1%8C%EF%BC%9A"><span class="nav-number">9.</span> <span class="nav-text">要换回也简单，在 cmd 下执行：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-Server-2019%E5%AE%89%E8%A3%85Intel-I211%E7%BD%91%E5%8D%A1%E9%A9%B1%E5%8A%A8"><span class="nav-number">10.</span> <span class="nav-text">Windows Server 2019安装Intel I211网卡驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%A9%B1%E5%8A%A8%E4%B8%8B%E8%BD%BD"><span class="nav-number">10.1.</span> <span class="nav-text">1、驱动下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BF%AE%E6%94%B9%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E6%96%87%E4%BB%B6%EF%BC%88%E4%BB%A5I211%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="nav-number">10.2.</span> <span class="nav-text">2、修改驱动程序文件（以I211为例）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#I211"><span class="nav-number">10.2.1.</span> <span class="nav-text">I211</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E8%AE%B0%E4%BA%8B%E6%9C%AC%E6%89%93%E5%BC%80e1r64x64-inf%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%EF%BC%8C%E6%90%9C%E7%B4%A2I211%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84ID"><span class="nav-number">10.2.2.</span> <span class="nav-text">用记事本打开e1r64x64.inf这个文件，搜索I211找到对应的ID</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%B5%8B%E8%AF%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">10.3.</span> <span class="nav-text">开启测试模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%A9%B1%E5%8A%A8"><span class="nav-number">10.4.</span> <span class="nav-text">安装驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E6%B5%8B%E8%AF%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">10.5.</span> <span class="nav-text">关闭测试模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E9%99%84%E5%8A%A0%EF%BC%9A%E5%BC%80%E5%90%AFWLAN"><span class="nav-number">10.6.</span> <span class="nav-text">6、附加：开启WLAN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E8%85%BE%E8%AE%AF%E4%BA%91%E4%B8%BB%E6%9C%BA%E5%AE%89%E8%A3%85Windows-Server-2012R2-Linux%E5%8F%8C%E7%B3%BB%E7%BB%9F"><span class="nav-number">11.</span> <span class="nav-text">为腾讯云主机安装Windows Server 2012R2+Linux双系统</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/04/22/windows-system-and-desktop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows 系统与桌面技巧合集 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows 系统与桌面技巧合集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-22 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-22T00:00:00+08:00">2023-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Windows 侧的实用设置：自动登录、应用商店、WSL 的搬运与替换、以及服务器系统装网卡驱动。</p>
+<span id="more"></span>
+
+<p><a id="windows-10-11-auto-login"></a></p>
+<h2 id="Windows-10-11自动登录设置"><a href="#Windows-10-11自动登录设置" class="headerlink" title="Windows 10&#x2F;11自动登录设置"></a>Windows 10&#x2F;11自动登录设置</h2><h2 id="找回自动登录复选框的办法"><a href="#找回自动登录复选框的办法" class="headerlink" title="找回自动登录复选框的办法"></a>找回自动登录复选框的办法</h2><p>要找回这个复选框其实也很简单，只需要修改注册表的一个小地方即可。</p>
+<p>打开注册表路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device</span><br></pre></td></tr></table></figure>
+
+<p>修改下面的 <code>DevicePasswordLessBuildVersion</code> 值为 0，那么再运行 <code>Netplwiz</code>，<strong>【要使用本计算机，用户必须输入用户名和密码】</strong> 复选框就又出现了。</p>
+<p><a id="windows10-ltsb-deploy-microsoft-store"></a></p>
+<h2 id="在Windows-10-企业版长期服务计划版本部署应用商店"><a href="#在Windows-10-企业版长期服务计划版本部署应用商店" class="headerlink" title="在Windows 10 企业版长期服务计划版本部署应用商店"></a>在Windows 10 企业版长期服务计划版本部署应用商店</h2><p>目前适用于ltsb 2015&#x2F;2016版本，appx软件包由国外网友提取。</p>
+<p>首先打开win10中开发人员模式，然后此处下载提取出的appx软件包：</p>
+<p><a href="http://link.zhihu.com/?target=https://1drv.ms/u/s!Av9xX09cRe2HgblSXegPY-r2-Ik_hA">https://1drv.ms/u/s!Av9xX09cRe2HgblSXegPY-r2-Ik_hA</a></p>
+<p>解压后直接运行其中IntallStore.ps1脚本即可。然后在开始菜单运行应用商店，等待其自动更新；</p>
+<p>注意要使用微软账户登录。</p>
+<p>附脚本内容：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-Appxpackage</span> | ? &#123; <span class="variable">$_</span>.PackageFullName <span class="operator">-match</span> <span class="string">&quot;Store&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$packageList</span> = <span class="string">&quot;.\Microsoft.NET.Native.Runtime.1.0_1.0.22929.0_x64__8wekyb3d8bbwe.appx&quot;</span>,<span class="string">&quot;.\Microsoft.VCLibs.140.00_14.0.22929.0_x64__8wekyb3d8bbwe.appx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Add-AppxPackage</span> <span class="literal">-Path</span> <span class="string">&quot;.\76435323689e40d094e3dea2914c64c1.appxbundle&quot;</span> –DependencyPath <span class="variable">$packageList</span></span><br><span class="line"><span class="built_in">write-host</span> <span class="string">&quot; &quot;</span></span><br><span class="line"><span class="built_in">write-host</span> <span class="string">&quot;Installation beendet.&quot;</span> </span><br><span class="line"><span class="built_in">write-host</span> <span class="string">&quot; &quot;</span></span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<p>目前安装为英文版，大部分appx均可使用， 除xbox游戏无法使用因为没有账户整合</p>
+<p><a id="how-to-move-wsl-dict"></a></p>
+<h2 id="如何将win10-win11的wsl子系统移动到其他位置"><a href="#如何将win10-win11的wsl子系统移动到其他位置" class="headerlink" title="如何将win10&#x2F;win11的wsl子系统移动到其他位置"></a>如何将win10&#x2F;win11的wsl子系统移动到其他位置</h2><blockquote>
+<p><strong>建议使用</strong> <a target="_blank" rel="noopener" href="https://github.com/DDoSolitary/LxRunOffline">DDoSolitary&#x2F;LxRunOffline</a> 工具进行配置。</p>
+<p>但此工具长期未更新，在高版本 Win11 上面疑似失效（原因不明），在此提供使用 WSL 内置命令的方法。</p>
+</blockquote>
+<h2 id="适用于-Win10-11-支持-WSL1-和-WSL2-的所有版本"><a href="#适用于-Win10-11-支持-WSL1-和-WSL2-的所有版本" class="headerlink" title="适用于 Win10&#x2F;11 支持 WSL1 和 WSL2 的所有版本"></a>适用于 Win10&#x2F;11 支持 WSL1 和 WSL2 的所有版本</h2><p>首先按正常方法安装 WSL，并启动运行。</p>
+<p>确认安装好后，切换到系统的 cmd&#x2F;powershell，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示已安装的发行版</span></span><br><span class="line">wsl --list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭正在运行的 WSL 容器</span></span><br><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
+
+<h2 id="导出需要移动或备份的发行版"><a href="#导出需要移动或备份的发行版" class="headerlink" title="导出需要移动或备份的发行版"></a>导出需要移动或备份的发行版</h2><p>完成后可随意删除 appx 商店的应用，已不再需要。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wsl --<span class="built_in">export</span> debian e:/WSL/debian.tar</span><br><span class="line">wsl --unregister debian</span><br><span class="line">wsl --import debian e:/WSL/debian e:/WSL/Debian.tar</span><br></pre></td></tr></table></figure>
+
+<p>输入 <code>wsl</code>，确认正常运行即可，将自动添加到 Windows Terminal 标签页中，但不会生成开始菜单选项。</p>
+<h2 id="按此方法修改位置后，默认将使用-root-登录，如何修复？"><a href="#按此方法修改位置后，默认将使用-root-登录，如何修复？" class="headerlink" title="按此方法修改位置后，默认将使用 root 登录，如何修复？"></a>按此方法修改位置后，默认将使用 root 登录，如何修复？</h2><h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法 1"></a>方法 1</h3><p>在 Terminal 的 WSL 启动选项添加 <code>-u %USER</code> 参数，示例：</p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/QQ%E5%9B%BE%E7%89%8720230422112015.png"><img src="/images/QQ%E5%9B%BE%E7%89%8720230422112015.png"></a></p>
+<h3 id="方法-2"><a href="#方法-2" class="headerlink" title="方法 2"></a>方法 2</h3><p>在 WSL 中创建 <code>/etc/wsl.conf</code> 文件，输入以下内容：</p>
+<p><a href="https://wiki.wenyinos.com/wp-content/uploads/2023/04/QQ%E5%9B%BE%E7%89%8720230422112512.png"><img src="/images/QQ%E5%9B%BE%E7%89%8720230422112512.png"></a></p>
+<p><a id="windows-server-2016-install-wsl-archlinux"></a></p>
+<h2 id="为Windows-Server-2016正式版移植WSL组件并将其替换为Arch-Linux"><a href="#为Windows-Server-2016正式版移植WSL组件并将其替换为Arch-Linux" class="headerlink" title="为Windows Server 2016正式版移植WSL组件并将其替换为Arch Linux"></a>为Windows Server 2016正式版移植WSL组件并将其替换为Arch Linux</h2><p>方法选自：<a target="_blank" rel="noopener" href="https://forums.mydigitallife.net/threads/discussion-windows-server-2016-14393-1607.70435/page-10">Windows Server 2016 14393 (1607) Discussion</a></p>
+<p>首先安装 Windows Server 2016 正式版并配置好，然后激活：</p>
+<p><img src="/images/v2-2cca5c6cb05073257b314d2789a45904_hd.jpg"></p>
+<p>然后下载 WSL 补充包，从 Win10 x64 提取的：</p>
+<p><a target="_blank" rel="noopener" href="https://1drv.ms/f/s!Av9xX09cRe2HgbNGyd7BTiCzc-uxYA">下载链接 - OneDrive</a></p>
+<p>对照文档中方案安装：</p>
+<p>Paste this on an administrative command prompt, reboot when asked, enable the developer mode via the metro settings panel。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dism /online /norestart /add-package /packagepath:Microsoft-Windows-Lxss-Optional-Package.cab /packagepath:Microsoft-Windows-Lxss-Optional-Package-en-US.cab /packagepath:Microsoft-Windows-Lxss-Package.cab /packagepath:Microsoft-Windows-Lxss-Package-en-US.cab</span><br><span class="line"></span><br><span class="line">dism /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all</span><br></pre></td></tr></table></figure>
+
+<p>（记得打开开发者模式）</p>
+<p><img src="/images/v2-dc6672c4832e0cc868c74773e3844fb2_hd.jpg"></p>
+<p>到此请重新启动设备：</p>
+<p><img src="/images/v2-dc60a779d382e282ce227088f78f3ff9_hd.jpg"></p>
+<p>重启后输入 <code>bash</code> 即可开始下载安装：</p>
+<p><img src="/images/v2-ef2553af48c02afcb550ec0daecccaf3_hd.jpg"></p>
+<p>等待，然后输入用户名密码，配置完成：</p>
+<p><img src="/images/v2-57c0763b25bcbfab5089185fb8c9ab7d_hd.jpg"></p>
+<p><img src="/images/v2-be82c82f23911120d08100a4c54e4cd4_hd.jpg"></p>
+<p>替换为 Arch Linux 可以借用如下脚本：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/turbo/alwsl">GitHub - turbo&#x2F;alwsl: Install archlinux as the WSL</a></p>
+<blockquote>
+<p>更新：故障已解决，WSL 可以正常运行。</p>
+</blockquote>
+<blockquote>
+<p><strong>提醒：Arch 环境毛病太多，本人还是换回 Ubuntu 了。</strong></p>
+</blockquote>
+<h2 id="要换回也简单，在-cmd-下执行："><a href="#要换回也简单，在-cmd-下执行：" class="headerlink" title="要换回也简单，在 cmd 下执行："></a>要换回也简单，在 cmd 下执行：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alwsl.bat remove</span><br></pre></td></tr></table></figure>
+
+<p><strong>彻底卸载 Arch 环境重新安装 Ubuntu 即可。</strong></p>
+<p><img src="/images/v2-c01449479e03bc1965349b31f4e02e20_hd.jpg"></p>
+<p>切换到 Arch Linux，我们即可执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alwsl.bat install</span><br></pre></td></tr></table></figure>
+
+<p>（在 cmd 而不是 bash 环境）</p>
+<p><img src="/images/v2-62e4bc2331b3de481d97a6268b37f289_hd.jpg"></p>
+<p>然后就是漫长等待……</p>
+<p><img src="/images/v2-668184389409cb757518f3395c8cd77c_hd.jpg"></p>
+<p>等待执行完成，开始菜单中找到 Arch Linux 就可以运行了。</p>
+<p><img src="/images/v2-77ab22cf069233899d221d51ef0ece8b_hd.jpg"></p>
+<p><img src="/images/v2-95ba234d8c3411a516eb03dbeed662e5_hd.jpg"></p>
+<p><a id="windows-server-2019-intel-i211-driver"></a></p>
+<h2 id="Windows-Server-2019安装Intel-I211网卡驱动"><a href="#Windows-Server-2019安装Intel-I211网卡驱动" class="headerlink" title="Windows Server 2019安装Intel I211网卡驱动"></a>Windows Server 2019安装Intel I211网卡驱动</h2><p>由于Windows系统原因，一般桌面主板自带的Intel网卡（典型的包括I211、I211-AT、I217-V、I218-V、I219-V）等，都无法在Windows Server系统上找到对应的驱动。但是，这些网卡几乎都有对应的服务器主板版本（例如I219-LM）。这些网卡其实并没有本质上的差别，只是在驱动层面，利用不同的驱动签名使得显卡不能通用。本文将详细说明如何在Windows Server系统上安装这些驱动。</p>
+<h3 id="1、驱动下载"><a href="#1、驱动下载" class="headerlink" title="1、驱动下载"></a>1、驱动下载</h3><p>首先，在Intel官网下载网卡驱动程序包，由于Windows Server 2019刚发布，所以目前没有2019的专门页面，但可以通用Windows Server 2016版本（<a target="_blank" rel="noopener" href="https://downloadcenter.intel.com/download/26092/Intel-Network-Adapter-Driver-for-Windows-Server-2016-">下载页面</a>）。下载完成后，得到一个PROWinx64.exe的自解压安装包，使用7zip或其他解压软件解压到任意文件夹。</p>
+<h3 id="2、修改驱动程序文件（以I211为例）"><a href="#2、修改驱动程序文件（以I211为例）" class="headerlink" title="2、修改驱动程序文件（以I211为例）"></a>2、修改驱动程序文件（以I211为例）</h3><p>进入第一步解压后的文件夹，依次进入PRO1000 -&gt; Winx64 -&gt; NDIS64文件夹。这个文件夹中，有举例的I211网卡的驱动安装文件。</p>
+<p><img src="/images/1.png"></p>
+<h4 id="I211"><a href="#I211" class="headerlink" title="I211"></a><strong>I211</strong></h4><h4 id="用记事本打开e1r64x64-inf这个文件，搜索I211找到对应的ID"><a href="#用记事本打开e1r64x64-inf这个文件，搜索I211找到对应的ID" class="headerlink" title="用记事本打开e1r64x64.inf这个文件，搜索I211找到对应的ID"></a>用记事本打开e1r64x64.inf这个文件，搜索I211找到对应的ID</h4><p>和I219-V差不多的步骤，不过配置的文件是同文件夹下的另一个文件，e1r64x64.inf。同样通过搜索找到I211所对应的ID</p>
+<p><img src="/images/5.png"></p>
+<p>用这个ID搜索到对应的键[Intel.NTamd64.6.3.1]和配置行</p>
+<p><img src="/images/6.png"></p>
+<p>将此行复制到后面的另一个键[Intel.NTamd64.6.3]中。保存，关闭。</p>
+<p><img src="/images/7.png"></p>
+<h3 id="开启测试模式"><a href="#开启测试模式" class="headerlink" title="开启测试模式"></a>开启测试模式</h3><p>因为我们修改了签名配置文件，所以如果要安装这些驱动，我们需要开启测试模式，允许未经过签名的驱动。</p>
+<p>在 CMD(管理员) 中执行以下两条命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bcdedit -<span class="built_in">set</span> loadoptions DISABLE_INTEGRITY_CHECKS</span><br><span class="line">bcdedit -<span class="built_in">set</span> TESTSIGNING ON</span><br></pre></td></tr></table></figure>
+
+<p>执行完后，需要重启电脑，以进入测试模式。</p>
+<h3 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h3><p>这里以I211网卡驱动安装为例，I219-V安装同理，只是在后续步骤选择驱动程序文件时不同而已。</p>
+<p>在设备管理器中，找到那个没有驱动的网络控制器，右键选择“更新驱动程序”</p>
+<p>选择“浏览我的计算机以查找驱动程序软件”</p>
+<p>选择“让我从计算机上的可用驱动程序列表中选取”</p>
+<p>下滑下拉列表，找到并选择“网络设配器”，点击下一步</p>
+<p>这里不做选择，点击右下的“从磁盘安装”</p>
+<p>在弹出窗口中，点击右下角的浏览，选择我们刚才修改的I211所在的配置文件，即e1r64x64.inf，然后点击确认。</p>
+<p>上一步点击完确认后，由于我们之前修改好了配置文件，所以就可以在后续窗口里看见I211驱动了，点击下一步。</p>
+<p>这里会弹出一个警告，因为我们对配置文件进行了修改，签名肯定是无法通过验证的，所以这里会有这个警告信息。当然点击“始终安装此驱动程序软件”</p>
+<p>安装完成后，在设备管理器中，也能看见这张网卡信息了。</p>
+<h3 id="关闭测试模式"><a href="#关闭测试模式" class="headerlink" title="关闭测试模式"></a>关闭测试模式</h3><p>安装完成后，关闭测试模式。在 CMD 中执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bcdedit -<span class="built_in">set</span> loadoptions ENABLE_INTEGRITY_CHECKS</span><br><span class="line">bcdedit -<span class="built_in">set</span> TESTSIGNING OFF</span><br></pre></td></tr></table></figure>
+
+<p>重启电脑，完成。</p>
+<h3 id="6、附加：开启WLAN"><a href="#6、附加：开启WLAN" class="headerlink" title="6、附加：开启WLAN"></a>6、附加：开启WLAN</h3><p>默认安装时无线LAN服务是关闭的，如果需要开启，只需要在“添加角色和功能”中，选择开启“无线LAN服务”即可。</p>
+<p>来源：<a target="_blank" rel="noopener" href="http://blog.zivers.com/post/2157.html">http://blog.zivers.com/post/2157.html</a></p>
+<p><a id="tencentyun-install-windowsserver2012r2-and-linux"></a></p>
+<h2 id="为腾讯云主机安装Windows-Server-2012R2-Linux双系统"><a href="#为腾讯云主机安装Windows-Server-2012R2-Linux双系统" class="headerlink" title="为腾讯云主机安装Windows Server 2012R2+Linux双系统"></a>为腾讯云主机安装Windows Server 2012R2+Linux双系统</h2><p>这里使用 Fedora 26 LxQt 版镜像作为示例，首先在腾讯云控制台选择安装 Windows Server 2012R2 系统，默认有 50+2GB 的磁盘空间，后面那个小虚拟磁盘用于交换，较大的在 Linux 下为 <code>/dev/vda1</code>，较小的为 <code>vda2</code>。</p>
+<p>这里用的是腾讯云学生计划每月 1 元的主机，配置很低。</p>
+<p><img src="/images/v2-d8653857f6d2c1083669a146a5d53b71_hd.jpg"></p>
+<p>软件准备：EasyBCD 和 Fedora 安装镜像，个人使用的是 Fedora-LXQt-Live-x86_64-26-1.5.iso 这个。</p>
+<p>第一步用 RDP 远程桌面登录首先截图记录，保存下本机的网络信息（腾讯云不提供 DHCP），以后会用到。</p>
+<p><img src="/images/v2-e4c6030ab2a109ba842f47e803a99e3f_hd.jpg"></p>
+<p>第二步将 Windows 中磁盘 1 压缩出一定空闲空间，个人分配了 30GB，并把磁盘 2 格式化为 FAT32 分区，如图所示：</p>
+<p><img src="/images/v2-b84a6107729b61768eafc6c942728e2e_hd.jpg"></p>
+<p>挂载上 Fedora 的安装镜像，并将根目录内所有文件复制到前面那个小的 2GB FAT32 分区中，并设置一个卷标，这里设为 FEDO。</p>
+<p><img src="/images/v2-9ead8f27148a39af1b6cb5001ee85975_hd.jpg"></p>
+<p>下面打开 EasyBCD，添加一个 NeoGrub 引导项，并进行配置：</p>
+<p>（引导倒计时设为 30s 以上方便后续操作）</p>
+<p><img src="/images/v2-341dbe0607e8736850470b653b344502_hd.jpg"></p>
+<p><img src="/images/v2-7e9efcca2285595a671521e21af3334d_hd.jpg"></p>
+<p>配置文件内写入：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title fedora LiveCD Method 1</span><br><span class="line">root (hd0,1)</span><br><span class="line">kernel /vmlinuz0 <span class="attr">root</span>=live:LABEL=FEDO rootfstype=auto ro rd.live.image quiet</span><br><span class="line">initrd /initrd0.img</span><br><span class="line">boot</span><br></pre></td></tr></table></figure>
+
+<p>注意前面 LABEL 后面的应该和你的存放安装镜像的分区标识相同。</p>
+<p>下面注意将安装镜像下 isolinux 目录中 vmlinuz 和 initrd 俩文件复制到 C 盘根目录并改名为 vmlinuz0 和 initrd0。</p>
+<p>下面重新启动虚拟机，在腾讯云后台的 VNC 界面打开，可见到如下菜单，选择 NeoGrub 引导。</p>
+<p><img src="/images/v2-040643458ffc6ab8ad6e3fa4dad6751e_hd.jpg"></p>
+<p>若配置正常即可进入 Fedora 的 LiveCD 环境，点击开始安装即可，注意安装到之前分出的 &#x2F;dev&#x2F;vda1 中。</p>
+<p><img src="/images/v2-8e310bf3dfc466b283d853b74df26dc6_hd.jpg"></p>
+<p><img src="/images/v2-458da2227961bb3ac1e430f16a69256c_hd.jpg"></p>
+<p>安装完以后重启虚拟机，可以关闭图形界面然后确认一下分区情况，再重新启动。</p>
+<p><img src="/images/v2-ad157b48f4226fd47dad1f5bf5a2fa85_hd.jpg"></p>
+<p>顺便改一下 grub 菜单的超时时间，默认只有 5s 很难切换系统。</p>
+<p>编辑 <code>/etc/default/grub</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vi /etc/default/grub</span><br></pre></td></tr></table></figure>
+
+<p>第一行改为较大的如 30 以上即可，便可显示出菜单进行切换。</p>
+<p>执行下面命令更新 grub 配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<p>下面重新启动：</p>
+<p><img src="/images/v2-938eb10b8030e575ab70b47820825376_hd.jpg"></p>
+<p>出现下面界面表示双系统正常运行，下面自行配置 Linux 下的网络参数即可进行 ssh 连接和其他操作，下面不再赘述。</p>
+<p><img src="/images/v2-8dd751b55cf0ae185b3cd16e37bcf4dd_hd.jpg"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/windows/" rel="tag"># windows</a>
+              <a href="/tags/wsl/" rel="tag"># wsl</a>
+              <a href="/tags/windows-server/" rel="tag"># windows-server</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/04/cloud-and-online-services/" rel="prev" title="云主机与在线服务试用合集">
+                  <i class="fa fa-angle-left"></i> 云主机与在线服务试用合集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/05/17/virtualization-and-containers/" rel="next" title="虚拟化与容器合集">
+                  虚拟化与容器合集 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
