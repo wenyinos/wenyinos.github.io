@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这个月做了一堆看起来毫不相干的事：给一个模拟器写 AVX-512 优化、给桌面应用补 FreeBSD 安装包、把一个 Node 项目从空库跑起来、修一个 Electron 分支的冷启动白屏、给两本开源书提 PR。 它们的共同点是：每一个都在”看起来已经完成”的地方翻车。  CI 全绿，产物装不上； 测试通过，是因为根本没跑到那段代码； 类型检查全绿，打包才炸； 计划里写着”优化这里能涨 20%”，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从计划到产物：九个「看起来没问题」的验证缺口">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/10/19/verify-before-you-build/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="这个月做了一堆看起来毫不相干的事：给一个模拟器写 AVX-512 优化、给桌面应用补 FreeBSD 安装包、把一个 Node 项目从空库跑起来、修一个 Electron 分支的冷启动白屏、给两本开源书提 PR。 它们的共同点是：每一个都在”看起来已经完成”的地方翻车。  CI 全绿，产物装不上； 测试通过，是因为根本没跑到那段代码； 类型检查全绿，打包才炸； 计划里写着”优化这里能涨 20%”，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-18T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="avx512">
+<meta property="article:tag" content="ci">
+<meta property="article:tag" content="freebsd">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="optimization">
+<meta property="article:tag" content="packaging">
+<meta property="article:tag" content="performance">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/10/19/verify-before-you-build/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/10/19/verify-before-you-build/","path":"2026/10/19/verify-before-you-build/","title":"从计划到产物：九个「看起来没问题」的验证缺口"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从计划到产物：九个「看起来没问题」的验证缺口 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%AE%A1%E8%AE%A1%E5%88%92%EF%BC%9A%E4%B8%80%E4%BB%BD%E4%BC%98%E5%8C%96%E6%96%87%E6%A1%A3%E9%87%8C%E7%9A%84%E5%9B%9B%E5%A4%84%E4%BA%8B%E5%AE%9E%E9%94%99%E8%AF%AF"><span class="nav-number">1.</span> <span class="nav-text">一、先审计划：一份优化文档里的四处事实错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BE%AE%E5%9F%BA%E5%87%86%E4%BC%9A%E8%A2%AB%E7%BC%96%E8%AF%91%E5%99%A8%E9%AA%97"><span class="nav-number">2.</span> <span class="nav-text">二、微基准会被编译器骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%A6%E5%86%B3%E4%B8%80%E4%B8%AA%E4%BC%98%E5%8C%96%EF%BC%8C%E9%9C%80%E8%A6%81%E6%AF%94%E5%AE%9E%E7%8E%B0%E5%AE%83%E6%9B%B4%E7%A1%AC%E7%9A%84%E4%BE%9D%E6%8D%AE"><span class="nav-number">3.</span> <span class="nav-text">三、否决一个优化，需要比实现它更硬的依据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8F%AA%E6%9C%89%E2%80%9D%E8%A3%85%E5%AE%8C%E8%83%BD%E8%B7%91%E2%80%9D%E6%89%8D%E7%AE%97%E9%AA%8C%E8%AF%81%EF%BC%9AFreeBSD-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85"><span class="nav-number">4.</span> <span class="nav-text">四、只有”装完能跑”才算验证：FreeBSD 二进制包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81overlay-%E4%B8%8A%E7%9A%84%E4%B8%89%E6%96%B9%E5%90%88%E5%B9%B6"><span class="nav-number">5.</span> <span class="nav-text">五、overlay 上的三方合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E7%A9%BA%E5%BA%93%E8%B5%B7%E4%B8%8D%E6%9D%A5%EF%BC%9A%E8%BF%81%E7%A7%BB%E8%84%9A%E6%9C%AC%E4%B8%8D%E6%98%AF%E5%BB%BA%E5%BA%93%E8%84%9A%E6%9C%AC"><span class="nav-number">6.</span> <span class="nav-text">六、空库起不来：迁移脚本不是建库脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%85%A8%E7%BB%BF%EF%BC%8C%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%83%BD%E6%9E%84%E5%BB%BA"><span class="nav-number">7.</span> <span class="nav-text">七、类型检查全绿，不等于能构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E4%BA%A7%E7%89%A9%E6%A0%B8%E5%AF%B9%E4%B8%8E%E5%8D%87%E7%BA%A7%E8%B7%AF%E5%BE%84"><span class="nav-number">8.</span> <span class="nav-text">八、产物核对与升级路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E7%BB%99%E6%96%87%E6%A1%A3%E6%8F%90-PR-%E6%97%B6%EF%BC%8C%E5%AE%A1%E6%9F%A5%E6%84%8F%E8%A7%81%E4%B9%9F%E8%A6%81%E5%AE%9E%E6%B5%8B"><span class="nav-number">9.</span> <span class="nav-text">九、给文档提 PR 时，审查意见也要实测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/19/verify-before-you-build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从计划到产物：九个「看起来没问题」的验证缺口 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从计划到产物：九个「看起来没问题」的验证缺口
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-19T00:00:00+08:00">2026-10-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这个月做了一堆看起来毫不相干的事：给一个模拟器写 AVX-512 优化、给桌面应用补 FreeBSD 安装包、把一个 Node 项目从空库跑起来、修一个 Electron 分支的冷启动白屏、给两本开源书提 PR。</p>
+<p>它们的共同点是：<strong>每一个都在”看起来已经完成”的地方翻车</strong>。</p>
+<ul>
+<li>CI 全绿，产物装不上；</li>
+<li>测试通过，是因为根本没跑到那段代码；</li>
+<li>类型检查全绿，打包才炸；</li>
+<li>计划里写着”优化这里能涨 20%”，那行代码默认配置下根本不执行。</li>
+</ul>
+<p>这篇按”验证”这条线把它们串起来。</p>
+<span id="more"></span>
+
+<h2 id="一、先审计划：一份优化文档里的四处事实错误"><a href="#一、先审计划：一份优化文档里的四处事实错误" class="headerlink" title="一、先审计划：一份优化文档里的四处事实错误"></a>一、先审计划：一份优化文档里的四处事实错误</h2><p>给 86Box（一个 PC 模拟器）的 Voodoo 显卡写 AVX-512 纹理解码之前，我先逐条核对了那份优化计划里的行号、函数名和编译基线。结果<strong>四处事实错误，其中两处会直接把方向带偏</strong>。</p>
+<p><strong>错误一：要优化的代码路径，默认配置根本不执行。</strong></p>
+<p>计划里 P3 的目标是把 C 解释器的 span 内层循环向量化，验收标准写”帧率提升 ≥20%”。</p>
+<p>但 Voodoo 有两条<strong>互斥</strong>的渲染路径：默认 <code>recompiler=1</code> 时，<code>vid_voodoo_render.c:1094-1099</code> 直接调用 JIT 生成的 <code>voodoo_draw()</code>，整个 C span 循环被跳过。也就是说，这个改动只在手动关掉 recompiler 时才有意义——那条 20% 的验收标准，测的是默认没人用的配置。</p>
+<p><strong>错误二：搞错了要优化的函数。</strong></p>
+<p>计划称 <code>voodoo_recalc_tex12()</code> 与 <code>voodoo_recalc_tex3()</code> 做 16 位→RGBA32 解码，并断言”纯查表+移位+或、无分支无跨像素依赖、天然 16-wide”。</p>
+<p>实际读代码：这两个函数只算每级 mip 的元数据（<code>tex_base</code>、<code>tex_w_mask</code>、<code>tex_shift</code>、<code>tex_lod</code>、<code>tex_width</code>），循环次数不超过 10、分支密集、每次纹理参数变化才调用一次。<strong>它们没有任何 texel 解码。</strong> 真正的解码循环在别处。</p>
+<p><strong>错误三：codegen 早就有 SIMD 了。</strong></p>
+<p>计划说 codegen “运行时发射纯标量 x86-64 指令流……无 SSE&#x2F;AVX 编码”。</p>
+<p>实际 <code>vid_voodoo_codegen_x86-64.h</code> 里有 <strong>301 处 XMM 引用</strong>，配 <code>__m128i</code> 查表，真实发射 <code>PMULLW</code>、<code>PADDW</code>、<code>PSRLW</code>、<code>PACKUSWB</code>、<code>PUNPCKLBW</code>、<code>PINSRW</code> 这些 128 位打包指令（用于双线性过滤，没有 AVX）。</p>
+<p>这个错误的后果是<strong>低估了难度</strong>：不是”从零新建向量后端”，而是”在现有 SSE2 发射器上加 AVX-512 路径 + CPUID 分派”。</p>
+<p><strong>错误四：把默认关闭的可选滤镜当成热点。</strong></p>
+<p><code>voodoo_filterline_v1/v2</code> 只在 <code>scrfilter &amp;&amp; scrfilterEnabled</code> 时调用，是默认关闭的功能；内部还是 3 通道交错查表，并带行内前向依赖：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fil[x*<span class="number">3</span>] = thefilterb[fil[x*<span class="number">3</span>]][fil[(x<span class="number">-1</span>)*<span class="number">3</span>]];</span><br></pre></td></tr></table></figure>
+
+<p>这不是”无依赖的规则变换”，SIMD 化要专门处理前缀依赖。</p>
+<p><strong>这四条都不是笔误，是”没读代码就写计划”。</strong> 审计划的成本大约半天，而照着错的计划写一周代码再发现方向不对，成本是这个的十倍。</p>
+<h2 id="二、微基准会被编译器骗"><a href="#二、微基准会被编译器骗" class="headerlink" title="二、微基准会被编译器骗"></a>二、微基准会被编译器骗</h2><p>计划修完之后开始写 P1（纹理解码）。先做了个微基准，结果 A8&#x2F;I8 两种格式的数字明显不对。</p>
+<p>查下来是 GCC 把重复写入同一个全局数组<strong>做了死存储消除</strong>——循环里的计算根本没执行。加 <code>-fno-tree-dse</code> 仍然异常，因为循环被整体提到外层、结果恒定。最后改成每次迭代移动源指针，才有可信数字。</p>
+<p>修完基准，真数字是：纯位运算格式 <strong>2–6 倍</strong>，调色板类因为要 <code>vpgatherdd</code> 只有 <strong>1.3–1.5 倍</strong>（印证了”gather 受内存带宽封顶”的判断）。</p>
+<p>另一个收获来自单元测试：RGB332 的蓝通道在原代码里是<strong>两步顺序自或</strong>，我为了写得漂亮压缩成一次表达式，结果差 1。测了 14 种格式 × 5 种宽度做字节级对比（8 位格式覆盖全部 256 个输入值、16 位覆盖全部 65536 个），才把这处偏差抓住。</p>
+<p><strong>结论：优化开始前先确认你的基准本身没有被优化掉。</strong></p>
+<h2 id="三、否决一个优化，需要比实现它更硬的依据"><a href="#三、否决一个优化，需要比实现它更硬的依据" class="headerlink" title="三、否决一个优化，需要比实现它更硬的依据"></a>三、否决一个优化，需要比实现它更硬的依据</h2><p>计划的最后一项是 P4：把 JIT 生成的代码也向量化。用户也希望做。</p>
+<p>侦察完之后我给了”不交付代码”的结论，三个硬阻塞：</p>
+<p><strong>1. JIT 是逐像素发射的。</strong> <code>voodoo_generate()</code> 从第 826 行到 3533 行是一整条逐像素流水线，末尾 <code>JNZ</code> 回跳构成 x 循环，中间状态全活在寄存器和栈槽里。要吃 AVX-512，必须让 16 个像素同时在飞——等于把那约 2700 行用向量指令重写，并按状态组合特化（ARM64 后端还有 4807 行要同步改）。现有的 SSE2 只是”像素内 SIMD”（单像素内 4 个纹素），扩不成”跨像素 SIMD”。</p>
+<p><strong>2. 最热路径的除法无法精确向量化。</strong> 透视校正每个像素每个 TMU 要算 <code>_w = (1ULL &lt;&lt; 48) / W</code>，而 <code>tmu0_w</code> 是 <code>int64_t</code> 且除法无符号。按位复现需要<strong>无符号 64 位除法</strong>和 <strong>64×64 精确乘法</strong>，AVX-512 两样都没有。任何近似都会破坏 accuracy-first 的前提。</p>
+<p><strong>3. 实测余量只有 1.85%，而且可归因于编译选项。</strong></p>
+<p>这一条最值得说。端到端跑 3DMark 99 Max：AVX-512 版 1654 分，原版 1624。看起来是 +1.85%，但对比是<strong>混的</strong>——原版用普通 Release，我这一版用 Optimized preset（<code>-march=native -O3 -flto</code>）。用户关掉多余进程重跑优化版得 1630，差异直接落回噪声。而且 CPU 3DMark（纯 CPU 测试，与纹理解码无关）也涨了 1.11%，说明增益主要来自编译选项对 dynarec 的通用提速。</p>
+<p>更根本的是<strong>这个基准没有判别力</strong>：3DMark 99 Max 跑在模拟的 P2-166 上，场景被 guest CPU 拖住，而不是 Voodoo 光栅化（CPU 子项与总分几乎同步变化就是证据）。</p>
+<p><strong>否决一个优化，需要证明”做了也没用”，而不是”我懒得做”。</strong> 上面三条中任何一条成立，都足够。</p>
+<h2 id="四、只有”装完能跑”才算验证：FreeBSD-二进制包"><a href="#四、只有”装完能跑”才算验证：FreeBSD-二进制包" class="headerlink" title="四、只有”装完能跑”才算验证：FreeBSD 二进制包"></a>四、只有”装完能跑”才算验证：FreeBSD 二进制包</h2><p>给一本 FreeBSD 开源书写”如何制作 pkg 包”这一节时，我把每条命令都在真机上跑了一遍。收获是四个纯靠实测才能发现的事实。</p>
+<p><strong>1. pkg 的本地数据库是 SQLite，不是目录。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/db/pkg/local.sqlite</span><br></pre></td></tr></table></figure>
+
+<p>没有 <code>/var/db/pkg/&lt;包名&gt;-&lt;版本&gt;/+MANIFEST</code> 这种逐包目录。读元数据要用 <code>pkg query</code>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg query -e <span class="string">&#x27;%n = curl&#x27;</span> <span class="string">&#x27;%dn %do %dv&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. <code>find -type f</code> 会漏掉符号链接。</strong></p>
+<p>打包时 plist 靠 <code>find stage</code> 生成，而 <code>-type f</code> 只匹配普通文件。含符号链接的目录会少列一条，链接就不会进包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find stage \( -<span class="built_in">type</span> f -o -<span class="built_in">type</span> l \) | sed <span class="string">&#x27;s|^stage||&#x27;</span> &gt; meta/files.plist</span><br></pre></td></tr></table></figure>
+
+<p>实测：改前少一条，改后链接被正常打包、安装后仍是符号链接、卸载无残留。</p>
+<p><strong>3. <code>pkg install</code> 接受本地归档路径。</strong></p>
+<p>不需要改用 <code>pkg add</code>。<code>pkg install ./hello-1.0.pkg</code> 实测装成功、程序能跑、<code>pkg delete</code> 之后无残留。</p>
+<p><strong>4. BSD tar 不剥前导 <code>/</code>。</strong></p>
+<p>pkg 归档成员路径本身就是绝对路径，FreeBSD 上 <code>tar --zstd -tf</code> 显示的是 <code>/usr/local/bin/hello</code>。GNU tar 才会剥掉开头的 <code>/</code>——写文档或工具时别弄混。</p>
+<p>另外几个参数级的坑：安装&#x2F;卸载脚本有四个固定文件名（<code>+PRE_INSTALL</code>、<code>+POST_INSTALL</code>、<code>+PRE_DEINSTALL</code>、<code>+POST_DEINSTALL</code>，都需要可执行权限），桌面条目要装到 <code>/usr/local/share/applications/</code>、图标要按标准尺寸装到 <code>hicolor/&lt;尺寸&gt;x&lt;尺寸&gt;/apps/</code>，否则桌面环境不认。</p>
+<h2 id="五、overlay-上的三方合并"><a href="#五、overlay-上的三方合并" class="headerlink" title="五、overlay 上的三方合并"></a>五、overlay 上的三方合并</h2><p>另一个项目用 overlay 的方式维护平台补丁（上游源码一字节不改，构建时叠加）。上游发 rc.2 时，27 个被覆盖的文件全部需要重建，合并后 19 处冲突。</p>
+<p>三个反复出现的坑：</p>
+<p><strong><code>merge: true</code> 的文件不能整文件三方合并。</strong> 上游已经删除的键会被 fork 副本原样带回来。后果不是报错，而是 lockfile 对不上（<code>ERR_PNPM_OUTDATED_LOCKFILE</code>）。正确语义是”以上游新版为基底、只叠加自己的键”——<strong>只增，不恢复</strong>。</p>
+<p><strong>未被覆盖的文件会 import 被覆盖文件的新增导出。</strong> 上游在 <code>prepare-runtime.ts</code> 里加了三个导出，而另外两个我没覆盖的脚本直接 import 它们。所以”只修当前报错那一处”必然还会失败——必须让整层 overlay 与上游新版对齐。</p>
+<p><strong><code>git merge-file -p</code> 不写文件。</strong> <code>-p</code> 是”把结果写到标准输出”，不加重定向的话目标文件纹丝不动。一度以为 12 个文件”干净合并”了，抽查才发现全是原样——冲突判定有效，但内容根本没落盘。</p>
+<p>还有一处只有 CI 才能暴露：合并时重建根 <code>package.json</code>，脚本值漏了 <code>package:</code> 前缀（写成 <code>run linux:x64</code>，正确是 <code>run package:linux:x64</code>）。本地 <code>typecheck</code> 不会有意见，打包 job 直接失败。</p>
+<h2 id="六、空库起不来：迁移脚本不是建库脚本"><a href="#六、空库起不来：迁移脚本不是建库脚本" class="headerlink" title="六、空库起不来：迁移脚本不是建库脚本"></a>六、空库起不来：迁移脚本不是建库脚本</h2><p>一个 Node 项目要解决”空库能不能跑起来”。空库能自动创建，但 <code>pnpm db:migrate</code> 在<strong>第 1 个迁移就失败</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: no such table: materials</span><br></pre></td></tr></table></figure>
+
+<p>根因很朴素：<code>migrations/</code> 是<strong>对已有库的增量补丁</strong>（加列、补边角表），不是全量建库脚本。运行时那套 ensure 机制把所有函数跑一遍，只能建出 <strong>86 &#x2F; 127 张表</strong>——缺 <code>employees</code>、<code>products</code>、<code>distributors</code> 等 41 张，于是大量接口 500。</p>
+<p>修法是补一个独立的 <code>db:init</code>：全量 DDL（126 张表 + 索引&#x2F;视图&#x2F;触发器，共 212 个对象）+ seed 数据 + 迁移登记。实测从零建库成功、全部接口 200、<strong>14&#x2F;14 款商品可下单</strong>。</p>
+<p>顺带两个：历史迁移已经手工应用过，重跑会报错，所以加了个 <code>db:baseline</code>（只登记、不执行 SQL）；以及 <strong>better-sqlite3 的游标迭代中不能写同一连接</strong>，批量脱敏要改成一次性 <code>all()</code> 读完再回写。</p>
+<p>同一轮依赖升级里还有三个坑：</p>
+<ul>
+<li><strong>pnpm 12 默认拦截依赖的构建脚本</strong>（<code>ERR_PNPM_IGNORED_BUILDS</code>），要在 <code>pnpm-workspace.yaml</code> 里写 <code>allowBuilds</code> 白名单。我第一次漏了 <code>unrs-resolver</code>，ESLint 的原生解析器又被拦。</li>
+<li><strong>Node 版本要和原生模块 ABI 对齐</strong>：生产跑 Node 22，我却在系统 Node 24 下装依赖，<code>better-sqlite3</code> 直接不可用。</li>
+<li><strong><code>HOSTNAME</code> 会被 shell 自动设置</strong>。<code>process.env.HOSTNAME || &#39;0.0.0.0&#39;</code> 在普通 shell 里拿到的是主机名，服务只绑 LAN IP，而且主机名解析到 IPv6 loopback，导致 <code>next/font/google</code> 加载失败、页面 500。显式 <code>HOSTNAME=0.0.0.0</code> 才对。</li>
+</ul>
+<h2 id="七、类型检查全绿，不等于能构建"><a href="#七、类型检查全绿，不等于能构建" class="headerlink" title="七、类型检查全绿，不等于能构建"></a>七、类型检查全绿，不等于能构建</h2><p>一个 Electron 分支合并上游之后，<strong>冷启动只出托盘、不建主窗口</strong>（Windows 与 Linux 都复现）。日志里 <code>[startup] 创建主窗口</code> 出现 <strong>0 次</strong>，每次启动精确对应一次：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unhandledRejection: &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根因：解决合并冲突时，<code>ZCODE_TELEMETRY_ENABLED</code> 和 <code>ZCODE_ARMS_RUM_ENDPOINT</code> 从 <code>packages/shared/src/index.ts</code> 的导出表里漏掉了，而桌面主进程的启动代码直接 import 它 → <code>ReferenceError</code> → 启动流程中断。</p>
+<p>这条 bug 的三个排查障碍都值得记：</p>
+<p><strong>1. <code>JSON.stringify(new Error())</code> 等于 <code>{}</code>。</strong> 日志格式化用了 <code>JSON.stringify</code>，而 Error 的 message&#x2F;stack 是不可枚举属性，于是所有信息都没了。日志里只剩一个空对象。</p>
+<p><strong>2. <code>pnpm typecheck</code> 不覆盖 <code>tsconfig.main.json</code>。</strong> 只有 tsup 从源码打包时才炸——所以”类型检查全绿”给了完全错误的安全感。</p>
+<p><strong>3. 单实例锁在模块加载期就获取。</strong> 第二次启动直接退出，无法用双实例复现。最后靠可重定向 userData 的环境变量起了个隔离实例，才拿到真堆栈：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReferenceError: ZCODE_TELEMETRY_ENABLED is not defined</span><br><span class="line">  at .../out/main/index.js:1398:17232</span><br></pre></td></tr></table></figure>
+
+<p>验证方式也值得一提：修复后<strong>解包 <code>app.asar</code></strong>，确认 <code>out/main/index.js</code> 里这两个标识符作为自由变量出现 <strong>0 次</strong>（故障版本的安装包里是原样保留的）。光看 CI 绿不够。</p>
+<h2 id="八、产物核对与升级路径"><a href="#八、产物核对与升级路径" class="headerlink" title="八、产物核对与升级路径"></a>八、产物核对与升级路径</h2><p>几条短但实用的：</p>
+<p><strong>下载会被截断。</strong> 发布一个 7.4MB 的包，<code>curl</code> 只拿到 6.1MB，SHA256 对不上、<code>tar</code> 报损坏。改用 <code>gh release download</code> 后哈希完全吻合——<strong>先排除”下载不完整”，再怀疑包本身</strong>。</p>
+<p><strong><code>left</code> 是 MySQL 保留字。</strong> 写甘特图的查询时直接用了 <code>left</code>，SQL 语法错误；必须反引号包起来。</p>
+<p><strong>模块内不能定义 <code>delete($id)</code>。</strong> 与父类 <code>model::delete($table, $id)</code> 签名不兼容，直接 Fatal。软删除应该调用父类方法并传表名。</p>
+<p><strong>PkgBase 跨版本升级有几个硬前提</strong>：先 <code>bectl create</code> 建启动环境（pkgbase 不会自动建）、<strong>不要在 pkgbase 机器上跑 <code>freebsd-update</code></strong>、升级前把引导器复制步骤放在重启<strong>之前</strong>（否则可能用旧引导器引导新系统，且启不来后再也没机会执行命令），以及 <code>Newer FreeBSD version for package</code> 默认选 <code>N</code> 会中止升级。</p>
+<h2 id="九、给文档提-PR-时，审查意见也要实测"><a href="#九、给文档提-PR-时，审查意见也要实测" class="headerlink" title="九、给文档提 PR 时，审查意见也要实测"></a>九、给文档提 PR 时，审查意见也要实测</h2><p>给两本开源书提 PR 时都碰上了自动审查 bot。做法是<strong>逐条核对，成立就改、不成立就给实测反证</strong>：</p>
+<ul>
+<li>有一次 6 条意见，4 条成立（包括”<code>find -type f</code> 会漏符号链接”这种我确实写错的），2 条不成立——它说”<code>pkg install</code> 不能装本地归档”、”tar 不应显示绝对路径”，我把实测输出贴上去，两条都站不住。</li>
+<li>另一次 7 条，5 条成立，其中”ABI 硬编码架构”和”引导器复制顺序”是真的会让人装坏系统的错误；2 条不成立，同样附了 <code>pkg-static -vv</code> 的输出反证。</li>
+</ul>
+<p>还有一个纯流程的坑：<strong>文档仓库里由 workflow 生成的文件不能只改源头</strong>。<code>mu-lu.md</code> 是从 <code>SUMMARY.md</code> 生成的，一级标题也是从 SUMMARY 同步的——改了正文标题却不动 SUMMARY，下一次 CI 会被覆盖回去。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>九件事，一条线：<strong>“看起来完成了”和”真的完成了”之间，隔着一层必须亲自验的东西</strong>。</p>
+<ul>
+<li>审计划的成本远低于照着错计划写一周代码；</li>
+<li>基准先确认没被编译器优化掉，对比先确认没混入其他变量；</li>
+<li>测试通过可能只是因为没跑到那段代码（<code>enabled: false</code> 时函数在顶部就 return）；</li>
+<li>类型检查、CI 全绿、生成产物，这三件事没有一件能证明”装上去能用”；</li>
+<li>否定一个方案和肯定一个方案一样，都需要证据——而且要更硬。</li>
+</ul>
+<p>最后一句：<strong>错误日志本身也会骗你。</strong> 那 4186 条记录、那个 <code>unhandledRejection: {}</code>，看起来都在指向别处。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+              <a href="/tags/packaging/" rel="tag"># packaging</a>
+              <a href="/tags/freebsd/" rel="tag"># freebsd</a>
+              <a href="/tags/ci/" rel="tag"># ci</a>
+              <a href="/tags/performance/" rel="tag"># performance</a>
+              <a href="/tags/optimization/" rel="tag"># optimization</a>
+              <a href="/tags/avx512/" rel="tag"># avx512</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/14/self-hosted-mcp-server-security/" rel="prev" title="自建 MCP 服务端：认证、冒充与删除端点的坑">
+                  <i class="fa fa-angle-left"></i> 自建 MCP 服务端：认证、冒充与删除端点的坑
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/10/20/legacy-code-meets-modern-runtime/" rel="next" title="老代码遇上新运行时：编码、字符集与那些不再报错的写法">
+                  老代码遇上新运行时：编码、字符集与那些不再报错的写法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

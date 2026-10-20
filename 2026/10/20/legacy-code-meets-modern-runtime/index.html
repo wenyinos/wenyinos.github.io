@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这个月连着做了三次”老代码搬家”：2003 年的 Discuz! 2.5 SP1（GBK 编码，125 个 PHP 文件）、跑了多年的 Discuz 4.1 论坛（PHP 8.5 移植 + 安全加固），以及一个 Delphi 7 写的、给 Windows 95 用的 AI 聊天客户端。 三套技术栈，年代跨度二十年，但踩的坑出奇地同构：真正要命的不是语法报错，而是那些”写完那一刻是对的、换了环境之后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="老代码遇上新运行时：编码、字符集与那些不再报错的写法">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/10/20/legacy-code-meets-modern-runtime/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="这个月连着做了三次”老代码搬家”：2003 年的 Discuz! 2.5 SP1（GBK 编码，125 个 PHP 文件）、跑了多年的 Discuz 4.1 论坛（PHP 8.5 移植 + 安全加固），以及一个 Delphi 7 写的、给 Windows 95 用的 AI 聊天客户端。 三套技术栈，年代跨度二十年，但踩的坑出奇地同构：真正要命的不是语法报错，而是那些”写完那一刻是对的、换了环境之后">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="debugging">
+<meta property="article:tag" content="delphi">
+<meta property="article:tag" content="gbk">
+<meta property="article:tag" content="legacy">
+<meta property="article:tag" content="migration">
+<meta property="article:tag" content="php">
+<meta property="article:tag" content="php8">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/10/20/legacy-code-meets-modern-runtime/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/10/20/legacy-code-meets-modern-runtime/","path":"2026/10/20/legacy-code-meets-modern-runtime/","title":"老代码遇上新运行时：编码、字符集与那些不再报错的写法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>老代码遇上新运行时：编码、字符集与那些不再报错的写法 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%89%E5%A5%97%E7%8E%AF%E5%A2%83%EF%BC%8C%E5%90%8C%E4%B8%80%E6%9D%A1%E7%BA%AA%E5%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">一、三套环境，同一条纪律</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%87%A0%E7%99%BE%E5%A4%84%E8%A3%B8%E4%B8%8B%E6%A0%87%EF%BC%9A%E5%B7%A5%E5%85%B7%E8%83%BD%E6%94%B9%EF%BC%8C%E4%BD%86%E5%B7%A5%E5%85%B7%E6%9C%AC%E8%BA%AB%E8%A6%81%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">二、几百处裸下标：工具能改，但工具本身要验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%8C%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%EF%BC%8C%E4%B8%A4%E5%A4%84%E8%A6%81%E7%9B%B8%E5%8F%8D%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">三、同一个函数，两处要相反的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%89%E4%BA%9B%E2%80%9D%E5%9D%8F%E4%BB%A3%E7%A0%81%E2%80%9D%E6%98%AF%E6%9C%89%E6%84%8F%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">四、有些”坏代码”是有意的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%80%E4%B8%AA%E8%B5%8B%E5%80%BC%EF%BC%8C%E8%AE%A9%E6%89%80%E6%9C%89%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%99%E8%AF%AF%E5%8F%98%E6%88%90%E7%99%BD%E5%B1%8F"><span class="nav-number">5.</span> <span class="nav-text">五、一个赋值，让所有数据库错误变成白屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81GBK-%E6%98%AF%E5%85%A8%E7%A8%8B%E7%9A%84%E7%BA%A6%E6%9D%9F"><span class="nav-number">6.</span> <span class="nav-text">六、GBK 是全程的约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%B7%91%E5%BE%97%E8%B5%B7%E6%9D%A5%E4%BD%86%E4%BC%9A%E5%87%BA%E4%BA%8B%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">7.</span> <span class="nav-text">七、跑得起来但会出事的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81Windows-%E4%BE%A7%E7%9A%84%E8%80%81%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="nav-number">8.</span> <span class="nav-text">八、Windows 侧的老工具链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%AE%B9%E5%99%A8%E4%B8%8E%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E4%B8%89%E4%B8%AA%E7%BB%86%E8%8A%82"><span class="nav-number">9.</span> <span class="nav-text">九、容器与运行环境的三个细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E9%A1%BA%E6%89%8B%E8%A1%A5%E7%9A%84%E5%AE%89%E5%85%A8%E7%BC%BA%E5%8F%A3"><span class="nav-number">10.</span> <span class="nav-text">十、顺手补的安全缺口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/20/legacy-code-meets-modern-runtime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="老代码遇上新运行时：编码、字符集与那些不再报错的写法 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          老代码遇上新运行时：编码、字符集与那些不再报错的写法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-20 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-20T00:00:00+08:00">2026-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这个月连着做了三次”老代码搬家”：2003 年的 Discuz! 2.5 SP1（GBK 编码，125 个 PHP 文件）、跑了多年的 Discuz 4.1 论坛（PHP 8.5 移植 + 安全加固），以及一个 Delphi 7 写的、给 Windows 95 用的 AI 聊天客户端。</p>
+<p>三套技术栈，年代跨度二十年，但踩的坑出奇地同构：<strong>真正要命的不是语法报错，而是那些”写完那一刻是对的、换了环境之后默默变味”的写法</strong>。语法错误至少会告诉你哪一行；静默失效只能靠对比和实测去挖。</p>
+<p>本文按问题类型整理，每一条都附上具体的错误信息和修法。</p>
+<span id="more"></span>
+
+<h2 id="一、三套环境，同一条纪律"><a href="#一、三套环境，同一条纪律" class="headerlink" title="一、三套环境，同一条纪律"></a>一、三套环境，同一条纪律</h2><p>改代码之前先把运行栈搭起来，否则后面每改一处都分不清是”改错了”还是”环境没搭对”。</p>
+<ul>
+<li><strong>Discuz! 2.5</strong>：podman 起 php-fpm 8.5 + MySQL 5.7 + nginx，代码挂进去。两个前置确认：镜像里必须已编译 <code>mysqli</code>、<code>iconv</code>、<code>mbstring</code>、<code>gd</code>，且 <code>short_open_tag=On</code>（这套源码里大量 <code>&lt;?</code> 短标签）；数据库的 <code>sql_mode</code> 要清空，否则严格模式下老代码那些”缺列 INSERT”会直接失败。</li>
+<li><strong>Discuz 4.1</strong>：同一套栈，但目标是”先修线上报错，再做安全加固”，所以基线必须能从生产 dump 还原。</li>
+<li><strong>Delphi 7</strong>：本机没有编译器，只能在 KVM 的 Windows 里装 Delphi 7，按 Ctrl+F9 编译。</li>
+</ul>
+<p>纪律是同一条：<strong>分阶段提交</strong>（阻断项 → 告警治理 → 加固 → 建库 → 验证），每个阶段单独回退。</p>
+<h2 id="二、几百处裸下标：工具能改，但工具本身要验"><a href="#二、几百处裸下标：工具能改，但工具本身要验" class="headerlink" title="二、几百处裸下标：工具能改，但工具本身要验"></a>二、几百处裸下标：工具能改，但工具本身要验</h2><p>最开始的症状很直接：Discuz 2.5 <strong>每个 GET 请求都致命</strong>，首页都起不来。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Fatal error: Uncaught TypeError: extract(): Argument #1 ($array)</span><br><span class="line">must be of type array, false given</span><br></pre></td></tr></table></figure>
+
+<p>根因在引导层：一个转义函数对空数组返回了 <code>false</code>，调用方拿去做 <code>extract()</code>。PHP 8 里 <code>extract(false)</code> 直接致命。</p>
+<p>但这个库真正的硬骨头在别处：<strong>全站 841 处裸数组键</strong>，分布在 46 个文件里，其中 <strong>572 处藏在双引号字符串内</strong>。</p>
+<p><code>$var[key]</code> 在 PHP 5 里会被宽容地当成字符串键，PHP 8 把它当未定义常量，直接报错。</p>
+<p><strong>这里千万别用正则批量替换。</strong> 裸键和字符串字面量长得一模一样，正则会误伤注释和用户文本。正确做法是用 PHP 自己的 tokenizer 写一个只认”数组下标位置”的改写器。</p>
+<p>然后我多踩了一步：第一版改完 lint 干净，第二版想更精确，结果<strong>反而改坏了 9 个文件</strong>——因为 PHP 8 的简单插值只支持一个下标，而带引号的下标在简单插值里本身就构成解析错误。最后只能按第一版重建。</p>
+<p>同类问题在 Discuz 4.1 里换了张脸：<strong>复杂插值 <code>{$arr[key]}</code></strong> 的裸键在 PHP 8 被当常量，报 <code>Undefined constant &quot;fid&quot;</code>。注意它和简单插值 <code>$arr[key]</code> 语义不同——后者才是字符串键。两种写法只差一对花括号。</p>
+<p>这里还有两个连带教训：</p>
+<ul>
+<li>静态扫描器最初把”双引号字符串内的下标”整个排除了（因为简单插值确实安全），结果漏掉了复杂插值这一类。<strong>这个问题是靠端到端遍历页面抓出来的，不是扫出来的。</strong></li>
+<li>批量加引号时用的是”匹配最内层键”的正则，嵌套结构会漏：<code>{$GLOBALS[lang][&#39;page&#39;]}</code> 的外层 <code>lang</code> 依然是裸键。复验时扫描器其实报了这处，被我当噪音略过了——<strong>扫描器的输出不要随手忽略</strong>。</li>
+</ul>
+<h2 id="三、同一个函数，两处要相反的参数"><a href="#三、同一个函数，两处要相反的参数" class="headerlink" title="三、同一个函数，两处要相反的参数"></a>三、同一个函数，两处要相反的参数</h2><p><code>extract()</code> 在两个地方需要完全相反的参数。</p>
+<p><code>post.php</code> 用 <code>EXTR_SKIP</code> 是对的——提取的是新变量，不覆盖已有值。但登录那段（<code>logging.php</code>）<strong>必须用 <code>EXTR_OVERWRITE</code></strong>：因为引导层里已经存在 <code>$adminid</code>、<code>$groupid</code>、<code>$discuz_uid</code> 这些全局变量，用 <code>EXTR_SKIP</code> 的话新值根本进不去。</p>
+<p>症状是”登录不报错，但就是不生效”。</p>
+<p>而且这段的致命错误只在<strong>登录失败</strong>时触发——<code>fetch_array</code> 返回 <code>null</code>，再喂给 <code>extract()</code>。正常登录流程测不出来，必须专门测错误路径。</p>
+<h2 id="四、有些”坏代码”是有意的"><a href="#四、有些”坏代码”是有意的" class="headerlink" title="四、有些”坏代码”是有意的"></a>四、有些”坏代码”是有意的</h2><p>Discuz 2.5 的缓存模块里有个 <code>array_del()</code>，读起来像是坏的：它对数组调 <code>trim($f)</code>，条件恒为假，所以<strong>从来没有删除过任何键</strong>。</p>
+<p>但站里的欢迎短消息、版规恰恰依赖这些键留在缓存中。这个”空实现”是功能的一部分。修法只消除 TypeError、行为原样保留，并在代码里写清原因——否则下一个人会”好心”把它修成真的删除。</p>
+<p>类似的还有模板里一处漏了 <code>$</code> 的裸常量，在 PHP 5 下被当成字符串真值，改”对”了反而会变行为。</p>
+<p><strong>判断标准</strong>：如果一个”bug”已经存在了二十年而功能正常，先假设它是特性，再去找证据。</p>
+<h2 id="五、一个赋值，让所有数据库错误变成白屏"><a href="#五、一个赋值，让所有数据库错误变成白屏" class="headerlink" title="五、一个赋值，让所有数据库错误变成白屏"></a>五、一个赋值，让所有数据库错误变成白屏</h2><p>这是这个月最贵的一条，值得单独讲。</p>
+<p>Discuz 4.1 的数据库层里有一行看着很正常的代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">$this</span>-&gt;conn-&gt;report_mode = MYSQLI_REPORT_OFF;</span><br></pre></td></tr></table></figure>
+
+<p>意图很清楚：关掉 mysqli 的异常模式，让错误走框架自己的 <code>halt()</code> 优雅提示。</p>
+<p>问题是，<strong><code>report_mode</code> 根本不是 mysqli 的属性</strong>。这行只是给对象动态加了个属性，PHP 8.2 起还会给一条弃用警告，行为上是彻头彻尾的空操作。</p>
+<p>而 PHP 8.1 之后的 mysqli <strong>默认就是抛异常模式</strong>，且 <code>@</code> 抑制无效。于是：</p>
+<ul>
+<li>数据库连不上 → 未捕获异常 → 白屏；</li>
+<li>SQL 出错 → 未捕获异常 → 白屏；</li>
+<li>本该显示”数据库暂时不可用”的页面，变成一张没有任何信息的白屏。</li>
+</ul>
+<p>正确写法只有一种：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">mysqli_report</span>(MYSQLI_REPORT_OFF);</span><br></pre></td></tr></table></figure>
+
+<p><strong>这条坑最贵的地方在于它有”假证据”</strong>：生产目录的错误日志里堆了 <strong>4186 条</strong>记录，看起来像”数据库连接一直有问题”。实际上那些全是白屏被记录下来的结果，不是原因。修完之后数字立刻归零。</p>
+<p>教训：看到一个”配置项”，先确认它真的是那个库的属性&#x2F;选项，而不是同名的动态属性。</p>
+<h2 id="六、GBK-是全程的约束"><a href="#六、GBK-是全程的约束" class="headerlink" title="六、GBK 是全程的约束"></a>六、GBK 是全程的约束</h2><p>老系统用 GBK，这个约束会出现在四个完全不同的地方。</p>
+<p><strong>1. 写回文件会被截断。</strong> 用 utf-8 或 latin-1 去读写含中文的 PHP 文件，会出现编码失败甚至文件被截断。正确姿势是从 git 基线恢复，用 GBK 往返（先解码再编码）重做。</p>
+<p><strong>2. 数据库连接要显式设字符集。</strong> 重写数据库层时保留 <code>SET NAMES gbk</code>，否则取出来的中文全是问号。</p>
+<p><strong>3. 界面全是方块。</strong> 查了两层：第一层是响应头写 <code>charset=UTF-8</code> 而正文是 GBK，浏览器按头解码全变替换字符；第二层更隐蔽——初始化数据库时把安装 SQL 按 UTF-8 写进了 GBK 库，于是”游客””管理员”这些初始数据本身就是错的字节。用 GBK 字节重新导入才干净。</p>
+<p><strong>4. GBK 的尾字节可能是反斜杠。</strong> 这一条在 Delphi 客户端上炸的：某几个汉字的 GBK 编码第二个字节是 <code>0x5C</code>（<code>\</code>），旧的手写逐字节 JSON 转义会把它当转义符，<strong>直接破坏消息、产出非法 JSON</strong>。</p>
+<p>修法是按 Windows 的 <code>ByteType</code> 识别双字节字符、整字跳过，而不是逐字节处理：</p>
+<figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 伪代码：遇到 GBK 双字节字符时整体前进 2 字节</span></span><br><span class="line"><span class="keyword">if</span> ByteType(s, i) = mbLeadByte <span class="keyword">then</span> Inc(i, <span class="number">2</span>) <span class="keyword">else</span> Inc(i, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、跑得起来但会出事的地方"><a href="#七、跑得起来但会出事的地方" class="headerlink" title="七、跑得起来但会出事的地方"></a>七、跑得起来但会出事的地方</h2><p><strong><code>char(32)</code> 装不下 bcrypt。</strong> 老库密码列是 md5 的长度，升级到 bcrypt 后 60 个字符会被<strong>静默截断</strong>。症状极迷惑：第一次设置密码能登录成功，第二次就失败。修法是列宽改 <code>varchar(255)</code>，新密码用 <code>password_hash()</code>，历史 md5 在登录成功后自动升级。</p>
+<p><strong><code>TYPE=MyISAM</code> 在现代 MySQL 是语法错误。</strong> 老安装脚本里 58 处 <code>TYPE=MyISAM</code> + 1 处 <code>Type=MyISAM</code>，还有 <code>TYPE=Heap</code>。要改成 <code>ENGINE=InnoDB</code> &#x2F; <code>ENGINE=MEMORY</code>，同时把文件编码从 GBK 转 UTF-8、文件头加 <code>SET SESSION sql_mode=&#39;&#39;</code>。</p>
+<p>转换时有三处”异常”全是误报：<code>TYPE=</code> 残留在自己的注释里、第 60 处 <code>ENGINE=</code> 是数据内容、中文行数为 0 是因为安装脚本本身就是空库结构。<strong>批量替换之后一定要逐条核对这些”看起来不对”的地方。</strong></p>
+<p><strong>短标签保护头会失效。</strong> 备份文件开头常写 <code>&lt;?exit();?&gt;</code> 防止被直接下载读取。PHP 8 默认关闭 <code>short_open_tag</code>，这句保护头直接失效，备份变明文。</p>
+<p>注意同一个项目里另一种写法仍然有效：<code>&lt;?PHP exit(...)?&gt;</code>——大写的 <code>PHP</code> 不是短标签。所以加固时<strong>不能一刀切把所有 <code>&lt;?</code> 都改掉</strong>。</p>
+<p><strong>行尾符会污染 diff。</strong> 编辑工具把混合行尾统一成 CRLF，结果 <code>viewthread.php</code> 显示改了 100 行，实际内容只改 1 行。量化一下：真实改动 53 行、行尾噪音 88 行。修法是按内容匹配还原原行尾。</p>
+<p><strong>字符集别从 dump 头部推断。</strong> dump 开头的 <code>SET NAMES utf8</code> 是 mysqldump 客户端的连接字符集，不代表表字符集。正确做法是把 59 张表的建表语句全打出来看 <code>DEFAULT CHARSET</code>。顺带排除一个假象：用 <code>head -c</code> 截断 dump 看到的 <code>&#39;�</code> 是多字节字符被切断的伪影，不是坏数据。</p>
+<h2 id="八、Windows-侧的老工具链"><a href="#八、Windows-侧的老工具链" class="headerlink" title="八、Windows 侧的老工具链"></a>八、Windows 侧的老工具链</h2><p>Delphi 7 那个客户端的任务是：界面中文化、加后台线程收发、切 JSON 协议、历史截断、代理令牌鉴权、配置从 ini 搬进注册表。技术含量不高，但工具链的坑一点不少。</p>
+<p><strong>源码编码必须是 GBK (CP936) + CRLF + 无 BOM。</strong> 窗体字体改「宋体」9pt、<code>Font.Charset = 134</code>（<code>GB2312_CHARSET</code>）。这些值我都是从用户给的 Delphi 7 源码 <code>Rtl/Win/Windows.pas</code> 里确认的——<strong>老工具链的常量定义，宁可去查它的源码，别猜。</strong></p>
+<p><strong><code>TCanvas</code> 会偷偷重置 <code>BkMode</code>。</strong> 切换字体后 <code>BkMode</code> 会被重置为不透明，<code>DrawText</code> 就用当前画刷（Logo 绘制遗留的白色）填充文字背景，形成一块白底。修法是封装一个统一的绘制函数，每次绘制前强制 <code>SetBkMode(TRANSPARENT)</code>，全文件 14 处文字绘制都换过去。</p>
+<p><strong>Delphi 7 不允许在方法的 <code>var</code> 块之后定义嵌套过程。</strong> 报 <code>Identifier expected but &#39;PROCEDURE&#39; found</code>，还会级联出一堆看似无关的错误（<code>FMsgCount</code>、<code>pnlHeader</code> 未定义）。修法是把它提升为窗体私有方法。</p>
+<p><strong><code>.res</code> 头结构错了会连累 IDE 崩溃。</strong> 我生成的图标资源报 “Invalid resource file”——因为 <code>.res</code> 头偏移 4 应为 <code>0x20</code>、偏移 8&#x2F;12 应为 <code>0xFFFF</code>，而我生成的是全 0。对照官方 <code>WordPad.res</code> 字节修正后又崩了一次（<code>coreide70.bpl</code> AV）：原因是<strong>加了 48×48 尺寸</strong>，而 Delphi 7 时代的图标只含 32×32。改回 Win95 标准的 16+32 两个尺寸才稳定。</p>
+<p><strong>没有编译器时的验证方式。</strong> 所有 API 签名（<code>TThread.Create/Resume</code>、<code>TClipboard.AsText</code>、<code>ByteType</code>、<code>WideCharToMultiByte</code>、<code>SetWindowRgn</code>）都逐条回查 Delphi 7 源码原文；编码则用”GBK 可解码、UTF-8 不可解码”双向校验确认。编译只能交给装了 Delphi 7 的虚拟机。</p>
+<h2 id="九、容器与运行环境的三个细节"><a href="#九、容器与运行环境的三个细节" class="headerlink" title="九、容器与运行环境的三个细节"></a>九、容器与运行环境的三个细节</h2><p><strong>rootless podman 里 <code>user=1000</code> 反而不对。</strong> 容器内只有 <code>root</code> 映射到宿主用户，设 <code>user=1000</code> 会落到 subuid，写不了文件；改成 <code>user=0</code> 又会让 fpm 拒绝以 root 跑池进程。最终用 <code>userns_mode: keep-id</code>，容器内 uid 1000 &#x3D; 宿主用户。</p>
+<p><strong>php-fpm 的工作目录不是站点根。</strong> 所有相对路径写缓存都会失败，要给池配置 <code>chdir</code>。</p>
+<p><strong>nginx 会缓存 php 容器的旧 IP。</strong> 改完代码不生效，重启 php 之后必须一起重启 nginx。</p>
+<h2 id="十、顺手补的安全缺口"><a href="#十、顺手补的安全缺口" class="headerlink" title="十、顺手补的安全缺口"></a>十、顺手补的安全缺口</h2><ul>
+<li><strong><code>install.php</code> 的 nginx 配置只写了 allow&#x2F;deny，漏了 <code>fastcgi_pass</code></strong>，结果 PHP 被当静态文件返回、直接泄露源码；</li>
+<li><strong>后台首页会自动删除 <code>install.php</code></strong>（Discuz 自带的安全特性），我在冒烟测试时把它删了两次才发现；</li>
+<li><strong>删了文件不等于删了历史</strong>：<code>config.inc.php</code> 已经从最新提交删除，但数据库密码仍在 git 历史里，任何人 clone 都能看到。用 <code>git filter-repo</code> 重写历史、<code>git log -p --all</code> 复扫确认零命中，同时轮换口令；</li>
+<li><strong>错误处理路径本身也要脱敏</strong>：把语言对象当字符串 <code>printf</code> 的那类 bug，访客看到的是带完整服务器路径的 Fatal 页。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>三次移植的共同结论，可以压成五条：</p>
+<ol>
+<li><strong>能交给工具改的别手改</strong>，但工具本身要验——我的第二版扫描器就改坏了 9 个文件；</li>
+<li><strong>看起来像 bug 的地方先假设它是功能</strong>，尤其那个”从不删除”的函数；</li>
+<li><strong>编码约束要贯穿全程</strong>：写文件、连数据库、发响应头，任何一环按 UTF-8 处理都会出现方块字；</li>
+<li><strong>列宽、<code>sql_mode</code>、短标签、字符集这类环境前提，比代码错误更容易漏</strong>——它们不会让 <code>php -l</code> 报错；</li>
+<li><strong>“没有报错”和”没有问题”是两件事</strong>。那 4186 条日志在修复前看起来像数据库故障，实际是白屏的副产品——错误日志本身也会骗你。</li>
+</ol>
+<p>最后一句：环境要恢复到”未安装”状态再交付，让别人自己跑一遍安装向导。那才是真正的验收。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/php/" rel="tag"># php</a>
+              <a href="/tags/php8/" rel="tag"># php8</a>
+              <a href="/tags/delphi/" rel="tag"># delphi</a>
+              <a href="/tags/legacy/" rel="tag"># legacy</a>
+              <a href="/tags/gbk/" rel="tag"># gbk</a>
+              <a href="/tags/migration/" rel="tag"># migration</a>
+              <a href="/tags/debugging/" rel="tag"># debugging</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/19/verify-before-you-build/" rel="prev" title="从计划到产物：九个「看起来没问题」的验证缺口">
+                  <i class="fa fa-angle-left"></i> 从计划到产物：九个「看起来没问题」的验证缺口
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
