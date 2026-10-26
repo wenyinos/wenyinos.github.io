@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="给 AI agent 加”长期记忆”，第一版几乎都会这么做：在系统提示里约定一个 MEMORY.md，让模型”觉得重要就自己写进去”，下一轮再把它读回来。 能跑，但撑不过几周。这篇记录把它换成 SQLite 主库的过程，以及同一时期在流式管道、定时任务、客户端联网边界上踩到的坑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/10/25/agent-long-term-memory-sqlite/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="给 AI agent 加”长期记忆”，第一版几乎都会这么做：在系统提示里约定一个 MEMORY.md，让模型”觉得重要就自己写进去”，下一轮再把它读回来。 能跑，但撑不过几周。这篇记录把它换成 SQLite 主库的过程，以及同一时期在流式管道、定时任务、客户端联网边界上踩到的坑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-24T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="agent">
+<meta property="article:tag" content="architecture">
+<meta property="article:tag" content="llm">
+<meta property="article:tag" content="memory">
+<meta property="article:tag" content="sqlite">
+<meta property="article:tag" content="streaming">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/10/25/agent-long-term-memory-sqlite/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/10/25/agent-long-term-memory-sqlite/","path":"2026/10/25/agent-long-term-memory-sqlite/","title":"给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%97%A7%E6%9C%BA%E5%88%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E7%84%B6%E7%83%82"><span class="nav-number">1.</span> <span class="nav-text">一、旧机制为什么必然烂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A1%A8%E7%BB%93%E6%9E%84%EF%BC%9A%E6%9D%A1%E7%9B%AE%E8%A6%81%E6%9C%89%E3%80%8C%E5%B1%82%E3%80%8D%E5%92%8C%E3%80%8C%E7%8A%B6%E6%80%81%E3%80%8D"><span class="nav-number">2.</span> <span class="nav-text">二、表结构：条目要有「层」和「状态」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8E%BB%E9%87%8D%EF%BC%9A%E5%9B%9B%E7%A7%8D%E6%89%8B%E6%AE%B5%E5%8F%A0%E7%9D%80%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">三、去重：四种手段叠着用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%B3%A8%E5%85%A5%EF%BC%9A%E5%9B%BA%E5%AE%9A%E5%9D%97-%E6%A3%80%E7%B4%A2"><span class="nav-number">4.</span> <span class="nav-text">四、注入：固定块 + 检索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%8A%BD%E5%8F%96%E8%A6%81%E5%85%8B%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">五、抽取要克制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%B5%81%E5%BC%8F%E7%AE%A1%E9%81%93%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%8D%A1%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">六、流式管道的两个卡点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E3%80%8C%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%AD%A3%E5%B8%B8%E3%80%8D"><span class="nav-number">7.</span> <span class="nav-text">七、定时任务的四个「看起来正常」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%87%BA%E5%8F%A3%E8%BE%B9%E7%95%8C"><span class="nav-number">8.</span> <span class="nav-text">八、客户端的出口边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">133</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/agent-long-term-memory-sqlite/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-25T00:00:00+08:00">2026-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>给 AI agent 加”长期记忆”，第一版几乎都会这么做：在系统提示里约定一个 <code>MEMORY.md</code>，让模型”觉得重要就自己写进去”，下一轮再把它读回来。</p>
+<p>能跑，但撑不过几周。这篇记录把它换成 SQLite 主库的过程，以及同一时期在流式管道、定时任务、客户端联网边界上踩到的坑。</p>
+<span id="more"></span>
+
+<h2 id="一、旧机制为什么必然烂"><a href="#一、旧机制为什么必然烂" class="headerlink" title="一、旧机制为什么必然烂"></a>一、旧机制为什么必然烂</h2><p>迁移前先盘了一下旧数据，结论有点难看：</p>
+<ul>
+<li><code>workspace2</code> 里 <strong>2617 条</strong>任务记录，其中 <strong>1364 行（52%）落在重复组</strong>里，76 个组覆盖了这些行；</li>
+<li><strong>999 条</strong>记录是同一个模板——“判断是否值得长期记住”这个动作被当成了记忆内容本身；</li>
+<li><strong>899&#x2F;90 条</strong>记录共享同一段置顶背景前缀；</li>
+<li>还有 <strong>52 条</strong> <code>hello</code>。</li>
+</ul>
+<p>原因不复杂：<strong>提示词约定 + 模型自由写文件</strong>这套机制，没有去重键、没有时间语义、没有冲突处理、没有容量上限。模型每次”回忆”都可能再写一遍，写得越多噪声越大，最后真正要用的那几条被埋掉。</p>
+<p>顺带暴露一个更基础的问题：所谓”保存记忆”其实是把 <code>workspace/sessions/*.jsonl</code> 逐条追加、每条 <code>fsync</code> 并原子重写 meta——<strong>写盘开销随消息数线性增长</strong>，而 <code>MEMORY.md</code> 只是模型主动写的一个普通文件。</p>
+<h2 id="二、表结构：条目要有「层」和「状态」"><a href="#二、表结构：条目要有「层」和「状态」" class="headerlink" title="二、表结构：条目要有「层」和「状态」"></a>二、表结构：条目要有「层」和「状态」</h2><p>换成 SQLite 主库之后，<code>pkg/memstore</code> 拆成六个表：<code>entries</code>、<code>sources</code>、<code>supersedes</code>、<code>relationship_state</code>、<code>personas</code>、<code>meta</code>。</p>
+<p>关键是给每条记忆加上三个维度：</p>
+<ul>
+<li><strong><code>realm</code></strong>：<code>real</code> &#x2F; <code>fictional</code> &#x2F; <code>work</code> &#x2F; <code>unknown</code> —— 区分”用户真实说过的事”和”角色扮演里虚构的设定”。不区分的话，一次剧本杀能把人设写歪。</li>
+<li><strong><code>layer</code></strong>：<code>persona</code> &#x2F; <code>profile</code> &#x2F; <code>relationship</code> &#x2F; <code>episodic</code> &#x2F; <code>procedural</code> &#x2F; <code>boundary</code> —— 人设、画像、关系状态、情节、流程、边界的注入优先级完全不同。</li>
+<li><strong><code>status</code></strong>：<code>active</code> &#x2F; <code>pending_review</code> &#x2F; <code>superseded</code> &#x2F; <code>archived</code> —— <strong>不确定的先进待审核</strong>，人工确认前不注入。</li>
+</ul>
+<p>另外还有 <code>importance</code>、<code>emotional_weight</code>、<code>audience</code>（public &#x2F; private）、<code>expires_at</code> 和版本链（<code>supersedes</code> 指向被取代的旧条目）。</p>
+<p>这套设计的核心不是”存得多”，而是**”知道哪条不该用”**。<code>pending_review</code> 和 <code>superseded</code> 这两个状态，是后面能收敛的前提。</p>
+<h2 id="三、去重：四种手段叠着用"><a href="#三、去重：四种手段叠着用" class="headerlink" title="三、去重：四种手段叠着用"></a>三、去重：四种手段叠着用</h2><p>单一手段去不干净，实际是四层叠加：</p>
+<ol>
+<li><strong>归一化 + SHA256 精确哈希</strong> —— 处理”一个字不差”的重复；</li>
+<li><strong>模板折叠</strong> —— 把同一套句式（比如那个抽取模板）折成一条；</li>
+<li><strong>中文 bigram Jaccard ≥ 0.75</strong> —— 处理换词不改意的近似重复（中文没有空格，用 bigram 比按词切可靠）；</li>
+<li><strong>SimHash Hamming ≤ 3</strong> —— 处理长文本的小幅改动。</li>
+</ol>
+<p>再加一条<strong>语义冲突处理</strong>：同一个 <code>subject + predicate</code> 出现新值时，旧条目置 <code>superseded</code> 而不是删掉——你要能回答”我当时为什么那么记”。</p>
+<p>迁移后的效果：库收敛到 <strong>515 条</strong>，重复导入第二次 <code>0 added</code>，完全幂等（WAL checkpoint 为 0）。</p>
+<h2 id="四、注入：固定块-检索"><a href="#四、注入：固定块-检索" class="headerlink" title="四、注入：固定块 + 检索"></a>四、注入：固定块 + 检索</h2><p>记忆有了，怎么塞进上下文是另一回事。全量注入会撑爆窗口，只按相似度检索又会丢人设。最后分成两块：</p>
+<ul>
+<li><strong>固定块</strong>（≤500 tokens）：人设、关系状态、画像、边界——每轮都带，不检索；</li>
+<li><strong>检索块</strong>（≤700 tokens）：按当前消息检索情节与流程类记忆。</li>
+</ul>
+<p>两个细节值得单独说：</p>
+<p><strong>按 <code>audience</code> 过滤。</strong> 固定注入块最初忽略了 <code>audience=private</code>，私密记忆会被注入到工作渠道的对话里。修法是把过滤放到 <code>BuildMessagesFromPrompt</code>，按渠道过滤——这类”串台”不会报错，只会让不该看到的人看到。</p>
+<p><strong>注入预算是硬的。</strong> 两个数字（500 &#x2F; 700）先写死，超了就砍检索结果，不砍固定块。</p>
+<h2 id="五、抽取要克制"><a href="#五、抽取要克制" class="headerlink" title="五、抽取要克制"></a>五、抽取要克制</h2><p>0.4.0 上线后立刻出问题：<strong>普通聊天被写进记忆库</strong>。</p>
+<p>比如一条消息里带”设定”两个字，就被抽成一条 <code>fictional/episodic</code> 的待审核记录。</p>
+<p>根因是关键词表太宽：<code>设定</code>、<code>扮演</code>、<code>剧情</code>、<code>人设</code>、<code>世界观</code>、<code>虚构</code>、<code>故事线</code>——这些词在日常聊天里太常见；而且当时<strong>同时扫描用户消息和助手回复</strong>，每轮都跑一次。</p>
+<p>0.4.1 的修法是把规则收紧到可枚举的程度：</p>
+<ul>
+<li>删掉全部角色扮演类宽泛关键词；</li>
+<li><strong>只扫描用户消息</strong>，不扫助手回复；</li>
+<li>自动记忆只保留：显式”记住&#x2F;记一下&#x2F;别忘了”、用户与 AI 的称呼、偏好与过敏、生日&#x2F;纪念日、带日期的事件。</li>
+</ul>
+<p>实测：普通消息、含”设定”的消息、含”剧情”的消息，均为 <strong>0 条新增、0 条待审核</strong>；而显式”记住：E2E041 我的测试标记是蓝鲸”能正确写成一条 <code>active/real/profile</code>。</p>
+<p>还有一处收尾：0.4.2 把 <code>MEMORY.md</code> <strong>彻底下线</strong>——删掉运行时回退，系统提示里那些”有事就更新 MEMORY.md”的规则一并删掉。否则会出现”SQLite 已经启用，但提示词还在让模型写一个没人读的文件”的鬼状态。</p>
+<h2 id="六、流式管道的两个卡点"><a href="#六、流式管道的两个卡点" class="headerlink" title="六、流式管道的两个卡点"></a>六、流式管道的两个卡点</h2><p>记忆之外，这块运行时里最影响体感的是流式。</p>
+<p><strong>卡点一：多候选就不流式。</strong> 原逻辑是”只有当活跃候选唯一时才走流式”，多候选 fallback 场景直接关流。改法是：<strong>首选候选直接流式</strong>；流式失败且<strong>尚无可见输出</strong>时才交回 fallback，已有可见输出绝不切换（否则用户会看到两段风格不同的回答拼在一起）。</p>
+<p>顺带把前端新建模型的默认值从 <code>streamingEnabled: false</code> 改成 <code>true</code>——不然后加进来的模型永远走非流式。</p>
+<p><strong>卡点二：收尾顺序。</strong> 长回复的最后内容帧到 <code>typing.stop</code> 之间会阻塞约 <strong>840ms</strong>，短回复只有 8ms。根因是 finalize 里<strong>先 Save（全量重写 + fsync）再发最终帧</strong>。</p>
+<p>把顺序调成「内存写入 → 算 usage → 发最终帧 → Save → Compact」之后，收尾降到 <strong>8ms</strong>。</p>
+<p>同一批还修了：</p>
+<ul>
+<li><code>picoConn</code> 加写超时（原来在锁内同步写、慢客户端能永久阻塞）；</li>
+<li>开 WebSocket 的 permessage-deflate；</li>
+<li><strong>会话持久化异步化</strong>：<code>AddMessage</code> 只进 pending 队列立即返回，后台 worker 每 20ms 合并一次、按会话一次 <code>append + fsync + meta</code>、同会话严格串行；单会话积压超 256 条强制同步落盘；<code>Close</code> 全量 flush。</li>
+</ul>
+<p>代价要写清楚：<strong>非正常崩溃最多丢最近 20ms 未落盘的消息</strong>；外部程序直接读 <code>sessions/*.jsonl</code> 需要等 20ms 或显式 <code>Flush()</code>。</p>
+<p>一个实测数据值得记：长回复 <strong>2751 字符 &#x2F; 235 帧 &#x2F; 383KB</strong>，而每帧都是<strong>全量快照</strong>——累计传输放大约 <strong>140 倍</strong>。这就是下一步要做增量帧的动机。</p>
+<h2 id="七、定时任务的四个「看起来正常」"><a href="#七、定时任务的四个「看起来正常」" class="headerlink" title="七、定时任务的四个「看起来正常」"></a>七、定时任务的四个「看起来正常」</h2><p>定时任务这一块，四个 bug 的共同点是<strong>界面显示一切正常</strong>：</p>
+<p><strong>① CLI 加了任务，跑着的 gateway 不执行。</strong> CLI 是新建一个 <code>CronService</code> 写 <code>jobs.json</code>，而 gateway <strong>只在启动时加载一次</strong>、不监听文件变化。修法是加热加载。</p>
+<p><strong>② 任务失败却显示 <code>lastStatus: ok</code>。</strong> <code>CronTool.ExecuteJob</code> 只返回一个 <code>&quot;Error: ...&quot;</code> 字符串，<code>setupCronTool</code> 无论结果都返回 nil。修法是把签名改成 <code>(string, error)</code>，让错误真的传回 <code>CronService</code>。</p>
+<p><strong>③ 停机期间过期的一次性任务永久空转。</strong> 修法是启动后立即执行一次，并从存储删除；执行失败则保留为 disabled 并写 <code>lastError</code>，可用 <code>cron enable</code> 重试。</p>
+<p><strong>④ 配置重载后新旧两个调度循环同时跑同一任务。</strong> 修法是重载前先停旧 <code>CronService</code>，并让 <code>Stop</code> 等待调度循环真正退出。</p>
+<p>还有两个边界：<code>tools.cron.enabled=false</code> 时仍要安装任务执行器（否则已持久化的任务静默不执行）；删掉最后一个任务后 <code>jobs.json</code> 要写 <code>&quot;jobs&quot;: []</code> 而不是 <code>null</code>。</p>
+<p><strong>已知限制</strong>：CLI 与 gateway 同时写 <code>jobs.json</code> 仍是”最后写入者获胜”，彻底解决需要跨进程文件锁或由 gateway 提供控制 API。</p>
+<h2 id="八、客户端的出口边界"><a href="#八、客户端的出口边界" class="headerlink" title="八、客户端的出口边界"></a>八、客户端的出口边界</h2><p>最后记一件和”记忆”看似无关、但同属 agent 工程边界的事。</p>
+<p>一个桌面客户端分支被要求”开源版不参与官方活动”，但装好之后<strong>仍然收到免费 token 的营销推送</strong>。查下来是上游新增了一条 <code>marketingTouch</code> 通道，请求 <code>/api/v1/marketing/touch</code>。</p>
+<p>根因比这一条通道更值得记：<strong>代码里根本没有统一的”官方域名出口拦截层”</strong>——屏蔽完全依赖每个消费点自己去查开关。上游新增一条通道而清单没跟上，它就保持默认开启。</p>
+<p>于是那次不只是关一个开关，而是：</p>
+<ul>
+<li>策略常量置 false + 服务层注册空实现（<strong>返回空快照而不是抛错</strong>，否则调用方会按失败退避反复重试）+ Renderer 不创建 runtime（不轮询、不下载资源、不渲染 Banner）；</li>
+<li>顺手全仓扫出另外两处仍在自动触达官方域名的通道：<strong>启动强制升级 gate</strong>（上游一上调 <code>minimalVersion</code> 就可能阻止建主窗口）和<strong>客户端远端配置</strong>（两处灰度入口会请求 <code>/api/v1/client/configs</code>），都加关闭入口；</li>
+<li>补 <strong><code>check:defaults</code> 静态断言</strong>，并为上游新文件在架构策略里登记最小例外。</li>
+</ul>
+<p>第三条是关键：这类”靠每个消费点自觉”的机制，<strong>下次同步上游必然再漏一条</strong>。没有拦截层，就只能靠”默认值 + 静态断言”把漏的地方钉住。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>做 agent 的长期记忆，容易把注意力放在”怎么存”，但真正决定成败的是三件事：</p>
+<ol>
+<li><strong>知道哪条不该用</strong>——<code>pending_review</code>、<code>superseded</code>、<code>audience</code> 这几个状态比存储量重要；</li>
+<li><strong>抽取要克制</strong>——自动写入的规则越宽，库烂得越快；宁可少记，也不要记错；</li>
+<li><strong>注入要有预算</strong>——固定块保人设、检索块补上下文，两个数字都要写死。</li>
+</ol>
+<p>另外两条通用经验：</p>
+<ul>
+<li><strong>「看起来正常」是最危险的信号</strong>——定时任务显示 ok、收尾看起来没慢、任务加了没报错，全是假象；判断标准要有可观测的副作用（<code>lastRunAtMs</code> 变了、<code>typing.stop</code> 的间隔、进程数）。</li>
+<li><strong>别指望每个调用点都自觉</strong>——无论是”不请求官方域名”还是”失败要报错”，只要没有统一入口，就一定会漏。要么加拦截层，要么加静态断言。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/agent/" rel="tag"># agent</a>
+              <a href="/tags/memory/" rel="tag"># memory</a>
+              <a href="/tags/sqlite/" rel="tag"># sqlite</a>
+              <a href="/tags/llm/" rel="tag"># llm</a>
+              <a href="/tags/streaming/" rel="tag"># streaming</a>
+              <a href="/tags/architecture/" rel="tag"># architecture</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/19/verify-before-you-build/" rel="prev" title="从计划到产物：九个「看起来没问题」的验证缺口">
+                  <i class="fa fa-angle-left"></i> 从计划到产物：九个「看起来没问题」的验证缺口
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/10/26/desktop-editor-ime-export-performance/" rel="next" title="自己写的编辑器卡在哪：输入法、导出与每帧性能">
+                  自己写的编辑器卡在哪：输入法、导出与每帧性能 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
