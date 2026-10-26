@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">133</span>
+        <span class="site-state-item-count">139</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -374,6 +374,101 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/10/25/agent-long-term-memory-sqlite/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/10/25/cli-tool-audit-integration-paths/" class="post-title-link" itemprop="url">124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-25T00:00:00+08:00">2026-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一个 Fedora 上管理 Copr &#x2F; OBS 第三方源的命令行工具，跑了一遍 <code>pytest</code>：124 个测试全绿，<code>ruff</code> 和 <code>mypy</code> 也没有意见。看起来挺健康。</p>
+<p>但实际用起来，<code>copa audit</code> 稳定崩溃、多关键词搜索搜不到东西、正则搜索永远空、标着”高风险”的仓库照样能装。<strong>单元测试覆盖的是函数，不是集成路径</strong>——这些缺陷没有一个能在单元测试里暴露。</p>
+<p>这篇记录那次审计找出的一批真实缺陷、修法，以及中文化和打包时另外两个坑。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/10/25/cli-tool-audit-integration-paths/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -822,7 +917,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-10-20 00:00:00" itemprop="dateModified" datetime="2026-10-20T00:00:00+08:00">2026-10-20</time>
+      <time title="修改时间：2026-10-26 00:00:00" itemprop="dateModified" datetime="2026-10-26T00:00:00+08:00">2026-10-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -853,7 +948,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>接手一套跑了十多年的 PHP 系统，第一件事往往不是加功能，而是”让它在新版 PHP 上别崩”。这类迁移的坑特别有迷惑性：有些是直接白屏，有些是<strong>页面看起来正常、数据悄悄错了</strong>，还有些是”只有某一个入口才会踩”。</p>
-<p>本文汇总三次移植：一套禅道内核（PHP 5／7 时代的代码迁到 PHP 8.5）、2003 年的 Discuz! 2.5 SP1（全程 GBK 编码，125 个 PHP 文件）、以及跑了多年的 Discuz 4.1（移植 + 安全加固）。最后附一个 Delphi 7 老客户端上的同类问题——技术栈差二十年，踩的坑却高度同构。</p>
+<p>本文汇总四次移植：一套禅道内核（PHP 5／7 时代的代码迁到 PHP 8.5）、2003 年的 Discuz! 2.5 SP1（全程 GBK 编码，125 个 PHP 文件）、跑了多年的 Discuz 4.1（移植 + 安全加固）、以及一套老建站系统 chanzhiEPS（PHP 8.4+ 全量移植 + 自动发布）。最后附一个 Delphi 7 老客户端上的同类问题——技术栈差二十年，踩的坑却高度同构。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/10/03/php8-legacy-system-migration/#more" rel="contents">
@@ -1043,99 +1138,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/08/08/ai-api-integration-pitfalls/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/07/31/frontend-miniprogram-pitfalls/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/07/31/frontend-miniprogram-pitfalls/" class="post-title-link" itemprop="url">前端工程踩坑笔记：Vue 3、小程序与 Canvas 小游戏</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-07-31 00:00:00" itemprop="dateCreated datePublished" datetime="2026-07-31T00:00:00+08:00">2026-07-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文汇总 Vue 3 中后台前端、Taro&#x2F;uni-app 小程序以及 Canvas 小游戏开发中积累的踩坑记录，覆盖<strong>构建与缓存、Element Plus 组件、接口数据层、小程序容器限制</strong>四个方向。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/07/31/frontend-miniprogram-pitfalls/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

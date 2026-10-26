@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="一个 Fedora 上管理 Copr &#x2F; OBS 第三方源的命令行工具，跑了一遍 pytest：124 个测试全绿，ruff 和 mypy 也没有意见。看起来挺健康。 但实际用起来，copa audit 稳定崩溃、多关键词搜索搜不到东西、正则搜索永远空、标着”高风险”的仓库照样能装。单元测试覆盖的是函数，不是集成路径——这些缺陷没有一个能在单元测试里暴露。 这篇记录那次审计找出的一批真实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="一个 Fedora 上管理 Copr &#x2F; OBS 第三方源的命令行工具，跑了一遍 pytest：124 个测试全绿，ruff 和 mypy 也没有意见。看起来挺健康。 但实际用起来，copa audit 稳定崩溃、多关键词搜索搜不到东西、正则搜索永远空、标着”高风险”的仓库照样能装。单元测试覆盖的是函数，不是集成路径——这些缺陷没有一个能在单元测试里暴露。 这篇记录那次审计找出的一批真实">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-24T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="cli">
+<meta property="article:tag" content="copr">
+<meta property="article:tag" content="dnf">
+<meta property="article:tag" content="i18n">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="testing">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/","path":"2026/10/25/cli-tool-audit-integration-paths/","title":"124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%BA%BF%EF%BC%9A%E6%B5%8B%E8%AF%95%E5%85%A8%E7%BB%BF%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%83%BD%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">一、基线：测试全绿不等于能用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%8C%89%E3%80%8C%E4%BC%9A%E4%B8%8D%E4%BC%9A%E7%9B%B4%E6%8E%A5%E5%9D%8F%E3%80%8D%E6%8E%92%E5%BA%8F%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="nav-number">2.</span> <span class="nav-text">二、按「会不会直接坏」排序的缺陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%85%8D%E7%BD%AE%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%8F%AA%E6%8D%95-TypeError-%E6%98%AF%E4%B8%8D%E5%A4%9F%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text">三、配置解析：只捕 TypeError 是不够的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%80%80%E5%87%BA%E7%A0%81%E4%B8%8E-JSON%EF%BC%9A%E5%A4%B1%E8%B4%A5%E4%B9%9F%E8%A6%81%E6%9C%89%E7%BB%93%E6%9E%84%E5%8C%96%E8%BE%93%E5%87%BA"><span class="nav-number">4.</span> <span class="nav-text">四、退出码与 JSON：失败也要有结构化输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%AD%E6%96%87%E5%8C%96%E7%9A%84%E9%99%B7%E9%98%B1%EF%BC%9A%E5%86%85%E9%83%A8%E5%80%BC%E4%B8%8D%E8%83%BD%E7%BF%BB"><span class="nav-number">5.</span> <span class="nav-text">五、中文化的陷阱：内部值不能翻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%89%93%E5%8C%85%EF%BC%9A%E6%96%B0%E7%9B%AE%E5%BD%95%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%BF%9B-wheel-RPM"><span class="nav-number">6.</span> <span class="nav-text">六、打包：新目录不会自动进 wheel &#x2F; RPM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%8F%91%E5%B8%83%EF%BC%9ACI-%E8%AF%A5%E8%A6%86%E7%9B%96%E4%BB%80%E4%B9%88"><span class="nav-number">7.</span> <span class="nav-text">七、发布：CI 该覆盖什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">139</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-25T00:00:00+08:00">2026-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>一个 Fedora 上管理 Copr &#x2F; OBS 第三方源的命令行工具，跑了一遍 <code>pytest</code>：124 个测试全绿，<code>ruff</code> 和 <code>mypy</code> 也没有意见。看起来挺健康。</p>
+<p>但实际用起来，<code>copa audit</code> 稳定崩溃、多关键词搜索搜不到东西、正则搜索永远空、标着”高风险”的仓库照样能装。<strong>单元测试覆盖的是函数，不是集成路径</strong>——这些缺陷没有一个能在单元测试里暴露。</p>
+<p>这篇记录那次审计找出的一批真实缺陷、修法，以及中文化和打包时另外两个坑。</p>
+<span id="more"></span>
+
+<h2 id="一、基线：测试全绿不等于能用"><a href="#一、基线：测试全绿不等于能用" class="headerlink" title="一、基线：测试全绿不等于能用"></a>一、基线：测试全绿不等于能用</h2><p>审计的第一步不是读代码，是<strong>建基线</strong>：通读全部 8 个模块、跑 <code>pytest</code> &#x2F; <code>ruff</code> &#x2F; <code>mypy</code>，然后<strong>实际执行每一条子命令</strong>。</p>
+<p>对比很刺眼：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单元测试</td>
+<td>124 全绿</td>
+</tr>
+<tr>
+<td>ruff &#x2F; mypy</td>
+<td>通过</td>
+</tr>
+<tr>
+<td><code>copa audit</code></td>
+<td>稳定崩溃</td>
+</tr>
+<tr>
+<td>多关键词搜索</td>
+<td>一条都搜不到</td>
+</tr>
+<tr>
+<td>正则搜索</td>
+<td>永远空结果</td>
+</tr>
+<tr>
+<td><code>--copr OWNER/PROJECT</code></td>
+<td>前 10 条没命中时失效</td>
+</tr>
+<tr>
+<td>高风险仓库</td>
+<td>可以安装，且 <code>-y</code> 能绕过确认</td>
+</tr>
+</tbody></table>
+<p>结论是：<strong>测试覆盖的是「函数行为」，缺的是「命令串起来之后还算不算对」</strong>。所以后面补的 24 个回归测试，重点全在集成路径上。</p>
+<h2 id="二、按「会不会直接坏」排序的缺陷"><a href="#二、按「会不会直接坏」排序的缺陷" class="headerlink" title="二、按「会不会直接坏」排序的缺陷"></a>二、按「会不会直接坏」排序的缺陷</h2><p><strong>① <code>audit</code> 必崩：分页参数不受支持。</strong></p>
+<p><code>CoprBackend.get_builds()</code> 用了 python-copr 不认的分页方式，直接抛异常。修法是改用 <code>pagination={&quot;limit&quot;: limit}</code>（或先取列表再本地切片）。</p>
+<p><strong>② 多关键词 AND 搜索不生效：被拼成了字面 glob。</strong></p>
+<p>关键词被拼成 <code>&quot;ghostty terminal&quot;</code>，后端又包成 <code>*ghostty terminal*</code>——这个 glob 要求包名里<strong>连续出现带空格的整串</strong>，自然一条都没有。修法是逐词查询后合并，再做 AND 过滤。</p>
+<p><strong>③ 正则搜索永远空：后端没有服务端正则能力。</strong></p>
+<p>原实现把 <code>^ghost</code> 整个当字面量发出去查。修法是<strong>先抽取字面量做查询种子</strong>（<code>^ghost</code> → <code>ghost</code>，<code>vim|neovim</code> → <code>vim</code>、<code>neovim</code>），拿到候选后再本地用完整正则过滤。纯元字符的模式要明确报错，而不是静默返回空。</p>
+<p><strong>④ <code>--copr OWNER/PROJECT</code> 在前 10 条没命中就失效。</strong></p>
+<p>那段处理被包在「搜索结果非空」的 <code>if</code> 里，而搜索结果只取前 10 条。修法是这条路径直接 <code>get_project()</code> 加载指定项目，不走关键词搜索。</p>
+<p><strong>⑤ 标着 <code>blocked</code> 的仓库仍可安装，<code>-y</code> 还能绕过确认。</strong></p>
+<p>风险等级只是展示，没有在安装路径上强制执行。修法是在列表过滤 + 两条安装路径（普通安装与 <code>--copr</code> 直连）都加防御性拦截，<code>-y</code> 也不能绕过。</p>
+<p><strong>⑥ 本地仓库安装失败仍返回退出码 0。</strong></p>
+<p><code>-y</code> 分支和数字选择分支都打印了”Installation failed”，然后 <code>return 0</code>——和 Copr&#x2F;OBS 路径完全不一致。修法是 <code>return 1</code>。这类”失败但退出码 0”最坑自动化。</p>
+<p><strong>⑦ <code>Package.repo</code> 恒为空：三种字段名。</strong></p>
+<p>dnf5 的输出字段是 <code>Repository</code>、已安装查询是 <code>From repository</code>、dnf4 是 <code>Repo</code>。原解析只认一种。三种全兼容。</p>
+<p><strong>⑧ <code>-y</code> 下仍弹交互，空 stdin 直接 traceback。</strong></p>
+<p>两个原因：没给 dnf 传 <code>--assumeyes</code>；以及多处裸 <code>input()</code> 不处理 EOF。修法是该传的传、该跳过的跳过，所有 <code>input()</code> 换成 EOF 安全的包装。</p>
+<p><strong>⑨ dnf5 下 OBS 仓库禁用失败。</strong></p>
+<p>dnf4 的 <code>--set-disabled</code> 在 dnf5 里不可用。修法是按当前 dnf 版本分派：dnf5 用 <code>config-manager setopt &lt;repo&gt;.enabled=0</code>，dnf4 保留原参数。</p>
+<p><strong>⑩ Copr 的 chroot 回退会选错架构。</strong></p>
+<p>只按版本回退、没校验架构，x86_64 上会选中 <code>fedora-43-aarch64</code>。修法是加架构校验。</p>
+<p><strong>⑪ OBS 项目名可以路径穿越。</strong></p>
+<p>项目名被直接拼进文件路径、交给 <code>sudo curl</code> &#x2F; <code>sudo rm</code>——<code>copa repo remove obs:../../...</code> 能操作任意 <code>*.repo</code>。修法是项目名字符集校验，阻断 <code>../</code>。<strong>这条是安全问题，不是功能问题。</strong></p>
+<h2 id="三、配置解析：只捕-TypeError-是不够的"><a href="#三、配置解析：只捕-TypeError-是不够的" class="headerlink" title="三、配置解析：只捕 TypeError 是不够的"></a>三、配置解析：只捕 <code>TypeError</code> 是不够的</h2><p>用户手改 <code>config.toml</code> 写错一个字段类型，<strong>所有命令都会崩</strong>：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[search]</span></span><br><span class="line"><span class="attr">search</span> = <span class="number">1</span>      <span class="comment"># 本该是子表，写成了整数</span></span><br></pre></td></tr></table></figure>
+
+<p>原代码对 <code>data[key]</code> 直接调 <code>.items()</code>，且只捕获 <code>TypeError</code>，于是抛的是 <code>AttributeError: &#39;int&#39; object has no attribute &#39;items&#39;</code>——而 <code>main()</code> 在每条命令前都会加载配置，等于整个工具不可用。</p>
+<p>修法两件事：加 <code>isinstance(data[key], dict)</code> 检查，并捕获 <code>AttributeError</code>；失败时回退默认值而不是中断。手写配置文件永远会有错，工具要容错。</p>
+<h2 id="四、退出码与-JSON：失败也要有结构化输出"><a href="#四、退出码与-JSON：失败也要有结构化输出" class="headerlink" title="四、退出码与 JSON：失败也要有结构化输出"></a>四、退出码与 JSON：失败也要有结构化输出</h2><p>CLI 工具的两条基本纪律，这个项目原先都没完全做到：</p>
+<ul>
+<li><strong>失败必须非零退出码</strong>（第 ⑥ 条）；</li>
+<li><strong><code>--json</code> 模式下失败也要输出 JSON</strong>，带 <code>error</code> 字段，而不是直接 <code>return 1</code> 什么都不打印。</li>
+</ul>
+<p>后者对脚本调用方很重要——它们解析不了空输出，只会报一个更莫名其妙的错。</p>
+<p>顺带统一了「必需的检查 vs 可选的检查」：<code>doctor</code> 原先把”可选 OBS 凭据缺失”和”有 dnf 没 dnf5”都算失败，还总是返回 0；现在区分必需&#x2F;可选，必需项失败返回 1。<code>audit</code> 也补上读取配置（<code>warn_experimental</code>、<code>block_*</code>）和检查 <code>testing only</code>，网络错误单独报，不再统一报成”项目不存在或已删除”。</p>
+<h2 id="五、中文化的陷阱：内部值不能翻"><a href="#五、中文化的陷阱：内部值不能翻" class="headerlink" title="五、中文化的陷阱：内部值不能翻"></a>五、中文化的陷阱：内部值不能翻</h2><p>加中英双语时最容易踩的坑不是翻译质量，是<strong>把内部值也翻了</strong>。</p>
+<p>这个工具里，<code>enabled</code> &#x2F; <code>disabled</code>、风险等级 <code>low</code> &#x2F; <code>medium</code> &#x2F; <code>high</code> &#x2F; <code>blocked</code>、构建状态、配置枚举——这些值会参与字符串比较、会写进 JSON、会被 dnf 输出解析。一旦展示层的中文化漏进这些地方，<strong>逻辑会静默失效</strong>。</p>
+<p>定下的规则是：</p>
+<ul>
+<li>源码里的 UI 文案保持英文、用 <code>tr(&quot;English message&quot;)</code> 包裹，中文集中在 <code>copa/locales/zh_CN.json</code>；</li>
+<li><strong>内部枚举、JSON 输出字段、dnf 解析一律保持英文</strong>，只在展示层翻译；</li>
+<li><code>DnfBackend._run()</code> 强制 <code>LANG=C</code> &#x2F; <code>LC_ALL=C</code>，测试里也固定 <code>LC_ALL=C</code>；</li>
+<li><code>argparse</code> 自动生成的参数错误不翻译（翻了反而不好搜）。</li>
+</ul>
+<p>还顺手加了中文确认别名：<code>是</code> &#x2F; <code>是的</code> &#x2F; <code>好</code> &#x2F; <code>确定</code>，<code>否</code> &#x2F; <code>不</code> &#x2F; <code>不是</code> &#x2F; <code>取消</code>——不然中文界面下用户回一个”是”，程序认不出来。</p>
+<h2 id="六、打包：新目录不会自动进-wheel-RPM"><a href="#六、打包：新目录不会自动进-wheel-RPM" class="headerlink" title="六、打包：新目录不会自动进 wheel &#x2F; RPM"></a>六、打包：新目录不会自动进 wheel &#x2F; RPM</h2><p>新增了 <code>copa/locales/</code> 目录放翻译，但<strong>打包时不会自动收录</strong>：<code>pyproject.toml</code> 要显式加 <code>package-data</code>，RPM spec 的 <code>%{python3_sitelib}/copa/</code> 虽然包含子包，数据文件仍要确认。</p>
+<p>验证方式很直接：装完 <code>rpm -ql</code> 看有没有 <code>zh_CN.json</code>，或者解 wheel 看一眼。否则就是”本地能显示中文、装完又变英文”。</p>
+<p>另外一条：<code>make build</code> 原来依赖预置的源码包，改成一键从工作区生成 tarball 再 <code>rpmbuild</code>，并在打包时排除 <code>build/</code>、<code>dist/</code>、<code>rpms/</code>、<code>srpm/</code> 与缓存目录——否则源码包会夹带构建产物。</p>
+<h2 id="七、发布：CI-该覆盖什么"><a href="#七、发布：CI-该覆盖什么" class="headerlink" title="七、发布：CI 该覆盖什么"></a>七、发布：CI 该覆盖什么</h2><p>最后的发布链路覆盖了这些环节：版本一致性校验、<code>ruff</code> + <code>mypy</code>、Python 3.11&#x2F;3.12&#x2F;3.13 三档测试、Fedora 43 与 44 的 RPM 构建、SRPM、GitHub Release、以及<strong>触发 Copr 构建</strong>（Copr 侧两个 chroot 都成功才算完）。</p>
+<p>这里有个小判断值得记：本机 <code>dnf5 --refresh repoquery</code> 访问 <code>packages.redhat.com</code> 会超时，但那是本机网络环境的问题——<strong>不能据此判断构建失败</strong>，要以 Copr API 的结果为准。区分”我的网络”和”构建产物”是发布验收的基本功。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次审计最大的收获不是修了 18 个问题，而是重新理解了「测试全绿」的含义：</p>
+<ul>
+<li><strong>单元测试全绿只能说明函数对</strong>，命令串起来之后对不对，得靠真的去跑每一条子命令；</li>
+<li><strong>失败要非零退出码、要能输出结构化错误</strong>，否则自动化链路会以各种奇怪的方式失败；</li>
+<li><strong>中文化只翻展示层</strong>，内部枚举和 JSON 字段保持英文，否则逻辑会被翻译静默破坏；</li>
+<li><strong>新增资源目录记得进打包清单</strong>，否则”本地好的、装完就变”。</li>
+</ul>
+<p>一句话：<strong>给工具做审计，先跑命令，再看代码。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/cli/" rel="tag"># cli</a>
+              <a href="/tags/dnf/" rel="tag"># dnf</a>
+              <a href="/tags/copr/" rel="tag"># copr</a>
+              <a href="/tags/testing/" rel="tag"># testing</a>
+              <a href="/tags/i18n/" rel="tag"># i18n</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/19/verify-before-you-build/" rel="prev" title="从计划到产物：九个「看起来没问题」的验证缺口">
+                  <i class="fa fa-angle-left"></i> 从计划到产物：九个「看起来没问题」的验证缺口
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/10/25/agent-long-term-memory-sqlite/" rel="next" title="给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite">
+                  给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
