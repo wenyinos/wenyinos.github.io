@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="改完代码、跑通测试、部署上线——到这一步很多人就收工了。 但这个月有四次，“看起来修好了”和”真的修好了”之间差着一次取证：一次是日志里还有旧报错、一次是打包显示成功但关键步骤没执行、一次是审计报告把数据问题写成了代码 bug、还有一次是构建失败其实是本机网络的问题。 这篇记一下取证的具体做法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="修复上线之后：拿什么证明它真的生效">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/10/29/proving-a-fix-actually-works/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="改完代码、跑通测试、部署上线——到这一步很多人就收工了。 但这个月有四次，“看起来修好了”和”真的修好了”之间差着一次取证：一次是日志里还有旧报错、一次是打包显示成功但关键步骤没执行、一次是审计报告把数据问题写成了代码 bug、还有一次是构建失败其实是本机网络的问题。 这篇记一下取证的具体做法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-28T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="debugging">
+<meta property="article:tag" content="ops">
+<meta property="article:tag" content="production">
+<meta property="article:tag" content="verification">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/10/29/proving-a-fix-actually-works/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/10/29/proving-a-fix-actually-works/","path":"2026/10/29/proving-a-fix-actually-works/","title":"修复上线之后：拿什么证明它真的生效"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>修复上线之后：拿什么证明它真的生效 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%8C%BA%E5%88%86%E3%80%8C%E6%88%91%E7%9A%84%E7%BD%91%E7%BB%9C%E3%80%8D%E5%92%8C%E3%80%8C%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9%E3%80%8D"><span class="nav-number">1.</span> <span class="nav-text">一、先区分「我的网络」和「构建产物」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81A-B-%E5%AF%B9%E7%85%A7%EF%BC%9A%E5%9B%9E%E9%80%80%E4%B8%80%E6%AC%A1%EF%BC%8C%E8%AE%A9%E6%97%A5%E5%BF%97%E8%AF%B4%E8%AF%9D"><span class="nav-number">2.</span> <span class="nav-text">二、A&#x2F;B 对照：回退一次，让日志说话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A4%8D%E7%8E%B0%E6%9D%A1%E4%BB%B6%E8%A6%81%E8%B7%9F%E7%BA%BF%E4%B8%8A%E5%AF%B9%E9%BD%90"><span class="nav-number">3.</span> <span class="nav-text">三、复现条件要跟线上对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%97%A5%E5%BF%97%E8%A6%81%E8%83%BD%E8%AF%81%E6%98%8E%E3%80%8C%E6%AD%A5%E9%AA%A4%E7%9C%9F%E7%9A%84%E6%89%A7%E8%A1%8C%E4%BA%86%E3%80%8D"><span class="nav-number">4.</span> <span class="nav-text">四、日志要能证明「步骤真的执行了」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%A1%E8%AE%A1%E6%8A%A5%E5%91%8A%E4%B8%8D%E8%83%BD%E7%85%A7%E5%8D%95%E5%85%A8%E6%94%B6"><span class="nav-number">5.</span> <span class="nav-text">五、审计报告不能照单全收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8F%91%E5%B8%83%E5%89%8D%E7%A1%AE%E8%AE%A4%E3%80%8C%E5%9C%A8%E5%8F%AF%E5%AE%89%E8%A3%85%E4%BA%A7%E7%89%A9%E9%87%8C%E3%80%8D"><span class="nav-number">6.</span> <span class="nav-text">六、发布前确认「在可安装产物里」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">149</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/29/proving-a-fix-actually-works/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="修复上线之后：拿什么证明它真的生效 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          修复上线之后：拿什么证明它真的生效
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-29 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-29T00:00:00+08:00">2026-10-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>改完代码、跑通测试、部署上线——到这一步很多人就收工了。</p>
+<p>但这个月有四次，<strong>“看起来修好了”和”真的修好了”之间差着一次取证</strong>：一次是日志里还有旧报错、一次是打包显示成功但关键步骤没执行、一次是审计报告把数据问题写成了代码 bug、还有一次是构建失败其实是本机网络的问题。</p>
+<p>这篇记一下取证的具体做法。</p>
+<span id="more"></span>
+
+<h2 id="一、先区分「我的网络」和「构建产物」"><a href="#一、先区分「我的网络」和「构建产物」" class="headerlink" title="一、先区分「我的网络」和「构建产物」"></a>一、先区分「我的网络」和「构建产物」</h2><p>最省时间的一条原则：<strong>出问题先分清是环境还是产物</strong>。</p>
+<ul>
+<li>发布时本机 <code>dnf5 --refresh repoquery</code> 访问 <code>packages.redhat.com</code> 一直超时，看起来像构建挂了。但 <code>dnf repolist</code> 秒回、Copr API 那边构建状态是 <code>SUCCESS</code>——<strong>是本机到那个镜像的网络问题</strong>，不是产物问题。判据要以构建侧（CI 状态、Copr API）为准。</li>
+<li>联调环境里首页一直跳到升级页，一开始怀疑代码；核对后发现是<strong>数据库停在旧版本、代码是新版本</strong>。版本不一致本身就是”现象”，不是 bug。</li>
+</ul>
+<p>这两件事的共同点：<strong>现象发生在你面前，原因不一定在你面前</strong>。先确认”我这边看到的”代表不代表”真实状态”。</p>
+<h2 id="二、A-B-对照：回退一次，让日志说话"><a href="#二、A-B-对照：回退一次，让日志说话" class="headerlink" title="二、A&#x2F;B 对照：回退一次，让日志说话"></a>二、A&#x2F;B 对照：回退一次，让日志说话</h2><p>线上刷了 7 条 <code>stripslashes(): Passing null to parameter #1 ($string) of type string is deprecated ... on line 492</code>。</p>
+<p>改之前先做对照实验：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git stash          # 回退到修复前</span><br><span class="line">请求 ?p=banlist     # 日志里出现与线上一字不差的报错</span><br><span class="line">git stash pop      # 恢复修复</span><br><span class="line">再请求              # 200，零 Deprecated / Warning / Notice</span><br></pre></td></tr></table></figure>
+
+<p><strong>回退能复现、恢复能消失</strong>，这才是修复生效的证据。只看”我改完访问了一下是好的”，说服不了任何人——包括三个月后的自己。</p>
+<p>顺带一个判断：那 7 条报错正好对应列表页里 <strong>7 条没有对应管理员的封禁记录</strong>。数字能对上，根因才算落地：管理员被删 → <code>LEFT JOIN sb_admins</code> 返回 <code>admin_name = NULL</code> → PHP 8.4+ 把 null 传给 string 参数就报 Deprecated。</p>
+<h2 id="三、复现条件要跟线上对齐"><a href="#三、复现条件要跟线上对齐" class="headerlink" title="三、复现条件要跟线上对齐"></a>三、复现条件要跟线上对齐</h2><p>同一个报错，本地死活复现不出来，有两个原因，都值得记：</p>
+<p><strong>① 数据条件不具备。</strong> 本地备份库里没有”孤儿记录”（线上是后来删管理员才产生的）。做法是<strong>临时</strong>把一条封禁记录的 <code>aid</code> 指向一个不存在的 <code>999999</code>，请求后立刻还原——不是造一套假数据，而是<strong>只改触发条件那一个字段</strong>。</p>
+<p><strong>② 分支条件不一致。</strong> 第一次测试压根没走到第 492 行：本地 <code>banlist.hideadminname=1</code>，匿名请求走的是 <code>admin=false</code> 分支，根本不会调用 <code>stripslashes</code>。<strong>测试前先把触发条件对齐线上配置</strong>，否则你会得到一个”没问题”的假结论。</p>
+<p>测完必须还原：数据改回原值、模板缓存清空、临时容器删掉。否则下次有人在这个环境上测试，会拿到你留下的脏数据。</p>
+<h2 id="四、日志要能证明「步骤真的执行了」"><a href="#四、日志要能证明「步骤真的执行了」" class="headerlink" title="四、日志要能证明「步骤真的执行了」"></a>四、日志要能证明「步骤真的执行了」</h2><p>这一条最容易忽略：<strong>“打包成功”不等于”关键步骤执行了”</strong>。</p>
+<p>一个跨平台打包项目里有个关键步骤——把第三方预编译库绑定的 glib 符号隔离掉，否则应用一加载就崩。但这步如果没执行，打包依然是绿的。</p>
+<p>所以验收方式是<strong>回看日志确认证据</strong>：</p>
+<ul>
+<li>Linux x64 与 arm64 各自出现 <code>isolated sharp&#39;s bundled glib in 2 file(s)</code>（提升副本与 <code>.pnpm</code> 副本各一），patchelf 0.19.2 安装成功；</li>
+<li>FreeBSD 侧日志里<strong>没有</strong>这一步 —— 这<strong>是正常的</strong>：它走独立构建脚本、按平台直接跳过该修补，而且用的库是 WASM 实现、根本不链接 glib。</li>
+</ul>
+<p>同一个判据在两个平台上结论相反，是因为<strong>平台分支不同</strong>。要求”两边日志一致”反而会误判。验收要按平台分别定判据，而不是套一个模板。</p>
+<h2 id="五、审计报告不能照单全收"><a href="#五、审计报告不能照单全收" class="headerlink" title="五、审计报告不能照单全收"></a>五、审计报告不能照单全收</h2><p>有一份审计报告说：”12 条 supersede 边对应 6 条仍然 active，是写边时没回写 status”。</p>
+<p>听起来是个明确的代码 bug。但核对之后发现两件事：</p>
+<ul>
+<li>更可能是<strong>手工 SQL、导入、或旧版本写入</strong>留下的数据，当前正常写入路径没有这个逻辑；</li>
+<li>而且<strong>审计快照是 308 条，手上库是 306 条</strong> —— 两边根本不是同一份数据。</li>
+</ul>
+<p>结论：不能照着审计的 SQL 批量执行。先备份，先查记录来源，只做”能确定来源”的那部分修复。</p>
+<p>同一份报告里的另一条（提示词预算不足导致关键内容被裁）<strong>成立且更严重</strong>，值得优先修。</p>
+<p><strong>审计报告是一份线索，不是一份判决书。</strong> 它的价值在于指出”哪里可疑”，验证和定级还是要自己来。</p>
+<h2 id="六、发布前确认「在可安装产物里」"><a href="#六、发布前确认「在可安装产物里」" class="headerlink" title="六、发布前确认「在可安装产物里」"></a>六、发布前确认「在可安装产物里」</h2><p>有一个功能做完验收，才发现<strong>改动只在本地分支</strong>：已经发布的二进制不包含新页面，装了新版的人根本拿不到这个能力。</p>
+<p>修法是把分支合并、补文档、发下一个版本号，而不是覆盖已发布的版本。教训是：<strong>“我测过了”要加一句”在哪个产物里测的”</strong>。</p>
+<p>另一个同类：部署完代码，页面还是旧的——因为 php-fpm 的 OPcache 设了 <code>validate_timestamps=0</code>，<strong>必须重启才加载新文件</strong>。这类”代码更新了但运行的是旧的”在 PHP&#x2F;OPcache、Java 容器、Node 常驻进程里都会出现，验收要看<strong>运行时加载的版本</strong>，不是文件时间戳。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>“修好了”要有证据，证据要满足三条：</p>
+<ol>
+<li><strong>能复现也能消失</strong>——A&#x2F;B 对照，回退一次让日志说话；</li>
+<li><strong>条件跟生产对齐</strong>——数据条件、分支条件、运行时版本；</li>
+<li><strong>证据指向那个步骤本身</strong>——不是”整体成功”，而是”这一步确实执行了”。</li>
+</ol>
+<p>再加两条心态：</p>
+<ul>
+<li><strong>审计报告是线索不是判决书</strong>，先看两边数据是不是同一份；</li>
+<li><strong>现象在你面前，原因不一定在你面前</strong>——先分清是本机环境还是真实产物。</li>
+</ul>
+<p>最后一句：<strong>上线不是终点，是验收的开始。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/debugging/" rel="tag"># debugging</a>
+              <a href="/tags/production/" rel="tag"># production</a>
+              <a href="/tags/verification/" rel="tag"># verification</a>
+              <a href="/tags/ops/" rel="tag"># ops</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/27/responsive-layer-without-mobile-views/" rel="prev" title="不复制一套移动端视图：把响应式层重做一遍">
+                  <i class="fa fa-angle-left"></i> 不复制一套移动端视图：把响应式层重做一遍
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
