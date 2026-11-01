@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">149</span>
+        <span class="site-state-item-count">155</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,194 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/04/grub-and-boot-repair/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/04/grub-and-boot-repair/" class="post-title-link" itemprop="url">GRUB 与系统引导修复合集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-04 00:00:00" itemprop="dateCreated datePublished" datetime="2026-04-04T00:00:00+08:00">2026-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>GRUB 的配置文件是自动生成的，手改容易丢；这几篇记录的是「怎么改才对、引导坏了怎么救」——从重建配置、用 grubby 做永久更改，到 chroot 修 Win10 双系统的引导。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/04/grub-and-boot-repair/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/03/27/systemd-user-session-exit-service-stop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/03/27/systemd-user-session-exit-service-stop/" class="post-title-link" itemprop="url">用户会话退出导致的级联服务停止</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2026-03-27T00:00:00+08:00">2026-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="用户会话退出导致的级联服务停止"><a href="#用户会话退出导致的级联服务停止" class="headerlink" title="用户会话退出导致的级联服务停止"></a>用户会话退出导致的级联服务停止</h1><p><strong>TL;DR</strong>: 用户 <code>wenyinos</code> (UID 1002) 注销 SSH&#x2F;图形会话导致其 systemd user 实例停止，所有用户级服务（ZeroClaw、CLI Proxy API）被级联终止。解决方案：启用 <code>loginctl enable-linger</code>。</p>
+<hr>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/03/27/systemd-user-session-exit-service-stop/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -958,194 +1146,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/27/desktop-environment-and-ime/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/27/desktop-environment-and-ime/" class="post-title-link" itemprop="url">桌面环境与输入法合集</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-06-27 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-27T00:00:00+08:00">2023-06-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>KDE 与 RHEL 系桌面的安装、输入法配置，以及几个高频小故障（Dolphin 提权、KDE Connect 失联）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/06/27/desktop-environment-and-ime/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/05/17/virtualization-and-containers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/17/virtualization-and-containers/" class="post-title-link" itemprop="url">虚拟化与容器合集</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-17 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-17T00:00:00+08:00">2023-05-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>QEMU&#x2F;KVM、Podman 环境里装 Docker、嵌套虚拟化，以及老式虚拟机的安装记录。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/17/virtualization-and-containers/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

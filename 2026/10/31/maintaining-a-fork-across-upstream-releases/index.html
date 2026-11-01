@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="维护一个「跟着上游走、又带自己改动」的分支，最容易低估的不是冲突数量，而是上游顺手把你依赖的基础设施也改了。 这个月的一次上游同步可以当样本：5231 个文件、+21.6 万 &#x2F; −61.1 万，看着吓人，但真正与本分支有交集的只有约 80 个文件、11 个内容冲突。冲突一个下午就解完了，剩下的时间全花在「上游把测试框架整个换掉」这件事上。 这篇按这次的实际顺序记一遍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="维护一个上游分支：每次同步大版本要动哪些地方">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/10/31/maintaining-a-fork-across-upstream-releases/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="维护一个「跟着上游走、又带自己改动」的分支，最容易低估的不是冲突数量，而是上游顺手把你依赖的基础设施也改了。 这个月的一次上游同步可以当样本：5231 个文件、+21.6 万 &#x2F; −61.1 万，看着吓人，但真正与本分支有交集的只有约 80 个文件、11 个内容冲突。冲突一个下午就解完了，剩下的时间全花在「上游把测试框架整个换掉」这件事上。 这篇按这次的实际顺序记一遍。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-30T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="ci">
+<meta property="article:tag" content="fork">
+<meta property="article:tag" content="maintenance">
+<meta property="article:tag" content="merge">
+<meta property="article:tag" content="testing">
+<meta property="article:tag" content="upstream">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/10/31/maintaining-a-fork-across-upstream-releases/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/10/31/maintaining-a-fork-across-upstream-releases/","path":"2026/10/31/maintaining-a-fork-across-upstream-releases/","title":"维护一个上游分支：每次同步大版本要动哪些地方"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>维护一个上游分支：每次同步大版本要动哪些地方 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E9%87%8F%E5%8C%96%E8%A7%84%E6%A8%A1%EF%BC%8C%E5%86%8D%E5%86%B3%E5%AE%9A%E6%80%8E%E4%B9%88%E6%89%93"><span class="nav-number">1.</span> <span class="nav-text">一、先量化规模，再决定怎么打</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%86%B2%E7%AA%81%E5%A5%BD%E8%A7%A3%EF%BC%8C%E9%9A%BE%E7%9A%84%E6%98%AF%E3%80%8C%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E8%A2%AB%E6%8D%A2%E6%8E%89%E3%80%8D"><span class="nav-number">2.</span> <span class="nav-text">二、冲突好解，难的是「基础设施被换掉」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%97%A7%E6%B5%8B%E8%AF%95%EF%BC%9A%E5%88%A0%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%8C%E6%94%B9%E4%B8%80%E9%83%A8%E5%88%86"><span class="nav-number">3.</span> <span class="nav-text">三、旧测试：删一部分，改一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%8B%BF%E4%B8%8D%E5%88%B0%E6%97%A5%E5%BF%97%E6%97%B6%EF%BC%8C%E6%80%8E%E4%B9%88%E8%AE%B0%E9%81%97%E7%95%99"><span class="nav-number">4.</span> <span class="nav-text">四、拿不到日志时，怎么记遗留</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%80%E6%9D%A1%E7%BB%99%E4%B8%8B%E6%AC%A1%E7%9A%84%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="nav-number">5.</span> <span class="nav-text">五、一条给下次的检查清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/31/maintaining-a-fork-across-upstream-releases/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="维护一个上游分支：每次同步大版本要动哪些地方 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          维护一个上游分支：每次同步大版本要动哪些地方
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-31 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-31T00:00:00+08:00">2026-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>维护一个「跟着上游走、又带自己改动」的分支，最容易低估的不是冲突数量，而是<strong>上游顺手把你依赖的基础设施也改了</strong>。</p>
+<p>这个月的一次上游同步可以当样本：<strong>5231 个文件、+21.6 万 &#x2F; −61.1 万</strong>，看着吓人，但真正与本分支有交集的只有约 80 个文件、<strong>11 个内容冲突</strong>。冲突一个下午就解完了，剩下的时间全花在「上游把测试框架整个换掉」这件事上。</p>
+<p>这篇按这次的实际顺序记一遍。</p>
+<span id="more"></span>
+
+<h2 id="一、先量化规模，再决定怎么打"><a href="#一、先量化规模，再决定怎么打" class="headerlink" title="一、先量化规模，再决定怎么打"></a>一、先量化规模，再决定怎么打</h2><p>动手前先算出三个数字，它们决定策略完全不同：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>这次的值</th>
+<th>意味着什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>上游改动规模</td>
+<td>5231 文件 &#x2F; +21.6 万 −61.1 万</td>
+<td>是一次大重构，不是补丁</td>
+</tr>
+<tr>
+<td>与本分支交集</td>
+<td>约 80 个文件</td>
+<td>冲突面可控</td>
+</tr>
+<tr>
+<td>实际冲突</td>
+<td>11 个内容冲突</td>
+<td>一下午能解完</td>
+</tr>
+</tbody></table>
+<p>如果交集只有 80 个文件，就<strong>不要</strong>去做「全部 rebase 重放」——那是几千个文件的工作量。用 <code>git merge</code> 把这个上游版本整体合进来，只处理交集部分。</p>
+<p>顺带一句：改动行数是<strong>负数</strong>（−61.1 万），说明上游删得比加得多。<strong>删除比新增更容易伤到你</strong>——删掉的文件可能是你分支里还在用的东西。</p>
+<h2 id="二、冲突好解，难的是「基础设施被换掉」"><a href="#二、冲突好解，难的是「基础设施被换掉」" class="headerlink" title="二、冲突好解，难的是「基础设施被换掉」"></a>二、冲突好解，难的是「基础设施被换掉」</h2><p>11 个冲突按常规处理：保留本分支的策略常量、品牌改动和自有发布链路，其余跟上游走。真正花时间的是三类「不算冲突但照样让你跑不起来」的变化。</p>
+<p><strong>① 测试命令直接消失。</strong></p>
+<p>上游删掉了 <code>test:unit</code> &#x2F; <code>test:unit:affected</code>，连 <code>scripts/run-affected-unit-tests.mjs</code> 一起删了，改成 <code>test:engineering</code> 系列，并且——<strong>不再自动发现 <code>packages/**/test</code></strong>，改由 <code>scripts/engineering-test-files.json</code> 这个显式清单管理。</p>
+<p>后果很直接：本分支为了保住自己的策略和品牌断言而写的那些测试，<strong>不在清单里就等于从来没跑过</strong>。表现是「按新命令跑，全绿通过」——但你的测试一条都没执行。</p>
+<p>修法是逐个确认本分支新增的测试文件，手动登记进清单。这一步没有报错提示，只能靠自己数。</p>
+<p><strong>② API 改名。</strong></p>
+<p><code>readRequestVerificationConfig</code> 变成 <code>readValidatedRequestVerificationConfig</code>，还新增了 <code>ApiError</code> 类型。这种改名在 TypeScript 里会明确报错，好办；要小心的是<strong>只是行为变了、签名没变</strong>的那类。</p>
+<p><strong>③ 新增功能插进了你改过的位置。</strong></p>
+<p>上游在桌面更新流程里新增了 <code>verifyWindowsAuthenticodeSignature</code>，而这正是本分支「更新只走自有 Release」的改造点。合并时不显式保住 <code>checkSelfHostedRelease</code> 的分流，上游那套判断就会把你的分流顶掉——<strong>编译能过、类型也对，只是行为悄悄变回上游的</strong>。</p>
+<p>这类「语义冲突」比文本冲突危险得多，只能靠合并后逐处复核改过的文件。</p>
+<h2 id="三、旧测试：删一部分，改一部分"><a href="#三、旧测试：删一部分，改一部分" class="headerlink" title="三、旧测试：删一部分，改一部分"></a>三、旧测试：删一部分，改一部分</h2><p>上游既然重构了测试，本分支原有的测试自然有一批不兼容。这次共 13 个，分两类处理：</p>
+<p><strong>按上游退役删掉（9 个）</strong>：</p>
+<ul>
+<li>7 个 UI 测试依赖 <code>@testing-library/react</code>，而上游把这个依赖移除了；</li>
+<li>1 个测的是「厂商更新链路」的就绪状态，而本分支已经明确关闭了那条链路——测的对象不存在了；</li>
+<li>1 个的旧断言假设「渲染进程自己判断 stale」，上游改成「由 Main 判断」，断言前提已经不成立。</li>
+</ul>
+<p><strong>改断言后保留（4 个）</strong>：仍然有效的实现测试，按上游新行为逐个改。</p>
+<p>关键判断：<strong>「不兼容」不等于「该删」</strong>。依赖被移除了、被测对象被关了，这是真该删；只是行为变了，就该改断言留下。</p>
+<p>还有一条顺序上的讲究：如果一款文件同时是「上游删除、本地修改」，<strong>先保留本地版本，统一验证完再按退役逐批清理</strong>。一次性按上游删，会把本分支的策略覆盖丢光，而且丢了你也不知道——因为测试也一起没了。</p>
+<h2 id="四、拿不到日志时，怎么记遗留"><a href="#四、拿不到日志时，怎么记遗留" class="headerlink" title="四、拿不到日志时，怎么记遗留"></a>四、拿不到日志时，怎么记遗留</h2><p>发布这次没全绿：<code>Build Linux-rpm-arm64</code> 这个 job 失败。</p>
+<p><code>gh run view --log-failed</code> 拉日志超时，只能定位到「失败发生在容器内 <code>pnpm install</code> 阶段」，后面的打包、校验、收集产物全是 skipped。根因没查到。</p>
+<p>这种时候的处理原则是：<strong>不猜，写清楚边界</strong>。</p>
+<ul>
+<li>Release 说明不能写「Linux x64 与 arm64 均可用」——资产里确实缺 arm64 的 rpm；</li>
+<li>遗留条目要写清「哪一步失败、卡在哪个阶段、为什么没继续查、下轮怎么补」。</li>
+</ul>
+<p>比”我以为只是网络抖动”要好得多：下一个看这条记录的人（通常是三个月后的自己）能直接接着查。</p>
+<h2 id="五、一条给下次的检查清单"><a href="#五、一条给下次的检查清单" class="headerlink" title="五、一条给下次的检查清单"></a>五、一条给下次的检查清单</h2><p>同步完成后，除了「测试全绿」，还要确认这几件事：</p>
+<ol>
+<li><strong>测试真的跑了</strong>——新框架若是显式清单制，先数一遍本分支的测试有没有登记；</li>
+<li><strong>改过的文件逐个复核行为</strong>——尤其是被上游新增逻辑插进来的位置（更新流程、鉴权、配置读取）；</li>
+<li><strong>上游新增的网络出口有没有接到你的策略门禁上</strong>——这次上游加了一个客户端配置下载边界，目前没有调用方，但<strong>将来一接入就会绕过本分支的「关闭官方远端配置」策略</strong>，必须提前登记成待办；</li>
+<li><strong>元数据别写错</strong>——同步记录的日期、版本号这种小地方，写错了会让下一个人误判范围（这次就把日期写成了一个月前）；</li>
+<li><strong>产物清单要和发布说明对得上</strong>——少一个架构的包，说明里就不能说「双架构可用」。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>跟着上游走的分支，维护成本不在「解冲突」，在这三件事：</p>
+<ul>
+<li><strong>上游会改你的基础设施</strong>——测试怎么跑、怎么发现，比业务代码更影响你；</li>
+<li><strong>语义冲突比文本冲突危险</strong>——编译通过、测试通过，行为却变回上游的；</li>
+<li><strong>拿不到证据时，把边界写清楚</strong>，不要用推测填补空白。</li>
+</ul>
+<p>一句话：<strong>同步大版本之后，先验证「你的测试还在跑」，再验证「测试全绿」。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/testing/" rel="tag"># testing</a>
+              <a href="/tags/fork/" rel="tag"># fork</a>
+              <a href="/tags/upstream/" rel="tag"># upstream</a>
+              <a href="/tags/merge/" rel="tag"># merge</a>
+              <a href="/tags/ci/" rel="tag"># ci</a>
+              <a href="/tags/maintenance/" rel="tag"># maintenance</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/29/proving-a-fix-actually-works/" rel="prev" title="修复上线之后：拿什么证明它真的生效">
+                  <i class="fa fa-angle-left"></i> 修复上线之后：拿什么证明它真的生效
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/10/31/first-login-force-password-change/" rel="next" title="给已有系统加「首登强制改密」：一个跨切面开关的设计">
+                  给已有系统加「首登强制改密」：一个跨切面开关的设计 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
