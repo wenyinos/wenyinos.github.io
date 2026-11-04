@@ -109,7 +109,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/categories/ai-model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -174,18 +174,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">176</span>
+        <span class="site-state-item-count">155</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,686 +207,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/27/responsive-layer-without-mobile-views/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/27/responsive-layer-without-mobile-views/" class="post-title-link" itemprop="url">不复制一套移动端视图：把响应式层重做一遍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-27 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-27T00:00:00+08:00">2026-10-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>给一套跑了多年的管理后台补移动端，最常见的做法是<strong>再做一套 <code>m.*</code> 视图</strong>：复制一份模板、改改布局，按 UA 分流出不同的控制器。</p>
-<p>这个方案看着干净，实际代价很高——这个项目有 <strong>488 个视图</strong>，复制一份就是 488 个新的维护点，之后每个功能改动都要改两遍。</p>
-<p>这次换了个做法：<strong>不加视图，只重做响应式层</strong>。三个文件、一次断点调整，覆盖从 320px 手机到桌面的全部宽度。过程里踩的坑比预想的多，记一下。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/27/responsive-layer-without-mobile-views/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/26/desktop-editor-ime-export-performance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/26/desktop-editor-ime-export-performance/" class="post-title-link" itemprop="url">自己写的编辑器卡在哪：输入法、导出与每帧性能</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-26 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-26T00:00:00+08:00">2026-10-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-10-31 00:00:00" itemprop="dateModified" datetime="2026-10-31T00:00:00+08:00">2026-10-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>用 Rust + egui 重写一个 MarkText 风格的 Markdown 编辑器，功能本身不难——难的是三件事：<strong>输入法要能用中文、导出要能看、大文件要能不卡</strong>。</p>
-<p>这三件事有个共同点：<strong>写完不报错，用起来才发现不行</strong>。输入法不接就是打不出字，导出不处理就是一堆方块，每帧哈希就是滚动条抖。这篇把这三个方向上的具体坑记下来，顺带记两处桌面集成的连带问题。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/26/desktop-editor-ime-export-performance/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/agent-long-term-memory-sqlite/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/25/agent-long-term-memory-sqlite/" class="post-title-link" itemprop="url">给 AI agent 做长期记忆：从 MEMORY.md 到 SQLite</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-25T00:00:00+08:00">2026-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-10-30 00:00:00" itemprop="dateModified" datetime="2026-10-30T00:00:00+08:00">2026-10-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>给 AI agent 加”长期记忆”，第一版几乎都会这么做：在系统提示里约定一个 <code>MEMORY.md</code>，让模型”觉得重要就自己写进去”，下一轮再把它读回来。</p>
-<p>能跑，但撑不过几周。这篇记录把它换成 SQLite 主库的过程，以及同一时期在流式管道、定时任务、客户端联网边界上踩到的坑。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/25/agent-long-term-memory-sqlite/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/25/cli-tool-audit-integration-paths/" class="post-title-link" itemprop="url">124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-25T00:00:00+08:00">2026-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>一个 Fedora 上管理 Copr &#x2F; OBS 第三方源的命令行工具，跑了一遍 <code>pytest</code>：124 个测试全绿，<code>ruff</code> 和 <code>mypy</code> 也没有意见。看起来挺健康。</p>
-<p>但实际用起来，<code>copa audit</code> 稳定崩溃、多关键词搜索搜不到东西、正则搜索永远空、标着”高风险”的仓库照样能装。<strong>单元测试覆盖的是函数，不是集成路径</strong>——这些缺陷没有一个能在单元测试里暴露。</p>
-<p>这篇记录那次审计找出的一批真实缺陷、修法，以及中文化和打包时另外两个坑。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/25/cli-tool-audit-integration-paths/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/19/verify-before-you-build/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/19/verify-before-you-build/" class="post-title-link" itemprop="url">从计划到产物：九个「看起来没问题」的验证缺口</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-19T00:00:00+08:00">2026-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这个月做了一堆看起来毫不相干的事：给一个模拟器写 AVX-512 优化、给桌面应用补 FreeBSD 安装包、把一个 Node 项目从空库跑起来、修一个 Electron 分支的冷启动白屏、给两本开源书提 PR。</p>
-<p>它们的共同点是：<strong>每一个都在”看起来已经完成”的地方翻车</strong>。</p>
-<ul>
-<li>CI 全绿，产物装不上；</li>
-<li>测试通过，是因为根本没跑到那段代码；</li>
-<li>类型检查全绿，打包才炸；</li>
-<li>计划里写着”优化这里能涨 20%”，那行代码默认配置下根本不执行。</li>
-</ul>
-<p>这篇按”验证”这条线把它们串起来。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/19/verify-before-you-build/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/14/self-hosted-mcp-server-security/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/14/self-hosted-mcp-server-security/" class="post-title-link" itemprop="url">自建 MCP 服务端：认证、冒充与删除端点的坑</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-14 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-14T00:00:00+08:00">2026-10-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>给一套老系统接 MCP（Model Context Protocol），让 AI 客户端能直接读写业务数据，是这两年被问得很多的需求。真正做起来会发现：<strong>协议本身不难，难的是”人”——谁在操作、怎么证明是他、出了问题怎么追溯</strong>。</p>
-<p>本文记录一次自建 MCP 服务端的完整过程，重点在认证设计上翻过的车。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/14/self-hosted-mcp-server-security/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/11/packaging-ci-system-integration-pitfalls/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/11/packaging-ci-system-integration-pitfalls/" class="post-title-link" itemprop="url">跨平台打包与 CI 发布踩坑集：overlay 隔离层与 FreeBSD 移植</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-11 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-11T00:00:00+08:00">2026-10-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>打包分发的坑分两类：<strong>CI 的「静默吞」<strong>与</strong>发行版差异</strong>。这篇把开源项目的多平台打包（RPM &#x2F; DEB &#x2F; Arch &#x2F; Electron &#x2F; AppImage）、CI 流水线，以及 overlay 隔离层与 FreeBSD 移植的经验收在一起。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/11/packaging-ci-system-integration-pitfalls/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -1154,6 +474,657 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/08/10/rust-desktop-tool-pitfalls/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/08/08/ai-api-integration-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/08/08/ai-api-integration-pitfalls/" class="post-title-link" itemprop="url">对接多家大模型 API 的踩坑与治理经验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-08-08 00:00:00" itemprop="dateCreated datePublished" datetime="2026-08-08T00:00:00+08:00">2026-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文汇总 AI 应用集成类项目（图像&#x2F;视频生成服务、Web 聊天应用、模型代理插件）对接多家大模型 API 时积累的踩坑记录，覆盖<strong>配置加载、多厂商 API 差异、并发语义、数据落库与安全</strong>五个方向。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/08/08/ai-api-integration-pitfalls/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/07/31/frontend-miniprogram-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/07/31/frontend-miniprogram-pitfalls/" class="post-title-link" itemprop="url">前端工程踩坑笔记：Vue 3、小程序与 Canvas 小游戏</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-07-31 00:00:00" itemprop="dateCreated datePublished" datetime="2026-07-31T00:00:00+08:00">2026-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文汇总 Vue 3 中后台前端、Taro&#x2F;uni-app 小程序以及 Canvas 小游戏开发中积累的踩坑记录，覆盖<strong>构建与缓存、Element Plus 组件、接口数据层、小程序容器限制</strong>四个方向。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/07/31/frontend-miniprogram-pitfalls/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/06/29/nestjs-prisma-mysql-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/06/29/nestjs-prisma-mysql-pitfalls/" class="post-title-link" itemprop="url">企业级后台开发踩坑实录：NestJS + Prisma + MySQL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-06-29 00:00:00" itemprop="dateCreated datePublished" datetime="2026-06-29T00:00:00+08:00">2026-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文汇总多个中后台系统（OA、进销存、ERP 类）开发过程中积累的服务端踩坑记录，技术栈为 NestJS + Prisma + MySQL 8 + Redis。内容集中在<strong>参数校验、并发事务、序列化、数据库结构管理与安全</strong>五个方向。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/06/29/nestjs-prisma-mysql-pitfalls/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/06/26/ai-assisted-development-pitfalls/" class="post-title-link" itemprop="url">AI 辅助开发踩坑录：跨项目反复出现的 8 类问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-06-26 00:00:00" itemprop="dateCreated datePublished" datetime="2026-06-26T00:00:00+08:00">2026-06-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在多项目、长时间使用 AI 编程助手协作开发的过程中，一些<strong>同类型的坑反复出现</strong>——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 8 类问题，附具体现象、根因与修复方法。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/06/26/ai-assisted-development-pitfalls/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/05/08/storage-and-disk-space/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/08/storage-and-disk-space/" class="post-title-link" itemprop="url">存储、文件系统与空间回收合集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-08 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-08T00:00:00+08:00">2026-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>把空间要回来的几种做法：迁移 &#x2F;home 并改 fstab、清 MySQL binlog、压缩虚拟机磁盘镜像。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/05/08/storage-and-disk-space/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/28/graphics-and-hardware-acceleration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/28/graphics-and-hardware-acceleration/" class="post-title-link" itemprop="url">显卡、显示与硬件加速合集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-28 00:00:00" itemprop="dateCreated datePublished" datetime="2026-04-28T00:00:00+08:00">2026-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Intel 核显&#x2F;独显在 Linux 下的驱动与加速、浏览器硬解、XWayland 缩放，以及几款游戏的图形设置。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/28/graphics-and-hardware-acceleration/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/04/17/package-manager-and-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/17/package-manager-and-cache/" class="post-title-link" itemprop="url">包管理器、缓存与工具链合集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-17 00:00:00" itemprop="dateCreated datePublished" datetime="2026-04-17T00:00:00+08:00">2026-04-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>清理缓存、换软件源、装社区仓库、升级发行版、编译工具链——这些「环境维护」动作每次都要重查一遍。这篇把散在各处的记录收在一起。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/17/package-manager-and-cache/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
