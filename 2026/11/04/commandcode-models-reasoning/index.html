@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="覆盖 command-code 网关 Provider API 96 个端点 与 CLI 1.88.2 官方目录 94 款（抓取日 2026-11-04）。✅ 档位唯一口径 &#x3D; CLI 包内 models.md：在线 Provider API 只返回 ID &#x2F; context_length &#x2F; supported_endpoints，不含价格与推理档位。⚠️ 两源差">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CommandCode 全模型推理档位速查">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/04/commandcode-models-reasoning/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="覆盖 command-code 网关 Provider API 96 个端点 与 CLI 1.88.2 官方目录 94 款（抓取日 2026-11-04）。✅ 档位唯一口径 &#x3D; CLI 包内 models.md：在线 Provider API 只返回 ID &#x2F; context_length &#x2F; supported_endpoints，不含价格与推理档位。⚠️ 两源差">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-03T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="cli">
+<meta property="article:tag" content="commandcode">
+<meta property="article:tag" content="推理档位">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/04/commandcode-models-reasoning/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/04/commandcode-models-reasoning/","path":"2026/11/04/commandcode-models-reasoning/","title":"CommandCode 全模型推理档位速查"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CommandCode 全模型推理档位速查 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/categories/ai-model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%BA%90%E4%B8%8E%E5%88%B7%E6%96%B0%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">数据源与刷新方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%94%AF%E6%8C%81%E5%8F%AF%E9%80%89%E6%8E%A8%E7%90%86%E6%A1%A3%E4%BD%8D%EF%BC%8867-%E4%B8%AA%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">一、支持可选推理档位（67 个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BC%9A%E6%8E%A8%E7%90%86%E3%80%81%E6%B7%B1%E5%BA%A6%E7%94%B1-CommandCode-%E8%87%AA%E5%8A%A8%E9%80%89%E6%8B%A9%EF%BC%8827-%E4%B8%AA%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">二、会推理、深度由 CommandCode 自动选择（27 个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%8D%E8%B4%B9-%E9%9B%B6%E6%B6%88%E8%80%97%E7%AB%AF%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">三、免费 &#x2F; 零消耗端点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%80%E6%96%B0%E6%94%B6%E5%BD%95-%E9%80%80%E5%BD%B9%E7%AB%AF%E7%82%B9%E6%A1%A3%E4%BD%8D%EF%BC%88CLI-1-88-2-%E5%AE%98%E6%96%B9%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">四、最新收录 &#x2F; 退役端点档位（CLI 1.88.2 官方目录）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81CommandCode-%E5%A5%97%E9%A4%90%E7%9F%A9%E9%98%B5%E4%B8%8E-API%EF%BC%8811-04-%E5%A4%8D%E6%A0%B8%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">五、CommandCode 套餐矩阵与 API（11-04 复核）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">176</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/04/commandcode-models-reasoning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CommandCode 全模型推理档位速查 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CommandCode 全模型推理档位速查
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-04 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-04T00:00:00+08:00">2026-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ai-model-intel/" itemprop="url" rel="index"><span itemprop="name">ai-model-intel</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>覆盖 <strong>command-code 网关 Provider API 96 个端点</strong> 与 <strong>CLI 1.88.2 官方目录 94 款</strong>（抓取日 <strong>2026-11-04</strong>）。<br>✅ <strong>档位唯一口径 &#x3D; CLI 包内 <code>models.md</code></strong>：在线 Provider API 只返回 ID &#x2F; <code>context_length</code> &#x2F; <code>supported_endpoints</code>，<strong>不含价格与推理档位</strong>。<br>⚠️ <strong>两源差集 2 款</strong>：<code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code> <strong>已在网关 API 上线，但 CLI 1.88.2 目录尚未收录</strong>（档位与价格官方未公布）。<strong>建档位以 CLI 为准，判可用以网关 API 为准</strong>。<br><strong>档位说明</strong>：① <code>deepseek/*</code> 全线含 <strong><code>off</code></strong>（可关闭思考）；② <code>claude-*</code> &#x2F; <code>gpt-*</code> 多为五档 <code>low, medium, high, xhigh, max</code>；③ <code>Qwen 3.8</code> 系为 <code>low, medium, xhigh</code>（<strong>无 high</strong>）；④ <code>zai-org/GLM-5.2</code> 仅 <code>high, max</code> 两档。<br>本文档为<strong>当前状态速查</strong>：档位、价格、套餐门槛全部取自 <code>command-code</code> <strong>CLI 1.88.2</strong> 包内官方目录与 Provider API（2026-11-04 抓取），不含历史版本对照。</p>
+</blockquote>
+<h2 id="数据源与刷新方法"><a href="#数据源与刷新方法" class="headerlink" title="数据源与刷新方法"></a>数据源与刷新方法</h2><table>
+<thead>
+<tr>
+<th>数据</th>
+<th>来源</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在线模型全名单（<strong>96</strong>）</td>
+<td><code>GET https://api.commandcode.ai/provider/v1/models</code></td>
+<td>官方 Provider API，<strong>2026-11-04 匿名抓取</strong>；返回字段含 <code>context_length</code> &#x2F; <code>supported_endpoints</code>，<strong>不含价格与推理档位</strong>；与 CLI 1.88.2 目录差集 2 款（<code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code> 网关独有）</td>
+</tr>
+<tr>
+<td>推理能力 &#x2F; 可选档位 &#x2F; 网关价 &#x2F; 套餐下限（<strong>权威</strong>）</td>
+<td><code>npm pack command-code@latest</code> → <code>package/dist/bundled/command-code-knowledge/reference/models.md</code></td>
+<td>CLI 官方模型目录，含 Id &#x2F; Name &#x2F; Context &#x2F; <strong>Efforts</strong> &#x2F; $每1M &#x2F; <strong>Min plan</strong> &#x2F; Best for；<strong>版本 1.88.2，共 94 款（17,296 字节 &#x2F; 134 行）</strong></td>
+</tr>
+<tr>
+<td>收录版本 &#x2F; 退役事件</td>
+<td>同上 → <code>package/CHANGELOG.md</code></td>
+<td>各模型进入官方目录的 CLI 版本、以及退役公告（见第四节）</td>
+</tr>
+<tr>
+<td>档位口径（快照，已过时）</td>
+<td><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/pi-commandcode-provider"><code>pi-commandcode-provider</code></a></td>
+<td>由旧版 CLI 生成的静态快照；滞后于 CLI，仅作对照，<strong>禁止作为档位依据</strong></td>
+</tr>
+</tbody></table>
+<p><strong>刷新方法</strong>：重新执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://api.commandcode.ai/provider/v1/models          <span class="comment"># 在线全模型名单（11-04 = 96 个 ID）</span></span><br><span class="line">npm view command-code version                                   <span class="comment"># CLI 最新版（11-04 = 1.88.2）</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /tmp/cc &amp;&amp; <span class="built_in">cd</span> /tmp/cc &amp;&amp; npm pack command-code@latest &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md &gt; m.md</span><br><span class="line">tar xzOf command-code-*.tgz package/CHANGELOG.md &gt; c.md</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️ <strong>沙箱注意</strong>：包体约 4.2 MB（1.88.2 实测 4,185,427 字节）且解压后远超 &#x2F;tmp 配额，<strong>禁止 <code>tar xzf</code> 全量解压</strong>（会报「设备上没有空间」）；必须用 <code>tar xzOf &lt;tgz&gt; &lt;包内路径&gt;</code> 直接流式取单个文件。先 <code>tar tzf | grep models.md</code> 确认路径。</p>
+</blockquote>
+<p><strong>新模型核实要求</strong>：先 diff Provider API 全名单与本文表内条目，新增端点<strong>直接读 CLI 包内 <code>models.md</code> 取档位与价格</strong>；<strong>禁止按同族模型外推</strong>。注意：<strong>未列入下表档位列的模型，不代表不推理</strong>——见第二节「自动档」。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="一、支持可选推理档位（67-个）"><a href="#一、支持可选推理档位（67-个）" class="headerlink" title="一、支持可选推理档位（67 个）"></a>一、支持可选推理档位（67 个）</h2><p>档位值即网关上 <code>reasoning_effort</code> 参数接受的拼写（恒等直译）。<strong>价格为 CLI 目录公开的 input&#x2F;output · cache read（每 1M tokens）</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>模型 ID</th>
+<th>名称</th>
+<th>上下文</th>
+<th>可选推理档位</th>
+<th>价格（in&#x2F;out · cache）</th>
+<th>Min plan</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>claude-sonnet-5-5</code></td>
+<td><strong>Claude Sonnet 5.5</strong></td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td><strong>$2&#x2F;$10 · $0.2（wr $2.5）</strong></td>
+<td><strong>GOAT and above</strong></td>
+</tr>
+<tr>
+<td><code>claude-sonnet-5</code></td>
+<td>Claude Sonnet 5</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$2&#x2F;$10 · $0.2（wr $2.5）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>claude-sonnet-4-6</code></td>
+<td>Claude Sonnet 4.6</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$3&#x2F;$15 · $0.3（wr $3.75）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>claude-fable-5-1</code></td>
+<td>Claude Fable 5.1</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$10&#x2F;$50 · $0.25（wr $12.5）</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>claude-fable-5</code></td>
+<td>Claude Fable 5</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$10&#x2F;$50 · $1（wr $12.5）</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>claude-opus-5</code></td>
+<td>Claude Opus 5</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$5&#x2F;$25 · $0.5（wr $6.25）</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>claude-opus-5-5</code></td>
+<td>Claude Opus 5.5</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$4&#x2F;$20 · $0.2（wr $5）</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>claude-opus-4-8</code></td>
+<td>Claude Opus 4.8</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$5&#x2F;$25 · $0.5（wr $6.25）</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>claude-opus-4-7</code></td>
+<td>Claude Opus 4.7</td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$5&#x2F;$25 · $0.5（wr $6.25）</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4.1-flash</code></td>
+<td>DeepSeek V4.1 Flash</td>
+<td>1,000,000</td>
+<td>off, low, high, max</td>
+<td>$0.15&#x2F;$0.6 · $0.003</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4.1-flash-fast</code></td>
+<td><strong>DeepSeek V4.1 Flash Fast</strong></td>
+<td>1,000,000</td>
+<td>off, low, high, max</td>
+<td><strong>$0.16&#x2F;$0.58 · $0.016</strong></td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4-pro</code></td>
+<td>DeepSeek V4 Pro (latest)</td>
+<td>1,000,000</td>
+<td>off, high, max</td>
+<td>$0.66&#x2F;$1.98 · $0.022</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4-flash</code></td>
+<td>DeepSeek V4 Flash (latest)</td>
+<td>1,000,000</td>
+<td>off, high, max</td>
+<td>$0.15&#x2F;$0.6 · $0.003</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4-flash-fast</code></td>
+<td>DeepSeek V4 Flash Fast</td>
+<td>1,000,000</td>
+<td>low, high, max</td>
+<td>$0.28&#x2F;$0.56 · $0.07</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4-flash-vision-exp</code></td>
+<td>DeepSeek V4 Flash Vision (exp)</td>
+<td>1,000,000</td>
+<td>off, high, max</td>
+<td>$0.15&#x2F;$0.6 · $0.003</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>moonshotai/Kimi-K3</code></td>
+<td>Kimi K3</td>
+<td>1,000,000</td>
+<td>low, high, max</td>
+<td>$3&#x2F;$15 · $0.3</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>moonshotai/Kimi-K3.1-Pro</code></td>
+<td><strong>Kimi K3.1 Pro</strong></td>
+<td>1,048,576</td>
+<td>low, high, max</td>
+<td>$2&#x2F;$10 · $0.2</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>z-ai/glm-5.3-flashx</code></td>
+<td>GLM-5.3 FlashX</td>
+<td>1,000,000</td>
+<td>low, high, max</td>
+<td>$0.37&#x2F;$1.25 · $0.075</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>z-ai/glm-5.3-flash</code></td>
+<td>GLM-5.3 Flash</td>
+<td>1,048,576</td>
+<td>low, high, max</td>
+<td>$0.15&#x2F;$0.5 · $0.03</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>zai-org/GLM-5.3</code></td>
+<td>GLM-5.3</td>
+<td>1,000,000</td>
+<td>low, high, max</td>
+<td>$1.4&#x2F;$4.4 · $0.26</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>zai-org/GLM-5.2</code></td>
+<td>GLM-5.2</td>
+<td>1,000,000</td>
+<td>high, max</td>
+<td>$1.4&#x2F;$4.4 · $0.26</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>MiniMaxAI/MiniMax-M3</code></td>
+<td>MiniMax M3</td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$0.3&#x2F;$1.2 · $0.06</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.8-Omni-Flash</code></td>
+<td>Qwen 3.8 Omni Flash</td>
+<td>1,000,000</td>
+<td>low, medium, xhigh</td>
+<td>$0.15&#x2F;$0.47 · $0.016</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.8-Max-0902</code></td>
+<td>Qwen 3.8 Max 0902</td>
+<td>1,000,000</td>
+<td>low, medium, xhigh</td>
+<td>$2&#x2F;$6 · $0.25</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.8-Max</code></td>
+<td>Qwen 3.8 Max</td>
+<td>1,000,000</td>
+<td>low, medium, xhigh</td>
+<td>$2&#x2F;$6 · $0.25（wr $2.5）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.8-27B</code></td>
+<td>Qwen 3.8 27B</td>
+<td>262,144</td>
+<td>low, medium, xhigh</td>
+<td>$0.4&#x2F;$3 · $0.04</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.8-Flash</code></td>
+<td>Qwen 3.8 Flash</td>
+<td>1,000,000</td>
+<td>low, medium, xhigh</td>
+<td>$0.16&#x2F;$0.47 · $0.016</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>tencent/hy4-preview</code></td>
+<td>Tencent Hy4 Preview</td>
+<td>1,048,576</td>
+<td>low, medium, high</td>
+<td>$0.834&#x2F;$2.501 · $0.042</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>sakana/fugu-ultra</code></td>
+<td>Fugu Ultra</td>
+<td>1,000,000</td>
+<td>high, xhigh</td>
+<td>$5&#x2F;$30 · $0.5</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>meta/muse-spark-1.3</code></td>
+<td>Muse Spark 1.3</td>
+<td>1,048,576</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$1.25&#x2F;$4.25 · $0.15</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>meta/muse-spark-1.3-contributor</code></td>
+<td>Muse Spark 1.3 Contributor</td>
+<td>1,048,576</td>
+<td>low, medium, high, xhigh</td>
+<td>$0.1&#x2F;$0.2 · $0.002</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>meta/muse-spark-1.2</code></td>
+<td>Muse Spark 1.2</td>
+<td>1,048,576</td>
+<td>low, medium, high, xhigh</td>
+<td>$1.25&#x2F;$4.25 · $0.15</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>meta/muse-spark-1.2-contributor</code></td>
+<td>Muse Spark 1.2 Contributor</td>
+<td>1,048,576</td>
+<td>low, medium, high, xhigh</td>
+<td>$0.1&#x2F;$0.2 · $0.002</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>meta/muse-spark-1.1</code></td>
+<td>Muse Spark 1.1</td>
+<td>1,048,576</td>
+<td>low, medium, high, xhigh</td>
+<td>$1.25&#x2F;$4.25 · $0.15</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>xai/grok-4.6</code></td>
+<td>Grok 4.6</td>
+<td>500,000</td>
+<td>low, medium, high, xhigh</td>
+<td>$2&#x2F;$6 · $0.5</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>xai/grok-4.7</code></td>
+<td>Grok 4.7</td>
+<td>500,000</td>
+<td>low, medium, high, xhigh</td>
+<td>$2&#x2F;$6 · $0.5</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>stepfun/Step-5-Preview</code></td>
+<td>Step 5 Preview</td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$1&#x2F;$2.7 · $0.05</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>xai/grok-4.5</code></td>
+<td>Grok 4.5</td>
+<td>500,000</td>
+<td>low, medium, high</td>
+<td>$2&#x2F;$6 · $0.5</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>google/gemini-3.8-flash</code></td>
+<td>Gemini 3.8 Flash</td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$1.5&#x2F;$7.5 · $0.15</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>google/gemini-3.7-flash</code></td>
+<td>Gemini 3.7 Flash</td>
+<td>1,048,576</td>
+<td>low, medium, high</td>
+<td>$1.5&#x2F;$7.5 · $0.15（wr $0.08334）</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>google/gemini-3.6-flash</code></td>
+<td>Gemini 3.6 Flash</td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$1.5&#x2F;$7.5 · $0.15</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>google/gemini-3.5-flash</code></td>
+<td>Gemini 3.5 Flash</td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$1.5&#x2F;$9 · $0.15</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>google/gemini-3.5-flash-lite</code></td>
+<td>Gemini 3.5 Flash Lite</td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$0.3&#x2F;$2.5 · $0.03</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>google/gemini-3.1-flash-lite</code></td>
+<td>Gemini 3.1 Flash Lite</td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$0.25&#x2F;$1.5 · $0.03</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>gpt-6-astra</code></td>
+<td>GPT-6 Astra</td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$10&#x2F;$50 · $1（wr $12.5）</td>
+<td>Max</td>
+</tr>
+<tr>
+<td><code>gpt-6.1-sol</code></td>
+<td><strong>GPT-6.1 Sol</strong></td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td><strong>$2&#x2F;$10 · $0.1（wr $2.5）</strong></td>
+<td><strong>Max</strong></td>
+</tr>
+<tr>
+<td><code>gpt-6.1-terra</code></td>
+<td><strong>GPT-6.1 Terra</strong></td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$1&#x2F;$5 · $0.05（wr $1.25）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>gpt-6-sol</code></td>
+<td>GPT-6 Sol</td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$2&#x2F;$10 · $0.2（wr $2.5）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>gpt-6-luna</code></td>
+<td>GPT-6 Luna</td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$0.1&#x2F;$0.5 · $0.01（wr $0.125）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>gpt-5.6-sol</code></td>
+<td>GPT-5.6 Sol</td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$5&#x2F;$30 · $0.5（wr $6.25）</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>gpt-5.6-terra</code></td>
+<td>GPT-5.6 Terra</td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$2&#x2F;$12 · $0.2（wr $2.5）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>gpt-5.6-luna</code></td>
+<td>GPT-5.6 Luna</td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$0.2&#x2F;$1.2 · $0.02（wr $0.25）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>gpt-5.5</code></td>
+<td>GPT-5.5</td>
+<td>400,000</td>
+<td>low, medium, high, xhigh</td>
+<td>$5&#x2F;$30 · $0.5（wr $0）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>gpt-5.4</code></td>
+<td>GPT-5.4</td>
+<td>400,000</td>
+<td>low, medium, high, xhigh</td>
+<td>$2.5&#x2F;$15 · $0.25（wr $0）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>gpt-5.4-mini</code></td>
+<td>GPT-5.4 Mini</td>
+<td>400,000</td>
+<td>low, medium, high</td>
+<td>$0.75&#x2F;$4.5 · $0.075（wr $0）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>gpt-5.3-codex</code></td>
+<td>GPT-5.3 Codex</td>
+<td>400,000</td>
+<td>low, medium, high, xhigh</td>
+<td>$2&#x2F;$8 · $0.5（wr $0）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>claude-haiku-5-5</code></td>
+<td><strong>Claude Haiku 5.5</strong></td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$0.1&#x2F;$0.5 · $0.01（wr $0.125）</td>
+<td><strong>GOAT and above</strong></td>
+</tr>
+<tr>
+<td><code>google/gemini-4-argon</code></td>
+<td><strong>Gemini 4 Argon</strong></td>
+<td>1,000,000</td>
+<td>low, medium, high</td>
+<td>$2&#x2F;$10 · $0.1</td>
+<td><strong>Pro and above</strong></td>
+</tr>
+<tr>
+<td><code>mistral/mistral-large-4</code></td>
+<td><strong>Mistral Large 4</strong></td>
+<td>524,288</td>
+<td>low, medium, high</td>
+<td>$1.36&#x2F;$4.18 · $0.14</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.8-Max-Prime</code></td>
+<td><strong>Qwen 3.8 Max Prime</strong></td>
+<td>1,000,000</td>
+<td>low, medium, xhigh</td>
+<td>$4&#x2F;$12 · $0.5（wr $5）</td>
+<td><strong>GOAT and above</strong></td>
+</tr>
+<tr>
+<td><code>nvidia/nemotron-3.5-super-vl</code></td>
+<td><strong>Nemotron 3.5 Super VL</strong></td>
+<td>262,144</td>
+<td>low, medium, high</td>
+<td>$0.2&#x2F;$0.5 · $0.04</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>inclusionai/ling-3.1-flash</code></td>
+<td><strong>Ling 3.1 Flash</strong></td>
+<td>262,144</td>
+<td>low, medium, high</td>
+<td>$0.3&#x2F;$0.9 · $0.06</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>meta/muse-spark-open</code></td>
+<td><strong>Muse Spark Open</strong></td>
+<td>1,048,576</td>
+<td>low, medium, high</td>
+<td>$1.25&#x2F;$4.25 · $0.15</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>meta/muse-wonder-1.0</code></td>
+<td><strong>Muse Wonder</strong></td>
+<td>1,048,576</td>
+<td>low, medium, high, xhigh</td>
+<td>$4&#x2F;$20 · $0.2</td>
+<td><strong>Max</strong></td>
+</tr>
+<tr>
+<td><code>stealth/glyph-cluster:free</code></td>
+<td><strong>Glyph Cluster</strong></td>
+<td>262,144</td>
+<td>low, medium, high, xhigh</td>
+<td>$0&#x2F;$0 · $0</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>minimax/minimax-m3.1-flash</code></td>
+<td><strong>MiniMax M3.1 Flash</strong></td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$0.15&#x2F;$0.6 · $0.015</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>reflection/beam:free</code></td>
+<td><strong>Beam 1.0</strong></td>
+<td>1,050,000</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$0&#x2F;$0 · $0</td>
+<td>Go and above</td>
+</tr>
+</tbody></table>
+<h2 id="二、会推理、深度由-CommandCode-自动选择（27-个）"><a href="#二、会推理、深度由-CommandCode-自动选择（27-个）" class="headerlink" title="二、会推理、深度由 CommandCode 自动选择（27 个）"></a>二、会推理、深度由 CommandCode 自动选择（27 个）</h2><p>模型支持推理，但官方 CLI catalog <strong>未公布可选档位</strong>（<code>Efforts</code> 列为 <code>—</code>），不发送 <code>reasoning_effort</code>（发送反而会被网关拒绝）。</p>
+<table>
+<thead>
+<tr>
+<th>模型 ID</th>
+<th>名称</th>
+<th>上下文</th>
+<th>可选推理档位</th>
+<th>价格（in&#x2F;out · cache）</th>
+<th>Min plan</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>claude-haiku-4-5-20251001</code></td>
+<td>Claude Haiku 4.5</td>
+<td>200,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$1&#x2F;$5 · $0.1（wr $1.25）</td>
+<td>Pro and above</td>
+</tr>
+<tr>
+<td><code>inclusionai/ling-3.1-flash-1019</code></td>
+<td><strong>Ling 3.1 Flash 1019</strong></td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.3&#x2F;$0.9 · $0.06</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>stealth/crouton-alpha</code></td>
+<td><strong>Crouton Alpha</strong></td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>免费（$0&#x2F;$0）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>MiniMaxAI/MiniMax-M2.7</code></td>
+<td>MiniMax M2.7</td>
+<td>—</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.3&#x2F;$1.2 · $0.06</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>MiniMaxAI/MiniMax-M2.5</code></td>
+<td>MiniMax M2.5</td>
+<td>200,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.3&#x2F;$1.2 · $0.03</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>moonshotai/Kimi-K2.7-Code</code></td>
+<td>Kimi K2.7 Code</td>
+<td>256,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.95&#x2F;$4 · $0.19</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>moonshotai/Kimi-K2.7-Code-Highspeed</code></td>
+<td>Kimi K2.7 Code HighSpeed</td>
+<td>262,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$1.9&#x2F;$8 · $0.38</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>moonshotai/Kimi-K2.6</code></td>
+<td>Kimi K2.6</td>
+<td>256,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.95&#x2F;$4 · $0.16</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>moonshotai/Kimi-K2.5</code></td>
+<td>Kimi K2.5</td>
+<td>256,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.6&#x2F;$3 · $0.1</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>zai-org/GLM-5.2-Fast</code></td>
+<td>GLM-5.2 Fast</td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$3&#x2F;$10.25 · $0.5</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>zai-org/GLM-5.1</code></td>
+<td>GLM-5.1</td>
+<td>—</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$1.4&#x2F;$4.4 · $0.26</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>zai-org/GLM-5</code></td>
+<td>GLM-5</td>
+<td>200,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$1&#x2F;$3.2 · $0.2</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>xiaomi/mimo-v2.6-flash</code></td>
+<td>MiMo V2.6 Flash</td>
+<td>1,048,576</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.14&#x2F;$0.28 · $0.0028</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>xiaomi/mimo-v2.6-pro</code></td>
+<td>MiMo V2.6 Pro</td>
+<td>1,048,576</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.435&#x2F;$0.87 · $0.0036</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>xiaomi/mimo-v2.6-pro-ultraspeed</code></td>
+<td>MiMo V2.6 Pro UltraSpeed</td>
+<td>1,048,576</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$4.35&#x2F;$8.7 · $0.036</td>
+<td>GOAT and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.7-Max</code></td>
+<td>Qwen 3.7 Max</td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$2.5&#x2F;$7.5 · $0.5（wr $3.13）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.7-Plus</code></td>
+<td>Qwen 3.7 Plus</td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.4&#x2F;$1.6 · $0.08（wr $0.5）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.7-Flash</code></td>
+<td>Qwen 3.7 Flash</td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.03&#x2F;$0.13 · $0.006（wr $0.038）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.6-Max-Preview</code></td>
+<td>Qwen 3.6 Max Preview</td>
+<td>—</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$1.3&#x2F;$7.8 · $0.26（wr $1.63）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.6-Plus</code></td>
+<td>Qwen 3.6 Plus</td>
+<td>—</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.5&#x2F;$3 · $0.1</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>meituan/LongCat-2.0</code></td>
+<td>LongCat 2.0</td>
+<td>1,048,576</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.3&#x2F;$1.2 · $0.006</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>stepfun/Step-3.7-Flash</code></td>
+<td>Step 3.7 Flash</td>
+<td>256,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.2&#x2F;$1.15 · $0.04</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>stepfun/Step-3.5-Flash</code></td>
+<td>Step 3.5 Flash</td>
+<td>262,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.09&#x2F;$0.3 · $0.02</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>tencent/hy3-paid</code></td>
+<td>Tencent Hy3</td>
+<td>262,144</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.14&#x2F;$0.58 · $0.035</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>nvidia/nemotron-3-ultra-550b-a55b</code></td>
+<td>Nemotron 3 Ultra</td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.6&#x2F;$2.4 · $0.12</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>thinkingmachines/inkling</code></td>
+<td>Inkling</td>
+<td>256,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$1&#x2F;$4.05 · $0.17</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>thinkingmachines/inkling-small</code></td>
+<td>Inkling Small</td>
+<td>1,000,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.5&#x2F;$1.2 · $0.1</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>poolside/laguna-s-2.1-free</code></td>
+<td>Laguna S 2.1</td>
+<td>256,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>免费（$0&#x2F;$0）</td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>ornith/ornith-1.5-122b</code></td>
+<td><strong>Ornith 1.5 122B</strong></td>
+<td>262,144</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>$0.16&#x2F;$0.64 · $0.02</td>
+<td>Go and above</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>计数核对：<strong>67 + 27 &#x3D; 94</strong>，与 CLI <strong>1.88.2</strong> 官方目录 94 款一致（<code>Efforts</code> 列非 <code>—</code> 者 67 款、为 <code>—</code> 者 27 款）；<strong>Provider API 实测 96 个 ID</strong>，差集为上述 2 款网关独有端点（CLI 目录未收录）。<br>⚠️ <strong>本表分档一律以 CLI <code>Efforts</code> 列为准</strong>：在线免费端点中，<code>glyph-cluster:free</code>、<code>reflection/beam:free</code> 官方公布了可选档位；<code>poolside/laguna-s-2.1-free</code> 未公布档位（列于本节）。</p>
+</blockquote>
+<h2 id="三、免费-零消耗端点"><a href="#三、免费-零消耗端点" class="headerlink" title="三、免费 &#x2F; 零消耗端点"></a>三、免费 &#x2F; 零消耗端点</h2><table>
+<thead>
+<tr>
+<th>端点</th>
+<th>名称</th>
+<th>上下文</th>
+<th>可选档位</th>
+<th>免费机制</th>
+<th>Deals 说明</th>
+<th>10-23 状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>poolside/laguna-s-2.1-free</code></td>
+<td>Laguna S 2.1</td>
+<td>256K</td>
+<td><em>自动（未公布档位）</em></td>
+<td>全部请求零消耗</td>
+<td>「while capacity lasts」</td>
+<td>✅ API 在线</td>
+</tr>
+<tr>
+<td><code>stealth/glyph-cluster:free</code></td>
+<td>Glyph Cluster</td>
+<td>256K</td>
+<td>low, medium, high, xhigh</td>
+<td>全部请求零消耗</td>
+<td>每日上限 100 次请求「while the stealth preview lasts」</td>
+<td>✅ API 在线</td>
+</tr>
+<tr>
+<td><strong><code>reflection/beam:free</code></strong></td>
+<td><strong>Beam 1.0</strong></td>
+<td><strong>1.05M</strong></td>
+<td><strong>low, medium, high, xhigh, max</strong></td>
+<td><strong>全部请求零消耗</strong></td>
+<td><strong>无每日请求上限「while capacity lasts」</strong></td>
+<td>✅ API 在线（CLI 1.85.0 起收录）</td>
+</tr>
+<tr>
+<td><strong><code>stealth/crouton-alpha</code></strong></td>
+<td><strong>Crouton Alpha</strong></td>
+<td><strong>1M</strong></td>
+<td><strong><em>未公布</em></strong></td>
+<td><strong>全部请求零消耗</strong></td>
+<td><strong>无每日请求上限「while the stealth preview lasts」</strong></td>
+<td>✅ API 在线（CLI 目录未收录）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>当前在线免费端点共 4 款</strong>（Laguna S 2.1 + Glyph Cluster + Beam 1.0 + <strong>Crouton Alpha</strong>）；<strong>GOAT 计划页页头计数 Free 4 与此一致</strong>。<br>⚠️ <strong>已退出免费清单（切勿再写进配置）</strong>：<strong><code>minimax/minimax-m3.1-flash:free</code></strong>（限时免费已结束，已自网关 API 与 CLI 1.87.3 目录移除；付费 slug <code>minimax/minimax-m3.1-flash</code> 仍在）、<strong><code>ornith/ornith-1.5-122b:free</code></strong>（免费截止 2026-10-21 23:00 PT，已自网关 API 与 CLI 目录移除；付费 slug <code>ornith/ornith-1.5-122b</code> 仍在）、<strong><code>stealth/cat-jam:free</code></strong>（已下架）、<code>stealth/pixel-canary</code>（2026-09-30 退役）、<code>stealth/space-bunny-alpha</code>（已自网关 API 与 CLI 目录移除）、<code>inclusionai/ling-3.0-flash-sante:free</code>（已移除）、<code>inclusionai/ling-3.1-flash:free</code>（<strong>已转付费 ID <code>ling-3.1-flash</code></strong>，$0.3&#x2F;$0.9 · $0.06，含 GOAT $100 &#x2F; Pro $110 加成额度）。OpenCode <strong>Zen 侧的 <code>ling-3.0-flash-fin-free</code> 与 OpenRouter 侧同名系列不受此影响（各自独立清单）</strong>。</p>
+</blockquote>
+<h2 id="四、最新收录-退役端点档位（CLI-1-88-2-官方目录）"><a href="#四、最新收录-退役端点档位（CLI-1-88-2-官方目录）" class="headerlink" title="四、最新收录 &#x2F; 退役端点档位（CLI 1.88.2 官方目录）"></a>四、最新收录 &#x2F; 退役端点档位（CLI 1.88.2 官方目录）</h2><p>来源：<code>command-code</code> <strong>CLI 1.88.2</strong> 包内 <code>dist/bundled/command-code-knowledge/reference/models.md</code>；「最早收录版本」由同包 <code>CHANGELOG.md</code> 逐条反查（取<strong>最早出现该模型的版本号</strong>），<strong>不是改动记录</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>模型 ID</th>
+<th>名称</th>
+<th>上下文</th>
+<th>可选推理档位</th>
+<th>网关价（in&#x2F;out · cache读）</th>
+<th>最低套餐</th>
+<th>CLI 最早收录</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>moonshotai/Kimi-K3.1-Pro</code></td>
+<td><strong>Kimi K3.1 Pro</strong></td>
+<td>1.05M</td>
+<td>low, high, max</td>
+<td>$2&#x2F;$10 · $0.2</td>
+<td>Go and above</td>
+<td><strong>1.88.0</strong></td>
+</tr>
+<tr>
+<td><code>gpt-6.1-terra</code></td>
+<td><strong>GPT-6.1 Terra</strong></td>
+<td>1.05M</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$1&#x2F;$5 · $0.05（wr $1.25）</td>
+<td>Pro and above</td>
+<td><strong>1.88.0</strong></td>
+</tr>
+<tr>
+<td><code>inclusionai/ling-3.1-flash-1019</code></td>
+<td><strong>Ling 3.1 Flash 1019</strong>（网关已上线，<strong>CLI 目录未收录</strong>）</td>
+<td>1M</td>
+<td>—</td>
+<td>$0.3&#x2F;$0.9 · $0.06</td>
+<td>Go and above</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>stealth/crouton-alpha</code></td>
+<td><strong>Crouton Alpha</strong>（stealth 免费端点，<strong>CLI 目录未收录</strong>）</td>
+<td>1M</td>
+<td>—</td>
+<td>免费（$0&#x2F;$0）</td>
+<td>Go and above</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ornith/ornith-1.5-122b</code></td>
+<td><strong>Ornith 1.5 122B</strong>（限时免费档 <code>:free</code> 免费期已结束，已自目录移除）</td>
+<td>262K</td>
+<td>—</td>
+<td>$0.16&#x2F;$0.64 · $0.02</td>
+<td>Go and above</td>
+<td><strong>1.86.0</strong></td>
+</tr>
+<tr>
+<td><code>minimax/minimax-m3.1-flash</code></td>
+<td><strong>MiniMax M3.1 Flash</strong>（限时免费档 <code>:free</code> 已自目录移除）</td>
+<td>1M</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$0.15&#x2F;$0.6 · $0.015</td>
+<td>Go and above</td>
+<td><strong>1.85.0</strong></td>
+</tr>
+<tr>
+<td><code>reflection/beam:free</code></td>
+<td><strong>Beam 1.0</strong></td>
+<td>1.05M</td>
+<td>low, medium, high, xhigh, max</td>
+<td>免费（$0&#x2F;$0）</td>
+<td>Go and above</td>
+<td><strong>1.85.0</strong></td>
+</tr>
+<tr>
+<td><del><code>stealth/cat-jam:free</code></del></td>
+<td>Cat Jam（<strong>已下架并自目录移除</strong>）</td>
+<td>1.05M</td>
+<td>low, medium, high, xhigh, max</td>
+<td>免费（$0&#x2F;$0）</td>
+<td>—</td>
+<td>1.84.0 尚在目录 → <strong>1.85.0 目录移除</strong></td>
+</tr>
+<tr>
+<td><code>gpt-6.1-sol</code></td>
+<td><strong>GPT-6.1 Sol</strong></td>
+<td>1.05M</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$2&#x2F;$10 · $0.1（wr $2.5）</td>
+<td><strong>Max</strong></td>
+<td><strong>1.71.0</strong></td>
+</tr>
+<tr>
+<td><code>inclusionai/ling-3.1-flash</code></td>
+<td><strong>Ling 3.1 Flash</strong>（原 <code>:free</code>，<strong>已转付费</strong>）</td>
+<td>262K</td>
+<td>low, medium, high</td>
+<td>$0.3&#x2F;$0.9 · $0.06</td>
+<td>Go and above</td>
+<td><strong>1.70.0</strong></td>
+</tr>
+<tr>
+<td><code>claude-sonnet-5-5</code></td>
+<td><strong>Claude Sonnet 5.5</strong></td>
+<td>1M</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$2&#x2F;$10 · $0.2（wr $2.5）</td>
+<td><strong>GOAT and above</strong></td>
+<td><strong>1.68.0</strong></td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4.1-flash-fast</code></td>
+<td>DeepSeek V4.1 Flash Fast</td>
+<td>1M</td>
+<td>low, high, max</td>
+<td>$0.16&#x2F;$0.58 · $0.016</td>
+<td>Go and above</td>
+<td><strong>1.67.0</strong></td>
+</tr>
+<tr>
+<td><del><code>stealth/pixel-canary</code></del></td>
+<td>Pixel Canary（<strong>已退役并自目录移除</strong>）</td>
+<td>262K</td>
+<td>low, medium, xhigh</td>
+<td>免费（$0&#x2F;$0）</td>
+<td>—</td>
+<td>1.66.0 收录 → <strong>1.73.1 公告退役 → 1.74.1 目录移除</strong></td>
+</tr>
+<tr>
+<td><del><code>stealth/space-bunny-alpha</code></del></td>
+<td>Space Bunny Alpha（<strong>已下架并自目录移除</strong>）</td>
+<td>1M</td>
+<td>low, medium, high, max</td>
+<td>免费（$0&#x2F;$0）</td>
+<td>—</td>
+<td>1.65.0 收录 → <strong>已自目录移除</strong></td>
+</tr>
+<tr>
+<td><del><code>inclusionai/ling-3.0-flash-sante:free</code></del></td>
+<td>Ling 3.0 Flash Sante（<strong>已移除</strong>）</td>
+<td>262K</td>
+<td>未公布</td>
+<td>免费（$0&#x2F;$0）</td>
+<td>—</td>
+<td>早期收录 → <strong>已自目录移除</strong></td>
+</tr>
+<tr>
+<td><code>typesafe / Jev</code></td>
+<td>Jev</td>
+<td>32K</td>
+<td>—</td>
+<td>$0.042&#x2F;$0.00 · $0.00</td>
+<td>Go and above</td>
+<td>1.62.1（<code>typesafe/jev</code> 支持 headless + Provider API）</td>
+</tr>
+<tr>
+<td><code>xiaomi/mimo-v2.6-*</code></td>
+<td>MiMo V2.6 系列</td>
+<td>1.05M</td>
+<td>— &#x2F; 见正文</td>
+<td>$0.14&#x2F;$0.28 ～ $4.35&#x2F;$8.7</td>
+<td>Go &#x2F; GOAT and above</td>
+<td>1.62.0</td>
+</tr>
+<tr>
+<td><code>stepfun/Step-5-Preview</code></td>
+<td>Step 5 Preview</td>
+<td>1M</td>
+<td>low, medium, high</td>
+<td>$1&#x2F;$2.7 · $0.05</td>
+<td>Go and above</td>
+<td>1.60.0</td>
+</tr>
+<tr>
+<td><code>xai/grok-4.7</code></td>
+<td>Grok 4.7</td>
+<td>500K</td>
+<td>low, medium, high, xhigh</td>
+<td>$2&#x2F;$6 · $0.5</td>
+<td>GOAT and above</td>
+<td>1.59.0</td>
+</tr>
+<tr>
+<td><code>deepseek/*</code> 全线</td>
+<td>DeepSeek 系列含 <strong><code>off</code></strong> 档（可关闭思考）</td>
+<td>—</td>
+<td>+ <code>off</code></td>
+<td>—</td>
+<td>Go and above</td>
+<td>1.73.3</td>
+</tr>
+<tr>
+<td>CLI 能力</td>
+<td><strong><code>cmd acp</code></strong>（ACP Agent，可接入 Zed 等 ACP 客户端）+ 内置 <code>/acp</code> mod</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>1.74.0</td>
+</tr>
+<tr>
+<td><code>meituan/LongCat-2.0</code></td>
+<td>LongCat 2.0</td>
+<td>1.05M</td>
+<td><em>自动</em></td>
+<td>$0.3&#x2F;$1.2 · $0.006</td>
+<td>Go and above</td>
+<td>1.42.0（免费）→ <strong>1.58.0 转付费</strong></td>
+</tr>
+<tr>
+<td><code>z-ai/glm-5.3-flashx</code></td>
+<td>GLM-5.3 FlashX</td>
+<td>1M</td>
+<td>low, high, max</td>
+<td>$0.37&#x2F;$1.25 · $0.075</td>
+<td>Go and above</td>
+<td>1.56.2</td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3.8-Omni-Flash</code></td>
+<td>Qwen 3.8 Omni Flash</td>
+<td>1M</td>
+<td>low, medium, xhigh</td>
+<td>$0.15&#x2F;$0.47 · $0.016</td>
+<td>Go and above</td>
+<td>1.56.0</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4.1-flash</code></td>
+<td>DeepSeek V4.1 Flash</td>
+<td>1M</td>
+<td>low, high, max</td>
+<td>$0.15&#x2F;$0.6 · $0.003</td>
+<td>Go and above</td>
+<td>1.51.0（Beta）</td>
+</tr>
+<tr>
+<td><code>gpt-6-astra</code></td>
+<td>GPT-6 Astra</td>
+<td>1.05M</td>
+<td>low, medium, high, xhigh, max</td>
+<td>$10&#x2F;$50 · $1（wr $12.5）</td>
+<td>Max</td>
+<td>1.49.0</td>
+</tr>
+<tr>
+<td><code>deepseek/deepseek-v4-flash-fast</code></td>
+<td>DeepSeek V4 Flash Fast</td>
+<td>1M</td>
+<td>low, high, max</td>
+<td>$0.28&#x2F;$0.56 · $0.07</td>
+<td>Go and above</td>
+<td>CHANGELOG <strong>未单列</strong>（仅见于目录 <code>models.md</code>）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>收录版本口径</strong>：表内版本号为 CHANGELOG 中<strong>最早出现该模型的条目</strong>。⚠️ CHANGELOG 只记 feature 行，<strong>未单列的模型不得倒推版本</strong>（如 <code>deepseek-v4-flash-fast</code>）。<strong>当前 CLI 1.88.2，官方目录共 94 款</strong>；Provider API 在线 96 端点，差集 2 款为网关独有的 <code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code>（CLI 目录未收录）。1.85.0 <strong>新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 <code>stealth/cat-jam:free</code></strong>；1.86.0 <strong>新增 Ornith 1.5 122B（含限时免费档）</strong>；1.87.x 为功能与修复版（<code>/btw</code> 侧问指令、permission mode aliases、BYOK 包更新）；<strong>1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 <code>xiaomi/mimo-v2.5</code> 系（目录 96 → 94 款）</strong>；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。</p>
+</blockquote>
+<blockquote>
+<p><strong>档位口径补充</strong>：① <code>Min plan = Go and above</code> 指 **Command Code 自家 Go 档（$1&#x2F;月）**即可用（GOAT&#x2F;Pro&#x2F;Max 同样可用）——与本报告另一处「GOAT 独占」（指 OpenCode Go 未上架）口径不同，勿混用；② CLI 目录同时给出全部 94 款的网关价与套餐下限，<strong>可作 <a href="/2026/11/04/opencode-go-vs-commandcode-goat/">OpenCode Go vs CommandCode GOAT 对比</a> 与价格对比文档的价格交叉校验源</strong>；③ <strong>未公布档位 ≠ 不推理</strong>，只是不让调用方指定 <code>reasoning_effort</code>；④ CLI 目录末注原文：「Rates are the advertised price list resolved from the billing source of truth (<strong>promos are already baked in</strong>)」——<strong>表内价格已含 Deals 折后价</strong>。</p>
+</blockquote>
+<h2 id="五、CommandCode-套餐矩阵与-API（11-04-复核）"><a href="#五、CommandCode-套餐矩阵与-API（11-04-复核）" class="headerlink" title="五、CommandCode 套餐矩阵与 API（11-04 复核）"></a>五、CommandCode 套餐矩阵与 API（11-04 复核）</h2><p><strong>Provider API 三协议齐备</strong>（<code>https://api.commandcode.ai/provider/v1/</code>）：</p>
+<table>
+<thead>
+<tr>
+<th>端点</th>
+<th>协议</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/v1/chat/completions</code></td>
+<td>OpenAI Chat Completions</td>
+<td>通用兼容</td>
+</tr>
+<tr>
+<td><code>/v1/responses</code></td>
+<td>OpenAI Responses</td>
+<td>自 CLI 1.55.0 起支持；<strong>与 OpenCode Go 的套餐 API 协议能力一致</strong></td>
+</tr>
+<tr>
+<td><code>/v1/messages</code></td>
+<td>Anthropic Messages</td>
+<td>Claude 系与 Qwen &#x2F; MiniMax 等</td>
+</tr>
+<tr>
+<td><code>/v1/models</code></td>
+<td>目录</td>
+<td><strong>11-04 返回 96 个 ID</strong>（CLI 1.88.2 目录 94 款，差集 2 款为网关独有的 <code>ling-3.1-flash-1019</code>、<code>crouton-alpha</code>）</td>
+</tr>
+</tbody></table>
+<p><strong>套餐矩阵（11-04，官方 Pricing &amp; Limits 页）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>月费</th>
+<th>月额度</th>
+<th>5 小时窗口</th>
+<th>每周窗口</th>
+<th>官方请求量估算</th>
+<th>最低可用模型层级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Go</strong></td>
+<td>$1</td>
+<td>$10 credits</td>
+<td><strong>$2</strong></td>
+<td><strong>$5</strong></td>
+<td>~9K</td>
+<td>Go（全部开源模型 + 部分 premium，逐模型额度）</td>
+</tr>
+<tr>
+<td><strong>GOAT</strong></td>
+<td>$10</td>
+<td><strong>$70 usage</strong></td>
+<td>$14</td>
+<td>$35</td>
+<td>~75K</td>
+<td>+ GPT-5.6 Sol、Gemini 3.7&#x2F;3.8 Flash、Muse Spark 1.2&#x2F;1.3、Grok 4.6&#x2F;4.7、Claude Sonnet 5.5 &#x2F; Haiku 5.5</td>
+</tr>
+<tr>
+<td><strong>Pro</strong></td>
+<td>$20</td>
+<td><strong>$80 usage</strong></td>
+<td>$16</td>
+<td>$40</td>
+<td>~100K</td>
+<td>+ Claude Sonnet、GPT-5.4&#x2F;5.5、Gemini 3.5&#x2F;3.6 系、GPT-6 Sol、Gemini 4 Argon</td>
+</tr>
+<tr>
+<td><strong>Max 10×</strong></td>
+<td>$100</td>
+<td>$150 credits（premium $100 &#x2F; standard $150 双池）</td>
+<td>$45</td>
+<td>$90</td>
+<td>~230K</td>
+<td>+ Claude Opus&#x2F;Fable、GPT-6 Astra、GPT-6.1 Sol、Fugu Ultra、Muse Wonder</td>
+</tr>
+<tr>
+<td><strong>Max 20×</strong></td>
+<td>$200</td>
+<td>$300 credits（premium $200 &#x2F; standard $300）</td>
+<td>$90</td>
+<td>$180</td>
+<td>~370K</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>Team Pro</strong></td>
+<td>$40</td>
+<td>$40 credits</td>
+<td>$12</td>
+<td>$24</td>
+<td>~35K</td>
+<td>团队级共享池</td>
+</tr>
+<tr>
+<td><strong>Provider</strong></td>
+<td>$15</td>
+<td>按量付费（无月额度）</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>全目录（Provider API 通道）</td>
+</tr>
+<tr>
+<td><strong>Enterprise</strong></td>
+<td><strong>$5,000+</strong></td>
+<td>Custom</td>
+<td>—</td>
+<td>—</td>
+<td>Custom</td>
+<td>自有基础设施部署；<strong>不受滚动窗口约束</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>额度机制原文要点</strong>：① 限额以 <strong>credit value 计量，不是请求数</strong>（”Limits are measured in credit value, not request count”）；② 两个滚动窗口从<strong>首次使用起滚动</strong>，非固定时钟；③ <strong>滚动窗口只约束套餐内月度 credits</strong>——按需（on-demand）credits 任何套餐都不受节流，免费&#x2F;纯余额用量与 Enterprise 池也无窗口上限；④ 达窗口后可继续走按需 credits 或等窗口重置，<strong>不会被硬停</strong>；⑤ 超出额度后可在 Studio &gt; Billing 按模型成本补买 credits，<strong>credits 永不过期、可结转</strong>。</p>
+</blockquote>
+<blockquote>
+<p><strong>Deals（11-04，GOAT 计划页内嵌数据；页头计数 Deals 5 &#x2F; Free 4）</strong>：</p>
+<ol>
+<li><strong><code>laguna-s-2.1-free</code> free</strong> —— 「while capacity lasts」；</li>
+<li><strong><code>glyph-cluster:free</code> free</strong> —— 每日上限 100 次请求「while the stealth preview lasts」；</li>
+<li><strong><code>crouton-alpha-free</code> free</strong> —— 「while the stealth preview lasts」；</li>
+<li><strong><code>beam:free</code> free</strong> —— <strong>无每日请求上限</strong>「while capacity lasts」；</li>
+<li><strong><code>minimax-m3</code> 2× usage</strong>（50% off） —— 每份 credit 用得更久（目录价 $0.30&#x2F;$1.20 · $0.06）。</li>
+</ol>
+<p><strong>额度加成 Deals</strong>：GOAT 页内嵌 <code>creditDeal</code> 字段当前<strong>无 <code>liveAtBuild=true</code> 的条目</strong>——<code>deepseek-v4.1-flash</code> 的 $100 促销（through Oct 21st）与 <code>mistral-large-4</code> 的 $40 促销（through Oct 20th）均已到期，<strong>现行额度分别转为常态 $100 与 $20</strong>。</p>
+<p>⚠️ <strong>已退出 Deals 清单（切勿再写进配置）</strong>：<code>minimax-m3.1-flash:free</code> 与 <code>ornith-1.5-122b:free</code>（限时免费结束，已自网关与 CLI 目录移除）、<code>mimo-v2.5</code> &#x2F; <code>mimo-v2.5-pro</code> up to 99% off（已自网关 API 与 CLI 目录移除）、<code>jev-free</code>（免费期已于 2026-09-24 结束）。<code>kimi-k3</code> 额度加成已于 2026-10-07 到期（GOAT 由 $60 回落 $20）；<code>grok-4.7</code> 40% off 已到期；<code>GPT-6 Luna</code> 的 $0.10&#x2F;$0.50 已成为常规目录价。</p>
+</blockquote>
+<blockquote>
+<p><strong>地理限制（官方 Geo model limits 表）</strong>：<strong>GPT-5.6 Luna（OpenAI）、Gemini 3.7 Flash 与 Gemini 3.8 Flash（Google）在中国大陆不可用</strong>；被屏蔽时该模型对该区域不可调用，套餐内其余模型不受影响。</p>
+</blockquote>
+<p>“&gt; <strong>逐模型月额度实测（11-04，GOAT 计划页额度表三张共 60 条，单位 $）</strong>：</p>
+<blockquote>
+<p><strong>$100</strong> DeepSeek V4.1 Flash (latest)、<strong>GLM-5.3 Flash</strong>、Ling 3.1 Flash、<strong>Ling 3.1 Flash 1019</strong>｜<br><strong>$70</strong> GLM-5.2、Tencent Hy3、Qwen 3.8 27B｜<br><strong>$60</strong> DeepSeek V4 Flash (latest)、DeepSeek V4.1 Flash Fast (latest)、Kimi K2.7 Code｜<br><strong>$50</strong> LongCat 2.0｜<br><strong>$47</strong> MiniMax M3｜<br><strong>$40</strong> Gemini 3.8 Flash、Gemini 3.7 Flash｜<br><strong>$33</strong> Qwen 3.7 Max、Qwen 3.7 Plus、Qwen 3.6 Plus｜<br><strong>$20</strong>（起步档）DeepSeek V4 Pro (latest)、Kimi K3.1 Pro、Kimi K3、GPT-5.6 Sol、GPT-5.6 Luna、GPT-6 Luna、Qwen 3.8 Max &#x2F; Max 0902 &#x2F; Max Prime &#x2F; Omni Flash &#x2F; 3.8 Flash、Tencent Hy4 Preview、GLM-5.3、GLM-5.3 FlashX、GLM-5.2 Fast、DS V4 Flash Vision (exp)、DS V4 Flash Fast、MiMo V2.6 Flash &#x2F; V2.6 Pro、Muse Spark 1.2 &#x2F; 1.2 Contributor &#x2F; 1.3 &#x2F; 1.3 Contributor &#x2F; Open、Kimi K2.7 Code HighSpeed、Grok 4.5 &#x2F; 4.6 &#x2F; 4.7、Step 5 Preview、Step 3.7 &#x2F; 3.5 Flash、Inkling &#x2F; Inkling Small、Nemotron 3 Ultra &#x2F; 3.5 Super VL、Jev &#x2F; Jev 1.14.0、Claude Haiku 5.5、Mistral Large 4、MiniMax M3.1 Flash、Ornith 1.5 122B｜<br><strong>$10</strong> MiMo V2.6 Pro UltraSpeed、Claude Sonnet 5.5。</p>
+</blockquote>
+<blockquote>
+<p>⚠️ <strong>DeepSeek 系分时价（GOAT 页内嵌 <code>timeOfDay</code> 字段）</strong>：<code>DeepSeek V4.1 Flash (latest)</code>、<code>DeepSeek V4 Flash (latest)</code>、<code>DeepSeek V4 Flash Vision (exp)</code> 均为 <strong>off-peak $0.15&#x2F;$0.60，peak $0.30&#x2F;$1.20（01–04 &amp; 06–10 UTC，周一至周五，7h&#x2F;day，17h&#x2F;day 为 off-peak）</strong>；<code>DeepSeek V4 Pro (latest)</code> 为 <strong>off-peak $0.66&#x2F;$1.98，peak $1.32&#x2F;$3.96</strong>（同一窗口）。<strong>额度表内价均为 off-peak 标价</strong>。</p>
+</blockquote>
+<blockquote>
+<p><strong>页头计数（11-04）</strong>：GOAT 页 <strong>GOAT plan 72 款 &#x2F; All plans 98 &#x2F; Deals 5 &#x2F; Free 4</strong>；Pricing &amp; Limits 页 <strong>All 102 &#x2F; Free 6</strong>——<strong>两页互相不一致</strong>（Pricing &amp; Limits 页计数滞后），且与网关 API 96、CLI 1.88.2 目录 94 均不同，属页面计数口径差异，引用时须标来源页。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cli/" rel="tag"># cli</a>
+              <a href="/tags/commandcode/" rel="tag"># commandcode</a>
+              <a href="/tags/%E6%8E%A8%E7%90%86%E6%A1%A3%E4%BD%8D/" rel="tag"># 推理档位</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/04/opencode-go-model-guide/" rel="prev" title="OpenCode Go 模型配置指南（2026-11-04 实测）">
+                  <i class="fa fa-angle-left"></i> OpenCode Go 模型配置指南（2026-11-04 实测）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/11/04/china-llm-api-vs-openrouter-pricing/" rel="next" title="国产大模型官方 API vs OpenRouter 各渠道价格对比">
+                  国产大模型官方 API vs OpenRouter 各渠道价格对比 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

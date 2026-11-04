@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="数据抓取时间：2026-11-04（OpenRouter endpoints 实测于 11-04 15:20 CST；六家厂商官方定价页于 11-04 15:10 CST 逐家复核）| 折算汇率：1 USD &#x3D; 6.7180 CNY（中国外汇交易中心 2026-11-04 中间价，每轮按实时中间价重取）来源：各品牌官方定价页（见文末来源表）+ OpenRouter 模型页 &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="国产大模型官方 API vs OpenRouter 各渠道价格对比">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/04/china-llm-api-vs-openrouter-pricing/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="数据抓取时间：2026-11-04（OpenRouter endpoints 实测于 11-04 15:20 CST；六家厂商官方定价页于 11-04 15:10 CST 逐家复核）| 折算汇率：1 USD &#x3D; 6.7180 CNY（中国外汇交易中心 2026-11-04 中间价，每轮按实时中间价重取）来源：各品牌官方定价页（见文末来源表）+ OpenRouter 模型页 &#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-03T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="deepseek">
+<meta property="article:tag" content="glm">
+<meta property="article:tag" content="kimi">
+<meta property="article:tag" content="minimax">
+<meta property="article:tag" content="openrouter">
+<meta property="article:tag" content="价格">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/04/china-llm-api-vs-openrouter-pricing/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/04/china-llm-api-vs-openrouter-pricing/","path":"2026/11/04/china-llm-api-vs-openrouter-pricing/","title":"国产大模型官方 API vs OpenRouter 各渠道价格对比"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>国产大模型官方 API vs OpenRouter 各渠道价格对比 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/categories/ai-model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%98%E6%96%B9-API-%E5%AE%9A%E4%BB%B7%E6%80%BB%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">一、官方 API 定价总览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepSeek%EF%BC%88%E5%AE%98%E6%96%B9%EF%BC%9Aapi-docs-deepseek-com%EF%BC%8C11-04-%E5%A4%8D%E6%A0%B8%EF%BC%8C%E6%A8%A1%E5%9E%8B%E4%BB%B7%E6%9C%AA%E5%8F%98%E3%80%81Search-Fetch-API-%E5%B7%B2%E6%AD%A3%E5%BC%8F%E4%B8%8A%E7%BA%BF%E6%94%B6%E8%B4%B9%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">DeepSeek（官方：api-docs.deepseek.com，11-04 复核，模型价未变、Search &amp; Fetch API 已正式上线收费）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%BA%E8%B0%B1-GLM%EF%BC%88%E4%BA%BA%E6%B0%91%E5%B8%81%E8%AE%A1%E4%BB%B7%EF%BC%8C%E5%AE%98%E6%96%B9%EF%BC%9Adocs-bigmodel-cn-cn-guide-start-pricing%EF%BC%8C10-18-%E5%A4%8D%E6%A0%B8%EF%BC%8C%E6%97%A0%E5%8F%98%E5%8A%A8%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">智谱 GLM（人民币计价，官方：docs.bigmodel.cn&#x2F;cn&#x2F;guide&#x2F;start&#x2F;pricing，10-18 复核，无变动）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kimi%EF%BC%88%E4%BA%BA%E6%B0%91%E5%B8%81%E8%AE%A1%E4%BB%B7%EF%BC%8C%E5%AE%98%E6%96%B9%EF%BC%9Aplatform-kimi-com-docs-pricing-chat%EF%BC%8C11-04-%E5%A4%8D%E6%A0%B8%EF%BC%8CK3-1-Pro-%E5%B7%B2%E5%8F%91%E5%B8%83%E3%80%81K2-%E7%B3%BB%E5%88%97%E4%B8%8B%E7%BA%BF%E9%A2%84%E5%91%8A%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Kimi（人民币计价，官方：platform.kimi.com&#x2F;docs&#x2F;pricing&#x2F;chat，11-04 复核，K3.1 Pro 已发布、K2 系列下线预告）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%B1%B3-MiMo%EF%BC%88%E4%BA%BA%E6%B0%91%E5%B8%81-%E7%BE%8E%E5%85%83%E5%8F%8C%E6%A0%87%EF%BC%8C%E5%AE%98%E6%96%B9%EF%BC%9Amimo-mi-com-%E6%8C%89%E9%87%8F%E8%AE%A1%E8%B4%B9%E9%A1%B5%EF%BC%8C10-21-%E5%A4%8D%E6%A0%B8%EF%BC%8C%E9%A1%B5%E5%86%85%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4-2026-10-21%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">小米 MiMo（人民币 &#x2F; 美元双标，官方：mimo.mi.com 按量计费页，10-21 复核，页内更新时间 2026-10-21）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%85%BE%E8%AE%AF%E6%B7%B7%E5%85%83%EF%BC%88%E4%BA%BA%E6%B0%91%E5%B8%81%E8%AE%A1%E4%BB%B7%EF%BC%8C%E5%AE%98%E6%96%B9%EF%BC%9Acloud-tencent-com-document-product-1823-130055%EF%BC%8C10-21-%E5%A4%8D%E6%A0%B8%EF%BC%8C%E9%A1%B5%E5%86%85%E6%9B%B4%E6%96%B0-2026-10-21-00-32%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">腾讯混元（人民币计价，官方：cloud.tencent.com&#x2F;document&#x2F;product&#x2F;1823&#x2F;130055，10-21 复核，页内更新 2026-10-21 00:32）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BF%E9%87%8C%E7%99%BE%E7%82%BC%EF%BC%88Qwen%EF%BC%8C%E5%AE%98%E6%96%B9%EF%BC%9Ahelp-aliyun-com-zh-model-studio-model-pricing%EF%BC%8C10-18-%E5%A4%8D%E6%A0%B8%EF%BC%8C%E6%97%A0%E5%8F%98%E5%8A%A8%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">阿里百炼（Qwen，官方：help.aliyun.com&#x2F;zh&#x2F;model-studio&#x2F;model-pricing，10-18 复核，无变动）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81OpenRouter-%E5%90%84-provider-%E4%BB%B7%E6%A0%BC%EF%BC%88%E7%BE%8E%E5%85%83-%E7%99%BE%E4%B8%87-tokens%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、OpenRouter 各 provider 价格（美元 &#x2F; 百万 tokens）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepSeek-V4-1-Flash%EF%BC%8840-%E6%B8%A0%E9%81%93%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">DeepSeek V4.1 Flash（40 渠道）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepSeek-V4-Pro%EF%BC%8815-%E6%B8%A0%E9%81%93%EF%BC%89%E2%80%94%E2%80%94%F0%9F%94%91-%E4%BB%85%E8%BE%93%E5%87%BA%E9%A1%B9%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9B%B4%E4%BE%BF%E5%AE%9C"><span class="nav-number">2.2.</span> <span class="nav-text">DeepSeek V4 Pro（15 渠道）——🔑 仅输出项第三方更便宜</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GLM-5-3-Flash%EF%BC%8841-%E6%B8%A0%E9%81%93%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">GLM-5.3-Flash（41 渠道）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GLM-5-3%EF%BC%8848-%E6%B8%A0%E9%81%93%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">GLM-5.3（48 渠道）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GLM-5-2%EF%BC%8833-%E6%B8%A0%E9%81%93%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">GLM-5.2（33 渠道）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GLM-5-3-FlashX-GLM-5-3-Prime%EF%BC%88%E5%90%84-1-%E6%B8%A0%E9%81%93%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">GLM-5.3-FlashX &#x2F; GLM-5.3-Prime（各 1 渠道）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kimi-K3%EF%BC%8830-%E6%B8%A0%E9%81%93%EF%BC%89"><span class="nav-number">2.7.</span> <span class="nav-text">Kimi K3（30 渠道）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kimi-K3-1-Pro%EF%BC%882-%E6%B8%A0%E9%81%93%EF%BC%8C10-23-%E4%B8%8A%E6%9E%B6%EF%BC%89"><span class="nav-number">2.8.</span> <span class="nav-text">Kimi K3.1 Pro（2 渠道，10-23 上架）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MiniMax-M3-1-Flash%EF%BC%8813-%E6%B8%A0%E9%81%93%EF%BC%8C%E4%BB%98%E8%B4%B9%E6%A1%A3%E5%BC%80%E6%B8%A0%EF%BC%89"><span class="nav-number">2.9.</span> <span class="nav-text">MiniMax M3.1 Flash（13 渠道，付费档开渠）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MiniMax-M3%EF%BC%8813-%E6%B8%A0%E9%81%93%EF%BC%89"><span class="nav-number">2.10.</span> <span class="nav-text">MiniMax M3（13 渠道）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MiMo-V2-6-%E7%B3%BB%E5%88%97"><span class="nav-number">2.11.</span> <span class="nav-text">MiMo V2.6 系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%9B%BD%E4%BA%A7%E6%A8%A1%E5%9E%8B%E6%B8%A0%E9%81%93"><span class="nav-number">2.12.</span> <span class="nav-text">其他国产模型渠道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E6%A8%A1%E5%9E%8B%E6%B8%A0%E9%81%93%EF%BC%882026-10-15-10-19-%E4%B8%8A%E6%9E%B6%EF%BC%89"><span class="nav-number">2.13.</span> <span class="nav-text">新增模型渠道（2026-10-15 ~ 10-19 上架）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%B7%E5%A4%96%E6%97%97%E8%88%B0%E6%A8%A1%E5%9E%8B%E6%B8%A0%E9%81%93%EF%BC%88OpenAI-Anthropic-xAI%EF%BC%89"><span class="nav-number">2.14.</span> <span class="nav-text">海外旗舰模型渠道（OpenAI &#x2F; Anthropic &#x2F; xAI）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%8D%E8%B4%B9%E7%AB%AF%E7%82%B9%EF%BC%88-free%EF%BC%89%E9%80%9F%E8%A7%88%EF%BC%88%E5%85%B1-17-%E4%B8%AA%EF%BC%89"><span class="nav-number">2.15.</span> <span class="nav-text">免费端点（:free）速览（共 17 个）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%98%E6%96%B9-vs-OpenRouter-%E5%B7%AE%E4%BB%B7%E5%AF%B9%E6%AF%94%EF%BC%88%E4%BA%BA%E6%B0%91%E5%B8%81%EF%BC%8C%E5%85%83-%E7%99%BE%E4%B8%87-tokens%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、官方 vs OpenRouter 差价对比（人民币，元&#x2F;百万 tokens）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepSeek-V4-1-Flash"><span class="nav-number">3.1.</span> <span class="nav-text">DeepSeek V4.1 Flash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepSeek-V4-Pro-%E2%80%94%E2%80%94-%F0%9F%94%91-%E4%BB%85%E8%BE%93%E5%87%BA%E9%A1%B9%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9B%B4%E4%BE%BF%E5%AE%9C"><span class="nav-number">3.2.</span> <span class="nav-text">DeepSeek V4 Pro —— 🔑 仅输出项第三方更便宜</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GLM-5-2-GLM-5-3"><span class="nav-number">3.3.</span> <span class="nav-text">GLM-5.2 &#x2F; GLM-5.3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GLM-5-3-Flash-FlashX"><span class="nav-number">3.4.</span> <span class="nav-text">GLM-5.3-Flash &#x2F; FlashX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kimi-K3"><span class="nav-number">3.5.</span> <span class="nav-text">Kimi K3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MiMo-V2-6-V2-5"><span class="nav-number">3.6.</span> <span class="nav-text">MiMo V2.6 &#x2F; V2.5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%B1%B3-MiMo-UltraSpeed-%E4%B8%A4%E4%BB%A3%E5%AF%B9%E7%85%A7%EF%BC%88%E6%B6%A8%E4%BB%B7%E9%A1%B9%EF%BC%89"><span class="nav-number">3.7.</span> <span class="nav-text">小米 MiMo UltraSpeed 两代对照（涨价项）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%85%BE%E8%AE%AF-Hy4-preview"><span class="nav-number">3.8.</span> <span class="nav-text">腾讯 Hy4 preview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BF%E9%87%8C-Qwen3-8-Flash"><span class="nav-number">3.9.</span> <span class="nav-text">阿里 Qwen3.8-Flash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BF%E9%87%8C-Qwen3-8-Omni-Flash"><span class="nav-number">3.10.</span> <span class="nav-text">阿里 Qwen3.8-Omni-Flash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%A8%E6%A8%A1%E5%9E%8B%E9%80%9F%E6%9F%A5%E6%8E%92%E5%90%8D"><span class="nav-number">4.</span> <span class="nav-text">四、全模型速查排名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E4%BB%B7%EF%BC%88%E7%BC%93%E5%AD%98%E6%9C%AA%E5%91%BD%E4%B8%AD%EF%BC%8C%E4%BA%BA%E6%B0%91%E5%B8%81%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">输入价（缓存未命中，人民币）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E4%BB%B7%EF%BC%88%E4%BA%BA%E6%B0%91%E5%B8%81%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">输出价（人民币）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E4%BB%B7%EF%BC%88%E4%BA%BA%E6%B0%91%E5%B8%81%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">缓存命中价（人民币）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E7%BB%93%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text">五、结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%9D%A5%E6%BA%90"><span class="nav-number">6.</span> <span class="nav-text">主要来源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">176</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/04/china-llm-api-vs-openrouter-pricing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="国产大模型官方 API vs OpenRouter 各渠道价格对比 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          国产大模型官方 API vs OpenRouter 各渠道价格对比
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-04 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-04T00:00:00+08:00">2026-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ai-model-intel/" itemprop="url" rel="index"><span itemprop="name">ai-model-intel</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>数据抓取时间：<strong>2026-11-04</strong>（OpenRouter endpoints 实测于 <strong>11-04 15:20 CST</strong>；六家厂商官方定价页于 <strong>11-04 15:10 CST</strong> 逐家复核）| <strong>折算汇率：1 USD &#x3D; 6.7180 CNY</strong>（中国外汇交易中心 2026-11-04 中间价，每轮按实时中间价重取）<br>来源：各品牌官方定价页（见文末来源表）+ OpenRouter 模型页 &#x2F; endpoints API（<strong>目录 455 款</strong>：<code>:free</code> 14 &#x2F; <code>:batch</code> 73 &#x2F; <code>~</code> 别名 19）+ DeepSeek 开放平台定价页与 changelog + 小米 MiMo 开放平台定价页与模型下线页 + 腾讯云 TokenHub + 阿里云百炼<br>单位：<strong>元 &#x2F; 百万 tokens</strong>（OpenRouter 美元价 × 折算汇率 6.7180 折算）<br>口径：官方价取<strong>国内人民币价</strong>；DeepSeek 分峰谷，基准取<strong>空闲价</strong>（含周末全天），高峰为括号参考<br>⚠️ OpenRouter 第三方渠道价<strong>日内即会变动</strong>，本文所有渠道价均为上述抓取时刻的一次快照，<strong>不可跨日、亦不可跨时段沿用</strong>。<br>🔑 <strong>OpenRouter <code>pricing</code> 新增 <code>discount</code> 字段</strong>（0.895 &#x3D; 打 1.05 折，即 -89.5%）：<code>prompt</code> &#x2F; <code>completion</code> &#x2F; <code>input_cache_read</code> <strong>已是折后实付价</strong>，原价需按 <code>折后价 ÷ (1 - discount)</code> 还原。<strong>负值表示加价</strong>，<strong><code>discount = 0</code> 表示无折扣、按原价挂牌</strong>。本文所有渠道价均记<strong>折后实付价</strong>，并在折扣列标注原价，<strong>不再把原价误记为”官方原价档”</strong>。<br>⚠️ <strong>抓取时点 15:20 CST &#x3D; 07:20 UTC，已出 DeepSeek 高峰窗口（01:00–04:00 与 06:00–10:00 UTC 工作日）</strong>；OpenRouter 的 DeepSeek 直供端点仍报空闲档 $0.15 &#x2F; $0.60 · 缓存 $0.003 → <strong>OpenRouter 端点标价不随峰谷切换，实际计费以 platform.deepseek.com 为准</strong>。<br>🔑 <strong>2026-11-04 渠道侧要点</strong>：① <strong>百度千帆折扣重新在架</strong>——<code>deepseek-v4.1-flash</code> 的 Baidu 折扣已退出最低位，但 <code>deepseek-v4-pro</code> 与 <code>glm-5.3</code> 的 Baidu 折扣分别为 -45.1% 与 <strong>-80%</strong>（后者重夺 GLM-5.3 输出 + 缓存最低位）；② <strong><code>deepseek-v4.1-flash</code> 缓存最低位易主</strong>：Baidu（-82.1%，10-23 口径）→ <strong>CoreWeave $0.002（无折扣）</strong>；③ <strong>Kimi K3 输入最低降至 Relace $0.19</strong>（10-23 口径为 Wafer $0.238），<strong>输出最低亦为 Relace $8.94</strong>（10-23 口径 Sail Research $5.50）；④ <strong>新模型 Kimi K3.1 Pro 上线</strong>（10-23 created，OpenRouter 仅 Moonshot 官方 2 渠道）；⑤ <strong>MiniMax M3.1 Flash 出现 Tenstorrent 新低价 $0.05&#x2F;$0.2&#x2F;$0.005</strong>。</p>
+</blockquote>
+<span id="more"></span>
+
+<hr>
+<h2 id="一、官方-API-定价总览"><a href="#一、官方-API-定价总览" class="headerlink" title="一、官方 API 定价总览"></a>一、官方 API 定价总览</h2><h3 id="DeepSeek（官方：api-docs-deepseek-com，11-04-复核，模型价未变、Search-Fetch-API-已正式上线收费）"><a href="#DeepSeek（官方：api-docs-deepseek-com，11-04-复核，模型价未变、Search-Fetch-API-已正式上线收费）" class="headerlink" title="DeepSeek（官方：api-docs.deepseek.com，11-04 复核，模型价未变、Search &amp; Fetch API 已正式上线收费）"></a>DeepSeek（官方：api-docs.deepseek.com，11-04 复核，<strong>模型价未变、Search &amp; Fetch API 已正式上线收费</strong>）</h3><p><strong>🔑 <code>MODEL VERSION</code> 为 <code>DeepSeek-V4.1-Flash-1017</code>（10-17 版本）与 <code>DeepSeek-V4-Pro-0813</code></strong>，价格、上下文、峰谷规则全部沿用。官方定价表仍为两行：<code>deepseek-flash</code>（即 V4.1-Flash）与 <code>deepseek-v4-pro</code>。</p>
+<blockquote>
+<p>🔑 <strong>Search &amp; Fetch API 已正式上线并计费</strong>（11-04 复核，官方页顶部横幅「Search &#x2F; Fetch API is now available, powered by our in-house search engine」）：<strong>Search $0.75 &#x2F; 1000 次成功请求、Fetch $0.75 &#x2F; 1000 次成功请求</strong>。官方注明「经 DeepSeek Harness &#x2F; Claude Code &#x2F; Codex 的服务端工具调用会命中这两个 API」——<strong>11-01 起的收费窗口已生效，重度工具调用的成本核算必须补上这一项</strong>。<br>⚠️ <strong>旧 ID 退役公告</strong>：官方明示 <code>deepseek-v4-flash-vision-exp</code> 等旧 ID「仍被接受，但对应模型<strong>已退役</strong>，请求由 <code>DeepSeek-V4.1-Flash-1017</code> 服务并按 Flash 价计费」——<strong>继续用旧 ID 不会报错，但已无独立模型可用</strong>。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>官方模型 ID</th>
+<th>时段</th>
+<th>输入（缓存命中）</th>
+<th>输入（缓存未命中）</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>deepseek-flash</code></strong>（&#x3D; V4.1 Flash，<strong>V4.1-Flash-1017</strong>）</td>
+<td>空闲（含周末全天）</td>
+<td><strong>¥0.02（$0.003）</strong></td>
+<td><strong>¥1.00（$0.15）</strong></td>
+<td><strong>¥4.00（$0.59）</strong></td>
+</tr>
+<tr>
+<td><strong><code>deepseek-flash</code></strong>（&#x3D; V4.1 Flash，<strong>V4.1-Flash-1017</strong>）</td>
+<td>高峰（仅工作日）</td>
+<td>¥0.04（$0.006）</td>
+<td>¥2.00（$0.30）</td>
+<td>¥8.00（$1.19）</td>
+</tr>
+<tr>
+<td><code>deepseek-v4-pro</code>（<strong>DeepSeek-V4-Pro-0813</strong>）</td>
+<td>空闲（含周末全天）</td>
+<td>¥0.15（$0.022）</td>
+<td>¥4.50（$0.66）</td>
+<td>¥13.50（$1.98）</td>
+</tr>
+<tr>
+<td><code>deepseek-v4-pro</code>（<strong>DeepSeek-V4-Pro-0813</strong>）</td>
+<td>高峰（仅工作日）</td>
+<td>¥0.30（$0.044）</td>
+<td>¥9.00（$1.32）</td>
+<td>¥27.00（$3.96）</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>峰谷规则（官方原文）</strong>：「Off-peak rates are half of the peak rates. Peak hours are <strong>01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday</strong>, excluding Chinese public holidays. All other hours are off-peak, including weekends and Chinese public holidays in full.」→ 换算北京时间：<strong>高峰 &#x3D; 工作日 09:00–12:00、14:00–18:00</strong>。</li>
+<li>⚠️ <strong>旧 ID 注(1) 表述已更新</strong>（10-18 复核原文）：「The legacy names <code>deepseek-v4-flash</code> and <code>deepseek-v4-flash-vision-exp</code> are still accepted, but <strong>the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash-1017 model</strong> and billed at the Flash price.」→ <strong>旧 ID 已不是”同名模型”而是纯别名，新集成一律用 <code>deepseek-flash</code>。</strong></li>
+<li><strong>V4 Pro 继续独立服务</strong>：官方 changelog（2026-09-10）原文「我们决定在 <strong>2026 年 9 月 14 日之后继续提供 DeepSeek V4 Pro 的 API 调用服务，计费方式保持不变</strong>」→ <strong>“9&#x2F;14 下线路由”计划确认撤回且至今未重启</strong>。<strong>V4.1 Pro 无发布日期、无模型 ID、无价格</strong>。</li>
+<li><strong>能力</strong>：<code>deepseek-flash</code> 支持<strong>图像理解</strong>（V4-Pro 不支持）；两者均支持 Responses API 与 Anthropic API；上下文 1M、最大输出 384K。</li>
+<li>并发限制：<strong>flash 2500 &#x2F; pro 500</strong>；缓存命中价约为未命中价的 <strong>1&#x2F;50（空闲）~ 1&#x2F;30（高峰）</strong>。</li>
+<li><strong>V4.1 Flash 规格</strong>：552B 参数 MoE，输入阶段约 8B 激活、输出阶段约 16B 激活；Causal Encoder–Decoder 架构、原生多模态；<strong>MIT 许可开源</strong>（可自托管）。</li>
+<li>📌 同页另列<strong>独立计费的 Search &#x2F; Fetch API</strong>：<strong>$0.75 &#x2F; 每 1000 次成功请求</strong>（不计入 Token 价）。⚠️ <strong>经 DeepSeek Harness &#x2F; Claude Code &#x2F; Codex 等集成调用的服务端工具（Search &#x2F; Fetch）目前免费，官方公告自 2026-11-01 00:00（北京时间）起按次收费</strong>——当前为免费窗口末段，<strong>新架构选型须按 11-01 后的收费口径核算成本</strong>。</li>
+</ul>
+<h3 id="智谱-GLM（人民币计价，官方：docs-bigmodel-cn-cn-guide-start-pricing，10-18-复核，无变动）"><a href="#智谱-GLM（人民币计价，官方：docs-bigmodel-cn-cn-guide-start-pricing，10-18-复核，无变动）" class="headerlink" title="智谱 GLM（人民币计价，官方：docs.bigmodel.cn&#x2F;cn&#x2F;guide&#x2F;start&#x2F;pricing，10-18 复核，无变动）"></a>智谱 GLM（人民币计价，官方：docs.bigmodel.cn&#x2F;cn&#x2F;guide&#x2F;start&#x2F;pricing，10-18 复核，<strong>无变动</strong>）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>上下文</th>
+<th>输入（缓存命中）</th>
+<th>输入（缓存未命中）</th>
+<th>输出</th>
+<th>输入模态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GLM-5.3</td>
+<td>1M</td>
+<td>¥2.00（$0.297）<strong>存储限时免费</strong></td>
+<td>¥8.00（$1.19）</td>
+<td>¥28.00（$4.15）</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>GLM-5.2</td>
+<td>1M</td>
+<td>¥2.00（$0.297）<strong>存储限时免费</strong></td>
+<td>¥8.00（$1.19）</td>
+<td>¥28.00（$4.15）</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>GLM-5.3-Flash（目录价）</td>
+<td>1M</td>
+<td>¥0.23（$0.034）</td>
+<td>¥0.80（$0.119）</td>
+<td>¥2.80（$0.415）</td>
+<td>图片、视频、文件、文本</td>
+</tr>
+<tr>
+<td><strong>GLM-5.3-FlashX</strong></td>
+<td>1M</td>
+<td><strong>¥0.57</strong></td>
+<td><strong>¥2.00</strong></td>
+<td><strong>¥7.00</strong></td>
+<td>图片、视频、文件、文本</td>
+</tr>
+<tr>
+<td>GLM-5.1（输入 &lt;32k）</td>
+<td>200K</td>
+<td>¥1.30（$0.193）</td>
+<td>¥6.00（$0.89）</td>
+<td>¥24.00（$3.56）</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>GLM-5.1（输入 ≥32k）</td>
+<td>200K</td>
+<td>¥2.00（$0.297）</td>
+<td>¥8.00（$1.19）</td>
+<td>¥28.00（$4.15）</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>GLM-5-Turbo（输入 &lt;32k &#x2F; ≥32k）</td>
+<td>—</td>
+<td>¥1.20 &#x2F; ¥1.80</td>
+<td>¥5.00 &#x2F; ¥7.00</td>
+<td>¥22.00 &#x2F; ¥26.00</td>
+<td>文本</td>
+</tr>
+<tr>
+<td>GLM-5（输入 &lt;32k &#x2F; ≥32k）</td>
+<td>—</td>
+<td>¥1.00 &#x2F; ¥1.50</td>
+<td>¥4.00 &#x2F; ¥6.00</td>
+<td>¥18.00 &#x2F; ¥22.00</td>
+<td>文本</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>GLM-5.3-Flash 现按目录价结算</strong>：”5 折限时”（¥0.4&#x2F;¥1.4）已于 <strong>2026-09-10 23:59 到期</strong>，现行价 <strong>¥0.8&#x2F;¥2.8</strong>（&#x3D; GLM-5.3 的 1&#x2F;10）。GLM-5.3 权重已于 8&#x2F;28 开源（MIT）。</li>
+<li><strong>GLM-5.3-FlashX（9&#x2F;18 上线）</strong>：<strong>同一基座的”极速推理档”，非重新训练的更强模型</strong>——基座仍为 320B 总参 &#x2F; 18B 激活 MoE、原生多模态、1M 上下文、128K 最大输出；改动在 Infra，<strong>速度由约 40 tok&#x2F;s 提升至最高 200 tok&#x2F;s（约 5 倍），价格为 Flash 的 2.5 倍</strong>。</li>
+<li>GLM Coding Plan 分档：<strong>$12.6 &#x2F; $56 &#x2F; $117.6 每月</strong>。</li>
+</ul>
+<h3 id="Kimi（人民币计价，官方：platform-kimi-com-docs-pricing-chat，11-04-复核，K3-1-Pro-已发布、K2-系列下线预告）"><a href="#Kimi（人民币计价，官方：platform-kimi-com-docs-pricing-chat，11-04-复核，K3-1-Pro-已发布、K2-系列下线预告）" class="headerlink" title="Kimi（人民币计价，官方：platform.kimi.com&#x2F;docs&#x2F;pricing&#x2F;chat，11-04 复核，K3.1 Pro 已发布、K2 系列下线预告）"></a>Kimi（人民币计价，官方：platform.kimi.com&#x2F;docs&#x2F;pricing&#x2F;chat，11-04 复核，<strong>K3.1 Pro 已发布、K2 系列下线预告</strong>）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>输入（缓存命中）</th>
+<th>输入（缓存未命中）</th>
+<th>输出</th>
+<th>缓存写入</th>
+<th>上下文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>kimi-k3.1-pro</strong>（10-23 发布）</td>
+<td><em>官方价表本次未取到（RSC 解析失败）</em></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>1,048,576</strong></td>
+</tr>
+<tr>
+<td><strong>kimi-k3</strong></td>
+<td>¥2.00（$0.297）</td>
+<td>¥20.00（$2.97）</td>
+<td>¥100.00（$14.84）</td>
+<td><strong>TTL 5min ¥20.00 &#x2F; TTL 1h ¥40.00</strong></td>
+<td><strong>1,048,576</strong></td>
+</tr>
+<tr>
+<td>kimi-k2.7-code</td>
+<td>¥1.30（$0.193）</td>
+<td>¥6.50（$0.96）</td>
+<td>¥27.00（$4.01）</td>
+<td>—</td>
+<td>256K</td>
+</tr>
+<tr>
+<td>kimi-k2.7-code-highspeed</td>
+<td>¥2.60</td>
+<td>¥13.00</td>
+<td>¥54.00</td>
+<td>—</td>
+<td>262K</td>
+</tr>
+<tr>
+<td>kimi-k2.6</td>
+<td>¥1.10（$0.163）</td>
+<td>¥6.50（$0.96）</td>
+<td>¥27.00（$4.01）</td>
+<td>—</td>
+<td>256K</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>K3 的缓存写入档位</strong>：<strong>TTL 5 分钟 ¥20.00 &#x2F; TTL 1 小时 ¥40.00</strong>，官方原文「在有效期内命中缓存的输入仅按”输入价格（缓存命中）”计费，<strong>命中后缓存有效期自动续期，不再收取缓存写入费用</strong>」→ <strong>长会话持续命中时缓存写入实际不重复计费</strong>，与 OpenRouter 渠道”无缓存写入项”口径不冲突。<br>✅ <strong>11-04 复核，K3 价格与上下文窗口无变动</strong>。kimi-k2.5 与 moonshot-v1 全系列已于 8&#x2F;31 下线（Zen &#x2F; GOAT 渠道的 kimi-k2.5 端点来源转由第三方承接）。<br>🔑 <strong>Kimi K3.1 Pro 已正式发布</strong>（官网横幅「🎉 Kimi K3.1 Pro 已正式发布」），K3 系列上下文窗口 1,048,576 tokens，支持批量推理（<strong>Batch API 价格为标准价的 60%</strong>），<code>kimi-k3.1-pro</code> 与 <code>kimi-k3</code> 均在列。<br>⚠️ <strong>K2 系列下线预告</strong>：官方明示「<strong>K2 系列模型将于 2026-10-31 起停止向新注册用户开放，已注册用户不受影响；我们计划在 12 月底下线所有 K2 系列模型，请提前做好迁移准备</strong>」——<strong>K2.7 Code &#x2F; K2.6 &#x2F; K2.5 存量用户须在 2026 年 12 月底前完成迁移</strong>。</p>
+</blockquote>
+<h3 id="小米-MiMo（人民币-美元双标，官方：mimo-mi-com-按量计费页，10-21-复核，页内更新时间-2026-10-21）"><a href="#小米-MiMo（人民币-美元双标，官方：mimo-mi-com-按量计费页，10-21-复核，页内更新时间-2026-10-21）" class="headerlink" title="小米 MiMo（人民币 &#x2F; 美元双标，官方：mimo.mi.com 按量计费页，10-21 复核，页内更新时间 2026-10-21）"></a>小米 MiMo（人民币 &#x2F; 美元双标，官方：mimo.mi.com 按量计费页，10-21 复核，<strong>页内更新时间 2026-10-21</strong>）</h3><p><strong>🔑 小米定价页已直接列出 V2.6 系列的官方国内人民币价与海外美元价</strong>，本文按官方原值记录。</p>
+<p><strong>实时推理（元 &#x2F; 百万 tokens）</strong></p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>输入（缓存命中）</th>
+<th>输入（缓存未命中）</th>
+<th>输出</th>
+<th>上下文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>mimo-v2.6-pro</strong>（国内）</td>
+<td><strong>¥0.025</strong></td>
+<td><strong>¥3.00</strong></td>
+<td><strong>¥6.00</strong></td>
+<td>1M</td>
+</tr>
+<tr>
+<td><strong>mimo-v2.6-flash</strong>（国内）</td>
+<td><strong>¥0.02</strong></td>
+<td><strong>¥1.00</strong></td>
+<td><strong>¥2.00</strong></td>
+<td>1M</td>
+</tr>
+<tr>
+<td><strong>mimo-v2.6-pro-ultraspeed</strong>（国内）</td>
+<td><strong>¥0.25</strong></td>
+<td><strong>¥30.00</strong></td>
+<td><strong>¥60.00</strong></td>
+<td>1M</td>
+</tr>
+<tr>
+<td>mimo-v2.5-pro（<strong>已下线</strong>）</td>
+<td>¥0.025</td>
+<td>¥3.00</td>
+<td>¥6.00</td>
+<td>1M</td>
+</tr>
+<tr>
+<td>mimo-v2.5（<strong>已下线</strong>）</td>
+<td>¥0.02</td>
+<td>¥1.00</td>
+<td>¥2.00</td>
+<td>1M</td>
+</tr>
+</tbody></table>
+<p><strong>海外价（美元 &#x2F; 百万 tokens，同页双标）</strong>：v2.6-pro <strong>$0.0036 &#x2F; $0.435 &#x2F; $0.87</strong>；v2.6-flash <strong>$0.0028 &#x2F; $0.14 &#x2F; $0.28</strong>；v2.6-pro-ultraspeed <strong>$0.036 &#x2F; $4.35 &#x2F; $8.70</strong>。<strong>缓存写入限时免费</strong>。</p>
+<p><strong>批量推理（Batch，5 折）</strong></p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>国内输入（命中 &#x2F; 未命中）</th>
+<th>国内输出</th>
+<th>海外输入（命中 &#x2F; 未命中）</th>
+<th>海外输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mimo-v2.6-pro</td>
+<td>¥0.0125 &#x2F; ¥1.50</td>
+<td>¥3.00</td>
+<td>$0.0018 &#x2F; $0.2175</td>
+<td>$0.435</td>
+</tr>
+<tr>
+<td>mimo-v2.6-flash</td>
+<td>¥0.01 &#x2F; ¥0.50</td>
+<td>¥1.00</td>
+<td>$0.0014 &#x2F; $0.07</td>
+<td>$0.14</td>
+</tr>
+<tr>
+<td><strong>mimo-v2.6-pro-ultraspeed &#x2F; v2.5 系</strong></td>
+<td>—</td>
+<td><strong>不支持批量推理</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>V2.6 与 V2.5 主线同价</strong>（官方口径”智能提升、价格不变”）：Pro &#x2F; Flash 两条线的国内价、海外价、Batch 5 折全部沿用。<br>⚠️ <strong>唯一例外是 UltraSpeed</strong>：<code>mimo-v2.6-pro-ultraspeed</code> 国内 <strong>¥0.25 &#x2F; ¥30 &#x2F; ¥60</strong>，较 <code>mimo-v2.5-pro-ultraspeed</code>（¥0.075 &#x2F; ¥9 &#x2F; ¥18）<strong>涨价 3.33 倍</strong>（海外同比例）。UltraSpeed 提供最高 <strong>20 倍输出速度</strong>（峰值 1000 tokens&#x2F;s）。<br>⚠️ <strong>下线已完成（10-21 复核，页内更新 2026-10-21）</strong>：<strong>MiMo-V2.5-Pro、MiMo-V2.5 已于 2026-10-21 10:00（UTC+8）在小米官方 API 正式下线，旧 ID 直接报错</strong>。<strong>系统替换模型 &#x3D; <code>mimo-v2.6-pro</code> &#x2F; <code>mimo-v2.6-flash</code></strong>。<strong>但 Go &#x2F; CommandCode &#x2F; OpenRouter 渠道仍在供（转售存货）</strong>——第三方渠道存量用完即止，新配置一律改用 V2.6 ID。<br><strong>默认值变更（迁移后必查）</strong>：<code>max_completion_tokens</code> 默认值 <strong>v2.5 &#x3D; 32,768 → v2.6-flash &#x3D; 131,072</strong>；思考模式下 <code>mimo-v2.6-flash</code> &#x2F; <code>mimo-v2.6-pro</code> <strong>不支持自定义 <code>temperature</code> &#x2F; <code>top_p</code></strong>，实际强制为 <strong>1.0 &#x2F; 0.95</strong>。<br><strong>其他计价项</strong>：ASR <code>mimo-v2.5-asr</code> 国内 <strong>¥0.5 &#x2F; 小时</strong>、海外 <strong>$0.074 &#x2F; 小时</strong>；TTS <code>mimo-v2.5-tts</code> &#x2F; <code>-voiceclone</code> &#x2F; <code>-voicedesign</code> <strong>限时免费</strong>；联网服务插件 国内 <strong>¥16 &#x2F; 1000 次</strong>、海外 <strong>$5 &#x2F; 1000 次</strong>（不含在 Token 价内）。<br><strong>性能口径（官方发布）</strong>：MiMo-V2.6-Pro 在 Artificial Analysis 综合智能指数（v4.3）取得 <strong>46 分</strong>，<strong>登顶全球开源模型第一 &#x2F; 国产第一</strong>；<strong>全模态</strong>（文本 &#x2F; 图片 &#x2F; 视频 &#x2F; 音频输入）；<strong>单任务成本 $0.13</strong>。</p>
+</blockquote>
+<h3 id="腾讯混元（人民币计价，官方：cloud-tencent-com-document-product-1823-130055，10-21-复核，页内更新-2026-10-21-00-32）"><a href="#腾讯混元（人民币计价，官方：cloud-tencent-com-document-product-1823-130055，10-21-复核，页内更新-2026-10-21-00-32）" class="headerlink" title="腾讯混元（人民币计价，官方：cloud.tencent.com&#x2F;document&#x2F;product&#x2F;1823&#x2F;130055，10-21 复核，页内更新 2026-10-21 00:32）"></a>腾讯混元（人民币计价，官方：cloud.tencent.com&#x2F;document&#x2F;product&#x2F;1823&#x2F;130055，10-21 复核，<strong>页内更新 2026-10-21 00:32</strong>）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>输入（缓存命中）</th>
+<th>输入（缓存未命中）</th>
+<th>输出</th>
+<th>上下文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hy3</td>
+<td>¥0.25（$0.037）</td>
+<td>¥1.00（$0.148）</td>
+<td>¥4.00（$0.593）</td>
+<td>256K</td>
+</tr>
+<tr>
+<td><strong>Hy4 preview</strong></td>
+<td><strong>¥0.30（$0.045）</strong></td>
+<td><strong>¥6.00（$0.89）</strong></td>
+<td><strong>¥18.00（$2.67）</strong></td>
+<td>1M</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>TokenHub 表头为「推理输入 &#x2F; 推理输出 &#x2F; 缓存命中」，<strong>无峰谷、无分段</strong>。<strong>Hy4 preview 与 Hy3 两项 10-21 复核均无变动</strong>。<br><strong>同页另列 DeepSeek 原厂直供行</strong>（10-21 复核）：<code>DeepSeek-V4.1-Flash-1017 原厂直供</code> 空闲 <strong>¥1 &#x2F; ¥4 &#x2F; ¥0.02</strong>、高峰 <strong>¥2 &#x2F; ¥8 &#x2F; ¥0.04</strong>；<code>DeepSeek-V4-Pro 0813 正式版 原厂直供</code> 空闲 <strong>¥4.5 &#x2F; ¥13.5 &#x2F; ¥0.15</strong>、高峰 <strong>¥9 &#x2F; ¥27 &#x2F; ¥0.3</strong> —— <strong>与 DeepSeek 官方直连完全同价，可直接在腾讯云侧走原厂通道</strong>。<br>同页另列腾讯<strong>代理</strong>（非混元自研）的多档模型：GLM-5.3（¥8&#x2F;¥28&#x2F;¥2）、GLM-5.3-Flash（¥0.8&#x2F;¥2.8&#x2F;¥0.23）、GLM-5.3-FlashX（¥2&#x2F;¥7&#x2F;¥0.57）、GLM-5.2（¥8&#x2F;¥28&#x2F;¥2）、Kimi K3（¥20&#x2F;¥100&#x2F;¥2）、<strong>Kimi K2.8 Preview（¥6.5&#x2F;¥27&#x2F;¥1.7）</strong>、Kimi K2.7 Code HighSpeed（¥13&#x2F;¥54&#x2F;¥2.6）、Step 5 Preview（¥7&#x2F;¥20&#x2F;¥0.35）、<strong>MiniMax-M3.1-Flash（¥1&#x2F;¥4&#x2F;¥0.1）</strong>、MiMo-V2.6-Pro（¥3&#x2F;¥6&#x2F;¥0.025）、MiMo-V2.6-Flash（¥1&#x2F;¥2&#x2F;¥0.02）、MiMo-V2.5-Pro（¥3&#x2F;¥6&#x2F;¥0.025，<strong>小米官方已下线，TokenHub 仍在售</strong>）。<br>🔑 <strong>10-21 00:32 页内更新新增两款代理模型</strong>：<strong>MiniMax-M3.1-Flash ¥1&#x2F;¥4&#x2F;¥0.1</strong>（&#x3D; 官方价 5 折口径，1M 上下文）、<strong>Kimi K2.8 Preview ¥6.5&#x2F;¥27&#x2F;¥1.7</strong>——TokenHub 已成为国产新模型首发上架最快的转售入口之一。</p>
+</blockquote>
+<h3 id="阿里百炼（Qwen，官方：help-aliyun-com-zh-model-studio-model-pricing，10-18-复核，无变动）"><a href="#阿里百炼（Qwen，官方：help-aliyun-com-zh-model-studio-model-pricing，10-18-复核，无变动）" class="headerlink" title="阿里百炼（Qwen，官方：help.aliyun.com&#x2F;zh&#x2F;model-studio&#x2F;model-pricing，10-18 复核，无变动）"></a>阿里百炼（Qwen，官方：help.aliyun.com&#x2F;zh&#x2F;model-studio&#x2F;model-pricing，10-18 复核，<strong>无变动</strong>）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>区域 &#x2F; 区间</th>
+<th>输入（原价）</th>
+<th>输出（原价）</th>
+<th>现价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>qwen3.8-flash</strong></td>
+<td>国内（华北2 北京），0&lt;Token≤1M</td>
+<td><strong>¥0.80</strong></td>
+<td><strong>¥2.70</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>qwen3.8-flash</td>
+<td>国际 &#x2F; 美国</td>
+<td>¥1.094</td>
+<td>¥3.427</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>qwen3.8-max &#x2F; max-0902</strong></td>
+<td>国内</td>
+<td><strong>¥12.00</strong></td>
+<td><strong>¥36.00</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>qwen3.8-max &#x2F; max-0902</td>
+<td>国际</td>
+<td>¥14.988</td>
+<td>¥44.965</td>
+<td>—</td>
+</tr>
+<tr>
+<td>qwen3.8-max-prime（优速档）</td>
+<td>国内</td>
+<td>¥24.00</td>
+<td>¥72.00</td>
+<td><strong>无免费额度</strong></td>
+</tr>
+<tr>
+<td><strong>qwen3.7-plus</strong></td>
+<td>国内 0&lt;Token≤256K</td>
+<td>¥2.00</td>
+<td>¥8.00</td>
+<td><strong>限时 8 折 → ¥1.60 &#x2F; ¥6.40</strong></td>
+</tr>
+<tr>
+<td>qwen3.7-plus</td>
+<td>国内 256K&lt;Token≤1M</td>
+<td>¥6.00</td>
+<td>¥24.00</td>
+<td><strong>限时 8 折 → ¥4.80 &#x2F; ¥19.20</strong></td>
+</tr>
+<tr>
+<td>qwen3.6-plus</td>
+<td>国内 0&lt;Token≤256K</td>
+<td>¥2.00</td>
+<td>¥12.00</td>
+<td>—</td>
+</tr>
+<tr>
+<td>qwen3.6-plus</td>
+<td>国内 256K&lt;Token≤1M</td>
+<td>¥8.00</td>
+<td>¥48.00</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<p><strong>全模态（Omni）系列</strong>——官方<strong>单独列表，并直接给出固定缓存命中价</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>区域</th>
+<th>输入（文本 &#x2F; 图片 &#x2F; 视频）</th>
+<th>缓存命中</th>
+<th>输出（文本）</th>
+<th>音频输入 &#x2F; 输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>qwen3.8-omni-flash</strong></td>
+<td>中国内地</td>
+<td><strong>¥0.80</strong></td>
+<td><strong>¥0.10</strong></td>
+<td><strong>¥2.70</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>qwen3.8-omni-flash</td>
+<td>国际</td>
+<td>¥1.094</td>
+<td>¥0.117</td>
+<td>¥3.427</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>qwen3.8-omni-flash-realtime</strong></td>
+<td>中国内地</td>
+<td>¥1.50</td>
+<td>—</td>
+<td>¥4.50</td>
+<td>¥6.00 &#x2F; ¥12.00</td>
+</tr>
+<tr>
+<td>qwen3.8-omni-flash-realtime</td>
+<td>国际</td>
+<td>¥1.677</td>
+<td>—</td>
+<td>¥5.104</td>
+<td>¥6.781 &#x2F; ¥13.636</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>百炼文本模型的定价表内没有”缓存命中”列</strong>，只标注「上下文缓存 享有折扣」；缓存规则文档（help.aliyun.com&#x2F;zh&#x2F;model-studio&#x2F;context-cache）原文：「命中缓存的输入 Token 计费：<strong>显式 通常为输入 Token 单价的 10%</strong>，<strong>隐式 通常为输入 Token 单价的 20%</strong>」→ <strong>文本模型的缓存价是比例口径、不是固定数值</strong>，下文出现的 ¥0.08 &#x2F; ¥0.16 等均为按 10% 推算的参考值，<strong>不得当作官方承诺价</strong>。<strong>例外：Omni 系列已直接给出固定缓存命中价</strong>（¥0.10 &#x3D; 输入的 12.5%）。<br>✅ <strong>10-18 复核，上表价格与阶梯均无变动</strong>（含 qwen3.7-plus 限时 8 折仍在有效期内）。⚠️ 官方定价页已从 <code>…/model-studio/billing-for-model-studio</code> <strong>301 跳转至 <code>…/model-studio/model-pricing</code></strong>，引用旧链接会自动重定向。</p>
+</blockquote>
+<hr>
+<h2 id="二、OpenRouter-各-provider-价格（美元-百万-tokens）"><a href="#二、OpenRouter-各-provider-价格（美元-百万-tokens）" class="headerlink" title="二、OpenRouter 各 provider 价格（美元 &#x2F; 百万 tokens）"></a>二、OpenRouter 各 provider 价格（美元 &#x2F; 百万 tokens）</h2><blockquote>
+<p>全部为 <strong>2026-11-04 15:20 CST endpoints API 实测值</strong>；括号内为人民币折算（× 折算汇率 6.7180）。<br><strong>OpenRouter 目录共 455 款</strong>；<code>~</code> 前缀为 OpenRouter 路由<strong>别名</strong>（不暴露 endpoints，价格取自模型目录字段，<strong>共 19 个别名</strong>），<code>:free</code> 为免费端点（<strong>14 个</strong>），<code>:batch</code> 为批量折扣端点（<strong>73 个</strong>）。<br>🔑 <strong><code>pricing.discount</code> 是最容易误读的字段</strong>：<code>prompt</code> &#x2F; <code>completion</code> &#x2F; <code>input_cache_read</code> <strong>已是折后实付价</strong>，原价需按 <code>折后价 ÷ (1 - discount)</code> 还原；<strong><code>discount = 0</code> 即无折扣、按原价挂牌</strong>。下表一律记<strong>实付价</strong>，有折扣者附原价。<br>🔑 <strong>百度千帆折扣重新在架</strong>：<code>deepseek-v4-pro</code> 的 Baidu 行 <code>discount = 0.471</code>、<code>glm-5.3</code> 的 Baidu 行 <code>discount = 0.8</code>（输出 $0.88 &#x2F; 缓存 $0.052，重夺两项最低位）；<code>glm-5.2</code> 的 Baidu 行 <code>discount = 0.558</code> &#x2F; <code>baidu/fast</code> <code>discount = 0.725</code>。<strong>折扣到期与回归都属常态，<code>discount</code> 必须每次抓取重核，不可跨期沿用</strong>。<br>⚠️ <strong>同一 provider 会出现多条记录</strong>（<code>flex</code> &#x2F; 标准 &#x2F; <code>fast</code> &#x2F; <code>priority</code> 服务档，或 Azure <code>us</code>&#x2F;<code>eu</code>、Bedrock 区域档），下表按 <strong><code>tag</code> 字段</strong>区分，<strong>不得把 flex 价当标准价</strong>。</p>
+</blockquote>
+<h3 id="DeepSeek-V4-1-Flash（40-渠道）"><a href="#DeepSeek-V4-1-Flash（40-渠道）" class="headerlink" title="DeepSeek V4.1 Flash（40 渠道）"></a>DeepSeek V4.1 Flash（40 渠道）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/deepseek/deepseek-v4.1-flash">Morph</a></strong>（<code>morph/fp8</code>）</td>
+<td><strong>$0.0350（¥0.235）</strong></td>
+<td>$0.3150（¥2.12）</td>
+<td>$0.0060（¥0.040）</td>
+<td>—</td>
+<td><strong>输入最低</strong></td>
+</tr>
+<tr>
+<td>Relace（<code>relace/fp4</code>）</td>
+<td><strong>$0.0350（¥0.235）</strong></td>
+<td>$0.5000（¥3.36）</td>
+<td>$0.0050（¥0.034）</td>
+<td>—</td>
+<td>与 Morph 并列输入最低</td>
+</tr>
+<tr>
+<td>OpenInference（<code>open-inference/fp4</code>）</td>
+<td>$0.0405（¥0.272）</td>
+<td>$0.5790（¥3.89）</td>
+<td>$0.00579（¥0.039）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Wafer（<code>wafer/us</code>）</td>
+<td>$0.0450（¥0.302）</td>
+<td>$0.5000（¥3.36）</td>
+<td>$0.0180（¥0.121）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Sail Research</strong>（<code>sail-research/fp4/us</code>）</td>
+<td>$0.0900（¥0.605）</td>
+<td><strong>$0.2500（¥1.68）</strong></td>
+<td>$0.0060（¥0.040）</td>
+<td>—</td>
+<td><strong>输出最低</strong></td>
+</tr>
+<tr>
+<td>InferenceNet（<code>inference-net/us</code>）</td>
+<td>$0.1030（¥0.692）</td>
+<td>$0.6000（¥4.03）</td>
+<td>$0.0080（¥0.054）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>CoreWeave</strong>（<code>coreweave/fp8</code>）</td>
+<td>$0.1500（¥1.01）</td>
+<td>$0.6500（¥4.37）</td>
+<td><strong>$0.0020（¥0.0134）</strong></td>
+<td>—</td>
+<td><strong>缓存最低</strong></td>
+</tr>
+<tr>
+<td><strong>DeepSeek（官方直供）</strong>（<code>deepseek</code>）</td>
+<td><strong>$0.1500（¥1.01）</strong></td>
+<td><strong>$0.6000（¥4.03）</strong></td>
+<td><strong>$0.0030（¥0.020）</strong></td>
+<td>—</td>
+<td>✅ 空闲档位；标价不随峰谷切换</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>输入最低 &#x3D; Morph &#x2F; Relace 并列</strong>（均 $0.035）、<strong>缓存最低 &#x3D; CoreWeave</strong>（$0.002，无折扣）、<strong>输出最低 &#x3D; Sail Research</strong>（$0.25）。对官方空闲 ¥1.00 &#x2F; ¥4.00 &#x2F; ¥0.020 分别为 <strong>-76% &#x2F; -58% &#x2F; -33%</strong>。<br>⚠️ <strong>百度千帆的 -82.1% 折扣已退出 V4.1 Flash 最低位</strong>（10-23 口径其缓存读为 $0.001074）——缓存最低位现由<strong>无折扣的 CoreWeave</strong> 持有，缓存让利幅度由 -64% 收窄至 <strong>-33%</strong>。</p>
+</blockquote>
+<h3 id="DeepSeek-V4-Pro（15-渠道）——🔑-仅输出项第三方更便宜"><a href="#DeepSeek-V4-Pro（15-渠道）——🔑-仅输出项第三方更便宜" class="headerlink" title="DeepSeek V4 Pro（15 渠道）——🔑 仅输出项第三方更便宜"></a>DeepSeek V4 Pro（15 渠道）——🔑 <strong>仅输出项第三方更便宜</strong></h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Relace</strong>（<code>relace/fp4</code>）</td>
+<td><strong>$0.9000（¥6.05）</strong></td>
+<td><strong>$1.5000（¥10.08）</strong></td>
+<td>$0.2500（¥1.68）</td>
+<td>—</td>
+<td><strong>输入 + 输出最低</strong></td>
+</tr>
+<tr>
+<td><strong>StreamLake</strong>（<code>streamlake/fp8</code>）</td>
+<td>$0.9553（¥6.42）</td>
+<td>$1.9110（¥12.84）</td>
+<td><strong>$0.07961（¥0.535）</strong></td>
+<td>-45.1%（原 $1.74&#x2F;$3.47&#x2F;$0.145）</td>
+<td><strong>缓存最低</strong></td>
+</tr>
+<tr>
+<td>GMICloud（<code>gmicloud/fp8</code>）</td>
+<td>$0.9570（¥6.43）</td>
+<td>$1.9140（¥12.86）</td>
+<td>$0.07975（¥0.536）</td>
+<td>-45%（原 $1.74）</td>
+<td>缓存次低</td>
+</tr>
+<tr>
+<td>SiliconFlow（<code>siliconflow/fp8</code>）</td>
+<td>$1.0000（¥6.72）</td>
+<td>$3.1350（¥21.06）</td>
+<td>$0.1350（¥0.907）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DigitalOcean（<code>digitalocean</code>）</td>
+<td>$1.0440（¥7.01）</td>
+<td>$2.0880（¥14.03）</td>
+<td>$0.2088（¥1.40）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DeepInfra（<code>deepinfra/fp8</code>）</td>
+<td>$1.3000（¥8.73）</td>
+<td>$2.6000（¥17.47）</td>
+<td>$0.1000（¥0.672）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Alibaba（<code>alibaba/fp8</code>）</td>
+<td>$1.4160（¥9.51）</td>
+<td>$2.8320（¥19.03）</td>
+<td>$0.1180（¥0.793）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>V4 Pro 三项中仅”输出”第三方更便宜</strong>：输出最低 Relace ¥10.11 为官方 ¥13.50 的 <strong>-25%</strong>；<strong>输入最低 Relace ¥6.07 反比官方 ¥4.50 贵 +35%</strong>；<strong>缓存最低 StreamLake ¥0.537 仍是官方空闲 ¥0.15 的 3.6 倍（贵 +258%）</strong>。→ <strong>V4 Pro 一律走官方直连</strong>（空闲 ¥4.50 &#x2F; ¥13.50 &#x2F; ¥0.15）。<br>⚠️ <strong>百度千帆的 -47.1% 折扣现为输入次低</strong>（$0.894&#x2F;$1.788&#x2F;$0.07406），但缓存仍高于 StreamLake 之外的所有主流渠道可得的水平——<strong>折扣深度不足以改变”官方直连”结论</strong>。<br>⚠️ <strong>V4 Pro 在 OpenRouter 上仍无 <code>tag=deepseek</code> 官方直供端点</strong>——“官方直连”路径只有 platform.deepseek.com 或<strong>腾讯云 TokenHub 原厂直供</strong>。</p>
+</blockquote>
+<h3 id="GLM-5-3-Flash（41-渠道）"><a href="#GLM-5-3-Flash（41-渠道）" class="headerlink" title="GLM-5.3-Flash（41 渠道）"></a>GLM-5.3-Flash（41 渠道）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/z-ai/glm-5.3-flash">Relace</a></strong>（<code>relace/fp4</code>）</td>
+<td><strong>$0.0269（¥0.181）</strong></td>
+<td><strong>$0.0996（¥0.669）</strong></td>
+<td>$0.0269（¥0.181）</td>
+<td>—</td>
+<td><strong>输入 + 输出最低</strong></td>
+</tr>
+<tr>
+<td>OpenInference（<code>open-inference/fp4</code>）</td>
+<td>$0.0283（¥0.190）</td>
+<td>$0.2080（¥1.40）</td>
+<td>$0.0189（¥0.127）</td>
+<td>—</td>
+<td>缓存次低</td>
+</tr>
+<tr>
+<td>Wafer（<code>wafer/us</code>）</td>
+<td>$0.0440（¥0.296）</td>
+<td>$0.2000（¥1.34）</td>
+<td>$0.0430（¥0.289）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Morph（<code>morph/fp8</code>）</td>
+<td>$0.0470（¥0.316）</td>
+<td>$0.2680（¥1.80）</td>
+<td>$0.0200（¥0.134）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Darkbloom</strong>（<code>darkbloom/fp4</code>）</td>
+<td>$0.0650（¥0.437）</td>
+<td>$0.1800（¥1.21）</td>
+<td><strong>$0.0120（¥0.081）</strong></td>
+<td>—</td>
+<td><strong>缓存最低</strong></td>
+</tr>
+<tr>
+<td>Tenstorrent（<code>tenstorrent/fp8</code>）</td>
+<td>$0.0750（¥0.504）</td>
+<td>$0.2500（¥1.68）</td>
+<td>$0.0150（¥0.101）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>输入&#x2F;输出最低 &#x3D; Relace</strong>（$0.0269 &#x2F; $0.0996），<strong>缓存最低 &#x3D; Darkbloom</strong>（$0.012）。较 Z.AI 官方目录价 $0.15&#x2F;$0.5&#x2F;$0.03 便宜 <strong>-82% &#x2F; -80% &#x2F; -60%</strong>。官方 5 折已于 9&#x2F;10 到期回目录价，<strong>OpenRouter 现为最低成本通道</strong>。</p>
+</blockquote>
+<h3 id="GLM-5-3（48-渠道）"><a href="#GLM-5-3（48-渠道）" class="headerlink" title="GLM-5.3（48 渠道）"></a>GLM-5.3（48 渠道）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/z-ai/glm-5.3">Wafer</a></strong>（<code>wafer/us</code>）</td>
+<td><strong>$0.0790（¥0.531）</strong></td>
+<td><strong>$1.4000（¥9.41）</strong></td>
+<td>$0.0780（¥0.524）</td>
+<td>—</td>
+<td><strong>输入 + 输出最低</strong></td>
+</tr>
+<tr>
+<td>InferenceNet（<code>inference-net/fp4</code>）</td>
+<td>$0.0800（¥0.537）</td>
+<td>$4.0000（¥26.87）</td>
+<td>$0.0760（¥0.511）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Reka（<code>reka</code>）</td>
+<td>$0.1400（¥0.941）</td>
+<td>$4.2000（¥28.22）</td>
+<td>$0.1050（¥0.705）</td>
+<td>-30%（原 $0.20）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Makora（<code>makora/fp4</code>）</td>
+<td>$0.1400（¥0.941）</td>
+<td>$4.4000（¥29.56）</td>
+<td>$0.1000（¥0.672）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Morph</strong>（<code>morph/fp8</code>）</td>
+<td>$0.1870（¥1.26）</td>
+<td>$4.4000（¥29.56）</td>
+<td><strong>$0.0470（¥0.316）</strong></td>
+<td>—</td>
+<td><strong>缓存最低</strong></td>
+</tr>
+<tr>
+<td>Sail Research（<code>sail-research/fp8</code>）</td>
+<td>$0.5000（¥3.36）</td>
+<td>$2.0000（¥13.44）</td>
+<td>$0.0800（¥0.537）</td>
+<td>—</td>
+<td>输出次低</td>
+</tr>
+<tr>
+<td>DeepInfra（<code>deepinfra/fp4</code>）</td>
+<td>$0.5625（¥3.78）</td>
+<td>$2.5000（¥16.80）</td>
+<td>$0.1250（¥0.840）</td>
+<td>-37.5%（原 $0.90）</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Baidu</strong>（<code>baidu/fp8</code>）</td>
+<td>$1.4000（¥9.41）</td>
+<td>$4.4000（¥29.56）</td>
+<td>$0.2600（¥1.75）</td>
+<td><strong>0</strong></td>
+<td>官方目录价档</td>
+</tr>
+<tr>
+<td>Z.AI（官方）（<code>z-ai/fp8</code>）</td>
+<td>$1.4000（¥9.41）</td>
+<td>$4.4000（¥29.56）</td>
+<td>$0.2600（¥1.75）</td>
+<td>—</td>
+<td>与 Baidu 同价</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>三项最低</strong>：输入&#x2F;输出 <strong>Wafer $0.079 &#x2F; $1.40</strong>、缓存 <strong>Morph $0.047</strong>。48 家中约 15 家报官方同价 $1.4&#x2F;$4.4&#x2F;$0.26（含 Baidu 与 Z.AI 官方，<code>discount=0</code>）。</p>
+</blockquote>
+<h3 id="GLM-5-2（33-渠道）"><a href="#GLM-5-2（33-渠道）" class="headerlink" title="GLM-5.2（33 渠道）"></a>GLM-5.2（33 渠道）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/z-ai/glm-5.2">Wafer</a></strong>（<code>wafer/us</code>）</td>
+<td><strong>$0.0060（¥0.040）</strong></td>
+<td>$6.8000（¥45.68）</td>
+<td><strong>$0.0050（¥0.034）</strong></td>
+<td>—</td>
+<td><strong>输入 + 缓存最低</strong></td>
+</tr>
+<tr>
+<td>Relace（<code>relace/fp4</code>）</td>
+<td>$0.0065（¥0.044）</td>
+<td>$7.9060（¥53.11）</td>
+<td>$0.0065（¥0.044）</td>
+<td>—</td>
+<td>输入次低</td>
+</tr>
+<tr>
+<td><strong>Morph</strong>（<code>morph/fp8</code>）</td>
+<td>$0.1850（¥1.24）</td>
+<td><strong>$1.4000（¥9.41）</strong></td>
+<td>$0.0690（¥0.464）</td>
+<td>—</td>
+<td><strong>输出最低</strong></td>
+</tr>
+<tr>
+<td>DeepInfra（<code>deepinfra/fp4/flex</code>）</td>
+<td>$0.4500（¥3.02）</td>
+<td>$1.4400（¥9.67）</td>
+<td>$0.0840（¥0.564）</td>
+<td>-25%（原 $0.60）</td>
+<td>输出次低；flex 档</td>
+</tr>
+<tr>
+<td><strong>Baidu</strong>（<code>baidu/fp8</code>）</td>
+<td>$0.6188（¥4.16）</td>
+<td>$1.9448（¥13.07）</td>
+<td>$0.11492（¥0.772）</td>
+<td>-55.8%（原 $1.40&#x2F;$4.40&#x2F;$0.26）</td>
+<td>折扣在架</td>
+</tr>
+<tr>
+<td>Z.AI（官方）（<code>z-ai/fp8</code>）</td>
+<td>$1.4000（¥9.41）</td>
+<td>$4.4000（¥29.56）</td>
+<td>$0.2600（¥1.75）</td>
+<td>—</td>
+<td>官方目录价</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>三项最低</strong>：输入&#x2F;缓存 <strong>Wafer $0.006 &#x2F; $0.005</strong>、输出 <strong>Morph $1.40</strong>。较官方 $1.4&#x2F;$4.4&#x2F;$0.26 便宜 <strong>-99.6% &#x2F; -68% &#x2F; -98%</strong>——<strong>GLM-5.2 输入与缓存已是白菜价通道</strong>。⚠️ Wafer 的输出 $6.80 远高于官方 $4.40，<strong>采购必须整行核算</strong>。</p>
+</blockquote>
+<h3 id="GLM-5-3-FlashX-GLM-5-3-Prime（各-1-渠道）"><a href="#GLM-5-3-FlashX-GLM-5-3-Prime（各-1-渠道）" class="headerlink" title="GLM-5.3-FlashX &#x2F; GLM-5.3-Prime（各 1 渠道）"></a>GLM-5.3-FlashX &#x2F; GLM-5.3-Prime（各 1 渠道）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>GLM-5.3-FlashX</strong></td>
+<td>Z.AI（<code>z-ai/fp8</code>）</td>
+<td>$0.37（¥2.49）</td>
+<td>$1.25（¥8.40）</td>
+<td>$0.09（¥0.605）</td>
+<td>唯一渠道；较官方 ¥2 &#x2F; ¥7 &#x2F; ¥0.57 分别<strong>贵 25% &#x2F; 贵 20% &#x2F; 贵 7%</strong></td>
+</tr>
+<tr>
+<td><strong>GLM-5.3-Prime</strong></td>
+<td>Alibaba（<code>alibaba</code>）</td>
+<td>$2.80（¥18.81）</td>
+<td>$8.80（¥59.12）</td>
+<td>$0.56（¥3.76）</td>
+<td>1M；<strong>仅 Alibaba 1 渠道</strong></td>
+</tr>
+</tbody></table>
+<h3 id="Kimi-K3（30-渠道）"><a href="#Kimi-K3（30-渠道）" class="headerlink" title="Kimi K3（30 渠道）"></a>Kimi K3（30 渠道）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/moonshotai/kimi-k3">Relace</a></strong>（<code>relace/fp4</code>）</td>
+<td><strong>$0.1900（¥1.28）</strong></td>
+<td><strong>$8.9400（¥60.06）</strong></td>
+<td>$0.1900（¥1.28）</td>
+<td>—</td>
+<td><strong>输入 + 输出最低</strong></td>
+</tr>
+<tr>
+<td>Wafer（<code>wafer</code>）</td>
+<td>$0.2000（¥1.34）</td>
+<td>$16.0000（¥107.5）</td>
+<td>$0.1900（¥1.28）</td>
+<td>—</td>
+<td>输出异常高，<strong>须整行看</strong></td>
+</tr>
+<tr>
+<td>InferenceNet（<code>inference-net/us</code>）</td>
+<td>$0.2340（¥1.57）</td>
+<td>$16.5000（¥110.8）</td>
+<td>$0.1950（¥1.31）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Wafer</strong>（<code>wafer/us</code>）</td>
+<td>$0.2760（¥1.85）</td>
+<td>$11.5000（¥77.26）</td>
+<td><strong>$0.1300（¥0.873）</strong></td>
+<td>—</td>
+<td><strong>缓存最低</strong></td>
+</tr>
+<tr>
+<td>Makora（<code>makora/fp4</code>）</td>
+<td>$0.3600（¥2.42）</td>
+<td>$12.0000（¥80.62）</td>
+<td>$0.1600（¥1.07）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Moonshot AI（官方）</strong>（<code>moonshotai/mxfp4</code>）</td>
+<td>$3.0000（¥20.15）</td>
+<td>$15.0000（¥100.77）</td>
+<td>$0.3000（¥2.02）</td>
+<td>—</td>
+<td>官方价</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>K3 的第三方套利空间显著</strong>：输入最低 <strong>Relace ¥1.28</strong>（官方 ¥20 的 6%）、输出最低 <strong>Relace ¥60.06</strong>（官方的 60%）、缓存最低 <strong>Wafer&#x2F;us ¥0.873</strong>（官方的 44%）。<br>⚠️ <strong>Relace 现同时持输入与输出双最低</strong>——输出最低位已从 Sail Research $5.50 涨至 $8.94（+63%），<strong>最低位每次抓取都在变</strong>。<br>⚠️ 官方价目另有<strong>缓存写入</strong> ¥20（TTL 5min）&#x2F; ¥40（TTL 1h）两档，OpenRouter 各渠道<strong>均未列缓存写入项</strong>——<strong>跨平台比价时不可忽略这一项</strong>。</p>
+</blockquote>
+<h3 id="Kimi-K3-1-Pro（2-渠道，10-23-上架）"><a href="#Kimi-K3-1-Pro（2-渠道，10-23-上架）" class="headerlink" title="Kimi K3.1 Pro（2 渠道，10-23 上架）"></a>Kimi K3.1 Pro（2 渠道，10-23 上架）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Moonshot AI（官方）</strong>（<code>moonshotai/mxfp4</code>）</td>
+<td>$2.0000（¥13.44）</td>
+<td>$10.0000（¥67.18）</td>
+<td>$0.2000（¥1.34）</td>
+<td>—</td>
+<td><strong>唯一常规档</strong>；官方已发布（官网横幅「Kimi K3.1 Pro 已正式发布」）</td>
+</tr>
+<tr>
+<td>Moonshot AI（<code>moonshotai/highspeed</code>）</td>
+<td>$4.0000（¥26.87）</td>
+<td>$20.0000（¥134.36）</td>
+<td>$0.2000（¥1.34）</td>
+<td>—</td>
+<td>highspeed 服务档</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>K3.1 Pro 尚无第三方渠道</strong>——OpenRouter 仅 Moonshot 官方 2 条记录（常规 + highspeed），<strong>无任何折让空间</strong>；官方人民币价表本次未取到（mintlify RSC 解析失败），表内为 OpenRouter 官方直供端点的美元口径。<br>🔑 <strong>Kimi K2 系列下线预告</strong>：官方页面明示 <strong>K2 系列（K2.7 Code &#x2F; K2.6 &#x2F; K2.5）自 2026-10-31 起停止向新注册用户开放，已注册用户不受影响；计划 12 月底下线所有 K2 系列模型</strong>——<strong>K2 系存量用户须在 12 月底前完成迁移</strong>。</p>
+</blockquote>
+<h3 id="MiniMax-M3-1-Flash（13-渠道，付费档开渠）"><a href="#MiniMax-M3-1-Flash（13-渠道，付费档开渠）" class="headerlink" title="MiniMax M3.1 Flash（13 渠道，付费档开渠）"></a>MiniMax M3.1 Flash（13 渠道，付费档开渠）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/minimax/minimax-m3.1-flash">Tenstorrent</a></strong>（<code>tenstorrent/fp8</code>）</td>
+<td><strong>$0.0500（¥0.336）</strong></td>
+<td><strong>$0.2000（¥1.34）</strong></td>
+<td><strong>$0.0050（¥0.034）</strong></td>
+<td>—</td>
+<td><strong>三项最低</strong></td>
+</tr>
+<tr>
+<td>GMICloud（<code>gmicloud/fp8</code>）</td>
+<td>$0.1125（¥0.756）</td>
+<td>$0.4500（¥3.02）</td>
+<td>$0.01125（¥0.076）</td>
+<td>-25%（原 $0.15&#x2F;$0.6&#x2F;$0.015）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>StreamLake（<code>streamlake/fp8</code>）</td>
+<td>$0.1350（¥0.907）</td>
+<td>$0.5400（¥3.63）</td>
+<td>$0.0135（¥0.091）</td>
+<td>-10%（原 $0.15）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Minimax（官方）（<code>minimax</code>）</td>
+<td>$0.1500（¥1.01）</td>
+<td>$0.6000（¥4.03）</td>
+<td>$0.0150（¥0.101）</td>
+<td>—</td>
+<td>官方目录价</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>Tenstorrent 以 $0.05&#x2F;$0.2&#x2F;$0.005 拿下三项最低</strong>，较官方目录价低 <strong>-67% &#x2F; -67% &#x2F; -67%</strong>——是当前<strong>国产模型中单价最低的一档</strong>。<br>⚠️ <strong><code>:free</code> 限时免费端点已下架</strong>：<code>minimax/minimax-m3.1-flash:free</code> 返回 <strong>0 渠道</strong>，CommandCode &#x2F; Go &#x2F; Zen 三侧同步移除——<strong>免费窗口已结束，勿再写进配置</strong>。</p>
+</blockquote>
+<h3 id="MiniMax-M3（13-渠道）"><a href="#MiniMax-M3（13-渠道）" class="headerlink" title="MiniMax M3（13 渠道）"></a>MiniMax M3（13 渠道）</h3><table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/minimax/minimax-m3">DeepInfra</a></strong>（<code>deepinfra/fp8/flex</code>）</td>
+<td><strong>$0.2240（¥1.50）</strong></td>
+<td><strong>$0.8800（¥5.91）</strong></td>
+<td><strong>$0.0448（¥0.301）</strong></td>
+<td>—</td>
+<td><strong>三项最低</strong>；flex 档</td>
+</tr>
+<tr>
+<td>CoreWeave（<code>coreweave/fp4</code>）</td>
+<td>$0.2300（¥1.55）</td>
+<td>$0.9600（¥6.45）</td>
+<td>$0.0500（¥0.336）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GMICloud（<code>gmicloud/fp8</code>）</td>
+<td>$0.2400（¥1.61）</td>
+<td>$0.9600（¥6.45）</td>
+<td>$0.0480（¥0.322）</td>
+<td>-20%（原 $0.30）</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<h3 id="MiMo-V2-6-系列"><a href="#MiMo-V2-6-系列" class="headerlink" title="MiMo V2.6 系列"></a>MiMo V2.6 系列</h3><p><strong>MiMo V2.6 Flash（7 渠道）</strong></p>
+<table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><a target="_blank" rel="noopener" href="https://openrouter.ai/xiaomi/mimo-v2.6-flash">Darkbloom</a></strong>（<code>darkbloom/fp4</code>）</td>
+<td><strong>$0.1000（¥0.672）</strong></td>
+<td>$0.2800（¥1.88）</td>
+<td>$0.0500（¥0.336）</td>
+<td>—</td>
+<td><strong>输入最低</strong></td>
+</tr>
+<tr>
+<td><strong>GMICloud</strong>（<code>gmicloud/bf16</code>）</td>
+<td>$0.1120（¥0.752）</td>
+<td><strong>$0.2240（¥1.50）</strong></td>
+<td><strong>$0.0024（¥0.016）</strong></td>
+<td>-20%（原 $0.14&#x2F;$0.28&#x2F;$0.003）</td>
+<td><strong>输出 + 缓存最低</strong></td>
+</tr>
+<tr>
+<td>Cohere（<code>cohere</code>）</td>
+<td>$0.1400（¥0.941）</td>
+<td>$0.2800（¥1.88）</td>
+<td>$0.0030（¥0.020）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Xiaomi（官方）（<code>xiaomi/fp8</code>）</td>
+<td>$0.1400（¥0.941）</td>
+<td>$0.2800（¥1.88）</td>
+<td>$0.0028（¥0.019）</td>
+<td>—</td>
+<td>官方渠道</td>
+</tr>
+</tbody></table>
+<p><strong>MiMo V2.6 Pro（4 渠道）</strong></p>
+<table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>GMICloud</strong>（<code>gmicloud/bf16</code>）</td>
+<td><strong>$0.3480（¥2.34）</strong></td>
+<td><strong>$0.6960（¥4.68）</strong></td>
+<td><strong>$0.0032（¥0.021）</strong></td>
+<td>-20%（原 $0.435&#x2F;$0.87&#x2F;$0.0036）</td>
+<td><strong>三项全线最低</strong></td>
+</tr>
+<tr>
+<td>DeepInfra（<code>deepinfra/fp8</code>）</td>
+<td>$0.3870（¥2.60）</td>
+<td>$0.7830（¥5.26）</td>
+<td>$0.00324（¥0.022）</td>
+<td>-10%（原 $0.435）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Xiaomi（官方）（<code>xiaomi/fp8</code>）</td>
+<td>$0.4350（¥2.92）</td>
+<td>$0.8700（¥5.84）</td>
+<td>$0.0036（¥0.024）</td>
+<td>—</td>
+<td>官方渠道</td>
+</tr>
+</tbody></table>
+<p><strong>MiMo V2.6 Pro UltraSpeed（1 渠道）</strong></p>
+<table>
+<thead>
+<tr>
+<th>Provider（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>折扣</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Xiaomi（<code>xiaomi/fp8</code>）</td>
+<td>$4.35（¥29.22）</td>
+<td>$8.70（¥58.45）</td>
+<td>$0.036（¥0.242）</td>
+<td>—</td>
+<td><strong>仅官方 1 渠道，无第三方折扣</strong>；官方国内价 ¥30 &#x2F; ¥60 &#x2F; ¥0.25</td>
+</tr>
+</tbody></table>
+<h3 id="其他国产模型渠道"><a href="#其他国产模型渠道" class="headerlink" title="其他国产模型渠道"></a>其他国产模型渠道</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>渠道数</th>
+<th>最低渠道（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Qwen3.8-Flash</strong></td>
+<td>2</td>
+<td>Alibaba（<code>alibaba</code> &#x2F; <code>us-east-1</code>）</td>
+<td>$0.15（¥1.01）</td>
+<td>$0.47（¥3.16）</td>
+<td>$0.016（缓存写 $0.20）</td>
+<td>国内百炼 ¥0.8&#x2F;¥2.7 为<strong>更低</strong>，OpenRouter 走国际站口径<strong>溢价约 26%</strong></td>
+</tr>
+<tr>
+<td><strong>Qwen3.8-Max-0902</strong></td>
+<td>2</td>
+<td>Alibaba（<code>alibaba</code>）</td>
+<td>$2.00（¥13.44）</td>
+<td>$6.00（¥40.31）</td>
+<td>$0.25（缓存写 $2.50）</td>
+<td>与 3.8-Max 同价</td>
+</tr>
+<tr>
+<td><strong>Qwen3.8-Max-Prime</strong></td>
+<td>1</td>
+<td>Alibaba（<code>alibaba</code>）</td>
+<td>$4.00（¥26.87）</td>
+<td>$12.00（¥80.62）</td>
+<td>$0.50（缓存写 $5.00）</td>
+<td>优速档；仅 1 渠道</td>
+</tr>
+<tr>
+<td><strong>Qwen3.8-27B</strong></td>
+<td>20</td>
+<td>Tenstorrent（输入+输出）&#x2F; Chutes（缓存）</td>
+<td><strong>$0.020（¥0.135，Tenstorrent）</strong></td>
+<td><strong>$0.50（¥3.37，Tenstorrent）</strong></td>
+<td><strong>$0.0039（¥0.0263，Chutes）</strong></td>
+<td>20 渠道价差极大（输入 $0.020~$0.99）</td>
+</tr>
+<tr>
+<td><strong>Qwen3.8-Omni-Flash</strong></td>
+<td>1</td>
+<td>Alibaba（<code>alibaba</code>）</td>
+<td>$0.15（¥1.01）</td>
+<td>$0.47（¥3.16）</td>
+<td>$0.016（¥0.107）</td>
+<td>原生全模态（官方国内 ¥0.8 &#x2F; ¥2.7 · 固定缓存命中 ¥0.1）</td>
+</tr>
+<tr>
+<td><strong>Qwen3.7-Plus</strong></td>
+<td>2</td>
+<td>Alibaba（同价）</td>
+<td>$0.32（¥2.15）</td>
+<td>$1.28（¥8.60）</td>
+<td>$0.064（缓存写 $0.40）</td>
+<td>对应官方<strong>限时 8 折</strong>后的 ¥1.60 &#x2F; ¥6.40</td>
+</tr>
+<tr>
+<td><strong>Qwen3.7-Flash</strong></td>
+<td>2</td>
+<td>Alibaba（<code>alibaba</code>）</td>
+<td><strong>$0.030（¥0.202）</strong></td>
+<td><strong>$0.13（¥0.873）</strong></td>
+<td><strong>$0.006（¥0.040）</strong></td>
+<td><strong>全场最低单价段</strong>；缓存写 $0.038</td>
+</tr>
+<tr>
+<td><strong>Hy4 preview</strong></td>
+<td><strong>4</strong></td>
+<td>4 家<strong>完全同价</strong>（Tencent &#x2F; DeepInfra &#x2F; Novita &#x2F; SiliconFlow）</td>
+<td><strong>$0.834（¥5.60）</strong></td>
+<td><strong>$2.501（¥16.80）</strong></td>
+<td><strong>$0.042（¥0.282）</strong></td>
+<td>无第三方价差</td>
+</tr>
+<tr>
+<td><strong>Hy3</strong></td>
+<td>5</td>
+<td><strong>Tencent（<code>tencent/fp8</code>）</strong></td>
+<td><strong>$0.132（¥0.887）</strong></td>
+<td><strong>$0.528（¥3.55）</strong></td>
+<td><strong>$0.033（¥0.222）</strong></td>
+<td>官方渠道反为最低</td>
+</tr>
+<tr>
+<td><strong>MiniMax M3</strong></td>
+<td>14</td>
+<td>DeepInfra（<code>deepinfra/fp8/flex</code>）</td>
+<td><strong>$0.224（¥1.50）</strong></td>
+<td><strong>$0.880（¥5.91）</strong></td>
+<td><strong>$0.0448（¥0.301）</strong></td>
+<td>10 家报 $0.30&#x2F;$1.20 档</td>
+</tr>
+<tr>
+<td><strong>Step 3.7 Flash</strong></td>
+<td>2</td>
+<td>Novita &#x2F; StepFun（同价）</td>
+<td>$0.20（¥1.34）</td>
+<td>$1.15（¥7.73）</td>
+<td>$0.04（¥0.269）</td>
+<td>256K</td>
+</tr>
+<tr>
+<td><strong>Step 3.5 Flash</strong></td>
+<td>1</td>
+<td>SiliconFlow（<code>siliconflow/fp8</code>）</td>
+<td>$0.09（¥0.605）</td>
+<td>$0.30（¥2.02）</td>
+<td>$0.02（¥0.134）</td>
+<td>262K</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Ling 系列</strong>：<code>ling-3.1-flash</code> 已由 $0 免费转为付费（Novita $0.075&#x2F;$0.225）；Command Code 侧 <code>ling-3.1-flash</code> 的月度额度促销仍在（GOAT $100 &#x2F; Pro $110），见 <a href="/2026/11/04/opencode-go-vs-commandcode-goat/">OpenCode Go vs CommandCode GOAT 对比</a>。</p>
+</blockquote>
+<h3 id="新增模型渠道（2026-10-15-10-19-上架）"><a href="#新增模型渠道（2026-10-15-10-19-上架）" class="headerlink" title="新增模型渠道（2026-10-15 ~ 10-19 上架）"></a>新增模型渠道（2026-10-15 ~ 10-19 上架）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>上架日</th>
+<th>渠道数</th>
+<th>最低渠道</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>minimax/minimax-m3.1-flash:free</code></strong></td>
+<td><strong>10-19</strong></td>
+<td>1</td>
+<td>Minimax（<code>minimax</code>）</td>
+<td><strong>Free</strong></td>
+<td><strong>Free</strong></td>
+<td><strong>Free</strong></td>
+<td>多模态编码、可调思考深度；1M 上下文</td>
+</tr>
+<tr>
+<td><strong><code>deepseek/deepseek-v4.1-flash-1017</code></strong></td>
+<td><strong>10-17</strong></td>
+<td><strong>24</strong></td>
+<td>DeepInfra（<code>deepinfra/fp8/flex</code>，-51%）</td>
+<td><strong>$0.0784（¥0.527）</strong></td>
+<td><strong>$0.2352（¥1.58）</strong></td>
+<td><strong>$0.0024（¥0.016）</strong></td>
+<td><strong>官方新版专属 slug</strong>；DeepSeek 直供行报 $0.15&#x2F;$0.60&#x2F;$0.003</td>
+</tr>
+<tr>
+<td><strong><code>reflection/beam-1.0-501b-a23b</code></strong></td>
+<td><strong>10-16</strong></td>
+<td>4</td>
+<td>Nebius（<code>nebius/fp8</code>）</td>
+<td><strong>$0.250（¥1.679）</strong></td>
+<td><strong>$1.00（¥6.72）</strong></td>
+<td>无缓存项</td>
+<td>Together $0.40&#x2F;$1.20&#x2F;$0.04</td>
+</tr>
+<tr>
+<td><strong><code>meta/muse-spark-open</code></strong></td>
+<td><strong>10-15</strong></td>
+<td>5</td>
+<td>5 家完全同价</td>
+<td>$1.25（¥8.40）</td>
+<td>$4.25（¥28.55）</td>
+<td>$0.15（¥1.01）</td>
+<td>与 Muse Spark 1.2&#x2F;1.3 <strong>同价</strong></td>
+</tr>
+<tr>
+<td><strong><code>nvidia/nemotron-3.5-super-vl</code></strong></td>
+<td><strong>10-15</strong></td>
+<td>5</td>
+<td>Crusoe &#x2F; DeepInfra（<code>fp4</code>）</td>
+<td><strong>$0.10（¥0.672）</strong></td>
+<td><strong>$0.40（¥2.69）</strong></td>
+<td><strong>$0.08（¥0.537）</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong><code>xingchen-agi/xing4.0-29b-a4b:free</code></strong></td>
+<td><strong>10-16</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Free</strong></td>
+<td><strong>Free</strong></td>
+<td><strong>Free</strong></td>
+<td><code>:free</code> 端点</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong><code>deepseek-v4.1-flash-1017</code> 是 DeepSeek 版本迭代在 OpenRouter 上的落地</strong>：与 <code>deepseek-v4.1-flash</code>（38 渠道）<strong>并行存在</strong>。两 slug 三项最低对比：<strong>1017 &#x3D; $0.0784 &#x2F; $0.2352 &#x2F; $0.0024，旧 slug &#x3D; $0.049 &#x2F; $0.15 &#x2F; $0.001</strong> → <strong>1017 输入贵 60%、输出贵 57%、缓存贵 140%</strong>。<strong>两者应视为”同代不同快照”，现阶段旧 slug 更便宜，不可按”新 slug 更好”直接替换。</strong></p>
+</blockquote>
+<h3 id="海外旗舰模型渠道（OpenAI-Anthropic-xAI）"><a href="#海外旗舰模型渠道（OpenAI-Anthropic-xAI）" class="headerlink" title="海外旗舰模型渠道（OpenAI &#x2F; Anthropic &#x2F; xAI）"></a>海外旗舰模型渠道（OpenAI &#x2F; Anthropic &#x2F; xAI）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>端点数</th>
+<th>服务档（tag）</th>
+<th>输入</th>
+<th>输出</th>
+<th>缓存命中</th>
+<th>缓存写入</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>GPT-6 Luna</strong></td>
+<td>7</td>
+<td><code>openai/flex</code> &#x2F; <strong>标准（<code>openai</code>&#x3D;<code>azure</code>）</strong> &#x2F; <code>azure/us·eu</code>·<code>bedrock/us-east-1</code> &#x2F; <code>openai/fast</code></td>
+<td>$0.05 &#x2F; <strong>$0.10</strong> &#x2F; $0.11 &#x2F; $0.20</td>
+<td>$0.25 &#x2F; <strong>$0.50</strong> &#x2F; $0.55 &#x2F; $1.00</td>
+<td>$0.005 &#x2F; <strong>$0.01</strong> &#x2F; $0.011 &#x2F; $0.02</td>
+<td>$0.0625 &#x2F; <strong>$0.125</strong> &#x2F; $0.1375 &#x2F; $0.25</td>
+<td>9&#x2F;22 发布；<strong>flex 半价</strong>、<code>fast</code> 双倍价</td>
+</tr>
+<tr>
+<td><strong>GPT-6 Sol</strong></td>
+<td>7</td>
+<td>同上四档</td>
+<td>$1.00 &#x2F; <strong>$2.00</strong> &#x2F; $2.20 &#x2F; $4.00</td>
+<td>$5.00 &#x2F; <strong>$10.00</strong> &#x2F; $11.00 &#x2F; $20.00</td>
+<td>$0.10 &#x2F; <strong>$0.20</strong> &#x2F; $0.22 &#x2F; $0.40</td>
+<td>$1.25 &#x2F; <strong>$2.50</strong> &#x2F; $2.75 &#x2F; $5.00</td>
+<td>9&#x2F;22 发布；复杂编码 &#x2F; Agent</td>
+</tr>
+<tr>
+<td><strong>GPT-6 Astra</strong></td>
+<td>7</td>
+<td><code>openai/flex</code> &#x2F; <strong>标准</strong> &#x2F; 区域档 &#x2F; <code>openai/fast</code> &#x2F; <strong><code>openai/ultrafast</code></strong></td>
+<td>$5.00 &#x2F; <strong>$10.00</strong> &#x2F; $11.00 &#x2F; $20.00 &#x2F; <strong>$60.00</strong></td>
+<td>$25.00 &#x2F; <strong>$50.00</strong> &#x2F; $55.00 &#x2F; $100.00 &#x2F; <strong>$300.00</strong></td>
+<td>$0.50 &#x2F; <strong>$1.00</strong> &#x2F; $1.10 &#x2F; $2.00 &#x2F; <strong>$6.00</strong></td>
+<td>$6.25 &#x2F; <strong>$12.50</strong> &#x2F; $13.75 &#x2F; $25.00 &#x2F; <strong>$75.00</strong></td>
+<td><strong><code>ultrafast</code> 档 &#x3D; 标准价 6 倍</strong></td>
+</tr>
+<tr>
+<td><strong>GPT-6.1 Sol</strong></td>
+<td><strong>8</strong></td>
+<td>同上五档</td>
+<td>$1.00 &#x2F; <strong>$2.00</strong> &#x2F; $2.20 &#x2F; $4.00 &#x2F; <strong>$12.00</strong></td>
+<td>$5.00 &#x2F; <strong>$10.00</strong> &#x2F; $11.00 &#x2F; $20.00 &#x2F; <strong>$60.00</strong></td>
+<td><strong>$0.05 &#x2F; $0.10</strong> &#x2F; $0.11 &#x2F; $0.20 &#x2F; <strong>$0.60</strong></td>
+<td>$1.25 &#x2F; <strong>$2.50</strong> &#x2F; $2.75 &#x2F; $5.00 &#x2F; <strong>$15.00</strong></td>
+<td><strong>缓存标准价 $0.10 为 GPT-6 Sol（$0.20）的一半</strong></td>
+</tr>
+<tr>
+<td><strong>Claude Opus 5.5</strong></td>
+<td>11</td>
+<td><strong>全球档</strong> &#x2F; 区域档 &#x2F; <code>anthropic/fast</code></td>
+<td><strong>$4.00</strong> &#x2F; $4.40 &#x2F; $8.00</td>
+<td><strong>$20.00</strong> &#x2F; $22.00 &#x2F; $40.00</td>
+<td><strong>$0.20</strong> &#x2F; $0.22 &#x2F; $0.40</td>
+<td><strong>$5.00</strong> &#x2F; $5.50 &#x2F; $10.00</td>
+<td>9&#x2F;22 发布；批量 5 折</td>
+</tr>
+<tr>
+<td><strong>Claude Sonnet 5.5</strong></td>
+<td>8</td>
+<td>全球档 &#x2F; 区域档</td>
+<td><strong>$2.00</strong> &#x2F; $2.20</td>
+<td><strong>$10.00</strong> &#x2F; $11.00</td>
+<td><strong>$0.10</strong> &#x2F; $0.11</td>
+<td><strong>$2.50</strong> &#x2F; $2.75</td>
+<td>9&#x2F;28 发布；批量 5 折</td>
+</tr>
+<tr>
+<td><strong>Claude Haiku 5.5</strong></td>
+<td>8</td>
+<td>全球档 &#x2F; 区域档</td>
+<td><strong>$1.00</strong> &#x2F; $1.10</td>
+<td><strong>$5.00</strong> &#x2F; $5.50</td>
+<td><strong>$0.10</strong> &#x2F; $0.11</td>
+<td><strong>$1.25</strong> &#x2F; $1.375</td>
+<td>200K 上下文</td>
+</tr>
+<tr>
+<td><strong>Grok 4.7</strong></td>
+<td>5</td>
+<td><code>xai</code> · <code>xai/zdr</code>（标准） &#x2F; <code>xai/zdr/us</code> &#x2F; <code>xai/priority</code></td>
+<td>$2.00 &#x2F; $2.20 &#x2F; <strong>$4.00</strong></td>
+<td>$6.00 &#x2F; $6.60 &#x2F; <strong>$12.00</strong></td>
+<td>$0.50 &#x2F; $0.55 &#x2F; <strong>$1.00</strong></td>
+<td>—</td>
+<td>500K；<strong>priority 档双倍价</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>海外旗舰全部为”一线云厂商官方端点”</strong>（OpenAI &#x2F; Azure &#x2F; Amazon Bedrock &#x2F; Google Vertex &#x2F; Anthropic &#x2F; Claude Platform on AWS &#x2F; xAI），<strong>无低价第三方托管</strong>——区域档仅 ±10%，<strong>无跨商套利空间</strong>。<strong>真正的降本杠杆是服务档</strong>：<code>flex</code> 约半价（更慢）、<code>fast</code> 约双倍、<code>ultrafast</code>（Astra &#x2F; GPT-6.1 Sol 六倍）、xAI <code>priority</code> <strong>双倍</strong>。<br>📌 <strong>注意 flex 档的缓存价同样减半</strong>（如 GPT-6.1 Sol flex 缓存 $0.05 vs 标准 $0.10），跨档比较需同档对齐。<br>📌 目录另有 <strong><code>openai/gpt-6.1-sol-pro</code>（09-29 上架）</strong>，标价与标准 Sol 同为 $2&#x2F;$10 · 缓存 $0.10、1.05M 上下文——<strong>Pro 计算档在 OpenRouter 的挂牌单价与非 Pro 相同，差异在实际算力消耗计量</strong>；<strong>Command Code CLI 目录与 OpenCode Go 均未收录该 ID</strong>。</p>
+</blockquote>
+<h3 id="免费端点（-free）速览（共-17-个）"><a href="#免费端点（-free）速览（共-17-个）" class="headerlink" title="免费端点（:free）速览（共 17 个）"></a>免费端点（<code>:free</code>）速览（共 17 个）</h3><p><code>cohere/north-mini-code:free</code>、<code>dots-studio/dots-3-note-preview:free</code>、<code>google/gemma-4-26b-a4b-it:free</code>、<code>google/gemma-4-31b-it:free</code>、<code>liquid/lfm-2.5-2.6b:free</code>、<strong><code>minimax/minimax-m3.1-flash:free</code></strong>、<code>nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free</code>、<code>nvidia/nemotron-3-super-120b-a12b:free</code>、<code>nvidia/nemotron-3-ultra-550b-a55b:free</code>、<code>nvidia/nemotron-3.5-content-safety:free</code>、<code>nvidia/nemotron-3.5-lightning:free</code>、<code>nvidia/nemotron-3.5-super-vl:free</code>、<code>poolside/laguna-s-2.1:free</code>、<code>poolside/laguna-xs-2.1:free</code>、<code>thinkingmachines/inkling:free</code>、<code>thinkingmachines/inkling-small:free</code>、<code>xingchen-agi/xing4.0-29b-a4b:free</code>。</p>
+<blockquote>
+<p>🔑 <strong>免费端点 17 个</strong>；<strong>新增 <code>minimax/minimax-m3.1-flash:free</code>（10-19）</strong>。<br>⚠️ <code>z-ai/glm-5.3:batch</code>、<code>z-ai/glm-5.2:batch</code>、<code>moonshotai/kimi-k3:batch</code>、<code>deepseek/deepseek-v4.1-flash:batch</code> 等为<strong>批量折扣档，不是免费端点</strong>（批量端点共 <strong>76 个</strong>）。</p>
+</blockquote>
+<hr>
+<h2 id="三、官方-vs-OpenRouter-差价对比（人民币，元-百万-tokens）"><a href="#三、官方-vs-OpenRouter-差价对比（人民币，元-百万-tokens）" class="headerlink" title="三、官方 vs OpenRouter 差价对比（人民币，元&#x2F;百万 tokens）"></a>三、官方 vs OpenRouter 差价对比（人民币，元&#x2F;百万 tokens）</h2><blockquote>
+<p>基准为<strong>官方国内人民币价</strong>，DeepSeek 取<strong>空闲时段</strong>价（周末全天适用），高峰为括号参考。</p>
+</blockquote>
+<h3 id="DeepSeek-V4-1-Flash"><a href="#DeepSeek-V4-1-Flash" class="headerlink" title="DeepSeek V4.1 Flash"></a>DeepSeek V4.1 Flash</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>官方空闲（含周末，直连）</td>
+<td><strong>¥1.00</strong></td>
+<td><strong>¥0.020</strong></td>
+<td><strong>¥4.00</strong></td>
+</tr>
+<tr>
+<td>官方高峰（仅工作日）</td>
+<td>¥2.00</td>
+<td>¥0.04</td>
+<td>¥8.00</td>
+</tr>
+<tr>
+<td><strong>OpenRouter 输入最低（Morph &#x2F; Relace $0.035）</strong></td>
+<td><strong>¥0.235</strong></td>
+<td>¥0.034</td>
+<td>¥2.11</td>
+</tr>
+<tr>
+<td><strong>OpenRouter 缓存最低（CoreWeave $0.002）</strong></td>
+<td>¥0.605</td>
+<td><strong>¥0.0135</strong></td>
+<td>¥1.68</td>
+</tr>
+<tr>
+<td><strong>OpenRouter 输出最低（Sail Research $0.25）</strong></td>
+<td>¥0.605</td>
+<td>¥0.040</td>
+<td><strong>¥1.68</strong></td>
+</tr>
+<tr>
+<td><strong>最低 vs 官方空闲</strong></td>
+<td><strong>便宜 76%</strong></td>
+<td><strong>便宜 33%</strong></td>
+<td><strong>便宜 58%</strong></td>
+</tr>
+<tr>
+<td><strong>最低 vs 官方高峰</strong></td>
+<td>便宜 88%</td>
+<td>便宜 66%</td>
+<td>便宜 79%</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>三项最低分散到三家</strong>（输入 &#x3D; Morph &#x2F; Relace $0.035，缓存 &#x3D; CoreWeave $0.002，输出 &#x3D; Sail Research $0.25）。⚠️ <strong>缓存让利幅度由 10-23 口径的 -64% 收窄至 -33%</strong>——百度千帆的 -82.1% 折扣已退出该位，现由<strong>无折扣渠道</strong>持有。<br>📌 <strong>新版 slug <code>deepseek-v4.1-flash-1017</code>（46 渠道）</strong> 三项最低为 <strong>Particle AI $0.025 &#x2F; Sail Research $0.15 &#x2F; Particle AI $0.0015</strong>（¥0.168 &#x2F; ¥1.01 &#x2F; ¥0.0101）——<strong>输入与缓存均低于旧 slug</strong>（旧 slug 输入 ¥0.236 &#x2F; 缓存 ¥0.0135）。</p>
+</blockquote>
+<h3 id="DeepSeek-V4-Pro-——-🔑-仅输出项第三方更便宜"><a href="#DeepSeek-V4-Pro-——-🔑-仅输出项第三方更便宜" class="headerlink" title="DeepSeek V4 Pro —— 🔑 仅输出项第三方更便宜"></a>DeepSeek V4 Pro —— 🔑 <strong>仅输出项第三方更便宜</strong></h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>官方空闲（含周末，直连）</td>
+<td><strong>¥4.50</strong></td>
+<td><strong>¥0.15</strong></td>
+<td>¥13.50</td>
+</tr>
+<tr>
+<td>官方高峰（仅工作日）</td>
+<td>¥9.00</td>
+<td>¥0.30</td>
+<td>¥27.00</td>
+</tr>
+<tr>
+<td><strong>OpenRouter 输入最低（Relace）</strong></td>
+<td><strong>¥6.05</strong></td>
+<td>¥1.68</td>
+<td>¥10.08</td>
+</tr>
+<tr>
+<td><strong>OpenRouter 输出最低（Relace）</strong></td>
+<td>¥6.05</td>
+<td>¥1.68</td>
+<td><strong>¥10.08</strong></td>
+</tr>
+<tr>
+<td><strong>OpenRouter 缓存最低（StreamLake，-45.1% 折后）</strong></td>
+<td>¥6.42</td>
+<td><strong>¥0.535</strong></td>
+<td>¥12.84</td>
+</tr>
+<tr>
+<td><strong>最低 vs 官方空闲</strong></td>
+<td><strong>贵 35%</strong></td>
+<td><strong>贵 258%</strong></td>
+<td><strong>便宜 25%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>V4 Pro 是本文唯一”第三方输入价也贵于官方”的模型</strong>：输入最低 Relace ¥6.07 仍比官方空闲 ¥4.50 贵 <strong>35%</strong>，缓存最低 ¥0.537 是官方 ¥0.15 的 <strong>3.6 倍（贵 258%）</strong>，仅输出项 ¥10.11 便宜 <strong>25%</strong>。→ <strong>V4 Pro 一律走官方直连（空闲 ¥4.50 &#x2F; ¥13.50 &#x2F; ¥0.15）</strong>。<br>⚠️ <strong>百度千帆的 -47.1% 折扣现为输入次低</strong>（¥6.03 &#x2F; ¥0.499 &#x2F; ¥12.05），<strong>StreamLake -45.1% 与 GMICloud -45% 是当前最深折扣</strong>，但缓存价仍远高于官方。<br>⚠️ <strong>V4 Pro 在 OpenRouter 上仍无 <code>tag=deepseek</code> 官方直供端点</strong>，”官方直连”路径只有 platform.deepseek.com 与<strong>腾讯云 TokenHub 原厂直供</strong>。</p>
+</blockquote>
+<h3 id="GLM-5-2-GLM-5-3"><a href="#GLM-5-2-GLM-5-3" class="headerlink" title="GLM-5.2 &#x2F; GLM-5.3"></a>GLM-5.2 &#x2F; GLM-5.3</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>GLM-5.2</strong> 官方国内</td>
+<td>¥8.00</td>
+<td>¥2.00</td>
+<td>¥28.00</td>
+</tr>
+<tr>
+<td>GLM-5.2 OpenRouter 输入&#x2F;缓存最低（<strong>Wafer&#x2F;us</strong>）</td>
+<td><strong>¥0.229</strong></td>
+<td><strong>¥0.221</strong></td>
+<td>¥47.03</td>
+</tr>
+<tr>
+<td>GLM-5.2 OpenRouter 输出最低（<strong>DeepInfra flex</strong>，-25% 折后）</td>
+<td>¥3.02</td>
+<td>¥0.564</td>
+<td><strong>¥9.68</strong></td>
+</tr>
+<tr>
+<td><strong>GLM-5.2 最低 vs 官方</strong></td>
+<td><strong>便宜 97%</strong></td>
+<td><strong>便宜 89%</strong></td>
+<td><strong>便宜 65%</strong></td>
+</tr>
+<tr>
+<td><strong>GLM-5.3</strong> 官方国内</td>
+<td>¥8.00</td>
+<td>¥2.00</td>
+<td>¥28.00</td>
+</tr>
+<tr>
+<td>GLM-5.3 OpenRouter 输入&#x2F;输出最低（<strong>Wafer&#x2F;us</strong>）</td>
+<td><strong>¥0.530</strong></td>
+<td>¥0.524</td>
+<td><strong>¥9.41</strong></td>
+</tr>
+<tr>
+<td>GLM-5.3 OpenRouter 缓存最低（<strong>Morph</strong>）</td>
+<td>¥1.77</td>
+<td><strong>¥0.451</strong></td>
+<td>¥29.56</td>
+</tr>
+<tr>
+<td><strong>GLM-5.3 最低 vs 官方</strong></td>
+<td><strong>便宜 93%</strong></td>
+<td><strong>便宜 77%</strong></td>
+<td><strong>便宜 66%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>GLM 两条线仍是全表最大的”开源倒挂”</strong>。<strong>Baidu 的 GLM 折扣（-57.2% &#x2F; -86.5%）已到期</strong>——10-18 的”Baidu 持有 GLM-5.2 输出最低位（¥4.00）”格局结束，现行输出最低为 <strong>DeepInfra flex ¥9.71</strong>。</p>
+</blockquote>
+<h3 id="GLM-5-3-Flash-FlashX"><a href="#GLM-5-3-Flash-FlashX" class="headerlink" title="GLM-5.3-Flash &#x2F; FlashX"></a>GLM-5.3-Flash &#x2F; FlashX</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Flash</strong> 官方目录价</td>
+<td>¥0.80</td>
+<td>¥0.23</td>
+<td>¥2.80</td>
+</tr>
+<tr>
+<td><strong>Flash OpenRouter 输入&#x2F;缓存最低（OpenInference）</strong></td>
+<td><strong>¥0.277</strong></td>
+<td><strong>¥0.025</strong></td>
+<td>¥2.52</td>
+</tr>
+<tr>
+<td><strong>Flash OpenRouter 输出最低（Sail Research）</strong></td>
+<td>¥0.605</td>
+<td>¥0.175</td>
+<td><strong>¥1.01</strong></td>
+</tr>
+<tr>
+<td><strong>Flash 最低 vs 官方目录</strong></td>
+<td><strong>便宜 65%</strong></td>
+<td><strong>便宜 89%</strong></td>
+<td><strong>便宜 64%</strong></td>
+</tr>
+<tr>
+<td><strong>FlashX</strong> 官方价</td>
+<td>¥2.00</td>
+<td>¥0.57</td>
+<td>¥7.00</td>
+</tr>
+<tr>
+<td>FlashX OpenRouter（Z.AI 唯一渠道）</td>
+<td>¥2.486</td>
+<td>¥0.605</td>
+<td>¥8.398</td>
+</tr>
+<tr>
+<td><strong>FlashX 渠道 vs 官方</strong></td>
+<td><strong>贵 25%</strong></td>
+<td><strong>贵 7%</strong></td>
+<td><strong>贵 20%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Flash 侧：官方 5 折已于 9&#x2F;10 到期回目录价，<strong>OpenRouter 最低档较官方目录价便宜 64~89%</strong>。<br>FlashX 侧：<strong>唯一渠道即为 Z.AI 官方，国内直购反而更便宜</strong>（-7% ~ -25%）。</p>
+</blockquote>
+<h3 id="Kimi-K3"><a href="#Kimi-K3" class="headerlink" title="Kimi K3"></a>Kimi K3</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>官方国内</td>
+<td>¥20.00</td>
+<td>¥2.00</td>
+<td>¥100.00</td>
+</tr>
+<tr>
+<td>OpenRouter 输入最低（<strong>Wafer</strong>）</td>
+<td><strong>¥1.59</strong></td>
+<td>¥1.53</td>
+<td>⚠️ ¥107.4（输出反超官方）</td>
+</tr>
+<tr>
+<td>OpenRouter 缓存最低（<strong>Decart</strong>，-45% 折后）</td>
+<td>¥11.08</td>
+<td><strong>¥1.11</strong></td>
+<td>¥55.43</td>
+</tr>
+<tr>
+<td>OpenRouter 输出最低（<strong>Sail Research</strong>）</td>
+<td>¥8.06</td>
+<td>¥1.35</td>
+<td><strong>¥36.95</strong></td>
+</tr>
+<tr>
+<td><strong>最低 vs 官方</strong></td>
+<td><strong>便宜 92%</strong></td>
+<td><strong>便宜 45%</strong></td>
+<td><strong>便宜 63%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>输入最低 ¥1.60 &#x3D; 官方 ¥20 的 8%</strong>，输出最低 ¥37.07 &#x3D; 官方的 37%（10-18 为 55%，Sail Research 进一步下调）、缓存最低 ¥1.11（-45% 折扣支撑）。⚠️ <strong>Wafer 输入最低但输出 $16 高于官方 $15</strong>——采购必须整行核算。⚠️ 官方另有**缓存写入 ¥20（TTL 5min）&#x2F; ¥40（TTL 1h）**两档，OpenRouter 各渠道均未列该项——<strong>跨平台比价不可忽略这层差异</strong>。</p>
+</blockquote>
+<h3 id="MiMo-V2-6-V2-5"><a href="#MiMo-V2-6-V2-5" class="headerlink" title="MiMo V2.6 &#x2F; V2.5"></a>MiMo V2.6 &#x2F; V2.5</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>Pro 输入</th>
+<th>Pro 缓存</th>
+<th>Pro 输出</th>
+<th>Flash 输入</th>
+<th>Flash 缓存</th>
+<th>Flash 输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>官方国内</strong>（V2.6 现行）</td>
+<td>¥3.00</td>
+<td>¥0.025</td>
+<td>¥6.00</td>
+<td>¥1.00</td>
+<td>¥0.020</td>
+<td>¥2.00</td>
+</tr>
+<tr>
+<td>OpenRouter 最低（<strong>V2.6 系</strong>）</td>
+<td><strong>¥2.60</strong>（DeepInfra）</td>
+<td><strong>¥0.022</strong>（DeepInfra）</td>
+<td><strong>¥5.26</strong>（DeepInfra）</td>
+<td><strong>¥0.470</strong>（Relace）</td>
+<td><strong>¥0.013</strong>（Makora）</td>
+<td><strong>¥1.21</strong>（Relace）</td>
+</tr>
+<tr>
+<td><strong>V2.6 系折扣</strong></td>
+<td><strong>-13%</strong></td>
+<td><strong>-12%</strong></td>
+<td><strong>-12%</strong></td>
+<td><strong>-53%</strong></td>
+<td><strong>-33%</strong></td>
+<td><strong>-40%</strong></td>
+</tr>
+<tr>
+<td>OpenRouter V2.5 系（<strong>转售存货</strong>）</td>
+<td>¥2.04（GMICloud）</td>
+<td>¥0.0188</td>
+<td>¥4.09</td>
+<td>¥0.799（GMICloud）</td>
+<td>¥0.0171</td>
+<td>¥1.59</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>V2.6-Flash 9 个渠道，Relace（输入+输出 -53%&#x2F;-40%）&#x2F; Makora（缓存 -33%）分别拿下最低</strong>；<strong>V2.6-Pro 第三方让利约 12~13%</strong>。<br>⚠️ <strong>V2.5 &#x2F; V2.5-Pro 已于 2026-10-21 10:00（UTC+8）在小米官方 API 正式下线，旧 ID 直接报错</strong>；<strong>OpenRouter 侧 V2.5 系仍在供（转售存货）</strong>——GMICloud 折扣仅存量有效，新配置一律用 V2.6 ID。</p>
+</blockquote>
+<h3 id="小米-MiMo-UltraSpeed-两代对照（涨价项）"><a href="#小米-MiMo-UltraSpeed-两代对照（涨价项）" class="headerlink" title="小米 MiMo UltraSpeed 两代对照（涨价项）"></a>小米 MiMo UltraSpeed 两代对照（涨价项）</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>V2.6 Pro UltraSpeed</strong> 官方国内</td>
+<td>¥30.00</td>
+<td>¥0.25</td>
+<td>¥60.00</td>
+</tr>
+<tr>
+<td><strong>V2.5 Pro UltraSpeed</strong> 官方国内（对照）</td>
+<td>¥9.00</td>
+<td>¥0.075</td>
+<td>¥18.00</td>
+</tr>
+<tr>
+<td><strong>涨幅</strong></td>
+<td><strong>+233%</strong></td>
+<td><strong>+233%</strong></td>
+<td><strong>+233%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ 官方称”V2.6 沿用 V2.5 API 定价”，但 <strong>UltraSpeed 档实际比前代贵 3.33 倍</strong>——国产模型中唯一高于前代的档位。<strong>OpenRouter 侧仅 Xiaomi 官方 1 渠道、无任何折让</strong>。</p>
+</blockquote>
+<h3 id="腾讯-Hy4-preview"><a href="#腾讯-Hy4-preview" class="headerlink" title="腾讯 Hy4 preview"></a>腾讯 Hy4 preview</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>官方国内（TokenHub）</td>
+<td>¥6.00</td>
+<td>¥0.30</td>
+<td>¥18.00</td>
+</tr>
+<tr>
+<td>OpenRouter 4 家同价（Tencent &#x2F; DeepInfra &#x2F; Novita &#x2F; SiliconFlow）</td>
+<td><strong>¥5.60</strong></td>
+<td><strong>¥0.282</strong></td>
+<td><strong>¥16.80</strong></td>
+</tr>
+<tr>
+<td><strong>最低 vs 官方</strong></td>
+<td><strong>便宜 6%</strong></td>
+<td><strong>便宜 6%</strong></td>
+<td><strong>便宜 6%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📌 Hy4 preview 现为 4 家完全同价、折让统一约 6%——<strong>“官方价不动、渠道数收敛”的典型样本</strong>。<strong>腾讯 TokenHub 另有 Hy3 ¥1&#x2F;¥4&#x2F;¥0.25、MiniMax-M3.1-Flash ¥1&#x2F;¥4&#x2F;¥0.1（10-21 新上架）</strong>。</p>
+</blockquote>
+<h3 id="阿里-Qwen3-8-Flash"><a href="#阿里-Qwen3-8-Flash" class="headerlink" title="阿里 Qwen3.8-Flash"></a>阿里 Qwen3.8-Flash</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>官方国内（百炼，0&lt;≤1M）</td>
+<td>¥0.80</td>
+<td>¥0.08（按显式 10% 推算）</td>
+<td>¥2.70</td>
+</tr>
+<tr>
+<td>OpenRouter Alibaba（2 渠道同价）</td>
+<td>¥1.01</td>
+<td>¥0.108</td>
+<td>¥3.16</td>
+</tr>
+<tr>
+<td><strong>差价</strong></td>
+<td><strong>+26%</strong></td>
+<td><strong>+35%</strong></td>
+<td><strong>+17%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>国内直购最便宜</strong>——OpenRouter 的 “Alibaba” 渠道走国际站口径（国际原价 ¥1.094 &#x2F; ¥3.427），较国内百炼溢价 17~35%。另注意<strong>阿里缓存价为比例口径</strong>（显式≈输入 10%、隐式≈20%），¥0.08 系推算值而非官方固定价。</p>
+</blockquote>
+<h3 id="阿里-Qwen3-8-Omni-Flash"><a href="#阿里-Qwen3-8-Omni-Flash" class="headerlink" title="阿里 Qwen3.8-Omni-Flash"></a>阿里 Qwen3.8-Omni-Flash</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>输入</th>
+<th>缓存命中</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>官方国内（百炼，中国内地）</td>
+<td>¥0.80</td>
+<td>¥0.10（官方固定价）</td>
+<td>¥2.70</td>
+</tr>
+<tr>
+<td>OpenRouter Alibaba（唯一渠道）</td>
+<td>¥1.01</td>
+<td>¥0.108</td>
+<td>¥3.16</td>
+</tr>
+<tr>
+<td><strong>差价</strong></td>
+<td><strong>+26%</strong></td>
+<td><strong>+8%</strong></td>
+<td><strong>+17%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>同为”国内直购更便宜”，且 Omni 的缓存是官方固定价、不是比例推算</strong>——这是阿里百炼体系中<strong>唯一直接给出缓存命中单价</strong>的系列，可直接用于跨平台比价。</p>
+</blockquote>
+<hr>
+<h2 id="四、全模型速查排名"><a href="#四、全模型速查排名" class="headerlink" title="四、全模型速查排名"></a>四、全模型速查排名</h2><h3 id="输入价（缓存未命中，人民币）"><a href="#输入价（缓存未命中，人民币）" class="headerlink" title="输入价（缓存未命中，人民币）"></a>输入价（缓存未命中，人民币）</h3><table>
+<thead>
+<tr>
+<th>排名</th>
+<th>模型</th>
+<th>官方国内价</th>
+<th>OpenRouter 最低价</th>
+<th>最低 vs 官方</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>Qwen3.7-Flash</strong></td>
+<td>官方页无对应国内价目行</td>
+<td><strong>¥0.201（Alibaba）</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>GLM-5.2</strong></td>
+<td>¥8.00</td>
+<td><strong>¥0.229（Wafer&#x2F;us）</strong></td>
+<td><strong>-97%</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>GLM-5.3-Flash</strong></td>
+<td>¥0.80</td>
+<td><strong>¥0.277（OpenInference）</strong></td>
+<td><strong>-65%</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>DeepSeek V4.1 Flash</strong></td>
+<td>¥1.00（空闲）&#x2F; ¥2.00（高峰）</td>
+<td><strong>¥0.329（OpenInference）</strong></td>
+<td><strong>-67% &#x2F; -83%</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>GLM-5.3</strong></td>
+<td>¥8.00</td>
+<td><strong>¥0.530（Wafer&#x2F;us）</strong></td>
+<td><strong>-93%</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>MiMo V2.6 Flash</td>
+<td>¥1.00</td>
+<td><strong>¥0.470（Relace）</strong></td>
+<td><strong>-53%</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Qwen3.8-Flash &#x2F; Omni-Flash</td>
+<td>¥0.80</td>
+<td>¥1.01（Alibaba）</td>
+<td><strong>+26%</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>¥4.50（空闲）&#x2F; ¥9.00（高峰）</td>
+<td><strong>¥5.95（StreamLake，-49.12% 折后）</strong></td>
+<td><strong>+33% &#x2F; -34%（输入反贵）</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>MiMo V2.6 Pro</td>
+<td>¥3.00</td>
+<td>¥2.60（DeepInfra）</td>
+<td>-13%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Hy4 preview</td>
+<td>¥6.00</td>
+<td>¥5.60（4 家同价）</td>
+<td>-6%</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Kimi K3</td>
+<td>¥20.00</td>
+<td><strong>¥1.59（Wafer）</strong></td>
+<td><strong>-92%</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>最低输入渠道高度分散</strong>：<strong>Wafer 2 项</strong>（GLM-5.2 &#x2F; GLM-5.3）、<strong>OpenInference 与 Relace 并列 1 项</strong>（GLM-5.3-Flash）、<strong>Morph 1 项</strong>（V4.1 Flash）、<strong>Io Net 1 项</strong>（MiMo V2.6 Flash）、<strong>Wafer 1 项</strong>（K3）、<strong>DeepInfra 1 项</strong>（V2.6 Pro）、<strong>StreamLake 1 项</strong>（V4 Pro，<strong>但仍贵于官方</strong>）、<strong>Alibaba 2 项</strong>（Qwen3.7-Flash &#x2F; Qwen3.8-Flash，后者为溢价）。<strong>Baidu 未在输入项占位，但凭 -82.1% 折后 $0.001074 持有 V4.1 Flash 缓存最低位。</strong></p>
+</blockquote>
+<h3 id="输出价（人民币）"><a href="#输出价（人民币）" class="headerlink" title="输出价（人民币）"></a>输出价（人民币）</h3><table>
+<thead>
+<tr>
+<th>排名</th>
+<th>模型</th>
+<th>官方国内价</th>
+<th>OpenRouter 最低价</th>
+<th>最低 vs 官方</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>Qwen3.7-Flash</strong></td>
+<td>官方页无对应国内价目行</td>
+<td><strong>¥0.873（Alibaba）</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>DeepSeek V4.1 Flash</strong></td>
+<td>¥4.00（空闲）&#x2F; ¥8.00（高峰）</td>
+<td><strong>¥1.01（Sail Research）</strong></td>
+<td><strong>-75% &#x2F; -87%</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>GLM-5.3-Flash</strong></td>
+<td>¥2.80</td>
+<td><strong>¥1.01（Sail Research）</strong></td>
+<td><strong>-64%</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>MiMo V2.6 Flash</td>
+<td>¥2.00</td>
+<td><strong>¥1.21（Relace）</strong></td>
+<td><strong>-40%</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>¥13.50（空闲）&#x2F; ¥27.00（高峰）</td>
+<td><strong>¥10.08（Relace）</strong></td>
+<td><strong>-25% &#x2F; -62%</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Qwen3.8-Flash &#x2F; Omni-Flash</td>
+<td>¥2.70</td>
+<td>¥3.16（Alibaba）</td>
+<td><strong>+17%</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>GLM-5.2</strong></td>
+<td>¥28.00</td>
+<td><strong>¥9.68（DeepInfra flex）</strong></td>
+<td><strong>-65%</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>GLM-5.3</strong></td>
+<td>¥28.00</td>
+<td><strong>¥9.41（Wafer&#x2F;us）</strong></td>
+<td><strong>-66%</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>MiMo V2.6 Pro</td>
+<td>¥6.00</td>
+<td>¥5.26（DeepInfra）</td>
+<td>-12%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Hy4 preview</td>
+<td>¥18.00</td>
+<td>¥16.80（4 家同价）</td>
+<td>-6%</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Kimi K3</td>
+<td>¥100.00</td>
+<td><strong>¥36.95（Sail Research）</strong></td>
+<td><strong>-63%</strong></td>
+</tr>
+</tbody></table>
+<h3 id="缓存命中价（人民币）"><a href="#缓存命中价（人民币）" class="headerlink" title="缓存命中价（人民币）"></a>缓存命中价（人民币）</h3><table>
+<thead>
+<tr>
+<th>排名</th>
+<th>模型</th>
+<th>官方国内价</th>
+<th>OpenRouter 最低价</th>
+<th>最低 vs 官方</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>DeepSeek V4.1 Flash</strong></td>
+<td>¥0.020（官方直连）</td>
+<td><strong>¥0.007（OpenInference）</strong></td>
+<td><strong>-65%</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>MiMo V2.6 Flash</strong></td>
+<td>¥0.020</td>
+<td><strong>¥0.013（Makora）</strong></td>
+<td><strong>-33%</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>MiMo V2.6 Pro</td>
+<td>¥0.025</td>
+<td>¥0.022（DeepInfra）</td>
+<td>-12%</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Qwen3.8-Omni-Flash</strong></td>
+<td>¥0.10（官方<strong>固定</strong>价）</td>
+<td>¥0.108（Alibaba）</td>
+<td><strong>+8%</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>GLM-5.2</strong></td>
+<td>¥2.00</td>
+<td><strong>¥0.221（Wafer&#x2F;us）</strong></td>
+<td><strong>-89%</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>GLM-5.3</strong></td>
+<td>¥2.00</td>
+<td><strong>¥0.451（Morph）</strong></td>
+<td><strong>-77%</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>GLM-5.3-Flash</td>
+<td>¥0.23</td>
+<td>¥0.025（OpenInference）</td>
+<td>-89%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Kimi K3</td>
+<td>¥2.00</td>
+<td>¥1.11（Decart，-45% 折后）</td>
+<td>-45%</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>¥0.15（官方直连）</td>
+<td><strong>¥0.495（StreamLake，-49.12% 折后）</strong></td>
+<td><strong>+232%（贵）</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>“缓存密集务必官方直连”这条经验在 DeepSeek 两条线上结论一致</strong>：V4.1 Flash 第三方 <strong>Baidu ¥0.0072（-82.1% 折后）低于</strong>官方 ¥0.020（-64%）；<strong>V4 Pro 第三方缓存最低 StreamLake ¥0.497 是官方 ¥0.15 的 3.3 倍——缓存密集场景必须官方直连</strong>。⚠️ 第三方多为 <code>fp8</code>&#x2F;<code>fp4</code> 量化部署，<strong>稳定性与等价性未验证</strong>；<strong>若以”计费口径可预期”为第一优先，官方直连仍是更稳的选择</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="五、结论"><a href="#五、结论" class="headerlink" title="五、结论"></a>五、结论</h2><ol>
+<li><strong>🔑 最重要的口径是 <code>pricing.discount</code></strong>。OpenRouter 的 <code>pricing</code> 里 <code>prompt</code> &#x2F; <code>completion</code> &#x2F; <code>input_cache_read</code> <strong>已是折扣后的实付价</strong>，<code>discount</code> 给出折扣比例（负值表示溢价；<code>0</code> &#x3D; 无折扣）。<strong>所有渠道价必须同时记录”实付价 + 折扣 + 还原原价”三项。</strong></li>
+<li><strong>🔑 V4 Pro 是唯一”输入价第三方也贵于官方”的模型</strong>：现行输入最低 <strong>Relace ¥6.05 仍比官方空闲 ¥4.50 贵 34%</strong>，缓存最低 <strong>StreamLake ¥0.535 仍是官方 ¥0.15 的 3.6 倍（贵 257%）</strong>，<strong>仅输出项 Relace ¥10.08 便宜 25%</strong>。→ <strong>V4 Pro 一律走官方直连（空闲 ¥4.50 &#x2F; ¥13.50 &#x2F; ¥0.15）</strong>。<strong>百度千帆折扣重新在架</strong>：V4 Pro <code>disc=0.471</code>（输入次低）、<strong>GLM-5.3 <code>disc=0.8</code>（重夺输出 + 缓存双最低）</strong>、GLM-5.2 <code>fp8</code> -55.8% &#x2F; <code>fast</code> -72.5%；但 <strong>V4.1 Flash 侧的 Baidu -82.1% 折扣已退出</strong>，缓存最低位改由<strong>无折扣的 CoreWeave $0.002</strong> 持有，缓存让利由 -64% 收窄至 <strong>-33%</strong>。</li>
+<li><strong>🔑 最低位持有者整期再洗牌</strong>：<strong>Morph &#x2F; Relace 并列持 V4.1 Flash 输入</strong>；<strong>CoreWeave 持 V4.1 Flash 缓存</strong>；<strong>Sail Research 持 V4.1 Flash 输出</strong>；<strong>Relace 持 GLM-5.3-Flash 输入 + 输出</strong>、<strong>Darkbloom 持其缓存</strong>；<strong>Baidu 持 GLM-5.3 输出 + 缓存</strong>、<strong>Wafer 持 GLM-5.3 输入</strong>；<strong>Wafer 持 GLM-5.2 输入 + 缓存</strong>（$0.006&#x2F;$0.005，白菜价）、<strong>Morph 持 GLM-5.2 输出</strong>；<strong>Relace 持 Kimi K3 输入 + 输出</strong>、<strong>Wafer&#x2F;us 持其缓存</strong>；<strong>Tenstorrent 持 MiniMax M3.1 Flash 三项</strong>（$0.05&#x2F;$0.2&#x2F;$0.005）。→ <strong>“某家长期通吃”与”折扣到期即永久失效”两种假设都不成立，每期必须重抓。</strong></li>
+<li><strong>⚠️ 渠道价波动可达数倍，任何一次引用都必须当次重抓</strong>：V4.1 Flash 的 OpenInference 由 10-18 的 $0.0648&#x2F;$0.144 变为 $0.049&#x2F;$0.375；GLM-5.3 缓存最低由 Morph $0.055 变为 $0.067；<strong>Hy4 preview 4 渠道完全同价 $0.834 &#x2F; $2.501 &#x2F; $0.042</strong>。<strong>沿用任何历史 endpoints 数据都会直接算错成本。</strong></li>
+<li><strong>DeepSeek 版本迭代：<code>DeepSeek-V4.1-Flash-1017</code>（10-17）</strong>，价格、峰谷、并发、上下文<strong>全部未变</strong>；旧 ID 已是纯别名，<strong>旧 <code>deepseek-v4-flash-vision-exp</code> 等 ID 官方明示”对应模型已退役”</strong>。OpenRouter 专属 slug <code>deepseek/deepseek-v4.1-flash-1017</code>（<strong>46 渠道</strong>）三项最低为 <strong>Particle AI $0.025 &#x2F; Sail Research $0.15 &#x2F; Particle AI $0.0015</strong>（¥0.169 &#x2F; ¥1.01 &#x2F; ¥0.0101）→ <strong>输入与缓存均已低于旧 slug</strong>。🔑 <strong>Search &#x2F; Fetch API 已正式上线并收费（$0.75&#x2F;1000 次）</strong>，经 Harness &#x2F; Claude Code &#x2F; Codex 的服务端工具调用同样命中——<strong>成本核算必须补上这一项</strong>。</li>
+<li><strong>腾讯云 TokenHub 已上架 DeepSeek 原厂直供</strong>：<code>DeepSeek-V4.1-Flash-1017 原厂直供</code> 空闲 ¥1&#x2F;¥4&#x2F;¥0.02、高峰 ¥2&#x2F;¥8&#x2F;¥0.04；<code>DeepSeek-V4-Pro 0813 正式版 原厂直供</code> 空闲 ¥4.5&#x2F;¥13.5&#x2F;¥0.15、高峰 ¥9&#x2F;¥27&#x2F;¥0.3 —— <strong>与 DeepSeek 官方直连完全同价</strong>。<strong>10-21 00:32 页内更新新增 MiniMax-M3.1-Flash ¥1&#x2F;¥4&#x2F;¥0.1 与 Kimi K2.8 Preview ¥6.5&#x2F;¥27&#x2F;¥1.7</strong>——TokenHub 已成为国产新模型首发上架最快的转售入口之一（P1）。</li>
+<li><strong>OpenRouter 目录 455 款（<code>:free</code> 14 个、<code>:batch</code> 73 个、<code>~</code> 别名 19 个）</strong>。最新上架（按 <code>created</code>）：<code>tencent/hy4</code>（<strong>11-04</strong>）、<code>stealth/crouton-alpha</code>（<strong>11-03</strong>）、<code>z-ai/glm-5.3-flashx-legal</code>（11-02）、<code>particle-ai/particle-1</code>（10-28）、<code>openai/gpt-6.1-terra</code> 与 <code>gpt-6.1-terra-pro</code>（10-26）、<strong><code>moonshotai/kimi-k3.1-pro</code>（10-23）</strong>、<code>recursive/flint-v1.0:free</code>（10-21）、<code>minimax/minimax-m3.1-flash</code>（10-19，<strong>付费档 13 渠道，Tenstorrent 三项最低 $0.05&#x2F;$0.2&#x2F;$0.005</strong>）、<code>deepseek/deepseek-v4.1-flash-1017</code>（10-17，<strong>46 渠道</strong>）。⚠️ <strong><code>minimax/minimax-m3.1-flash:free</code> 限时免费端点已下架（0 渠道）</strong>，CommandCode &#x2F; Go &#x2F; Zen 三侧同步移除；<strong><code>xai/grok-4.6</code> 已自 OpenRouter 下架</strong>。</li>
+<li><strong>智谱”开源倒挂”继续加深</strong>：GLM-5.3（48 渠道）三项最低 <strong>$0.0699 &#x2F; $0.88 &#x2F; $0.052</strong>（Wafer 输入、Baidu 输出+缓存 -80%）；GLM-5.2（33 渠道）三项最低 <strong>$0.006 &#x2F; $1.40 &#x2F; $0.005</strong>（Wafer 输入+缓存、Morph 输出）——<strong>输入与缓存已是白菜价通道（较官方低 98~99.6%）</strong>；GLM-5.3-Flash（41 渠道）三项最低 <strong>$0.0269 &#x2F; $0.0996 &#x2F; $0.012</strong>（Relace 输入+输出、Darkbloom 缓存），较 Z.AI 官方目录价便宜 <strong>60~82%</strong>。<strong>GLM-5.3-FlashX 仍是唯一渠道 &#x3D; Z.AI 官方，国内直购比 OpenRouter 便宜 7~25%</strong>。GLM-5.3-Prime 仍仅 Alibaba 单渠道。</li>
+<li><strong>Kimi K3 第三方套利空间仍在，输出端进一步扩大</strong>：输入最低 <strong>¥1.60（官方 ¥20 的 8%，Wafer）</strong>、输出最低 <strong>¥36.95（Sail Research，官方的 37%）</strong>、缓存最低 <strong>¥1.11（Decart，-45% 折后）</strong>。⚠️ <strong>Wafer 输入最低但输出 $16 高于官方 $15</strong>——须整行核算。官方价目另有<strong>缓存写入 ¥20（TTL 5min）&#x2F; ¥40（TTL 1h）</strong>，OpenRouter 各渠道均未列该项。<strong>K3 在订阅侧的额度促销已结束</strong>（Command Code GOAT 现回落至 $70 池内 $20 档），见 <a href="/2026/11/04/opencode-go-vs-commandcode-goat/">OpenCode Go vs CommandCode GOAT 对比</a>。</li>
+<li><strong>阿里出现”国内更便宜”的反向差价（官方价 10-21 复核无变动）</strong>：Qwen3.8-Flash 国内百炼 ¥0.8&#x2F;¥2.7，OpenRouter 的 Alibaba 渠道走国际站口径，<strong>贵 17~35%</strong>；Qwen3.8-Omni-Flash 官方国内 ¥0.8 &#x2F; ¥2.7 · <strong>固定</strong>缓存命中 ¥0.1，OpenRouter 唯一 Alibaba 渠道贵 <strong>8~26%</strong>；<strong>阿里文本模型的缓存为比例口径（显式≈输入 10%、隐式≈20%），不是固定数值</strong>。<strong>Qwen3.7-Flash 以 $0.03&#x2F;$0.13&#x2F;$0.006 成为全场最低单价段</strong>；<strong>Qwen3.8-27B 20 渠道价差极大</strong>（输入 $0.020~$0.99）。</li>
+<li><strong>海外旗舰没有低价第三方，但有”服务档”这条降本线</strong>：GPT-6 Luna &#x2F; Sol &#x2F; Astra、GPT-6.1 Sol、Claude Opus 5.5 &#x2F; Sonnet 5.5 &#x2F; Haiku 5.5、Grok 4.7 在 OpenRouter 的端点全部来自一线云厂商官方，<strong>区域档仅 ±10%，无跨商套利</strong>；真正的杠杆是服务档——<strong><code>flex</code> 约半价（缓存同比例减半）、<code>fast</code> 约双倍、<code>ultrafast</code>（Astra &#x2F; GPT-6.1 Sol）六倍、xAI <code>priority</code> 双倍</strong>。</li>
+<li><strong>选型建议（P0→P3）</strong>：<ul>
+<li><strong>P0 缓存密集 &#x2F; 长上下文 &#x2F; Agent 循环</strong> → <strong>默认 DeepSeek 官方直连或腾讯云 TokenHub 原厂直供</strong>（口径最稳；<strong>V4 Pro 第三方输入贵 33%、缓存贵 232%</strong>）。<strong>按峰谷错峰</strong>（工作日 09–12、14–18 为 2 倍价，<strong>周末全天空闲价</strong>）。⚠️ <strong>11-01 起 Search &#x2F; Fetch 工具开始收费（$0.75&#x2F;1000 次）</strong>，重度工具调用须重算成本。</li>
+<li><strong>P1 纯输入跑量、可自测质量、能容忍无 SLA</strong> → <strong>Morph</strong>（V4.1 Flash 输入最低 $0.024）、<strong>OpenInference &#x2F; Relace</strong>（GLM-5.3-Flash 输入+缓存 $0.0052）、<strong>Wafer</strong>（GLM-5.2 &#x2F; GLM-5.3 输入）、<strong>Io Net</strong>（MiMo V2.6 Flash 输入 $0.10）；<strong>P1 纯输出跑量</strong> → <strong>Decart</strong>（V4.1 Flash 输出 $0.18）、<strong>Sail Research</strong>（K3 输出 $5.50、V4.1 Flash-1017 输出 $0.15）、<strong>DeepInfra flex</strong>（GLM-5.2 输出 $1.44）、<strong>GMICloud</strong>（MiMo V2.6 Flash 输出 $0.238）、<strong>Makora</strong>（V2.6 Flash 缓存 $0.002）。</li>
+<li><strong>P2 国产模型默认优先国内官方渠道</strong>：阿里（OpenRouter 溢价 17~35%）、小米 UltraSpeed（第三方无折让）、GLM-5.3-FlashX（<strong>官方唯一渠道</strong>）、腾讯 Hy3（<strong>官方渠道反为 5 家最低</strong>）。</li>
+<li><strong>P3 迁移动作（时间敏感）</strong> → <strong>MiMo V2.5 &#x2F; V2.5-Pro 官方 API 已于 2026-10-21 10:00 下线，且 CommandCode 网关已移除该两款，仍在用旧 ID 的配置立即改 V2.6 系</strong>（OpenRouter 转售存货仅存量有效）；<strong>DeepSeek 旧 ID 用户改 <code>deepseek-flash</code></strong>；<strong>MiniMax M3.1 Flash 与 Ornith 1.5 122B 的免费端点已全部下架，勿再写进配置</strong>；<strong>11-01 前评估 Search &#x2F; Fetch 收费影响</strong>；<strong>V4 Pro 与 MiMo UltraSpeed 不要找第三方</strong>，前者输入贵 33% &#x2F; 缓存贵 232%、后者无折让。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="主要来源"><a href="#主要来源" class="headerlink" title="主要来源"></a>主要来源</h2><p><strong>OpenRouter</strong></p>
+<ul>
+<li>OpenRouter 模型与 endpoints API（<strong>2026-11-04 15:20 CST 重抓，目录 455 款 &#x2F; 免费端点 14 个 &#x2F; 批量端点 73 个 &#x2F; 别名 19 个</strong>）：openrouter.ai&#x2F;api&#x2F;v1&#x2F;models、openrouter.ai&#x2F;api&#x2F;v1&#x2F;models&#x2F;{slug}&#x2F;endpoints</li>
+<li><code>pricing.discount</code> 字段语义（<strong>折后实付价 + 折扣比例，负值 &#x3D; 溢价，0 &#x3D; 无折扣</strong>）：endpoints API 的 <code>pricing</code> 对象</li>
+</ul>
+<p><strong>厂商官方页</strong></p>
+<ul>
+<li>DeepSeek 官方定价页（<strong>10-21 复核：<code>MODEL VERSION</code> &#x3D; <code>DeepSeek-V4.1-Flash-1017</code> &#x2F; <code>DeepSeek-V4-Pro-0813</code>；价目表仍两行、峰谷规则、并发 2500&#x2F;500、Search&#x2F;Fetch $0.75&#x2F;1000 次、11-01 起对 Harness 集成收费</strong>）：<a target="_blank" rel="noopener" href="https://api-docs.deepseek.com/zh-cn/quick_start/pricing/">https://api-docs.deepseek.com/zh-cn/quick_start/pricing/</a></li>
+<li>DeepSeek 更新日志（<strong>2026-09-10 V4.1-Flash 发布条目原文确认「9&#x2F;14 之后继续提供 V4 Pro 的 API 调用服务，计费方式保持不变」</strong>）：<a target="_blank" rel="noopener" href="https://api-docs.deepseek.com/zh-cn/updates/">https://api-docs.deepseek.com/zh-cn/updates/</a></li>
+<li>智谱 BigModel 定价（<strong>10-21 复核无变动：GLM-5.3 ¥8&#x2F;¥28&#x2F;缓存 ¥2、GLM-5.3-Flash ¥0.8&#x2F;¥2.8&#x2F;¥0.23、GLM-5.3-FlashX ¥2&#x2F;¥7&#x2F;¥0.57、均”存储限时免费”</strong>）：<a target="_blank" rel="noopener" href="https://docs.bigmodel.cn/cn/guide/start/pricing">https://docs.bigmodel.cn/cn/guide/start/pricing</a></li>
+<li>Kimi 开放平台「模型推理定价」（<strong>10-21 复核，无变动</strong>）：<a target="_blank" rel="noopener" href="https://platform.kimi.com/docs/pricing/chat">https://platform.kimi.com/docs/pricing/chat</a></li>
+<li>小米 MiMo 按量计费（<strong>10-21 复核，页内更新时间 2026-10-21；V2.6 全系国内人民币价 + 海外价 + Batch 5 折 + ASR&#x2F;TTS + 联网服务</strong>）：<a target="_blank" rel="noopener" href="https://mimo.mi.com/docs/zh-CN/price/pay-as-you-go">https://mimo.mi.com/docs/zh-CN/price/pay-as-you-go</a></li>
+<li>小米 MiMo 模型下线页（<strong>10-21 复核：v2.5 &#x2F; v2.5-pro 已于 2026-10-21 10:00（UTC+8）正式下线，旧 ID 报错</strong>）：<a target="_blank" rel="noopener" href="https://mimo.mi.com/docs/zh-CN/updates/deprecate">https://mimo.mi.com/docs/zh-CN/updates/deprecate</a></li>
+<li>腾讯云 TokenHub 模型价格（<strong>10-21 复核，页内更新 2026-10-21 00:32；Hy4 preview ¥6&#x2F;¥18&#x2F;¥0.3、Hy3 ¥1&#x2F;¥4&#x2F;¥0.25；新增 MiniMax-M3.1-Flash ¥1&#x2F;¥4&#x2F;¥0.1、Kimi K2.8 Preview ¥6.5&#x2F;¥27&#x2F;¥1.7 与 DeepSeek 原厂直供两行</strong>）：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1823/130055">https://cloud.tencent.com/document/product/1823/130055</a></li>
+<li>阿里云百炼模型价格（<strong>10-21 复核，无变动</strong>；旧链接 <code>billing-for-model-studio</code> 已 301 跳转至 <code>model-pricing</code>）：<a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/model-studio/model-pricing">https://help.aliyun.com/zh/model-studio/model-pricing</a></li>
+<li>阿里云百炼上下文缓存规则（<strong>显式 ≈ 输入 10%、隐式 ≈ 20%，比例口径非固定价</strong>）：<a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/model-studio/context-cache">https://help.aliyun.com/zh/model-studio/context-cache</a></li>
+<li>MiniMax 按量计费（永久五折口径）：<a target="_blank" rel="noopener" href="https://platform.minimaxi.com/docs/guides/pricing-paygo.md">https://platform.minimaxi.com/docs/guides/pricing-paygo.md</a></li>
+</ul>
+<p><strong>订阅平台</strong></p>
+<ul>
+<li>OpenCode Zen &#x2F; Go、Command Code GOAT 页面与清单 API：opencode.ai&#x2F;zen、opencode.ai&#x2F;docs&#x2F;go、commandcode.ai&#x2F;docs&#x2F;plans&#x2F;goat、commandcode.ai&#x2F;docs&#x2F;resources&#x2F;pricing-limits、api.commandcode.ai&#x2F;provider&#x2F;v1&#x2F;models</li>
+<li>Command Code CLI 官方目录（档位 &#x2F; 价格 &#x2F; Min plan 权威源）：<code>command-code@1.88.2</code> 包内 <code>dist/bundled/command-code-knowledge/reference/models.md</code></li>
+</ul>
+<p><strong>汇率</strong></p>
+<ul>
+<li>OpenRouter 美元价按 <strong>折算汇率 1 USD &#x3D; 6.7180 CNY</strong> 折算（中国外汇交易中心 2026-11-04 中间价；<strong>汇率每轮按实时中间价重取，不写死</strong>）</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BB%B7%E6%A0%BC/" rel="tag"># 价格</a>
+              <a href="/tags/openrouter/" rel="tag"># openrouter</a>
+              <a href="/tags/deepseek/" rel="tag"># deepseek</a>
+              <a href="/tags/glm/" rel="tag"># glm</a>
+              <a href="/tags/kimi/" rel="tag"># kimi</a>
+              <a href="/tags/minimax/" rel="tag"># minimax</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/04/commandcode-models-reasoning/" rel="prev" title="CommandCode 全模型推理档位速查">
+                  <i class="fa fa-angle-left"></i> CommandCode 全模型推理档位速查
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/11/04/ai-weekly-roundup/" rel="next" title="AI 大模型一周汇总：10-16 → 11-04">
+                  AI 大模型一周汇总：10-16 → 11-04 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

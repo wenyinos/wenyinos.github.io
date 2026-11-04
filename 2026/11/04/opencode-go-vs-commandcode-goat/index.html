@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="数据来源（抓取日期 2026-11-04）：  OpenCode Go（$10）：官方文档 opencode.ai&#x2F;docs&#x2F;go（11 张表全量解析，含 Go &#x2F; Teams &#x2F; Plus 三档价目）、官方营销页 opencode.ai&#x2F;zh&#x2F;go、docs&#x2F;zen、清单 API &#x2F;inference&#x2F;go&#x2F;v1&#x2F;model">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCode Go vs CommandCode GOAT：两个 $10 套餐逐模型额度对比">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/04/opencode-go-vs-commandcode-goat/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="数据来源（抓取日期 2026-11-04）：  OpenCode Go（$10）：官方文档 opencode.ai&#x2F;docs&#x2F;go（11 张表全量解析，含 Go &#x2F; Teams &#x2F; Plus 三档价目）、官方营销页 opencode.ai&#x2F;zh&#x2F;go、docs&#x2F;zen、清单 API &#x2F;inference&#x2F;go&#x2F;v1&#x2F;model">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-03T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="commandcode">
+<meta property="article:tag" content="opencode">
+<meta property="article:tag" content="对比">
+<meta property="article:tag" content="额度">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/04/opencode-go-vs-commandcode-goat/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/04/opencode-go-vs-commandcode-goat/","path":"2026/11/04/opencode-go-vs-commandcode-goat/","title":"OpenCode Go vs CommandCode GOAT：两个 $10 套餐逐模型额度对比"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenCode Go vs CommandCode GOAT：两个 $10 套餐逐模型额度对比 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/categories/ai-model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%A5%97%E9%A4%90%E5%9F%BA%E7%A1%80%E5%AF%B9%E6%AF%94"><span class="nav-number">1.</span> <span class="nav-text">一、套餐基础对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CommandCode-%E5%85%A8%E6%A1%A3%E4%BD%8D%E7%9F%A9%E9%98%B5%EF%BC%8811-04%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">CommandCode 全档位矩阵（11-04）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GOAT-%E5%8A%9F%E8%83%BD%E4%B8%8E%E9%99%90%E5%88%B6%E8%A6%81%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">GOAT 功能与限制要点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%80%90%E6%A8%A1%E5%9E%8B%E9%A2%9D%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">2.</span> <span class="nav-text">二、逐模型额度对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%A4%E8%BE%B9%E5%9D%87%E6%9C%89%EF%BC%9A%E8%AF%B7%E6%B1%82%E6%95%B0%E5%AF%B9%E6%AF%94%EF%BC%88%E6%AF%8F5%E5%B0%8F%E6%97%B6-%E6%AF%8F%E5%91%A8-%E6%AF%8F%E6%9C%88%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 两边均有：请求数对比（每5小时 &#x2F; 每周 &#x2F; 每月）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%95%B0%E5%B7%AE%E5%BC%82%E8%A6%81%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">请求数差异要点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%9C%88%E9%A2%9D%E5%BA%A6%EF%BC%88Credits%EF%BC%89%E9%80%90%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 月额度（Credits）逐模型对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%86%85%E9%83%A8%E5%8D%95%E4%BB%B7%E5%B7%AE%E5%BC%82%EF%BC%88%E4%BB%85%E5%88%97%E5%87%BA%E4%B8%A4%E5%B9%B3%E5%8F%B0%E4%B8%8D%E5%90%8C%E7%9A%84%E9%A1%B9%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 内部单价差异（仅列出两平台不同的项）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-GOAT-%E7%8B%AC%E5%8D%A0%E6%A8%A1%E5%9E%8B%EF%BC%88Go-%E6%9C%AA%E4%B8%8A%E6%9E%B6%EF%BC%8C%E5%90%AB%E9%A2%9D%E5%BA%A6%E4%B8%8E%E8%AF%B7%E6%B1%82%E6%95%B0%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 GOAT 独占模型（Go 未上架，含额度与请求数）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E8%AE%BA%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">三、结论与选型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E8%B0%81%E6%9B%B4%E6%85%B7%E6%85%A8%EF%BC%88%E6%8C%89%E6%A8%A1%E5%9E%8B%E6%97%8F%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 谁更慷慨（按模型族）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-P0-%E5%86%B3%E7%AD%96"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 P0 决策</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81OpenCode-%E5%86%85%E9%83%A8%E6%A1%A3%E4%BD%8D%E5%AF%B9%E6%AF%94%EF%BC%88Go-10-Go-Teams-20%C2%B7%E6%88%90%E5%91%98-Go-Plus-40%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、OpenCode 内部档位对比（Go $10 &#x2F; Go Teams $20·成员 &#x2F; Go Plus $40）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%B8%89%E6%A1%A3%E6%9C%BA%E5%88%B6"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 三档机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E9%80%90%E6%A8%A1%E5%9E%8B%E9%A2%9D%E5%BA%A6%E5%85%A8%E8%A1%A8%EF%BC%88%E6%8C%89-Plus-%E5%80%8D%E7%8E%87%E5%88%86%E7%BB%84%EF%BC%8C%E5%85%B1-28-%E6%AC%BE%E6%9C%89%E9%A2%9D%E5%BA%A6%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 逐模型额度全表（按 Plus 倍率分组，共 28 款有额度模型）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%8D%95%E4%BD%8D%E4%BB%B7%E5%80%BC%EF%BC%88%E6%AF%8F-1-%E7%BE%8E%E5%85%83%E4%B9%B0%E5%88%B0%E5%A4%9A%E5%B0%91%E9%A2%9D%E5%BA%A6%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 单位价值（每 1 美元买到多少额度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E9%80%89%E5%9E%8B%E7%BB%93%E8%AE%BA%EF%BC%88P0%E2%86%92P2%EF%BC%89"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 选型结论（P0→P2）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">176</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/04/opencode-go-vs-commandcode-goat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenCode Go vs CommandCode GOAT：两个 $10 套餐逐模型额度对比 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenCode Go vs CommandCode GOAT：两个 $10 套餐逐模型额度对比
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-04 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-04T00:00:00+08:00">2026-11-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ai-model-intel/" itemprop="url" rel="index"><span itemprop="name">ai-model-intel</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>数据来源（<strong>抓取日期 2026-11-04</strong>）：</p>
+<ul>
+<li><strong>OpenCode Go（$10）</strong>：官方文档 opencode.ai&#x2F;docs&#x2F;go（<strong>11 张表全量解析</strong>，含 Go &#x2F; Teams &#x2F; Plus 三档价目）、官方营销页 opencode.ai&#x2F;zh&#x2F;go、docs&#x2F;zen、清单 API <code>/inference/go/v1/models</code>（<strong>28 个 ID &#x2F; 正文 30 款</strong>）</li>
+<li><strong>CommandCode</strong>：commandcode.ai&#x2F;docs&#x2F;plans&#x2F;goat（<strong>SSR 可 curl</strong>：5 张表 &#x3D; 模型 73 行 + 请求数 61 行 + 额度 21&#x2F;3&#x2F;39 行）、docs&#x2F;resources&#x2F;pricing-limits（套餐矩阵、滚动窗口、Deals 明细）。<strong>GOAT 页头：GOAT plan 69 &#x2F; All plans 94 &#x2F; Deals 4 &#x2F; Free 3；Pricing &amp; Limits 页头：All 98 &#x2F; Free 5</strong></li>
+<li><strong>档位权威源</strong>：CLI 包内官方目录 <code>command-code@1.88.2</code> → <code>package/dist/bundled/command-code-knowledge/reference/models.md</code>（含 Context &#x2F; Efforts &#x2F; $每 1M &#x2F; Min plan，<strong>94 款</strong>）；<strong>Provider API 在线 96 端点</strong>，差集 2 款为 <code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code>（已上线网关、CLI 目录尚未收录）</li>
+<li>🎯 <strong>本文定位</strong>：<strong>只做两个 $10 档套餐的同价位对比</strong>——<strong>OpenCode Go $10 vs CommandCode GOAT $10</strong>。Go 内部的 Teams &#x2F; Plus 档位<strong>不进本文主对比</strong>，单列于<strong>第四节</strong>。</li>
+<li>🎯 <strong>额度口径（用户重点）</strong>：<strong>两平台同价 $10</strong>。⚠️ <strong>同一模型额度可能不同</strong>：<code>deepseek-v4.1-flash</code> 双方<strong>均为 $100</strong>（现行同档），但 <code>glm-5.3-flash</code> 为 <strong>Go $60 vs GOAT $100</strong>——<strong>两平台不可混用同一数字</strong>。</li>
+<li>月费：<strong>Go $10 &#x2F; GOAT $10</strong>（本文对比对象）；其余档位：Go Teams $20·成员 &#x2F; Go Plus $40 &#x2F; CommandCode Go $1 &#x2F; Pro $20 &#x2F; Provider $15 &#x2F; Max 10× $100 &#x2F; Max 20× $200 &#x2F; Team Pro $40；折算汇率：1 美元 ≈ 6.7180 元人民币（中国外汇交易中心 2026-11-04 中间价，每轮重取）</li>
+<li><strong>Go Teams &#x2F; Go Plus 简介</strong>（详表见第四节）：三档 <strong>Token 单价完全相同</strong>，只差月度额度与成员数——<strong>Teams &#x3D; Go + $5&#x2F;模型、每成员独立额度</strong>；<strong>Plus &#x3D; Go × 2&#x2F;3&#x2F;4&#x2F;8 倍、仅限单成员</strong>。</li>
+<li>⚠️ <strong>退役现状</strong>：<code>stealth/pixel-canary</code>、<code>stealth/space-bunny-alpha</code>、<strong><code>stealth/cat-jam:free</code>（GOAT 侧同步下架）</strong>、<strong><code>space-bunny</code> &#x2F; <code>space-bunny-free</code>（Go&#x2F;Zen 全线退出）</strong>——均已从网关 API 与 CLI 目录同步移除。</li>
+</ul>
+</blockquote>
+<span id="more"></span>
+
+<hr>
+<h2 id="一、套餐基础对比"><a href="#一、套餐基础对比" class="headerlink" title="一、套餐基础对比"></a>一、套餐基础对比</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>OpenCode Go</strong></th>
+<th><strong>CommandCode GOAT</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>月费</td>
+<td><strong>$10</strong></td>
+<td><strong>$10</strong></td>
+</tr>
+<tr>
+<td>官方定位</td>
+<td>Lower-cost access</td>
+<td>7x credits（$70 credits）</td>
+</tr>
+<tr>
+<td>官方倍数表述</td>
+<td>docs 现行<strong>不披露倍数</strong>（按模型分档 1.5x–8.0x）</td>
+<td>7x（配合 Deals 可超 $100，即 10x+）</td>
+</tr>
+<tr>
+<td>Token 单价</td>
+<td>内部价（见 §2.3 与 GOAT 的逐项差异）</td>
+<td>内部价（与 Go 基本一致，少数模型有差异，见 §2.3）</td>
+</tr>
+<tr>
+<td>每5小时限额</td>
+<td><strong>按模型比例生成</strong>（&#x3D; 月额度 × 20%）；套餐级参考值 $12</td>
+<td><strong>按模型比例生成</strong>；套餐级参考值 <strong>$14</strong>（GOAT $70 × 20%）</td>
+</tr>
+<tr>
+<td>每周限额</td>
+<td>月额度 × 50%；套餐级参考值 $30</td>
+<td>月额度 × 50%；套餐级参考值 <strong>$35</strong></td>
+</tr>
+<tr>
+<td>每月限额</td>
+<td><strong>按模型分档</strong>：$15 &#x2F; $20 &#x2F; $30 &#x2F; $60 &#x2F; $100（+ 2 款限时免费不限量）</td>
+<td><strong>按模型分档</strong>：$10 &#x2F; $20 &#x2F; $33 &#x2F; $40 &#x2F; $47 &#x2F; $50 &#x2F; $60 &#x2F; $70 &#x2F; $100</td>
+</tr>
+<tr>
+<td>模型数量</td>
+<td><strong>30 款正文</strong>（套餐 API 实测 <strong>28 个 ID</strong>）</td>
+<td><strong>GOAT 72 款</strong>（All plans <strong>98</strong>；<strong>网关 API 96 端点</strong>，CLI 1.88.2 目录 94 款，差集 2 款；limits 页 All <strong>102</strong>）</td>
+</tr>
+<tr>
+<td>免费模型</td>
+<td>Zen <code>-free</code> 独立端点（<strong>9 款 + Big Pickle</strong>，<strong>不自动回落，需手动切换 <code>opencode/&lt;model-id&gt;</code></strong>）；套餐正文另含 <strong>Iceman Contributor Free</strong>、<strong>Beam Free</strong> 两个不限量限时免费</td>
+<td><strong>在线 4 款</strong>：Laguna S 2.1 Free（while capacity lasts）、Glyph Cluster Free（每日 100 次）、<strong>Crouton Alpha Free（while the stealth preview lasts）</strong>、<strong>Beam 1.0 Free（无日限，while capacity lasts）</strong></td>
+</tr>
+<tr>
+<td>超限兜底</td>
+<td>开启 <strong>Use balance</strong> 后回退 Zen 余额按量付费（唯一自动机制）；免费模型手动切换</td>
+<td>免费模型 + PAYG 额度回落；<strong>滚动窗口仅约束套餐内月度 credits，按需 credits 不受限</strong></td>
+</tr>
+<tr>
+<td>API 支持</td>
+<td>✅ 套餐 API <strong><code>opencode.ai/inference/go/{openai,anthropic,google}/v1*</code></strong>（三协议；模型 ID 短格式 <code>kimi-k3</code>，配置写 <code>opencode-go/kimi-k3</code>）；官方要求带 <strong><code>x-opencode-session</code></strong> 与独立 user agent</td>
+<td>✅ Provider API <strong>三协议齐备</strong>：Chat Completions + <strong>Responses（CLI v1.55.0 起）</strong> + Anthropic Messages；网关在线 <strong>96 端点</strong>（CLI 1.88.2 目录 <strong>94 款</strong>，差集 2 款），模型 ID <code>deepseek/deepseek-v4.1-flash</code></td>
+</tr>
+<tr>
+<td>成员数</td>
+<td><strong>仅限单成员 workspace</strong>（Go &#x2F; Plus 同）</td>
+<td>Team Pro &#x2F; Enterprise 支持团队；GOAT &#x2F; Pro 为单人</td>
+</tr>
+</tbody></table>
+<h3 id="CommandCode-全档位矩阵（11-04）"><a href="#CommandCode-全档位矩阵（11-04）" class="headerlink" title="CommandCode 全档位矩阵（11-04）"></a>CommandCode 全档位矩阵（11-04）</h3><table>
+<thead>
+<tr>
+<th>计划</th>
+<th>价格&#x2F;月</th>
+<th>Credits&#x2F;月</th>
+<th>估算请求</th>
+<th>5h &#x2F; 周窗口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Go</strong></td>
+<td><strong>$1</strong></td>
+<td><strong>$10</strong></td>
+<td>~9K</td>
+<td>$2 &#x2F; $5</td>
+</tr>
+<tr>
+<td><strong>GOAT</strong></td>
+<td><strong>$10</strong></td>
+<td><strong>$70</strong></td>
+<td>~75K</td>
+<td>$14 &#x2F; $35</td>
+</tr>
+<tr>
+<td><strong>Pro</strong></td>
+<td>$20</td>
+<td><strong>$80</strong></td>
+<td>~100K</td>
+<td>$16 &#x2F; $40</td>
+</tr>
+<tr>
+<td><strong>Provider</strong></td>
+<td>$15</td>
+<td>PAYG（Provider API 接入）</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Max 10×</strong></td>
+<td>$100</td>
+<td><strong>$150</strong>（premium $100 &#x2F; standard $150 双池）</td>
+<td>~230K</td>
+<td>$45 &#x2F; $90</td>
+</tr>
+<tr>
+<td><strong>Max 20×</strong></td>
+<td>$200</td>
+<td><strong>$300</strong>（premium $200 &#x2F; standard $300）</td>
+<td>~370K</td>
+<td>$90 &#x2F; $180</td>
+</tr>
+<tr>
+<td><strong>Team Pro</strong></td>
+<td>$40</td>
+<td>$40</td>
+<td>~35K</td>
+<td>$12 &#x2F; $24</td>
+</tr>
+<tr>
+<td><strong>Enterprise</strong></td>
+<td>$5,000+</td>
+<td>Custom</td>
+<td>Custom pool</td>
+<td>无滚动窗口上限</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>四源计数口径不同，引用必须写明来源</strong>：网关 API <strong>96</strong> &#x2F; CLI 1.88.2 目录 <strong>94</strong>（差集 2 款网关独有）&#x2F; GOAT 页 <strong>GOAT plan 72 &#x2F; All plans 98 &#x2F; Deals 5 &#x2F; Free 4</strong> &#x2F; limits 页 All <strong>102 &#x2F; Free 6</strong>。页面计数与目录口径不同，任一源单独引用都可能给出错误数。<br><strong>滚动窗口按”credit 价值”计量</strong>，不是请求数——便宜模型（如 DeepSeek V4 Flash）能把同一份额度拉长得多。</p>
+</blockquote>
+<h3 id="GOAT-功能与限制要点"><a href="#GOAT-功能与限制要点" class="headerlink" title="GOAT 功能与限制要点"></a>GOAT 功能与限制要点</h3><ul>
+<li><strong>思考强度调节</strong>：内置 <code>/effort [level]</code> + 全局 <code>effort</code> &#x2F; 逐模型 <code>reasoningEffort</code>（low→max，<strong>按模型支持</strong>；不支持时提示 “effort isn’t supported for that model”）。</li>
+<li><strong>Provider API</strong>：Chat Completions + Responses + Messages 三协议；<strong>除 Command Code Go 计划外全部计划有 API 访问</strong>（Go 计划用 Key 调 Provider API 返回 <strong>403 <code>upgrade_required</code></strong>）；Provider 套餐 $15&#x2F;月 + <strong>$1.01 卡费</strong>，PAYG 无加价、Deals 自动应用；模型命名 <code>provider/model-slug</code>（Claude 系无前缀，如 <code>claude-sonnet-5-5</code>）；流式 usage 自动回传，无需 opt-in；另有 <strong>422 <code>cmd_zdr_no_providers</code></strong>（ZDR 下无可用 provider）。</li>
+<li><strong>Deals 付费 1 条（11-04）</strong>：<code>minimax-m3</code> <strong>2× usage（50% off）</strong>。⚠️ <strong>已退出</strong>：<code>mimo-v2.5</code> 与 <code>mimo-v2.5-pro</code> up to 99% off（已自网关与 CLI 目录移除）；<strong><code>mistral-large-4</code> 加成（through Oct 20th）已到期</strong>，GOAT 额度由 $40 回落 <strong>$20</strong>；<strong><code>deepseek-v4.1-flash</code> 的 $100 促销（through Oct 21st）已到期并转为常态额度 $100</strong>（GOAT 页当前无 <code>liveAtBuild=true</code> 的 creditDeal）。</li>
+<li><strong>免费 4 条</strong>：<code>laguna-s-2.1-free</code>（while capacity lasts）、<code>glyph-cluster:free</code>（每日 100 次，while the stealth preview lasts）、<strong><code>crouton-alpha-free</code>（while the stealth preview lasts）</strong>、<strong><code>beam:free</code>（无日限，while capacity lasts）</strong>。⚠️ <strong>已下架</strong>：<code>minimax-m3.1-flash:free</code>、<code>ornith-1.5-122b:free</code>（限时免费结束，付费 slug 仍在）。</li>
+<li><strong>地理限制</strong>：<strong>GPT-5.6 Luna（OpenAI）与 Gemini 3.7 &#x2F; 3.8 Flash（Google）在中国内地不可用</strong>（官方 Geo model limits 表）。</li>
+<li><strong>⚠️ 额度是”共享单池”</strong>：低额度模型按比例消耗更多 credits，<strong>不可把各模型额度简单相加</strong>；滚动窗口按月度额度比例自动生成（GOAT $70 → 5h $14 &#x2F; 周 $35）。</li>
+<li><strong>开源仍未兑现</strong>（页面口径 delay “later this month”）。</li>
+</ul>
+<blockquote>
+<p><strong>🔄 新模型查询要求（每次核对必做）</strong>：全目录以 <code>curl -s https://api.commandcode.ai/provider/v1/models</code>、CLI 包内目录（1.88.2 &#x3D; 94 款）与 GOAT 页头计数（<strong>72 &#x2F; 98 &#x2F; 5 &#x2F; 4</strong>）、Pricing &amp; Limits 页 Deals 小节（<strong>当前 Deals 5 条 &#x3D; 免费 4 + 付费 1</strong>）<strong>四源交叉 diff</strong>（⚠️ <strong>网关 96 与 CLI 目录 94 存在 2 款差集，须同时记录</strong>）。Go 侧用 <code>curl -sL https://opencode.ai/inference/go/v1/models</code>（<strong>28 ID</strong>）对 docs&#x2F;go 正文（<strong>30 款</strong>）。<strong>档位与价格以 CLI 包内官方目录为准</strong>：<code>npm pack command-code@latest</code> → <code>tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md</code>（当前 &#x3D; CLI <strong>1.88.2</strong>，含 Context&#x2F;Efforts&#x2F;$每1M&#x2F;Min plan；CHANGELOG 同步取以捕捉退役公告）。⚠️ <strong>包体约 4.2 MB，禁止全量 <code>tar xzf</code>（沙箱 &#x2F;tmp 配额不足），必须 <code>tar xzOf</code> 流式取单文件</strong>。<strong>GOAT 页 10-18 起为 SSR</strong>：请求数表、额度三表、模型表均可直接 <code>curl -sL</code> + HTML 解析，无需浏览器；Caps 列的 “+1” 展开值仍为客户端渲染。完整规则见 <a href="/2026/11/04/opencode-go-model-guide/">OpenCode Go 模型配置指南</a> 同名节。</p>
+</blockquote>
+<p><strong>关键差异</strong>：GOAT 套餐级参考限额 <strong>$70</strong> vs Go 参考值 <strong>$60</strong>，5 小时 $14 vs $12、每周 $35 vs $30。<strong>但两平台额度都按模型分档</strong>（Go：$15 &#x2F; $20 &#x2F; $30 &#x2F; $60 &#x2F; $100 五档；GOAT：$10~$100 十档），<strong>套餐级数字只是默认参考值，比较必须落到逐模型，见第二节。</strong></p>
+<blockquote>
+<p><strong>Go 内部档位（Teams &#x2F; Plus）不与 GOAT 混比</strong>——它们属于 OpenCode 生态内的升档选项，详见<strong>第四节「OpenCode 内部档位对比」</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="二、逐模型额度对比"><a href="#二、逐模型额度对比" class="headerlink" title="二、逐模型额度对比"></a>二、逐模型额度对比</h2><h3 id="2-1-两边均有：请求数对比（每5小时-每周-每月）"><a href="#2-1-两边均有：请求数对比（每5小时-每周-每月）" class="headerlink" title="2.1 两边均有：请求数对比（每5小时 &#x2F; 每周 &#x2F; 每月）"></a>2.1 两边均有：请求数对比（每5小时 &#x2F; 每周 &#x2F; 每月）</h3><blockquote>
+<p>Go 列取 docs&#x2F;go 请求数表（29 行）；GOAT 列取 GOAT 页请求数表（58 行）。<strong>限时翻倍值单列在备注</strong>。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Go 5h&#x2F;周&#x2F;月</th>
+<th>GOAT 5h&#x2F;周&#x2F;月</th>
+<th>Go 月额度</th>
+<th>GOAT 月额度</th>
+<th>差异结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DeepSeek V4.1 Flash</strong></td>
+<td>43,330 &#x2F; 108,330 &#x2F; <strong>216,670</strong></td>
+<td><strong>51,300 &#x2F; 128,000 &#x2F; 256,000</strong></td>
+<td><strong>$100</strong></td>
+<td><strong>$100</strong></td>
+<td><strong>额度完全持平（10.0x）</strong>；GOAT 请求数 +18%（同额度下其典型 token 口径更小）</td>
+</tr>
+<tr>
+<td>GLM-5.3</td>
+<td>220 &#x2F; 540 &#x2F; 1,080</td>
+<td>271 &#x2F; 677 &#x2F; 1,350</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +25% 请求、+33% 额度</td>
+</tr>
+<tr>
+<td>GLM-5.2</td>
+<td>880 &#x2F; 2,150 &#x2F; 4,300</td>
+<td>947 &#x2F; 2,370 &#x2F; 4,740</td>
+<td>$60</td>
+<td><strong>$70</strong></td>
+<td>GOAT +10% 请求、+17% 额度</td>
+</tr>
+<tr>
+<td><strong>GLM-5.3 Flash</strong></td>
+<td>6,320 &#x2F; 15,790 &#x2F; 31,580</td>
+<td>11,800 &#x2F; 29,500 &#x2F; 59,000</td>
+<td><strong>$60</strong></td>
+<td><strong>$100</strong></td>
+<td><strong>GOAT 额度反超 67%（10.0x vs 6.0x）</strong></td>
+</tr>
+<tr>
+<td><strong>Kimi K3.1 Pro</strong></td>
+<td>147 &#x2F; 368 &#x2F; 735</td>
+<td><strong>294 &#x2F; 735 &#x2F; 1,470</strong></td>
+<td>$15</td>
+<td>$20</td>
+<td><strong>GOAT 请求 +100%、+33% 额度</strong>（10-23 新上架）</td>
+</tr>
+<tr>
+<td>Kimi K3</td>
+<td>110 &#x2F; 250 &#x2F; 490</td>
+<td>196 &#x2F; 490 &#x2F; 980</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +78% 请求、+33% 额度</td>
+</tr>
+<tr>
+<td>Kimi K2.7 Code</td>
+<td>1,350 &#x2F; 3,380 &#x2F; 6,750</td>
+<td>1,080 &#x2F; 2,710 &#x2F; 5,420</td>
+<td>$60</td>
+<td>$60</td>
+<td><strong>Go +25% 请求</strong>（额度持平）</td>
+</tr>
+<tr>
+<td>LongCat-2.0</td>
+<td>11,400 &#x2F; 28,600 &#x2F; 57,200</td>
+<td>12,800 &#x2F; 32,100 &#x2F; 64,100</td>
+<td><strong>$60</strong></td>
+<td>$50</td>
+<td><strong>Go 额度更高</strong>；GOAT 请求 +12%</td>
+</tr>
+<tr>
+<td><strong>Step 5 Preview</strong></td>
+<td>430 &#x2F; 1,070 &#x2F; 2,130（<strong>限时 4x &#x3D; 1,720 &#x2F; 4,280 &#x2F; 8,520</strong>）</td>
+<td>1,040 &#x2F; 2,600 &#x2F; 5,210</td>
+<td>$15（<strong>限时 $60</strong>）</td>
+<td>$20</td>
+<td>常态 GOAT 请求 2.4x；<strong>Go 限时窗口内额度反超 3x</strong></td>
+</tr>
+<tr>
+<td>MiMo-V2.5</td>
+<td>30,100 &#x2F; 75,200 &#x2F; 150,400</td>
+<td>19,500 &#x2F; 48,700 &#x2F; 97,400</td>
+<td><strong>$60</strong></td>
+<td>$30</td>
+<td><strong>Go 大幅领先</strong>（额度 2x、请求 1.54x）</td>
+</tr>
+<tr>
+<td><strong>MiMo-V2.6-Flash</strong></td>
+<td>30,100 &#x2F; 75,200 &#x2F; 150,400</td>
+<td>13,000 &#x2F; 32,500 &#x2F; 64,900</td>
+<td><strong>$60</strong></td>
+<td>$20</td>
+<td><strong>Go 3x 额度、2.3x 请求</strong>（GOAT 侧为 up to 98% off 计费）</td>
+</tr>
+<tr>
+<td>MiMo-V2.5-Pro</td>
+<td>3,250 &#x2F; 8,150 &#x2F; 16,300</td>
+<td>5,700 &#x2F; 14,200 &#x2F; 28,500</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +75% 请求、+33% 额度</td>
+</tr>
+<tr>
+<td>MiMo-V2.6-Pro</td>
+<td>3,250 &#x2F; 8,150 &#x2F; 16,300</td>
+<td>5,700 &#x2F; 14,200 &#x2F; 28,500</td>
+<td>$15</td>
+<td>$20</td>
+<td>同上（与 V2.5-Pro 同口径）</td>
+</tr>
+<tr>
+<td>MiniMax M3</td>
+<td>3,200 &#x2F; 8,000 &#x2F; 16,000</td>
+<td>2,770 &#x2F; 6,930 &#x2F; 13,900</td>
+<td><strong>$60</strong></td>
+<td>$47</td>
+<td><strong>Go +15% 请求、$60 &gt; $47</strong>（GOAT 侧标 2× usage）</td>
+</tr>
+<tr>
+<td>Muse Spark 1.3 Contributor</td>
+<td>45,300 &#x2F; 113,300 &#x2F; 226,600</td>
+<td>18,200 &#x2F; 45,500 &#x2F; 90,900</td>
+<td><strong>$60</strong></td>
+<td>$20</td>
+<td><strong>Go +149% 请求、3x 额度</strong></td>
+</tr>
+<tr>
+<td>Muse Spark 1.2 Contributor</td>
+<td>45,300 &#x2F; 113,300 &#x2F; 226,600</td>
+<td>18,200 &#x2F; 45,500 &#x2F; 90,900</td>
+<td><strong>$60</strong></td>
+<td>$20</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>Qwen3.8 Max</td>
+<td>160 &#x2F; 400 &#x2F; 810</td>
+<td>261 &#x2F; 654 &#x2F; 1,310</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +62% 请求、+33% 额度</td>
+</tr>
+<tr>
+<td>Qwen3.8 Flash</td>
+<td>5,400 &#x2F; 13,500 &#x2F; 27,000</td>
+<td>3,910 &#x2F; 9,780 &#x2F; 19,600</td>
+<td><strong>$30</strong></td>
+<td>$20</td>
+<td><strong>Go +38% 请求、$30 &gt; $20</strong>（GOAT 输入价 $0.16 vs Go $0.15）</td>
+</tr>
+<tr>
+<td>Qwen3.7 Plus</td>
+<td>4,300 &#x2F; 10,800 &#x2F; 21,600</td>
+<td>1,420 &#x2F; 3,560 &#x2F; 7,110</td>
+<td><strong>$60</strong></td>
+<td>$33</td>
+<td><strong>Go +204% 请求、额度近 2x</strong>（GOAT 缓存读 $0.08 vs Go $0.04）</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Pro</td>
+<td>1,050 &#x2F; 2,600 &#x2F; 5,200</td>
+<td>1,980 &#x2F; 4,940 &#x2F; 9,880</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +90% 请求、+33% 额度</td>
+</tr>
+<tr>
+<td>Hy3</td>
+<td>4,300 &#x2F; 10,750 &#x2F; 21,500</td>
+<td>7,080 &#x2F; 17,700 &#x2F; 35,400</td>
+<td>$60</td>
+<td><strong>$70</strong></td>
+<td>GOAT +65% 请求、+17% 额度</td>
+</tr>
+<tr>
+<td>Hy4 preview</td>
+<td>1,350 &#x2F; 3,380 &#x2F; 6,770</td>
+<td>1,220 &#x2F; 3,060 &#x2F; 6,120</td>
+<td><strong>$30</strong></td>
+<td>$20</td>
+<td><strong>Go 请求 +11%、额度 $30 &gt; $20</strong></td>
+</tr>
+<tr>
+<td>Grok 4.7</td>
+<td>169 &#x2F; 423 &#x2F; 845</td>
+<td>144 &#x2F; 360 &#x2F; 719</td>
+<td>$15</td>
+<td>$20</td>
+<td><strong>Go 请求 +17%</strong>；GOAT 额度 +33%</td>
+</tr>
+<tr>
+<td>GPT 6 Luna</td>
+<td>4,230 &#x2F; 10,560 &#x2F; 21,130</td>
+<td>6,060 &#x2F; 15,200 &#x2F; 30,300</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +43% 请求、+33% 额度（Go 单价更低 $0.10&#x2F;$0.50）</td>
+</tr>
+<tr>
+<td>GPT 5.6 Luna</td>
+<td>2,050 &#x2F; 5,100 &#x2F; 10,250</td>
+<td>2,960 &#x2F; 7,400 &#x2F; 14,800</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +44% 请求、+33% 额度</td>
+</tr>
+<tr>
+<td>Claude Haiku 5.5</td>
+<td>3,850 &#x2F; 9,620 &#x2F; 19,230</td>
+<td>5,970 &#x2F; 14,900 &#x2F; 29,900</td>
+<td>$15</td>
+<td>$20</td>
+<td>GOAT +55% 请求、+33% 额度</td>
+</tr>
+<tr>
+<td>Beam（免费）</td>
+<td>Unlimited（<code>beam-free</code>）</td>
+<td>免费（<code>beam:free</code>，无日限）</td>
+<td>免费</td>
+<td>免费</td>
+<td>两侧均不消耗额度</td>
+</tr>
+<tr>
+<td><strong>MiniMax M3.1 Flash Free</strong></td>
+<td>Unlimited（<code>minimax-m3.1-flash-free</code>，限时）</td>
+<td>免费（<code>minimax-m3.1-flash:free</code>，无日限，限时）</td>
+<td>免费</td>
+<td>免费</td>
+<td>两侧均不消耗额度；GOAT 另有付费档（$20，4,230 &#x2F; 10,600 &#x2F; 21,200）</td>
+</tr>
+</tbody></table>
+<p><strong>仅一侧收录</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Go</th>
+<th>GOAT</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Ornith 1.5 122B</strong></td>
+<td>❌ 未收录</td>
+<td>$20（3,180 &#x2F; 7,960 &#x2F; 15,900）+ 限时免费档</td>
+<td><strong>GOAT 独占</strong>（OpenRouter 无此 slug，仅 CC）</td>
+</tr>
+<tr>
+<td><strong>LongCat 2.5 Preview Free</strong></td>
+<td>❌ 已退出正文</td>
+<td>❌ 未收录</td>
+<td>两侧均已下架（Zen 侧 <code>longcat-2.5-preview-free</code> 同步移除）</td>
+</tr>
+<tr>
+<td><strong>Gemini 4 Argon</strong>（原 <code>gemini-4-argon-contributor</code> 更名）</td>
+<td>$30（50% off 期；440 &#x2F; 1,080 &#x2F; 2,120）</td>
+<td>❌ 未收录</td>
+<td><strong>Go 独占</strong>（GOAT 仅有 3.7&#x2F;3.8 Flash）</td>
+</tr>
+</tbody></table>
+<h4 id="请求数差异要点"><a href="#请求数差异要点" class="headerlink" title="请求数差异要点"></a>请求数差异要点</h4><ol>
+<li><strong>Go 占优（请求更多）</strong>：Kimi K2.7 Code（+25%）、MiniMax M3（+15%）、MiMo-V2.5（+54%）、<strong>MiMo-V2.6-Flash（+131%）</strong>、Muse Spark Contributor（+149%）、Qwen3.7 Plus（+204%）、Qwen3.8 Flash（+38%）、Hy4 preview（+11%）、Grok 4.7（+17%）。</li>
+<li><strong>GOAT 占优（请求更多）</strong>：DeepSeek V4.1 Flash（+18%）、GPT 5.6 &#x2F; 6 Luna（+44% &#x2F; +43%）、Hy3（+65%）、LongCat 2.0（+12%）、Claude Haiku 5.5（+55%）、MiMo-V2.5-Pro &#x2F; V2.6-Pro（+75%）、DeepSeek V4 Pro（+90%）、Kimi K3（+78%）、<strong>GLM-5.3 Flash（+49%）</strong>、Step 5 Preview（+144%）。</li>
+<li><strong>额度分配策略不同</strong>：Go 按模型分 <strong>$15 &#x2F; $20 &#x2F; $30 &#x2F; $60 &#x2F; $100</strong> 五档（+ 2 款限时免费不限量）；GOAT 分 <strong>$100 &#x2F; $80 &#x2F; $70 &#x2F; $60 &#x2F; $50 &#x2F; $47 &#x2F; $40 &#x2F; $33 &#x2F; $20 &#x2F; $10</strong> 多档，<strong>且 <code>planBudgetSteps</code> 会按日期自动切换档位</strong>（deepseek 与 glm-5.3-flash 的 $100→$80 回落即由该机制驱动）。</li>
+</ol>
+<h3 id="2-2-月额度（Credits）逐模型对比"><a href="#2-2-月额度（Credits）逐模型对比" class="headerlink" title="2.2 月额度（Credits）逐模型对比"></a>2.2 月额度（Credits）逐模型对比</h3><blockquote>
+<p>性价比口径：<strong>月额度 ÷ 月费 $10</strong>（Go 与 GOAT <strong>同价 $10</strong>，可直接比）。Go 侧升档（Teams &#x2F; Plus）的性价比另见<strong>第四节</strong>。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Go 月额度</th>
+<th>GOAT 月额度</th>
+<th>Go 性价比</th>
+<th>GOAT 性价比</th>
+<th>胜出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DeepSeek V4.1 Flash</strong></td>
+<td><strong>$100</strong></td>
+<td><strong>$100</strong></td>
+<td><strong>10.0x</strong></td>
+<td><strong>10.0x</strong></td>
+<td><strong>持平</strong>（双方同为最高档）</td>
+</tr>
+<tr>
+<td><strong>GLM-5.3 Flash</strong></td>
+<td>$60</td>
+<td><strong>$100</strong></td>
+<td>6.0x</td>
+<td><strong>10.0x</strong></td>
+<td><strong>GOAT</strong>（额度 +67%）</td>
+</tr>
+<tr>
+<td>Ling 3.1 Flash</td>
+<td>❌ 未上架</td>
+<td><strong>$100</strong></td>
+<td>—</td>
+<td><strong>10.0x</strong></td>
+<td>GOAT 独占</td>
+</tr>
+<tr>
+<td>Qwen 3.8 27B</td>
+<td>❌ 未上架</td>
+<td>$70</td>
+<td>—</td>
+<td>7.0x</td>
+<td>GOAT 独占</td>
+</tr>
+<tr>
+<td>GLM-5.2</td>
+<td>$60</td>
+<td>$70</td>
+<td>6.5x</td>
+<td>7.0x</td>
+<td>GOAT</td>
+</tr>
+<tr>
+<td>Hy3</td>
+<td>$60</td>
+<td>$70</td>
+<td>6.0x</td>
+<td>7.0x</td>
+<td><strong>GOAT</strong></td>
+</tr>
+<tr>
+<td>Kimi K2.7 Code</td>
+<td>$60</td>
+<td>$60</td>
+<td><strong>8.2x</strong></td>
+<td>6.0x</td>
+<td><strong>Go</strong>（额度同、请求更宽、单次成本更低）</td>
+</tr>
+<tr>
+<td>MiniMax M3</td>
+<td>$60</td>
+<td>$47</td>
+<td>6.0x</td>
+<td>4.7x</td>
+<td>Go</td>
+</tr>
+<tr>
+<td>Qwen 3.7 Plus</td>
+<td>$60</td>
+<td>$33</td>
+<td>6.0x</td>
+<td>3.3x</td>
+<td>Go</td>
+</tr>
+<tr>
+<td>MiMo V2.5</td>
+<td>$60</td>
+<td>$30</td>
+<td>6.0x</td>
+<td>3.0x</td>
+<td><strong>Go 大幅领先</strong></td>
+</tr>
+<tr>
+<td>MiMo V2.6 Flash</td>
+<td><strong>$60</strong></td>
+<td>$20</td>
+<td><strong>6.0x</strong></td>
+<td>2.0x</td>
+<td><strong>Go 大优（3x）</strong></td>
+</tr>
+<tr>
+<td>Muse Spark 1.3 &#x2F; 1.2 Contributor</td>
+<td>$60</td>
+<td>$20</td>
+<td>6.0x</td>
+<td>2.0x</td>
+<td><strong>Go 大优（3x）</strong></td>
+</tr>
+<tr>
+<td>DeepSeek V4 Flash</td>
+<td>❌ 未上架</td>
+<td>$60</td>
+<td>—</td>
+<td>6.0x</td>
+<td>GOAT 独占</td>
+</tr>
+<tr>
+<td>DeepSeek V4.1 Flash Fast</td>
+<td>❌ 未上架</td>
+<td>$60</td>
+<td>—</td>
+<td>6.0x</td>
+<td>GOAT 独占</td>
+</tr>
+<tr>
+<td><strong>MiniMax M3.1 Flash</strong></td>
+<td><strong>$20</strong>（3,880 &#x2F; 9,690 &#x2F; 19,380）</td>
+<td>$20</td>
+<td><strong>2.0x</strong></td>
+<td>2.0x</td>
+<td><strong>双方均已上架付费档</strong>（Go 侧 Zen 免费端点已下架）</td>
+</tr>
+<tr>
+<td>LongCat 2.0</td>
+<td>$60</td>
+<td>$50</td>
+<td>6.0x</td>
+<td>5.0x</td>
+<td><strong>Go 略优</strong></td>
+</tr>
+<tr>
+<td>GLM-5.3</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT（<strong>唯一 8x 模型，Plus 升档单位价值 2.0x，见 §四</strong>）</td>
+</tr>
+<tr>
+<td>Kimi K3</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT</td>
+</tr>
+<tr>
+<td>MiMo V2.5 Pro &#x2F; V2.6 Pro</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT</td>
+</tr>
+<tr>
+<td>Qwen 3.8 Max</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Pro</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT</td>
+</tr>
+<tr>
+<td>GPT-5.6 Luna &#x2F; GPT-6 Luna</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT</td>
+</tr>
+<tr>
+<td>Grok 4.7</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT 额度更高，Go 请求更多</td>
+</tr>
+<tr>
+<td>Claude Haiku 5.5</td>
+<td>$15</td>
+<td>$20</td>
+<td>1.5x</td>
+<td>2.0x</td>
+<td>GOAT</td>
+</tr>
+<tr>
+<td>Step 5 Preview</td>
+<td>$15（限时 <strong>$60</strong>）</td>
+<td>$20</td>
+<td>1.5x（限时 <strong>6.0x</strong>）</td>
+<td>2.0x</td>
+<td><strong>限时窗口内 Go 反超 3x</strong></td>
+</tr>
+<tr>
+<td>Gemini 4 Argon Contributor</td>
+<td><strong>$30</strong>（限时 <strong>$60</strong>）</td>
+<td>❌ 未收录</td>
+<td><strong>3.0x</strong>（限时 6.0x）</td>
+<td>—</td>
+<td><strong>Go 独占</strong></td>
+</tr>
+<tr>
+<td>Hy4 preview</td>
+<td><strong>$30</strong></td>
+<td>$20</td>
+<td>3.0x</td>
+<td>2.0x</td>
+<td><strong>Go 额度&#x2F;请求均更优</strong></td>
+</tr>
+<tr>
+<td>Qwen3.8 Flash</td>
+<td><strong>$30</strong></td>
+<td>$20</td>
+<td>3.0x</td>
+<td>2.0x</td>
+<td><strong>Go 额度&#x2F;请求更优</strong></td>
+</tr>
+<tr>
+<td>Ornith 1.5 122B</td>
+<td>❌ 未收录</td>
+<td><strong>$20</strong></td>
+<td>—</td>
+<td>2.0x</td>
+<td><strong>GOAT 独占</strong>（262K、$0.16&#x2F;$0.64&#x2F;$0.02，无推理档位公布）</td>
+</tr>
+<tr>
+<td>LongCat 2.5 Preview Free</td>
+<td>限时免费不限量</td>
+<td>❌ 未收录</td>
+<td>—</td>
+<td>—</td>
+<td><strong>Go 独占</strong></td>
+</tr>
+<tr>
+<td>Beam（免费）</td>
+<td>限时免费不限量</td>
+<td>免费无日限</td>
+<td>—</td>
+<td>—</td>
+<td>两侧均免费</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-内部单价差异（仅列出两平台不同的项）"><a href="#2-3-内部单价差异（仅列出两平台不同的项）" class="headerlink" title="2.3 内部单价差异（仅列出两平台不同的项）"></a>2.3 内部单价差异（仅列出两平台不同的项）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Go 输入&#x2F;输出&#x2F;缓存读</th>
+<th>GOAT 输入&#x2F;输出&#x2F;缓存读</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen3.7 Plus</td>
+<td>$0.40 &#x2F; $1.60 &#x2F; <strong>$0.04</strong></td>
+<td>$0.40 &#x2F; $1.60 &#x2F; <strong>$0.08</strong></td>
+<td><strong>GOAT 缓存读贵一倍</strong></td>
+</tr>
+<tr>
+<td>Qwen3.8 Flash</td>
+<td><strong>$0.15</strong> &#x2F; $0.47 &#x2F; $0.016</td>
+<td><strong>$0.16</strong> &#x2F; $0.47 &#x2F; $0.016</td>
+<td>GOAT 输入贵 6.7%</td>
+</tr>
+<tr>
+<td>Step 5 Preview</td>
+<td>$1.00 &#x2F; $2.70 &#x2F; <strong>$0.10</strong></td>
+<td>$1.00 &#x2F; $2.70 &#x2F; <strong>$0.05</strong></td>
+<td>GOAT 缓存读便宜一半</td>
+</tr>
+<tr>
+<td>MiMo V2.6 Pro</td>
+<td>$0.435 &#x2F; $0.87 &#x2F; $0.003625</td>
+<td>$0.435 &#x2F; $0.87 &#x2F; $0.0036</td>
+<td>四舍五入差异</td>
+</tr>
+<tr>
+<td>其余共有模型</td>
+<td>—</td>
+<td>—</td>
+<td><strong>完全一致</strong>（GLM-5.3&#x2F;5.2、Kimi K3 &#x2F; K2.7 Code、LongCat 2.0、DS V4.1 Flash &#x2F; V4 Pro、MiMo V2.5 系、MiniMax M3、Muse Spark Contributor、Qwen3.8 Max、Hy3、Hy4、Grok 4.7、GPT-6&#x2F;5.6 Luna、Claude Haiku 5.5）</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-GOAT-独占模型（Go-未上架，含额度与请求数）"><a href="#2-4-GOAT-独占模型（Go-未上架，含额度与请求数）" class="headerlink" title="2.4 GOAT 独占模型（Go 未上架，含额度与请求数）"></a>2.4 GOAT 独占模型（Go 未上架，含额度与请求数）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>GOAT 月额度</th>
+<th>5h &#x2F; 周 &#x2F; 月请求</th>
+<th>单价（输入&#x2F;输出&#x2F;缓存读）</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Ling 3.1 Flash</strong></td>
+<td><strong>$100</strong></td>
+<td>5,850 &#x2F; 14,600 &#x2F; 29,200</td>
+<td>$0.30 &#x2F; $0.90 &#x2F; $0.06</td>
+<td>GOAT 额度最高档（10.0x）；GOAT 页 Intelligence 41.1</td>
+</tr>
+<tr>
+<td>GPT-5.6 Sol</td>
+<td>$20</td>
+<td>118 &#x2F; 296 &#x2F; 592</td>
+<td>$5.00 &#x2F; $30.00 &#x2F; $0.50</td>
+<td>GOAT 页 Intelligence 47.0</td>
+</tr>
+<tr>
+<td>Qwen 3.8 27B</td>
+<td>$70</td>
+<td>4,790 &#x2F; 12,000 &#x2F; 24,000</td>
+<td>$0.40 &#x2F; $3.00 &#x2F; $0.04</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>DeepSeek V4.1 Flash Fast</strong></td>
+<td>$60</td>
+<td>11,500 &#x2F; 28,700 &#x2F; 57,500</td>
+<td>$0.16 &#x2F; $0.58 &#x2F; $0.016</td>
+<td>V4.1 Flash 高吞吐变体，随主档同步</td>
+</tr>
+<tr>
+<td>DeepSeek V4 Flash &#x2F; V4 Flash Vision (exp)</td>
+<td>$60 &#x2F; $20</td>
+<td>30,800 &#x2F; 76,900 &#x2F; 154,000；10,300 &#x2F; 25,600 &#x2F; 51,300</td>
+<td>$0.15 &#x2F; $0.60 &#x2F; $0.003</td>
+<td>Go 侧旧 ID 已下线</td>
+</tr>
+<tr>
+<td><strong>GLM-5.3 FlashX</strong></td>
+<td>$20</td>
+<td>945 &#x2F; 2,360 &#x2F; 4,720</td>
+<td>$0.37 &#x2F; $1.25 &#x2F; $0.075</td>
+<td>同基座极速档（约 5x 速度、2.5x 价格）</td>
+</tr>
+<tr>
+<td>Qwen 3.8 Omni Flash</td>
+<td>$20</td>
+<td>3,940 &#x2F; 9,860 &#x2F; 19,700</td>
+<td>$0.15 &#x2F; $0.47 &#x2F; $0.016</td>
+<td>原生全模态</td>
+</tr>
+<tr>
+<td>Qwen 3.8 Max Prime &#x2F; Max 0902</td>
+<td>$20 &#x2F; $20</td>
+<td>131 &#x2F; 327 &#x2F; 654；261 &#x2F; 654 &#x2F; 1,310</td>
+<td>$4.00 &#x2F; $12.00 &#x2F; $0.50；$2.00 &#x2F; $6.00 &#x2F; $0.25</td>
+<td></td>
+</tr>
+<tr>
+<td>Gemini 3.8 Flash &#x2F; 3.7 Flash</td>
+<td>$40 &#x2F; $40</td>
+<td>784 &#x2F; 1,960 &#x2F; 3,920</td>
+<td>$1.50 &#x2F; $7.50 &#x2F; $0.15</td>
+<td><strong>中国内地不可用</strong>（Geo 限制）</td>
+</tr>
+<tr>
+<td>Mistral Large 4</td>
+<td><strong>$20</strong>（Deal 已于 10-20 到期，由 $40 回落）</td>
+<td>896 &#x2F; 2,240 &#x2F; 4,480</td>
+<td>$1.36 &#x2F; $4.18 &#x2F; $0.14</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>MiMo V2.6 Pro UltraSpeed</strong></td>
+<td><strong>$10</strong></td>
+<td>285 &#x2F; 712 &#x2F; 1,420</td>
+<td>$4.35 &#x2F; $8.70 &#x2F; $0.036</td>
+<td><strong>GOAT 内唯一 $10 档</strong>（超速档按 10 倍价计）</td>
+</tr>
+<tr>
+<td>Kimi K2.7 Code HighSpeed</td>
+<td>$20</td>
+<td>181 &#x2F; 452 &#x2F; 904</td>
+<td>$1.90 &#x2F; $8.00 &#x2F; $0.38</td>
+<td>262K</td>
+</tr>
+<tr>
+<td>GLM-5.2 Fast</td>
+<td>$20</td>
+<td>138 &#x2F; 346 &#x2F; 691</td>
+<td>$3.00 &#x2F; $10.25 &#x2F; $0.50</td>
+<td></td>
+</tr>
+<tr>
+<td>Step 3.7 Flash &#x2F; 3.5 Flash</td>
+<td>$20 &#x2F; $20</td>
+<td>1,670 &#x2F; 4,180 &#x2F; 8,370；3,530 &#x2F; 8,830 &#x2F; 17,700</td>
+<td>$0.20 &#x2F; $1.15 &#x2F; $0.04；$0.09 &#x2F; $0.30 &#x2F; $0.02</td>
+<td></td>
+</tr>
+<tr>
+<td>Nemotron 3 Ultra &#x2F; 3.5 Super VL</td>
+<td>$20 &#x2F; $20</td>
+<td>575 &#x2F; 1,440 &#x2F; 2,870；1,770 &#x2F; 4,420 &#x2F; 8,850</td>
+<td>$0.60 &#x2F; $2.40 &#x2F; $0.12；$0.20 &#x2F; $0.50 &#x2F; $0.04</td>
+<td></td>
+</tr>
+<tr>
+<td>Inkling &#x2F; Inkling Small</td>
+<td>$20 &#x2F; $20</td>
+<td>396 &#x2F; 989 &#x2F; 1,980；709 &#x2F; 1,770 &#x2F; 3,550</td>
+<td>$1.00 &#x2F; $4.05 &#x2F; $0.17；$0.50 &#x2F; $1.20 &#x2F; $0.10</td>
+<td></td>
+</tr>
+<tr>
+<td>Qwen 3.7 Flash</td>
+<td>$20</td>
+<td>—</td>
+<td>$0.03 &#x2F; $0.13 &#x2F; $0.006</td>
+<td>全目录最低单价段</td>
+</tr>
+<tr>
+<td><strong>Jev &#x2F; Jev 1.14.0</strong></td>
+<td>$20 &#x2F; $20</td>
+<td><strong>119,000 &#x2F; 298,000 &#x2F; 595,000</strong></td>
+<td>$0.042 &#x2F; $0.00 &#x2F; $0.00</td>
+<td><strong>请求量天花板</strong>；决策模型，仅 headless <code>cmd -p</code> 与 Provider API，不在 <code>/model</code></td>
+</tr>
+<tr>
+<td>Claude Sonnet 5.5</td>
+<td>$10</td>
+<td>238 &#x2F; 595 &#x2F; 1,190</td>
+<td>$2.00 &#x2F; $10.00 &#x2F; $0.10</td>
+<td>GOAT 页 Intelligence 56.0（全页最高）</td>
+</tr>
+<tr>
+<td>Muse Spark 1.3 &#x2F; 1.2 &#x2F; Open（标准版）</td>
+<td>$20</td>
+<td>428 &#x2F; 1,070 &#x2F; 2,140</td>
+<td>$1.25 &#x2F; $4.25 &#x2F; $0.15</td>
+<td>标准价版；Contributor 版见 §2.1</td>
+</tr>
+<tr>
+<td>Grok 4.5 &#x2F; 4.6</td>
+<td>$20</td>
+<td>144 &#x2F; 360 &#x2F; 719</td>
+<td>$2.00 &#x2F; $6.00 &#x2F; $0.50</td>
+<td></td>
+</tr>
+<tr>
+<td>GLM-5.1 &#x2F; Kimi K2.6 &#x2F; Kimi K2.5 &#x2F; GLM-5 &#x2F; MiniMax M2.7 &#x2F; M2.5 &#x2F; Qwen 3.6 Plus &#x2F; 3.6 Max Preview</td>
+<td>$20</td>
+<td>—</td>
+<td>—</td>
+<td>老款清单，GOAT 保留完整额度行</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、结论与选型"><a href="#三、结论与选型" class="headerlink" title="三、结论与选型"></a>三、结论与选型</h2><h3 id="3-1-谁更慷慨（按模型族）"><a href="#3-1-谁更慷慨（按模型族）" class="headerlink" title="3.1 谁更慷慨（按模型族）"></a>3.1 谁更慷慨（按模型族）</h3><table>
+<thead>
+<tr>
+<th>方向</th>
+<th>模型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>GOAT 更大方</strong></td>
+<td><strong>GLM-5.3 Flash（$100 vs Go $60）</strong>、GLM-5.2 &#x2F; Hy3（$70 vs $60）、Kimi K3 &#x2F; GPT-6 Luna &#x2F; GPT-5.6 Luna &#x2F; Claude Haiku 5.5 &#x2F; Grok 4.7 &#x2F; MiMo V2.5-Pro &#x2F; V2.6-Pro &#x2F; Qwen 3.8 Max &#x2F; DS V4 Pro &#x2F; GLM-5.3（$20 vs $15）、Ling 3.1 Flash（$100）、Qwen 3.8 27B（$70）、DS V4.1 Flash Fast（$60）</td>
+</tr>
+<tr>
+<td><strong>Go 更大方</strong></td>
+<td><strong>MiMo-V2.6-Flash &#x2F; Muse Spark Contributor（$60 vs $20）</strong>、MiMo-V2.5（$60 vs $30）、Qwen3.7 Plus（$60 vs $33）、MiniMax M3（$60 vs $47）、LongCat-2.0（$60 vs $50）、Hy4 preview（$30 vs $20）、Qwen3.8 Flash（$30 vs $20）、<strong>Gemini 4 Argon &#x2F; LongCat 2.5 Preview Free（GOAT 无对应）</strong></td>
+</tr>
+<tr>
+<td><strong>持平</strong></td>
+<td><strong>DeepSeek V4.1 Flash（双方均 $100，同为现行最高档 10.0x）</strong></td>
+</tr>
+<tr>
+<td><strong>Go 单次成本更优</strong></td>
+<td>Kimi K2.7 Code（同 $60，请求 6,750 vs 5,420）、Qwen3.7 Plus（缓存读半价）、Step 5 Preview（缓存读 $0.10 vs $0.05 为 GOAT 优，但限时额度 Go 反超）</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-P0-决策"><a href="#3-2-P0-决策" class="headerlink" title="3.2 P0 决策"></a>3.2 P0 决策</h3><ol>
+<li><strong>主力是 DeepSeek V4.1 Flash</strong> → 两平台<strong>完全等价</strong>（均 <strong>$100</strong> 额度、10.0x）；选 Go 可保留 OpenCode 生态与 Responses 三协议，选 GOAT 则请求数多 18%。</li>
+<li><strong>主力是 MiMo-V2.6-Flash &#x2F; Muse Spark &#x2F; MiMo-V2.5</strong> → <strong>必须留 Go</strong>（额度 2–3 倍）。</li>
+<li><strong>主力是 GLM-5.3 Flash</strong> → <strong>GOAT 明显更划算</strong>（<strong>$100 vs $60，10.0x vs 6.0x</strong>，额度多 67%）。</li>
+<li><strong>主力是 GLM-5.3</strong> → GOAT 仅 $20；若坚持留在 OpenCode 生态，<strong>Go Plus 是唯一「升档即省钱」的模型（8x）</strong>——属内部档位话题，见第四节。</li>
+<li><strong>需要窄领域独占模型</strong>（Ling 3.1 Flash、Qwen 3.8 Omni Flash、GLM-5.3 FlashX、Step 3.x Flash、Inkling、Jev、MiMo UltraSpeed）→ <strong>GOAT 独有</strong>，Go 无替代。</li>
+<li><strong>需要单模型超长上下文 + 高请求量</strong> → Go 的 <strong>Muse Spark（226,600 次&#x2F;月）</strong> 与 <strong>MiMo-V2.6-Flash（150,400 次&#x2F;月）</strong> 仍是天花板；GOAT 的请求量天花板是 <strong>Jev（595,000 次&#x2F;月）</strong>，但为决策模型（非通用编码）。</li>
+<li><strong>价格稳定性</strong>：两平台内部价均与 OpenRouter 渠道价格战解耦；<strong>GOAT 独有的 <code>planBudgetSteps</code> 会按日期自动切档</strong>（促销窗口的起止由该机制驱动），<strong>引用额度必须带日期</strong>。</li>
+</ol>
+<hr>
+<h2 id="四、OpenCode-内部档位对比（Go-10-Go-Teams-20·成员-Go-Plus-40）"><a href="#四、OpenCode-内部档位对比（Go-10-Go-Teams-20·成员-Go-Plus-40）" class="headerlink" title="四、OpenCode 内部档位对比（Go $10 &#x2F; Go Teams $20·成员 &#x2F; Go Plus $40）"></a>四、OpenCode 内部档位对比（Go $10 &#x2F; Go Teams $20·成员 &#x2F; Go Plus $40）</h2><blockquote>
+<p>三档 <strong>Token 单价完全相同</strong>（docs&#x2F;go 定价表三档共用 Input &#x2F; Output &#x2F; Cached Read &#x2F; Cached Write），<strong>只差月度额度上限与成员数</strong>。因此档位选择的唯一问题是：<strong>多付的钱换到多少额度？</strong></p>
+</blockquote>
+<h3 id="4-1-三档机制"><a href="#4-1-三档机制" class="headerlink" title="4.1 三档机制"></a>4.1 三档机制</h3><table>
+<thead>
+<tr>
+<th>档位</th>
+<th>月费</th>
+<th>额度规则</th>
+<th>成员数</th>
+<th>官方表述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Go</strong></td>
+<td><strong>$10</strong></td>
+<td>逐模型分档 <strong>$15 &#x2F; $20 &#x2F; $30 &#x2F; $60 &#x2F; $100</strong></td>
+<td><strong>单成员</strong></td>
+<td>Lower-cost access</td>
+</tr>
+<tr>
+<td><strong>Go Teams</strong></td>
+<td><strong>$20 &#x2F; 成员 &#x2F; 月</strong></td>
+<td><strong>&#x3D; Go 档 + $5 &#x2F; 模型</strong>（固定加数，非倍率）</td>
+<td><strong>每成员独立额度</strong></td>
+<td>Every member gets their own limits, <strong>$5&#x2F;month higher than Go on every model</strong></td>
+</tr>
+<tr>
+<td><strong>Go Plus</strong></td>
+<td><strong>$40</strong></td>
+<td><strong>&#x3D; Go 档 × 2 &#x2F; 3 &#x2F; 4 &#x2F; 8</strong>（按模型倍率）</td>
+<td><strong>单成员</strong></td>
+<td>Higher usage limits</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 <strong>这是三条完全不同的加成逻辑</strong>：Teams 是<strong>加数</strong>（+$5）、Plus 是<strong>乘数</strong>（×2~×8）、Go 是基准。<strong>加数对高额度模型几乎无感、对低额度模型提升明显；乘数反之</strong>——这一点决定了两者的适用场景完全不同。</p>
+</blockquote>
+<h3 id="4-2-逐模型额度全表（按-Plus-倍率分组，共-28-款有额度模型）"><a href="#4-2-逐模型额度全表（按-Plus-倍率分组，共-28-款有额度模型）" class="headerlink" title="4.2 逐模型额度全表（按 Plus 倍率分组，共 28 款有额度模型）"></a>4.2 逐模型额度全表（按 Plus 倍率分组，共 28 款有额度模型）</h3><table>
+<thead>
+<tr>
+<th align="center">Plus 倍率</th>
+<th>模型</th>
+<th align="right">Go $10</th>
+<th align="right">Teams $20</th>
+<th align="right">Plus $40</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>8x</strong></td>
+<td><strong>GLM-5.3</strong></td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right"><strong>$120</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>4x</strong>（$15 → $60）</td>
+<td>Kimi K3.1 Pro</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Kimi K3</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Step 5 Preview</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>MiMo-V2.6-Pro</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>MiMo-V2.5-Pro</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Qwen3.8 Max</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>DeepSeek V4 Pro</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Grok 4.7</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>GPT 6 Luna</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>GPT 5.6 Luna</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Claude Haiku 5.5</td>
+<td align="right">$15</td>
+<td align="right">$20</td>
+<td align="right">$60</td>
+</tr>
+<tr>
+<td align="center"><strong>4x</strong>（$20 &#x2F; $30 &#x2F; $60 档）</td>
+<td>MiniMax M3.1 Flash</td>
+<td align="right">$20</td>
+<td align="right">$25</td>
+<td align="right">$80</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Hy4 preview</td>
+<td align="right">$30</td>
+<td align="right">$35</td>
+<td align="right">$120</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Gemini 4 Argon（50% off 期）</td>
+<td align="right">$30</td>
+<td align="right">$35</td>
+<td align="right">$120</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>LongCat-2.0</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right"><strong>$240</strong></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Hy3</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right"><strong>$240</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>3x</strong></td>
+<td>Qwen3.8 Flash</td>
+<td align="right">$30</td>
+<td align="right">$35</td>
+<td align="right">$90</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>GLM-5.3-Flash</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$180</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>GLM-5.2</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$180</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Kimi K2.7 Code</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$180</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>MiniMax M3</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$180</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Qwen3.7 Plus</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$180</td>
+</tr>
+<tr>
+<td align="center"><strong>2x</strong></td>
+<td>DeepSeek V4.1 Flash</td>
+<td align="right"><strong>$100</strong></td>
+<td align="right">$105</td>
+<td align="right">$200</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>MiMo-V2.6-Flash</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$120</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>MiMo-V2.5</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$120</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Muse Spark 1.3 Contributor</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$120</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td>Muse Spark 1.2 Contributor</td>
+<td align="right">$60</td>
+<td align="right">$65</td>
+<td align="right">$120</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>免额度款：<strong>Beam Free</strong>、<strong>Iceman Contributor Free</strong> 三档均标 <code>Unlimited limited time</code>，不参与额度比较。<br>倍率分布：<strong>8x × 1 款 &#x2F; 4x × 16 款 &#x2F; 3x × 6 款 &#x2F; 2x × 5 款</strong>——<strong>Plus 的加成重心在 4x（过半模型）</strong>。</p>
+</blockquote>
+<h3 id="4-3-单位价值（每-1-美元买到多少额度）"><a href="#4-3-单位价值（每-1-美元买到多少额度）" class="headerlink" title="4.3 单位价值（每 1 美元买到多少额度）"></a>4.3 单位价值（每 1 美元买到多少额度）</h3><blockquote>
+<p>口径：<strong>单位价值 &#x3D; 月额度 ÷ 月费</strong>；<strong>相对 Go</strong> &#x3D; 该档单位价值 ÷ Go 单位价值（<strong>&gt;1 表示升档后每美元买到更多额度，&lt;1 表示变贵</strong>）。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>模型档（Go 额度）</th>
+<th align="right">Go $10</th>
+<th align="right">Teams $20</th>
+<th align="right">Plus $40</th>
+<th align="center"><strong>Teams 相对 Go</strong></th>
+<th align="center"><strong>Plus 相对 Go</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$15 档（4x 模型，如 Kimi K3 &#x2F; Haiku 5.5）</td>
+<td align="right">1.50</td>
+<td align="right">1.00</td>
+<td align="right">1.50</td>
+<td align="center"><strong>0.67x</strong></td>
+<td align="center"><strong>1.00x（持平）</strong></td>
+</tr>
+<tr>
+<td>$60 档（4x 模型，如 LongCat &#x2F; Hy3）</td>
+<td align="right">6.00</td>
+<td align="right">3.25</td>
+<td align="right">6.00</td>
+<td align="center"><strong>0.54x</strong></td>
+<td align="center"><strong>1.00x（持平）</strong></td>
+</tr>
+<tr>
+<td>$15 档（8x：GLM-5.3）</td>
+<td align="right">1.50</td>
+<td align="right">1.00</td>
+<td align="right"><strong>3.00</strong></td>
+<td align="center"><strong>0.67x</strong></td>
+<td align="center"><strong>2.00x（翻倍）</strong></td>
+</tr>
+<tr>
+<td>$60 档（3x 模型，如 GLM-5.3-Flash &#x2F; GLM-5.2）</td>
+<td align="right">6.00</td>
+<td align="right">3.25</td>
+<td align="right">4.50</td>
+<td align="center"><strong>0.54x</strong></td>
+<td align="center"><strong>0.75x（变贵 25%）</strong></td>
+</tr>
+<tr>
+<td>$100 档（2x：DeepSeek V4.1 Flash）</td>
+<td align="right"><strong>10.00</strong></td>
+<td align="right">5.25</td>
+<td align="right">5.00</td>
+<td align="center"><strong>0.53x</strong></td>
+<td align="center"><strong>0.50x（腰斩）</strong></td>
+</tr>
+<tr>
+<td>$60 档（2x：MiMo-V2.6-Flash &#x2F; Muse Spark Contributor）</td>
+<td align="right">6.00</td>
+<td align="right">3.25</td>
+<td align="right">3.00</td>
+<td align="center"><strong>0.54x</strong></td>
+<td align="center"><strong>0.50x（腰斩）</strong></td>
+</tr>
+</tbody></table>
+<p><strong>读法</strong>：</p>
+<ul>
+<li><strong>Go 永远是单位价值基准（1.00x）</strong>，任何升档都不可能在”每美元额度”上超过 Go，只有 Plus 在 8x 模型上能反超（2.00x）。</li>
+<li><strong>Teams 在所有档位上都是 0.53~0.67x</strong>——付 2 倍钱只多拿 <code>$5/额度档</code> 的额度，<strong>额度效率必然下降</strong>。它的价值不在效率，在<strong>成员数与额度隔离</strong>。</li>
+<li><strong>Plus 的盈亏平衡点是 4x</strong>：4x 模型持平、8x 翻倍、3x 亏 25%、2x 亏 50%。<strong>当前只有 GLM-5.3 一款达到 8x</strong>。</li>
+</ul>
+<h3 id="4-4-选型结论（P0→P2）"><a href="#4-4-选型结论（P0→P2）" class="headerlink" title="4.4 选型结论（P0→P2）"></a>4.4 选型结论（P0→P2）</h3><ul>
+<li><strong>P0 单人、想省钱</strong> → <strong>留 Go $10</strong>。除 GLM-5.3 外，升 Plus 全部是「单位成本持平或上升」；升 Teams 则一律上升。</li>
+<li><strong>P0 主力是 GLM-5.3</strong> → <strong>升 Plus $40</strong>（唯一 2.00x 单位价值的模型，8x 加成）；Teams 只给 $20，不划算。</li>
+<li><strong>P0 团队多人、各自独立额度</strong> → <strong>选 Teams $20&#x2F;成员</strong>。<strong>这是 Teams 存在的唯一理由</strong>：<code>Go / Plus 均限单成员 workspace</code>，只有 Teams 能让每人拿到独立额度而不互相挤占。⚠️ 但<strong>人均额度效率低于 Go</strong>（0.53~0.67x），人数越多、总成本越高——3 人 Teams &#x3D; $60&#x2F;月，已超过 Plus 单人 $40。</li>
+<li><strong>P1 单人、主力是 2x 档（DS V4.1 Flash &#x2F; MiMo-V2.6-Flash &#x2F; Muse Spark &#x2F; MiMo-V2.5）</strong> → <strong>绝对留 Go</strong>。升 Plus 单位价值腰斩（$100 → 每美元 $5 额度），是所有升档动作里最亏的一档。</li>
+<li><strong>P1 单人、主力是 3x 档（GLM-5.3-Flash &#x2F; GLM-5.2 &#x2F; Kimi K2.7 Code）</strong> → <strong>留 Go 或换 GOAT</strong>（GOAT 的 GLM-5.3-Flash 给 $100），<strong>不要升 Plus</strong>（-25%）。</li>
+<li><strong>P2 需要 Teams 又要高额度</strong> → <strong>Teams + 按需 credits</strong>（Teams 成员同样受 5h&#x3D;20% &#x2F; 周&#x3D;50% &#x2F; 月&#x3D;100% 比例窗口约束，超限可走 Zen 余额按量付费，不自动回落）。</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>两档都不能解决”额度效率”问题</strong>：三档 Token 单价完全相同，<strong>加额度只能靠加钱</strong>。若目标是”同样的钱跑更多 token”，正解是换更便宜的模型（见 <a href="/2026/11/04/china-llm-api-vs-openrouter-pricing/">国产大模型官方 API vs OpenRouter 价格对比</a>）或走 GOAT（见第一至三节）。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/commandcode/" rel="tag"># commandcode</a>
+              <a href="/tags/opencode/" rel="tag"># opencode</a>
+              <a href="/tags/%E9%A2%9D%E5%BA%A6/" rel="tag"># 额度</a>
+              <a href="/tags/%E5%AF%B9%E6%AF%94/" rel="tag"># 对比</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/04/opencode-model-usage-ranking/" rel="prev" title="OpenCode 模型调用量排名（2026-11-04 快照）">
+                  <i class="fa fa-angle-left"></i> OpenCode 模型调用量排名（2026-11-04 快照）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/11/04/opencode-go-pricing-comparison/" rel="next" title="OpenCode Go 定价、请求数与性价比测算">
+                  OpenCode Go 定价、请求数与性价比测算 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
