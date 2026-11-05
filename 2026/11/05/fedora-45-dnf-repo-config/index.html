@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="升级到 Fedora 45 之后，我做了一件很平常的事：把 fedora 和 updates 两个仓库切到阿里云镜像。改完文件、makecache 也跑通了，看起来一切正常。 直到第二天发现系统还在连 mirror.nju.edu.cn。 这篇记录了这次踩坑的全过程，以及 Fedora 45 在仓库配置上真正的结构变化——它比”换个 baseurl”要复杂一层，而且旧的经验在这里会直接失效。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fedora 45 的 dnf 仓库配置：三层结构与升级后遗症">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/05/fedora-45-dnf-repo-config/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="升级到 Fedora 45 之后，我做了一件很平常的事：把 fedora 和 updates 两个仓库切到阿里云镜像。改完文件、makecache 也跑通了，看起来一切正常。 直到第二天发现系统还在连 mirror.nju.edu.cn。 这篇记录了这次踩坑的全过程，以及 Fedora 45 在仓库配置上真正的结构变化——它比”换个 baseurl”要复杂一层，而且旧的经验在这里会直接失效。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-04T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="dnf">
+<meta property="article:tag" content="fedora">
+<meta property="article:tag" content="repo">
+<meta property="article:tag" content="包管理">
+<meta property="article:tag" content="镜像源">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/05/fedora-45-dnf-repo-config/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/05/fedora-45-dnf-repo-config/","path":"2026/11/05/fedora-45-dnf-repo-config/","title":"Fedora 45 的 dnf 仓库配置：三层结构与升级后遗症"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Fedora 45 的 dnf 仓库配置：三层结构与升级后遗症 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%8E%B0%E8%B1%A1%EF%BC%9A%E4%B8%80%E5%8D%8A%E7%9A%84-repo-%E6%96%87%E4%BB%B6%E6%B6%88%E5%A4%B1%E4%BA%86"><span class="nav-number">1.</span> <span class="nav-text">一、现象：一半的 repo 文件消失了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%96%B0%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%89%E4%B8%AA%E7%9B%AE%E5%BD%95%EF%BC%8C%E4%B8%89%E5%B1%82%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">2.</span> <span class="nav-text">二、新结构：三个目录，三层优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A2%AB-override-%E6%82%84%E6%82%84%E6%8E%A5%E7%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">三、被 override 悄悄接管</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%94%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">四、正确的改法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E7%A1%AE%E8%AE%A4%E7%9C%9F%E7%9A%84%E7%94%9F%E6%95%88%E4%BA%86"><span class="nav-number">5.</span> <span class="nav-text">五、怎么确认真的生效了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%BF%9E%E5%B8%A6%E6%B8%85%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">六、连带清理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%B0%8F%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">七、小结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">158</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/05/fedora-45-dnf-repo-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Fedora 45 的 dnf 仓库配置：三层结构与升级后遗症 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fedora 45 的 dnf 仓库配置：三层结构与升级后遗症
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-05 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-05T00:00:00+08:00">2026-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>升级到 Fedora 45 之后，我做了一件很平常的事：把 fedora 和 updates 两个仓库切到阿里云镜像。改完文件、<code>makecache</code> 也跑通了，看起来一切正常。</p>
+<p>直到第二天发现系统还在连 <code>mirror.nju.edu.cn</code>。</p>
+<p>这篇记录了这次踩坑的全过程，以及 Fedora 45 在仓库配置上真正的结构变化——它比”换个 baseurl”要复杂一层，而且旧的经验在这里会直接失效。</p>
+<span id="more"></span>
+
+<h2 id="一、现象：一半的-repo-文件消失了"><a href="#一、现象：一半的-repo-文件消失了" class="headerlink" title="一、现象：一半的 repo 文件消失了"></a>一、现象：一半的 repo 文件消失了</h2><p>升级完成后，<code>/etc/yum.repos.d/</code> 长这个样子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> /etc/yum.repos.d/</span><br><span class="line">_copr:copr.fedorainfracloud.org:ruojiner:fedora-copa.repo</span><br><span class="line">google-chrome.repo</span><br><span class="line">vscode.repo</span><br><span class="line">fedora.repo.rpmsave</span><br><span class="line">fedora-updates.repo.rpmsave</span><br><span class="line">rpmfusion-free.repo.rpmsave</span><br><span class="line">rpmfusion-nonfree-updates.repo.rpmsave</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>一共 19 个文件，其中 <strong>10 个变成了 <code>.rpmsave</code></strong>，真正生效的只剩 8 个（6 个 copr 加 chrome、vscode）。</p>
+<p>但 <code>dnf repolist</code> 却显示一切正常：fedora、updates、rpmfusion 全都在。</p>
+<p>这说明这些仓库的配置来自别处。<code>.rpmsave</code> 是 rpm 升级时的行为——当它发现某个配置文件被用户改过，不会覆盖，而是把<strong>你改过的那份</strong>留成 <code>.rpmsave</code>，然后装上新的。问题在于：新的那份去哪了？</p>
+<h2 id="二、新结构：三个目录，三层优先级"><a href="#二、新结构：三个目录，三层优先级" class="headerlink" title="二、新结构：三个目录，三层优先级"></a>二、新结构：三个目录，三层优先级</h2><p>翻 <code>fedora-repos</code> 包的文件清单就能看到答案：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ rpm -ql fedora-repos | grep <span class="string">&#x27;\.repo&#x27;</span></span><br><span class="line">/usr/share/dnf5/repos.d/fedora-cisco-openh264.repo</span><br><span class="line">/usr/share/dnf5/repos.d/fedora-updates-testing.repo</span><br><span class="line">/usr/share/dnf5/repos.d/fedora-updates.repo</span><br><span class="line">/usr/share/dnf5/repos.d/fedora.repo</span><br></pre></td></tr></table></figure>
+
+<p><strong>Fedora 45 把发行版自带的仓库配置从 <code>/etc/yum.repos.d/</code> 挪到了 <code>/usr/share/dnf5/repos.d/</code>。</strong></p>
+<p>这个改动背后是 dnf5 的配置分层设计。现在完整的优先级从高到低是：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>路径</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最高</td>
+<td><code>/etc/dnf/repos.override.d/*.repo</code></td>
+<td>覆盖层，<code>config-manager</code> 写入</td>
+</tr>
+<tr>
+<td>中</td>
+<td><code>/etc/yum.repos.d/*.repo</code></td>
+<td>用户与第三方自定义</td>
+</tr>
+<tr>
+<td>基础</td>
+<td><code>/usr/share/dnf5/repos.d/*.repo</code></td>
+<td>发行版默认，随 rpm 包更新</td>
+</tr>
+</tbody></table>
+<p>这个设计本身是合理的：发行版默认配置归包管理，用户改动不再和升级抢同一个文件，也就不用再产生 <code>.rpmsave</code>。</p>
+<p><strong>但它带来一个后果</strong>：以前”改 <code>/etc/yum.repos.d/fedora.repo</code>“这个动作，现在改到的是<strong>一个不被读取的旧文件</strong>。你改得再对，也没有任何效果。</p>
+<p>我第一轮修改就栽在这里。</p>
+<h2 id="三、被-override-悄悄接管"><a href="#三、被-override-悄悄接管" class="headerlink" title="三、被 override 悄悄接管"></a>三、被 override 悄悄接管</h2><p>事情更有意思的地方在于，<code>/etc/yum.repos.d/</code> 里甚至没有 <code>fedora.repo</code>——它已经被 rpm 改名成 <code>.rpmsave</code> 了。所以我当时改的，其实是升级前留下的那份快照。</p>
+<p>而真正生效的配置在另一个完全没注意过的位置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /etc/dnf/repos.override.d/99-config_manager.repo</span><br><span class="line"><span class="comment"># Generated by libdnf5.</span></span><br><span class="line"><span class="comment"># Do not modify this file manually, use dnf5 config-manager instead.</span></span><br><span class="line">[fedora]</span><br><span class="line">baseurl=https://mirror.nju.edu.cn/fedora/releases/<span class="variable">$releasever</span>/Everything/<span class="variable">$basearch</span>/os/ \</span><br><span class="line">        https://cmcc.mirrors.ustc.edu.cn/fedora/releases/... \</span><br><span class="line">        https://mirror.nyist.edu.cn/fedora/releases/...</span><br><span class="line">metalink=</span><br><span class="line">[updates]</span><br><span class="line">baseurl=https://mirror.nju.edu.cn/fedora/updates/...</span><br><span class="line">metalink=</span><br></pre></td></tr></table></figure>
+
+<p>这里有两个关键信息：</p>
+<ol>
+<li>文件头明确写着 <strong><code>Generated by libdnf5. Do not modify this file manually</code></strong></li>
+<li>它显式写了 <code>metalink=</code>（空值），用来<strong>禁用</strong>官方 metalink</li>
+</ol>
+<p>也就是说，如果只改 <code>/etc/yum.repos.d/</code> 里的 <code>metalink</code> 和 <code>baseurl</code>，override 层会把你的改动完全压住。这就是”改完还是连 nju”的原因。</p>
+<h2 id="四、正确的改法"><a href="#四、正确的改法" class="headerlink" title="四、正确的改法"></a>四、正确的改法</h2><p>dnf5 提供了 <code>config-manager setopt</code> 来操作这一层：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf config-manager <span class="built_in">setopt</span> \</span><br><span class="line">  <span class="string">&#x27;fedora.baseurl=https://mirrors.aliyun.com/fedora/releases/$releasever/Everything/$basearch/os/&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> dnf config-manager <span class="built_in">setopt</span> <span class="string">&#x27;fedora.metalink=&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> dnf config-manager <span class="built_in">setopt</span> \</span><br><span class="line">  <span class="string">&#x27;updates.baseurl=https://mirrors.aliyun.com/fedora/updates/$releasever/Everything/$basearch/&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> dnf config-manager <span class="built_in">setopt</span> <span class="string">&#x27;updates.metalink=&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行后 override 文件会被重写：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[fedora]</span></span><br><span class="line"><span class="attr">baseurl</span>=https://mirrors.aliyun.com/fedora/releases/<span class="variable">$releasever</span>/Everything/<span class="variable">$basearch</span>/os/</span><br><span class="line"><span class="attr">metalink</span>=</span><br><span class="line"></span><br><span class="line"><span class="section">[updates]</span></span><br><span class="line"><span class="attr">baseurl</span>=https://mirrors.aliyun.com/fedora/updates/<span class="variable">$releasever</span>/Everything/<span class="variable">$basearch</span>/</span><br><span class="line">metalink=</span><br></pre></td></tr></table></figure>
+
+<p>三个细节值得单独说：</p>
+<p><strong>第一，<code>$releasever</code> 必须用单引号包住。</strong> 双引号下 shell 会尝试展开这个变量，结果变成空字符串，URL 直接坏掉。单引号能让 dnf 自己去做变量替换。</p>
+<p><strong>第二，<code>metalink=</code> 不能省略。</strong> 基础层的 <code>fedora.repo</code> 里 <code>metalink</code> 是启用的，override 只改 <code>baseurl</code> 的话，两者会同时存在，dnf 优先走 metalink，你的 baseurl 就成了摆设。显式置空才能真正接管。</p>
+<p><strong>第三，别手动编辑这个文件。</strong> 它由 <code>libdnf5</code> 生成，格式和顺序都由工具决定，手改之后下次 <code>config-manager</code> 操作会覆盖掉。文件头的警告不是客套话。</p>
+<h2 id="五、怎么确认真的生效了"><a href="#五、怎么确认真的生效了" class="headerlink" title="五、怎么确认真的生效了"></a>五、怎么确认真的生效了</h2><p>这个问题最麻烦的地方是：<strong><code>dnf</code> 不告诉你它到底连了哪个地址</strong>。</p>
+<p>试过这些手段，都不行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ dnf -v makecache --refresh --repo=fedora | grep -oE <span class="string">&#x27;https?://[^ &quot;]+&#x27;</span></span><br><span class="line">（无输出）</span><br><span class="line"></span><br><span class="line">$ dnf repoinfo fedora | grep -i baseurl</span><br><span class="line">（无输出）</span><br></pre></td></tr></table></figure>
+
+<p><code>dnf5</code> 的 verbose 模式不打印 URL，<code>repoinfo</code> 的输出格式也变了。</p>
+<p><strong>可靠的验证方法是看速度</strong>：先删掉对应仓库的元数据缓存，再重新拉取。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /var/cache/libdnf5/fedora-* /var/cache/libdnf5/updates-*</span><br><span class="line"><span class="built_in">sudo</span> dnf makecache --repo=fedora --repo=updates</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Fedora 45 - x86_64 - Updates   100% | 5.9 MiB/s | 12.3 MiB | 00m02s</span><br><span class="line">Fedora 45 - x86_64             100% | 8.7 MiB/s | 36.6 MiB | 00m04s</span><br></pre></td></tr></table></figure>
+
+<p>5~9 MiB&#x2F;s 是国内镜像的水平。官方 metalink 在国内通常只有几百 KB&#x2F;s，差距足够明显，一眼就能分辨。</p>
+<p><strong>注意不要用”只刷新了一点点”的结果来判断</strong>。我第一次验证时只下了几 KB 的变更文件，速度显示 3.3 KiB&#x2F;s——那是因为文件太小，测不出真实带宽。必须删缓存让它重新拉完整的 <code>repomd.xml</code> 和 primary 元数据，数据才有意义。</p>
+<h2 id="六、连带清理"><a href="#六、连带清理" class="headerlink" title="六、连带清理"></a>六、连带清理</h2><p>升级过程中还留下一些东西，顺手一起处理了：</p>
+<p><strong>旧内核。</strong> 系统里同时存在 <code>7.2.14-200.fc44</code>、<code>7.2.15-200.fc44</code> 和 <code>7.2.15-300.fc45</code>。前两个是 f44 时代的，在 f45 用户空间下基本无法启动，但会一直占着 <code>/boot</code> 和在 GRUB 菜单里占位。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf remove --oldinstallonly --<span class="built_in">setopt</span>=installonly_limit=2</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>.rpmsave</code> 与 <code>.rpmnew</code> 的区别。</strong> 这两个后缀容易被混为一谈：</p>
+<ul>
+<li><code>.rpmsave</code> —— 你改过的<strong>旧</strong>配置被留存，新配置已生效</li>
+<li><code>.rpmnew</code> —— 你改过的配置<strong>仍在用</strong>，新版本的默认配置被存成 <code>.rpmnew</code></li>
+</ul>
+<p>也就是说 <code>.rpmnew</code> 里是”新版本推荐的配置”，删掉它等于放弃参考。我这次清理了 23 个（含 5 个 <code>/etc/pam.d/*</code>、<code>sddm.conf</code>），删之前确认系统能正常登录——说明现有配置和 f45 兼容。如果日后认证或显示管理器出问题，可以用 <code>dnf reinstall pam sddm</code> 重新生成对照。</p>
+<p><strong>升级缓存。</strong> <code>/var/cache/PackageKit</code> 84M、<code>/var/cache/libdnf5</code> 85M、还有 <code>/var/lib/dnf/system-upgrade/</code> 里躺着一个 2024 年 10 月的状态文件。清理命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf clean all</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /var/cache/PackageKit/*</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /var/lib/dnf/system-upgrade/*</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、小结"><a href="#七、小结" class="headerlink" title="七、小结"></a>七、小结</h2><p>Fedora 45 这次改动可以总结成一句话：</p>
+<blockquote>
+<p>发行版仓库配置从 <code>/etc/yum.repos.d/</code> 迁到 <code>/usr/share/dnf5/repos.d/</code>，用户层面的覆盖统一走 <code>/etc/dnf/repos.override.d/</code>，用 <code>dnf config-manager setopt</code> 操作。</p>
+</blockquote>
+<p>几条可以直接拿走的经验：</p>
+<ul>
+<li>改源前先看 <code>/etc/dnf/repos.override.d/</code> 有没有文件，有的话你改 <code>yum.repos.d</code> 基本无效</li>
+<li><code>baseurl</code> 和 <code>metalink=</code> 要同时处理，只改一个可能不生效</li>
+<li>验证源是否生效，在 dnf5 下只能靠”删缓存 + 看下载速度”</li>
+<li>升级后 <code>/etc/yum.repos.d/</code> 里的 <code>.rpmsave</code> 是残留，不是配置</li>
+</ul>
+<p>最后补一句：这种”配置位置迁移”的改动，比参数调整更容易误导人。表面上看文件都在、<code>repolist</code> 也正常，实际上你修改的对象根本没有被读取。遇到”改了没效果”的情况，先确认<strong>文件是否真的在被读</strong>，再怀疑配置内容本身。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/dnf/" rel="tag"># dnf</a>
+              <a href="/tags/fedora/" rel="tag"># fedora</a>
+              <a href="/tags/repo/" rel="tag"># repo</a>
+              <a href="/tags/%E9%95%9C%E5%83%8F%E6%BA%90/" rel="tag"># 镜像源</a>
+              <a href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86/" rel="tag"># 包管理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/31/first-login-force-password-change/" rel="prev" title="给已有系统加「首登强制改密」：一个跨切面开关的设计">
+                  <i class="fa fa-angle-left"></i> 给已有系统加「首登强制改密」：一个跨切面开关的设计
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
