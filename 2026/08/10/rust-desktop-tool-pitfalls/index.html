@@ -163,7 +163,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81TLS-%E6%8C%87%E7%BA%B9%EF%BC%9A%E4%B8%8D%E6%98%AF%E6%89%80%E6%9C%89-TLS-%E9%83%BD%E4%B8%80%E6%A0%B7"><span class="nav-number">1.</span> <span class="nav-text">一、TLS 指纹：不是所有 TLS 都一样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81MSRV-%E9%92%89%E5%AD%90%EF%BC%9A%E4%BE%9D%E8%B5%96%E6%A0%91%E7%9A%84%E6%9A%97%E9%9B%B7"><span class="nav-number">2.</span> <span class="nav-text">二、MSRV 钉子：依赖树的暗雷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Win32-%E5%8E%9F%E7%94%9F%E6%8E%A7%E4%BB%B6%EF%BC%88native-windows-gui%EF%BC%89%E7%9A%84%E5%9D%91"><span class="nav-number">3.</span> <span class="nav-text">三、Win32 原生控件（native-windows-gui）的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%B3%BB%E7%BB%9F%E6%89%98%E7%9B%98%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%88%E8%B7%A8%E5%B9%B3%E5%8F%B0%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、系统托盘与窗口生命周期（跨平台）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81SQLite-%E5%B9%B6%E5%8F%91%E4%B8%8E%E8%BF%81%E7%A7%BB"><span class="nav-number">5.</span> <span class="nav-text">五、SQLite 并发与迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%BF%9B%E7%A8%8B%E6%B8%85%E7%90%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%AF%AF%E4%BC%A4"><span class="nav-number">6.</span> <span class="nav-text">六、进程清理的两种误伤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E5%AE%89%E5%85%A8"><span class="nav-number">7.</span> <span class="nav-text">七、文件路径安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81CI-%E4%B8%8E%E6%9E%84%E5%BB%BA%E7%9A%84%E8%A1%A5%E5%85%85%E6%95%99%E8%AE%AD"><span class="nav-number">8.</span> <span class="nav-text">八、CI 与构建的补充教训</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81TLS-%E6%8C%87%E7%BA%B9%EF%BC%9A%E4%B8%8D%E6%98%AF%E6%89%80%E6%9C%89-TLS-%E9%83%BD%E4%B8%80%E6%A0%B7"><span class="nav-number">1.</span> <span class="nav-text">一、TLS 指纹：不是所有 TLS 都一样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81MSRV-%E9%92%89%E5%AD%90%EF%BC%9A%E4%BE%9D%E8%B5%96%E6%A0%91%E7%9A%84%E6%9A%97%E9%9B%B7"><span class="nav-number">2.</span> <span class="nav-text">二、MSRV 钉子：依赖树的暗雷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Win32-%E5%8E%9F%E7%94%9F%E6%8E%A7%E4%BB%B6%EF%BC%88native-windows-gui%EF%BC%89%E7%9A%84%E5%9D%91"><span class="nav-number">3.</span> <span class="nav-text">三、Win32 原生控件（native-windows-gui）的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%B3%BB%E7%BB%9F%E6%89%98%E7%9B%98%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%88%E8%B7%A8%E5%B9%B3%E5%8F%B0%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、系统托盘与窗口生命周期（跨平台）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81SQLite-%E5%B9%B6%E5%8F%91%E4%B8%8E%E8%BF%81%E7%A7%BB"><span class="nav-number">5.</span> <span class="nav-text">五、SQLite 并发与迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%BF%9B%E7%A8%8B%E6%B8%85%E7%90%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%AF%AF%E4%BC%A4"><span class="nav-number">6.</span> <span class="nav-text">六、进程清理的两种误伤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E5%AE%89%E5%85%A8"><span class="nav-number">7.</span> <span class="nav-text">七、文件路径安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81CI-%E4%B8%8E%E6%9E%84%E5%BB%BA%E7%9A%84%E8%A1%A5%E5%85%85%E6%95%99%E8%AE%AD"><span class="nav-number">8.</span> <span class="nav-text">八、CI 与构建的补充教训</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81GUI-%E9%87%8D%E5%86%99%E7%9A%84%E5%8F%AF%E8%A1%8C%E6%80%A7%E8%AF%84%E4%BC%B0%EF%BC%9Aegui-%E4%B8%8D%E6%98%AF-GTK-%E7%9A%84%E6%9B%BF%E4%BB%A3%E5%93%81"><span class="nav-number">9.</span> <span class="nav-text">九、GUI 重写的可行性评估：egui 不是 GTK 的替代品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -178,7 +178,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,7 +189,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">158</span>
+        <span class="site-state-item-count">166</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -327,6 +327,16 @@
 <li><strong>双架构产物同名</strong>：x64&#x2F;x86 产物同名会在 Release 上互相覆盖，构建后先重命名；</li>
 <li><strong>本地能过、CI 失败的常见原因</strong>：陈旧 <code>*.tsbuildinfo</code>（大量 TS6305 报错，清理即过）、本地残留的构建产物造成假象。</li>
 </ul>
+<h2 id="九、GUI-重写的可行性评估：egui-不是-GTK-的替代品"><a href="#九、GUI-重写的可行性评估：egui-不是-GTK-的替代品" class="headerlink" title="九、GUI 重写的可行性评估：egui 不是 GTK 的替代品"></a>九、GUI 重写的可行性评估：egui 不是 GTK 的替代品</h2><p>评估一个 Python + GTK3 的托盘工具（NetworkMgr）能否用 Rust 重写时，最容易犯的错是把「换 UI 框架」当成「换渲染库」。</p>
+<ul>
+<li><strong>egui&#x2F;eframe 是即时模式窗口框架，不提供系统托盘</strong>：而这类工具的核心形态就是常驻托盘。架构必须拆成两件——托盘用 <code>tray-icon</code> + <code>muda</code> 原生菜单，配置窗口&#x2F;对话框用 eframe；</li>
+<li><strong>双二进制反而更贴合原契约</strong>：原项目本来就有 <code>networkmgr</code> 与 <code>networkmgr_configuration</code> 两个入口，拆成「托盘进程 + 配置进程」后，desktop 文件与 sudoers 一行都不用改；</li>
+<li><strong><code>Exec=sudo networkmgr</code> 是硬约束</strong>：sudo 环境下拿不到 session D-Bus，<code>ksni</code>（KSNI 托盘）后端直接失效，只能退回 <code>libappindicator</code>，代价是 GTK3 依赖去不掉。想「零 GTK」就必须改提权模型，那是范围扩张而不是重写；</li>
+<li><strong>分阶段迁移，每阶段留回退</strong>：契约冻结与样本采集 → 纯逻辑层 Rust 化（在 Linux 上跑契约测试）→ 配置窗口换 eframe → 托盘换 Rust → devd 与 port 打包。不要一次性全量重写；</li>
+<li><strong>验收环境要先做 spike</strong>：虚拟机没有 3D 加速（GLX 可能起不来）、没有真实无线网卡、guest 无 sudo——先验证 eframe 能起窗、tray-icon 能显示，再写业务代码，否则会把环境问题误判成业务 bug；</li>
+<li><strong>依赖的 BSD 支持要查源码而不是印象</strong>：<code>tray-icon</code> 官方支持 FreeBSD（AppIndicator &#x2F; KSNI 两种后端），<code>winit</code> 的 Unix X11 cfg 含 freebsd&#x2F;dragonfly；<code>eframe/egui</code> 默认 features 带 <code>wayland</code> + <code>wgpu</code>，BSD 上必须 <code>default-features=false</code>、只开 <code>glow,x11,default_fonts,clipboard</code>；egui 默认字体不含 CJK。</li>
+</ul>
+<p><strong>结论</strong>：重写可行性取决于「原程序的形态约束」（托盘、提权、D-Bus）而不是「新框架好不好用」。先把这些约束列成 P0，再决定架构。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Rust 桌面工具开发的坑集中在”<strong>边界条件</strong>“：老旧系统、企业网络环境、高 DPI、跨平台窗口系统、多线程数据库访问——每一项都有隐藏的窄路径。策略是：把兼容性约束写进 CI 门禁、把平台差异封装成显式的探测与降级，而不是”出问题再补”。</p>
 
     </div>
