@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="给一个从没做过简体中文的开源项目补翻译，看起来是「把英文换成中文」的体力活。实际做下来，难的是术语一致性、格式校验和 PR 的可审查性——764 条词条，翻错一条可能只是一个词，但术语不统一会让整个配置界面读起来像三个人分别翻的。 这篇以 Wayfire（基于 wlroots 的 Wayland 合成器）为例，记一遍完整流程。它原本只有罗马尼亚语一种翻译，45 个 .po、764 条词条（去重 7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="给上游项目补一套简体中文翻译：从 45 个 po 到上游 PR">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/13/upstream-zh-cn-localization/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="给一个从没做过简体中文的开源项目补翻译，看起来是「把英文换成中文」的体力活。实际做下来，难的是术语一致性、格式校验和 PR 的可审查性——764 条词条，翻错一条可能只是一个词，但术语不统一会让整个配置界面读起来像三个人分别翻的。 这篇以 Wayfire（基于 wlroots 的 Wayland 合成器）为例，记一遍完整流程。它原本只有罗马尼亚语一种翻译，45 个 .po、764 条词条（去重 7">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-12T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="gettext">
+<meta property="article:tag" content="i18n">
+<meta property="article:tag" content="translation">
+<meta property="article:tag" content="upstream">
+<meta property="article:tag" content="wayfire">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/13/upstream-zh-cn-localization/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/13/upstream-zh-cn-localization/","path":"2026/11/13/upstream-zh-cn-localization/","title":"给上游项目补一套简体中文翻译：从 45 个 po 到上游 PR"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>给上游项目补一套简体中文翻译：从 45 个 po 到上游 PR | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%91%B8%E6%B8%85%E8%A7%84%E6%A8%A1%E4%B8%8E%E6%9E%84%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">一、先摸清规模与构建方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9C%AF%E8%AF%AD%E8%A1%A8%E8%A6%81%E5%85%88%E5%AE%9A%EF%BC%8C%E8%80%8C%E4%B8%94%E8%A6%81%E7%9C%8B%E4%BB%A3%E7%A0%81%E8%AF%AD%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">二、术语表要先定，而且要看代码语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%94%9F%E6%88%90-po-%E6%96%87%E4%BB%B6%EF%BC%9A%E6%A0%BC%E5%BC%8F%E6%AF%94%E5%86%85%E5%AE%B9%E6%9B%B4%E5%AE%B9%E6%98%93%E5%87%BA%E9%94%99"><span class="nav-number">3.</span> <span class="nav-text">三、生成 po 文件：格式比内容更容易出错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%BF%BB%E8%AF%91%E9%98%B6%E6%AE%B5%E7%9A%84%E4%B8%89%E4%B8%AA%E5%88%A4%E6%96%AD"><span class="nav-number">4.</span> <span class="nav-text">四、翻译阶段的三个判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%8F%90%E4%BA%A4-PR%EF%BC%9A%E5%8F%AA%E6%94%BE%E7%BF%BB%E8%AF%91%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">五、提交 PR：只放翻译文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E7%BF%BB%E8%AF%91%E4%B9%8B%E5%A4%96%EF%BC%9A%E9%A1%BA%E6%89%8B%E6%8A%8A%E6%89%93%E5%8C%85%E4%B9%9F%E5%81%9A%E4%BA%86"><span class="nav-number">6.</span> <span class="nav-text">六、翻译之外：顺手把打包也做了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/13/upstream-zh-cn-localization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="给上游项目补一套简体中文翻译：从 45 个 po 到上游 PR | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          给上游项目补一套简体中文翻译：从 45 个 po 到上游 PR
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-13 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-13T00:00:00+08:00">2026-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>给一个从没做过简体中文的开源项目补翻译，看起来是「把英文换成中文」的体力活。实际做下来，<strong>难的是术语一致性、格式校验和 PR 的可审查性</strong>——764 条词条，翻错一条可能只是一个词，但术语不统一会让整个配置界面读起来像三个人分别翻的。</p>
+<p>这篇以 Wayfire（基于 wlroots 的 Wayland 合成器）为例，记一遍完整流程。它原本只有罗马尼亚语一种翻译，45 个 <code>.po</code>、764 条词条（去重 721 条）。</p>
+<span id="more"></span>
+
+<h2 id="一、先摸清规模与构建方式"><a href="#一、先摸清规模与构建方式" class="headerlink" title="一、先摸清规模与构建方式"></a>一、先摸清规模与构建方式</h2><p>动手前先回答三个问题：</p>
+<ol>
+<li><strong>词条总量与分布</strong>：<code>find . -name &#39;*.po&#39; | wc -l</code>、<code>msgattrib --translated</code> 或直接统计 <code>msgid</code>。Wayfire 是 45 个文件、764 条，分散在 core 与每个插件里；</li>
+<li><strong>翻译怎么被构建</strong>：看 <code>locale/meson.build</code>。多数项目会自动 <code>find</code> 所有语言目录，新增 <code>zh_CN</code> 不需要改构建脚本——这一步确认了能省掉一个 PR 改动；</li>
+<li><strong>上游有没有术语表或风格指南</strong>：没有就自己定一份，写进 PR 描述里。</li>
+</ol>
+<h2 id="二、术语表要先定，而且要看代码语义"><a href="#二、术语表要先定，而且要看代码语义" class="headerlink" title="二、术语表要先定，而且要看代码语义"></a>二、术语表要先定，而且要看代码语义</h2><p>同一个英文词在不同上下文里的中文可能不同。Wayfire 里先定了几组：</p>
+<table>
+<thead>
+<tr>
+<th>原文</th>
+<th>译法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>view</td>
+<td>窗口</td>
+<td>不是「视图」</td>
+</tr>
+<tr>
+<td>output</td>
+<td>输出</td>
+<td>显示器&#x2F;输出设备</td>
+</tr>
+<tr>
+<td>workspace</td>
+<td>工作区</td>
+<td></td>
+</tr>
+<tr>
+<td>activator</td>
+<td>激活器</td>
+<td>热区&#x2F;手势触发</td>
+</tr>
+<tr>
+<td><code>Scale</code> 插件</td>
+<td>窗口概览</td>
+<td>与 <code>Zoom</code> 区分</td>
+</tr>
+<tr>
+<td><code>Zoom</code> 插件</td>
+<td>桌面缩放</td>
+<td>直译会和 Scale 撞名</td>
+</tr>
+<tr>
+<td><code>Kawase</code> &#x2F; <code>XWayland</code> &#x2F; <code>GTK Shell</code></td>
+<td>保留原文</td>
+<td>专有名词</td>
+</tr>
+</tbody></table>
+<p><strong><code>Scale</code> 与 <code>Zoom</code> 是典型陷阱</strong>：两个插件都直译成「缩放」，配置界面里会出现两个同名条目，用户根本分不清。凡是「功能名」而不是「普通名词」的，要按实际行为命名。</p>
+<h2 id="三、生成-po-文件：格式比内容更容易出错"><a href="#三、生成-po-文件：格式比内容更容易出错" class="headerlink" title="三、生成 po 文件：格式比内容更容易出错"></a>三、生成 po 文件：格式比内容更容易出错</h2><p>最省事的做法是从模板批量生成，但生成脚本很容易在注释、<code>msgid</code>、<code>msgstr</code> 之间插入空行。<strong><code>msgfmt</code> 仍然能过，但 diff 会变得很难看</strong>，上游 review 时会先扣格式分。</p>
+<p>几个硬性要求：</p>
+<ul>
+<li>文件头不要写不实的生成器标注。模板里如果带 <code>X-Generator: Poedit 3.7</code> 而实际不是 Poedit 生成的，删掉——这是对工具和审查者的误导；</li>
+<li>每个文件的 <code>Language:</code>、<code>Plural-Forms:</code> 要正确；</li>
+<li><code>msgid</code> 一个字符都不能改，包括末尾空格与转义；</li>
+<li>按文件原顺序输出，别重新排序，否则 diff 全红。</li>
+</ul>
+<p>生成完先做一次机械校验：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find locale/zh_CN -name <span class="string">&#x27;*.po&#x27;</span> -<span class="built_in">exec</span> msgfmt -c -o /dev/null &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+
+<p><code>-c</code> 会检查格式错误（占位符不匹配、<code>msgstr</code> 缺失、复数形式不对）。这一步过了，再谈翻译质量。</p>
+<h2 id="四、翻译阶段的三个判断"><a href="#四、翻译阶段的三个判断" class="headerlink" title="四、翻译阶段的三个判断"></a>四、翻译阶段的三个判断</h2><ol>
+<li><strong>短词看上下文，不要按词典</strong>：<code>Open</code> 可能是「打开」也可能是「开放」，去 <code>.c</code>&#x2F;<code>.cpp</code> 里看它出现在按钮还是状态里；</li>
+<li><strong>占位符原样保留</strong>：<code>%s</code>、<code>%d</code>、<code>{0}</code> 的顺序和数量都不能动。<code>msgfmt -c</code> 能抓出一部分，但顺序错位它不一定报；</li>
+<li><strong>不要翻译配置键、路径、命令</strong>：这些是运行时匹配的字符串，翻了就失效。这个坑在别处已经踩过一次（见「汉化把运行时匹配串一起翻了」那类问题），这里的原则是：<strong>只翻给人看的文案</strong>。</li>
+</ol>
+<h2 id="五、提交-PR：只放翻译文件"><a href="#五、提交-PR：只放翻译文件" class="headerlink" title="五、提交 PR：只放翻译文件"></a>五、提交 PR：只放翻译文件</h2><p>上游 PR 的审查成本要尽量低：</p>
+<ul>
+<li><strong>一个 PR 只做一件事</strong>：45 个 <code>.po</code>、+3988 行，只包含翻译文件；顺手加的 <code>AGENTS.md</code>、构建脚本改动全部不提交；</li>
+<li><strong>分支名明确</strong>：<code>i18n/zh-cn</code>；</li>
+<li><strong>PR 描述写清三件事</strong>：覆盖的语言、词条总数与完成率、术语表的几个关键决定（比如为什么 <code>Scale</code> 不译成「缩放」）；</li>
+<li><strong>提交信息用英文</strong>：<code>locale: add Simplified Chinese translation</code>；</li>
+<li><strong>等 checks</strong>：如果仓库没有为该分支配置 CI，PR 页面会显示 <code>no checks reported</code>，这不是失败，但要在描述里说明本地已跑过 <code>msgfmt -c</code>。</li>
+</ul>
+<h2 id="六、翻译之外：顺手把打包也做了"><a href="#六、翻译之外：顺手把打包也做了" class="headerlink" title="六、翻译之外：顺手把打包也做了"></a>六、翻译之外：顺手把打包也做了</h2><p>这个项目当时还没有 deb&#x2F;rpm 包，翻译合进去也只是源码。所以同一个分支里另外加了一个 <code>packages.yml</code>：<code>deb</code> 与 <code>rpm</code> 两个 job，把目标发行版仓库里没有的 <code>wlroots</code> 0.20.2、<code>wf-config</code> 0.12.0、<code>wf-utils</code> 一起打进包。</p>
+<p>打包细节（<code>debian:testing</code> 基线、<code>brp-compress</code> 与 man page、<code>gh release upload</code> 的目录问题）在「跨平台打包与 CI」那篇里展开，这里只记一条：<strong>翻译 PR 和打包 PR 要分开</strong>，否则审查者要在 4000 行翻译里找构建脚本。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>给上游补翻译，交付物不是「一份中文」，而是<strong>一套能被维护的本地化</strong>：</p>
+<ul>
+<li>术语表先定，功能名按行为译，专有名词保留；</li>
+<li><code>msgfmt -c</code> 机械校验必须过，格式问题比错译更影响 review；</li>
+<li>只翻给人看的文案，运行时键、路径、命令一律不动；</li>
+<li>PR 只放翻译文件，描述里写清术语决定；</li>
+<li>翻译和打包分成两个 PR。</li>
+</ul>
+<p>最后一句：<strong>词条数不是工作量，术语一致性才是</strong>。764 条翻完可能两天，但把「窗口&#x2F;视图」「概览&#x2F;缩放」这些词统一，决定了这套翻译能不能被上游长期维护。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/i18n/" rel="tag"># i18n</a>
+              <a href="/tags/upstream/" rel="tag"># upstream</a>
+              <a href="/tags/gettext/" rel="tag"># gettext</a>
+              <a href="/tags/translation/" rel="tag"># translation</a>
+              <a href="/tags/wayfire/" rel="tag"># wayfire</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/08/ai-video-generation/" rel="prev" title="AI 视频生成实战：分镜、水印与模型的能力边界">
+                  <i class="fa fa-angle-left"></i> AI 视频生成实战：分镜、水印与模型的能力边界
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
