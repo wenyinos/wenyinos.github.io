@@ -178,7 +178,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,7 +189,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-count">171</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -420,7 +420,7 @@
 </ul>
 <h2 id="八、这一轮新增的六个打包坑"><a href="#八、这一轮新增的六个打包坑" class="headerlink" title="八、这一轮新增的六个打包坑"></a>八、这一轮新增的六个打包坑</h2><p><strong>asar 下 <code>lstatSync(..., {throwIfNoEntry:false})</code> 返回 <code>null</code>，到 Node 侧变成 <code>undefined</code>。</strong> 打包后的冒烟报「LibreOfficeKit 已安装但损坏」，而打包前 staging 冒烟正常。代码用 <code>!== undefined</code> 判断路径是否存在，把「不存在」误判成「存在但损坏」。更麻烦的是同类修复函数只修了一个包、漏了另一个——两个都要改。</p>
 <p><strong>runner 的 DNS 故障不是打包根因。</strong> apt 装工具链报 <code>Temporary failure resolving ...</code>、重试 5 次仍失败，看起来像网络；但 DNS 只影响工具链，真正的失败在后面的 smoke 阶段。解法是恢复官方源、只覆盖 DNS（1.1.1.1&#x2F;8.8.8.8）+ <code>Acquire::ForceIPv4=true</code>，不要用镜像替换硬解 runner 的 DNS。</p>
-<p><strong>先建 release 会让另一个平台被误判「已发布」。</strong> Linux 重跑直接 <code>skipped</code>，因为发布判定只看 release 是否存在，而 FreeBSD 先建了 release。重跑要带 <code>force=true</code>。</p>
+<p><strong>先建 release 会让另一个平台被误判「已发布」。</strong> Linux 重跑直接 <code>skipped</code>，因为发布判定只看 release 是否存在，而 FreeBSD 先建了 release。当时的处理是重跑带 <code>force=true</code>，但那只是绕过；根本修法是<strong>把判定改成「本平台产物是否存在」</strong>——改成只检查自己的资产后，重跑不带 <code>force</code> 也能正确判定需要构建，这才算修完。</p>
 <p><strong>RPM 的 <code>brp-compress</code> 会压缩 man page。</strong> 构建最后一步失败，因为 <code>%files</code> 还写着 <code>wayfire.1</code>、实际已被压成 <code>.gz</code>。打包前统一压缩 man page，再生成文件清单。</p>
 <p><strong><code>gh release upload dist/*</code> 会把目录当文件上传。</strong> DEB 上传成功、RPM 缺失，因为 RPM 在 <code>x86_64/</code> 子目录、被当成文件。要只匹配 <code>.deb</code>&#x2F;<code>.rpm</code>，缺失的手动补传。</p>
 <p><strong>目标发行版的库版本可能根本满足不了最低要求。</strong> Debian trixie 的 wayland 1.23.1 &#x2F; libdrm 2.4.124 &#x2F; xkbcommon 1.7.0 都低于 wlroots 0.20.2 的要求，backports 也补不齐——只能改用 <code>debian:testing</code> 构建。顺带：运行时包名要按仓库元数据核对（<code>libdisplay-info</code> 实际叫 <code>libdisplay-info3</code>），不能凭印象写。</p>

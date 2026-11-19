@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="桌面应用原本只有云端远控：手机扫码，经厂商 relay 连回桌面。一旦本地分支屏蔽了官方账号，这条路就断了。可行的替代是在桌面进程里内置一个局域网 relay，让手机浏览器直接连过来。 看起来是「起个 HTTP 服务」，实际做下来，难点在协议边界、配对语义和「不要替用户改防火墙」这三件事。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="给桌面应用做局域网手机远控：relay、配对与防火墙">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/19/lan-remote-control-for-desktop-apps/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="桌面应用原本只有云端远控：手机扫码，经厂商 relay 连回桌面。一旦本地分支屏蔽了官方账号，这条路就断了。可行的替代是在桌面进程里内置一个局域网 relay，让手机浏览器直接连过来。 看起来是「起个 HTTP 服务」，实际做下来，难点在协议边界、配对语义和「不要替用户改防火墙」这三件事。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-18T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="electron">
+<meta property="article:tag" content="lan">
+<meta property="article:tag" content="remote-control">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="websocket">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/19/lan-remote-control-for-desktop-apps/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/19/lan-remote-control-for-desktop-apps/","path":"2026/11/19/lan-remote-control-for-desktop-apps/","title":"给桌面应用做局域网手机远控：relay、配对与防火墙"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>给桌面应用做局域网手机远控：relay、配对与防火墙 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%91%B8%E6%B8%85%E4%BA%91%E7%AB%AF%E8%BF%9C%E6%8E%A7%E7%9A%84%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">一、先摸清云端远控的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9C%AC%E5%9C%B0-relay%EF%BC%9A%E4%B8%89%E4%B8%AA%E7%AB%AF%E7%82%B9%E5%B0%B1%E5%A4%9F"><span class="nav-number">2.</span> <span class="nav-text">二、本地 relay：三个端点就够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BC%A0%E8%BE%93%E5%B1%82%EF%BC%9A%E5%88%86%E7%89%87%E4%B8%8E%E6%B5%81%E6%8E%A7%E4%B8%8D%E8%83%BD%E7%9C%81"><span class="nav-number">3.</span> <span class="nav-text">三、传输层：分片与流控不能省</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%85%8D%E5%AF%B9%E8%AF%AD%E4%B9%89%EF%BC%9A%E4%B8%80%E6%AC%A1%E6%80%A7-vs-%E5%8F%AF%E6%9B%BF%E6%8D%A2"><span class="nav-number">4.</span> <span class="nav-text">四、配对语义：一次性 vs 可替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%98%B2%E7%81%AB%E5%A2%99%EF%BC%9A%E6%8F%90%E7%A4%BA%EF%BC%8C%E4%B8%8D%E8%A6%81%E4%BB%A3%E6%94%B9"><span class="nav-number">5.</span> <span class="nav-text">五、防火墙：提示，不要代改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%AA%8C%E8%AF%81%EF%BC%9A%E5%90%8C%E6%BA%90%E3%80%81%E9%9B%B6%E5%A4%96%E9%83%A8%E8%AF%B7%E6%B1%82"><span class="nav-number">6.</span> <span class="nav-text">六、验证：同源、零外部请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">171</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/19/lan-remote-control-for-desktop-apps/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="给桌面应用做局域网手机远控：relay、配对与防火墙 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          给桌面应用做局域网手机远控：relay、配对与防火墙
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-19 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-19T00:00:00+08:00">2026-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>桌面应用原本只有云端远控：手机扫码，经厂商 relay 连回桌面。一旦本地分支屏蔽了官方账号，这条路就断了。可行的替代是<strong>在桌面进程里内置一个局域网 relay</strong>，让手机浏览器直接连过来。</p>
+<p>看起来是「起个 HTTP 服务」，实际做下来，难点在协议边界、配对语义和「不要替用户改防火墙」这三件事。</p>
+<span id="more"></span>
+
+<h2 id="一、先摸清云端远控的架构"><a href="#一、先摸清云端远控的架构" class="headerlink" title="一、先摸清云端远控的架构"></a>一、先摸清云端远控的架构</h2><p>不要一上来就写 relay，先读现有实现：</p>
+<ul>
+<li>手机页面不是独立 Agent，而是通过 relay 挂到桌面<strong>已存在的 Window Host</strong> 上；手机只负责收发界面消息；</li>
+<li>桌面侧启动链路：生成一次性内部票据（绑定 <code>windowId + workspaceKey + remoteSessionId</code>）→ 读账号 JWT（没有就停在 <code>auth-required</code>，不注册、不建连、不显示二维码）→ <code>POST /api/v1/remote/device</code> 换 <code>device_sid</code> → 每次连接前申请一次性 <code>role=device</code> token（60 秒、用后作废）→ 连 <code>ws2?token&amp;mid</code> 并发 <code>auth_init</code>；</li>
+<li>二维码只包含 <code>/remote/v4?app_version=&amp;sid=&amp;mid=&amp;name=</code>，<strong>不含 JWT、token、hash</strong>；</li>
+<li>手机侧选可 bridge 的 workspace 后发 <code>workspace-bridge-open</code>，桌面校验 <code>workspaceKey</code>、<code>remoteSessionId</code> 已连接、远程身份与 Host 绑定一致，目标必须在该窗口已打开，然后建 <code>MessagePort</code> attachment。</li>
+</ul>
+<p>这套设计里有两个可以直接复用的原则：<strong>票据一次性、身份与窗口绑定</strong>。自建 relay 不需要照抄云端协议，但这两条要保留。</p>
+<h2 id="二、本地-relay：三个端点就够"><a href="#二、本地-relay：三个端点就够" class="headerlink" title="二、本地 relay：三个端点就够"></a>二、本地 relay：三个端点就够</h2><p>桌面进程内起一个 HTTP + WS 服务：</p>
+<ul>
+<li><code>GET /</code> 或固定路径 → 返回打包进应用的手机页面（静态资源）；</li>
+<li><code>POST /api/v1/remote/device</code> → 设备注册，返回 <code>device_sid</code>；</li>
+<li><code>GET /ws</code> → WebSocket，<code>auth_init</code> 后进入 <code>pair</code> &#x2F; <code>data</code> 状态机。</li>
+</ul>
+<p>监听 <code>0.0.0.0</code> 一次覆盖所有网卡（Wi-Fi + ZeroTier 虚拟网卡），来源只接受 RFC1918、<code>100.64/10</code> 与 loopback。固定端口（这次用 <code>47821</code>）比动态端口好排查，但要在设置页显示当前可用地址。</p>
+<p>手机页面用 <code>vite build --base=/remote/v4/</code> 构建、同源托管，避免跨域与「页面里写死别的 relay 地址」的问题。构建产物直接打进桌面包，随应用版本走。</p>
+<h2 id="三、传输层：分片与流控不能省"><a href="#三、传输层：分片与流控不能省" class="headerlink" title="三、传输层：分片与流控不能省"></a>三、传输层：分片与流控不能省</h2><p>WebSocket 单帧有大小限制，而任务输出可能很大。协议里要显式定义：</p>
+<ul>
+<li>单逻辑消息最多 16 MiB &#x2F; 64 片，单物理帧（含外层 JSON）≤ 1 MiB；</li>
+<li>每片带 <code>messageSeq / fragmentIndex / fragmentCount / CRC32</code>，接收端按序号重组并校验；</li>
+<li><code>rpc-frame-ack</code> 用累积 ACK；</li>
+<li>1 MiB &#x2F; 256 KiB 高低水位做流控，重放上限 32 MiB &#x2F; 45 秒；手机端 buffer 超 500 ops 或 1 MiB 就清空转 resync。</li>
+</ul>
+<p>这些数字不是拍脑袋：没有分片，大消息会直接断连；没有累积 ACK，重连后无法判断从哪里续。</p>
+<h2 id="四、配对语义：一次性-vs-可替换"><a href="#四、配对语义：一次性-vs-可替换" class="headerlink" title="四、配对语义：一次性 vs 可替换"></a>四、配对语义：一次性 vs 可替换</h2><p>第一版把配对码做成「用后即焚」，结果验收「第二台手机替换第一台」直接失败——回看二维码时码已经失效。</p>
+<p>正确的语义取决于产品形态：</p>
+<ul>
+<li>如果一台桌面只允许一台手机，配对码应该在<strong>远控生命周期内可重复使用</strong>，停止远控时统一撤销；</li>
+<li>如果要做「替换设备」，再加一个「刷新二维码」动作：生成新的随机 6 位码，同时断开已配对手机，旧码立即失效。</li>
+</ul>
+<p>错误提示也要区分：码错了是「配对码无效」，远控停了是「配对已失效，请重新扫码」，地址变了是「地址不可用」。用户看到的文案决定他下一步做什么。</p>
+<h2 id="五、防火墙：提示，不要代改"><a href="#五、防火墙：提示，不要代改" class="headerlink" title="五、防火墙：提示，不要代改"></a>五、防火墙：提示，不要代改</h2><p>这是这次最容易做错的地方。</p>
+<p>一开始在启动时调 <code>firewall-cmd --state</code> 做检测，结果在 Fedora 45 上<strong>每次启动都弹管理员密码</strong>——firewalld 2.5.2 把这个查询归到 <code>org.fedoraproject.FirewallD1.config</code>，默认策略是 <code>auth_admin_keep</code>。用户每次开应用都要输密码，体验直接崩。</p>
+<p>最终做法是<strong>删掉全部防火墙探测</strong>：</p>
+<ul>
+<li>设置页与对话框里给出按平台的手动命令（<code>firewall-cmd --add-port=47821/tcp</code>、<code>ufw allow 47821/tcp</code>）；</li>
+<li>连接失败时提示「检查防火墙是否放行该端口」，而不是尝试自己改；</li>
+<li>不申请提权、不写系统配置。</li>
+</ul>
+<p>理由很简单：改防火墙是用户的系统级决策，应用没有资格静默代劳；而一次查询就可能触发提权弹窗，代价比收益大。</p>
+<h2 id="六、验证：同源、零外部请求"><a href="#六、验证：同源、零外部请求" class="headerlink" title="六、验证：同源、零外部请求"></a>六、验证：同源、零外部请求</h2><p>本地静态托管的验证要看到「真的什么都没发出去」：</p>
+<ul>
+<li>手机页面加载后，Chrome DevTools 里 62 个请求全部命中本机地址，零外部请求、零 404；</li>
+<li>未登录状态下没有发出任何 <code>/api/v1/remote/*</code> 或云端 relay 请求——证明登录门禁在 token&#x2F;设备请求之前；</li>
+<li>指定 ZeroTier 地址后，二维码与手机连接都走该网卡；</li>
+<li>关闭远控时 relay 撤销、已配对连接断开。</li>
+</ul>
+<p>还要补一条：<code>verify:pre-push</code> 通过不代表测试真的跑了。这次门禁里 <code>test:engineering:affected</code> 因「选中全量」被脚本主动跳过，得单独补跑 relay 与设置分区的 16 个用例。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>给桌面应用做局域网远控，核心不是「起一个 WebSocket 服务」，而是三件事：</p>
+<ul>
+<li><strong>协议边界</strong>：分片、CRC、累积 ACK、流控，缺一个都会在大消息或弱网下暴露；</li>
+<li><strong>配对语义</strong>：一次性还是可替换，取决于产品，不取决于实现方便；</li>
+<li><strong>系统边界</strong>：防火墙、提权、系统配置属于用户，应用只给提示，不代改。</li>
+</ul>
+<p>最后一句：<strong>先读现有远控的架构，再决定自建哪一层</strong>。这次能两天做完，是因为云端协议的「一次性票据 + 身份绑定窗口」可以直接复用，而不是从零设计一套。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/websocket/" rel="tag"># websocket</a>
+              <a href="/tags/security/" rel="tag"># security</a>
+              <a href="/tags/electron/" rel="tag"># electron</a>
+              <a href="/tags/remote-control/" rel="tag"># remote-control</a>
+              <a href="/tags/lan/" rel="tag"># lan</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/13/upstream-zh-cn-localization/" rel="prev" title="给上游项目补一套简体中文翻译：从 45 个 po 到上游 PR">
+                  <i class="fa fa-angle-left"></i> 给上游项目补一套简体中文翻译：从 45 个 po 到上游 PR
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

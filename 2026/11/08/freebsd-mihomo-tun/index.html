@@ -178,7 +178,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,7 +189,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-count">171</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -333,6 +333,7 @@
 <li>移植脚本时，rc.d 的 <code>onestart</code>、PATH、pidfile 检测、回环路由这些都是 FreeBSD 特有的窄路径，要逐项过一遍。</li>
 </ul>
 <p>最后一条经验：<strong>测试环境的网络要先打通再谈功能</strong>。这次如果没先把 SSH 反向隧道和端口冲突理清楚，后面所有”TUN 不通”的现象都会指向错误的方向。</p>
+<p>补一句版本管理：FreeBSD 的 pkg 默认走 <code>quarterly</code> 分支，它可能比上游 <code>latest</code> 滞后几个小版本（这次 <code>quarterly</code> 是 1.19.31_3、<code>latest</code> 是 1.19.34）。文档里不要写「pkg 装的就是最新」——想固定某个版本，要么显式切 <code>latest</code>，要么在安装脚本里检查 <code>pkg query</code> 的实际版本。</p>
 
     </div>
 
