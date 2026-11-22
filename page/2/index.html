@@ -317,6 +317,101 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/10/25/cli-tool-audit-integration-paths/" class="post-title-link" itemprop="url">124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-25T00:00:00+08:00">2026-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一个 Fedora 上管理 Copr &#x2F; OBS 第三方源的命令行工具，跑了一遍 <code>pytest</code>：124 个测试全绿，<code>ruff</code> 和 <code>mypy</code> 也没有意见。看起来挺健康。</p>
+<p>但实际用起来，<code>copa audit</code> 稳定崩溃、多关键词搜索搜不到东西、正则搜索永远空、标着”高风险”的仓库照样能装。<strong>单元测试覆盖的是函数，不是集成路径</strong>——这些缺陷没有一个能在单元测试里暴露。</p>
+<p>这篇记录那次审计找出的一批真实缺陷、修法，以及中文化和打包时另外两个坑。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/10/25/cli-tool-audit-integration-paths/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/agent-long-term-memory-sqlite/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -388,101 +483,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/10/25/agent-long-term-memory-sqlite/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/10/25/cli-tool-audit-integration-paths/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/10/25/cli-tool-audit-integration-paths/" class="post-title-link" itemprop="url">124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-10-25 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-25T00:00:00+08:00">2026-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>一个 Fedora 上管理 Copr &#x2F; OBS 第三方源的命令行工具，跑了一遍 <code>pytest</code>：124 个测试全绿，<code>ruff</code> 和 <code>mypy</code> 也没有意见。看起来挺健康。</p>
-<p>但实际用起来，<code>copa audit</code> 稳定崩溃、多关键词搜索搜不到东西、正则搜索永远空、标着”高风险”的仓库照样能装。<strong>单元测试覆盖的是函数，不是集成路径</strong>——这些缺陷没有一个能在单元测试里暴露。</p>
-<p>这篇记录那次审计找出的一批真实缺陷、修法，以及中文化和打包时另外两个坑。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/10/25/cli-tool-audit-integration-paths/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
