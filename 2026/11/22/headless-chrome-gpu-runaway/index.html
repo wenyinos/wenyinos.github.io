@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="一个 agent 用的 headless Chrome 出现怪现象：找不到窗口、关掉上层应用也没用、CPU 持续被吃。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。 这篇记一遍完整排查：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="headless Chrome 退不出去：GPU 子进程失控的排查与收尾">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/22/headless-chrome-gpu-runaway/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="一个 agent 用的 headless Chrome 出现怪现象：找不到窗口、关掉上层应用也没用、CPU 持续被吃。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。 这篇记一遍完整排查：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-21T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="gpu">
+<meta property="article:tag" content="headless-chrome">
+<meta property="article:tag" content="performance">
+<meta property="article:tag" content="systemd">
+<meta property="article:tag" content="troubleshooting">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/22/headless-chrome-gpu-runaway/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/22/headless-chrome-gpu-runaway/","path":"2026/11/22/headless-chrome-gpu-runaway/","title":"headless Chrome 退不出去：GPU 子进程失控的排查与收尾"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>headless Chrome 退不出去：GPU 子进程失控的排查与收尾 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%97%87%E7%8A%B6%E4%B8%8E%E7%AC%AC%E4%B8%80%E5%B1%82%E8%AF%AF%E5%88%A4"><span class="nav-number">1.</span> <span class="nav-text">一、症状与第一层误判</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-GPU-%E8%BF%9B%E7%A8%8B%E4%BC%9A%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">二、为什么 GPU 进程会死循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E3%80%8C%E5%85%B3%E9%97%AD%E3%80%8D%E4%B9%9F%E5%85%B3%E4%B8%8D%E6%8E%89"><span class="nav-number">3.</span> <span class="nav-text">三、为什么「关闭」也关不掉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A4%84%E7%BD%AE%E4%B8%8E%E9%A2%84%E9%98%B2"><span class="nav-number">4.</span> <span class="nav-text">四、处置与预防</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%8A%8A%E7%BB%93%E8%AE%BA%E5%9B%BA%E5%8C%96%E4%B8%8B%E6%9D%A5"><span class="nav-number">5.</span> <span class="nav-text">五、把结论固化下来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/22/headless-chrome-gpu-runaway/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="headless Chrome 退不出去：GPU 子进程失控的排查与收尾 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          headless Chrome 退不出去：GPU 子进程失控的排查与收尾
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-22 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-22T00:00:00+08:00">2026-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>一个 agent 用的 headless Chrome 出现怪现象：<strong>找不到窗口、关掉上层应用也没用、CPU 持续被吃</strong>。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。</p>
+<p>这篇记一遍完整排查：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。</p>
+<span id="more"></span>
+
+<h2 id="一、症状与第一层误判"><a href="#一、症状与第一层误判" class="headerlink" title="一、症状与第一层误判"></a>一、症状与第一层误判</h2><p>用户侧的观察是「agent-browser 退不出去且持续消耗 CPU」。直接看主进程：PID 95820 只有 0.1%，Chrome 主进程 95840 也才 0.4%——<strong>顶层进程的 CPU 数字会骗人</strong>。</p>
+<p>按进程树往下翻一层才看到真凶：Chrome 的 GPU 子进程（<code>--type=gpu-process</code>，PID 104231）占用 <strong>508% CPU、21 个线程</strong>。</p>
+<p>一个量化证据让它无可辩驳：该进程实际存活 2 分 05 秒，却消耗了 680 秒 CPU（用户态 626.9s + 内核态 53.2s）——<strong>5.4 倍于真实时长</strong>，这是死循环的特征，不是「正常的忙」。</p>
+<p>方法本身值得记：<code>ps</code> 看百分比不够，要读 <code>/proc/&lt;pid&gt;/stat</code> 里的累计 CPU 时间，和进程实际存活时间对比。比值远大于 1（且持续增长）就是失控。</p>
+<h2 id="二、为什么-GPU-进程会死循环"><a href="#二、为什么-GPU-进程会死循环" class="headerlink" title="二、为什么 GPU 进程会死循环"></a>二、为什么 GPU 进程会死循环</h2><p>这台机器没有独显直通，Chrome 用 SwiftShader 做软件渲染（<code>--use-angle=swiftshader-webgl --enable-unsafe-swiftshader</code>）。打开重动画页面时：</p>
+<ol>
+<li>GPU 进程被软件 WebGL 压满；</li>
+<li>Chrome 的健康检查判定 GPU 进程崩溃，杀掉并重启；</li>
+<li>新进程又初始化 SwiftShader，回到第 1 步——<strong>崩溃-重启循环</strong>。</li>
+</ol>
+<p>每一轮都烧一遍满载 CPU，所以累计 CPU 时间远超存活时间。</p>
+<h2 id="三、为什么「关闭」也关不掉"><a href="#三、为什么「关闭」也关不掉" class="headerlink" title="三、为什么「关闭」也关不掉"></a>三、为什么「关闭」也关不掉</h2><p>三个因素叠在一起：</p>
+<ul>
+<li><code>--headless=new --ozone-platform=headless</code> <strong>从头到尾没有窗口</strong>——用户想「关窗口」根本没有可关的东西；</li>
+<li>daemon 的原生父进程退出后，被 reparent 到 <code>systemd --user</code>（PID 1374），<strong>不是任何上层应用</strong>——关掉上层应用不会回收它；</li>
+<li>Chrome 的优雅关闭要等 GPU 进程确认退出，而 GPU 进程正满载死循环、不响应关闭消息；<code>close</code> 命令又只有 <code>--all</code> &#x2F; <code>--session</code>，<strong>没有 <code>--force</code> &#x2F; <code>--timeout</code></strong>——只能干等。</li>
+</ul>
+<h2 id="四、处置与预防"><a href="#四、处置与预防" class="headerlink" title="四、处置与预防"></a>四、处置与预防</h2><p><strong>正常路径</strong>：显式执行 <code>agent-browser close --all</code>，会话关闭、端口释放、<code>/tmp/agent-browser-chrome-*</code> 自动清理。</p>
+<p><strong>卡死时的强杀顺序</strong>（顺序很重要）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pkill -f <span class="string">&quot;agent-browser-chrome&quot;</span>   <span class="comment"># 先杀 chrome 子进程</span></span><br><span class="line">pkill -f <span class="string">&quot;agent-browser-linux-x64&quot;</span> <span class="comment"># 再杀主进程</span></span><br></pre></td></tr></table></figure>
+
+<p>顺序反了会留下孤儿 GPU 进程继续烧 CPU——主进程死了，GPU 进程不会跟着退。</p>
+<p><strong>两个不要误杀的细节</strong>：关闭后残留的 <code>chrome_crashpad_handler</code> 要先查 PPID 与 cmdline 归属（可能属于 QQ 或别的应用），不要盲目 kill；重渲染页面从源头加 <code>--disable-gpu</code>，避免软件 WebGL 压满 CPU。</p>
+<h2 id="五、把结论固化下来"><a href="#五、把结论固化下来" class="headerlink" title="五、把结论固化下来"></a>五、把结论固化下来</h2><p>这类「环境特定」的故障，修完就忘是常态。值得把排查过程写进工具自己的文档：</p>
+<ul>
+<li>详细内容放独立的 <code>LOCAL-TROUBLESHOOTING.md</code>（症状、三层根因、排查命令、处置与预防），主 <code>SKILL.md</code> 只加几行指引——<strong>不要把长文塞进 discovery stub</strong>；</li>
+<li>注意：改技能目录里的文件会让 <code>.skill-lock.json</code> 的 <code>skillFolderHash</code> 与内容不一致，下次技能 CLI 更新可能提示本地修改或直接覆盖——独立文档要在更新后补回；</li>
+<li>顺手修正记忆里的误判（比如「父进程是某上层应用」），否则下次排查会从错误的父节点开始。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>headless Chrome「退不出去」的排查，三层各有一条教训：</p>
+<ul>
+<li><strong>定位</strong>：顶层进程 CPU 低不代表正常，真凶在进程树第二层；用 <code>/proc/&lt;pid&gt;/stat</code> 的累计 CPU 时间对比存活时间，比值失控就是死循环；</li>
+<li><strong>根因</strong>：无 GPU 环境下软件渲染重动画页面，会触发 GPU 进程崩溃-重启循环；</li>
+<li><strong>收尾</strong>：headless daemon 被 systemd 收养、close 无 force 语义时，强杀要按「子进程 → 主进程」的顺序，并确认没有孤儿。</li>
+</ul>
+<p>最后一句：<strong>「关不掉」本身就是一个 bug 报告</strong>——如果一个工具没有提供强制退出的路径，排障文档里就要写清楚手动收尾的命令，否则每个用户都要重新踩一遍。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/performance/" rel="tag"># performance</a>
+              <a href="/tags/systemd/" rel="tag"># systemd</a>
+              <a href="/tags/headless-chrome/" rel="tag"># headless-chrome</a>
+              <a href="/tags/gpu/" rel="tag"># gpu</a>
+              <a href="/tags/troubleshooting/" rel="tag"># troubleshooting</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/19/lan-remote-control-for-desktop-apps/" rel="prev" title="给桌面应用做局域网手机远控：relay、配对与防火墙">
+                  <i class="fa fa-angle-left"></i> 给桌面应用做局域网手机远控：relay、配对与防火墙
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
