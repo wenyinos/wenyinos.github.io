@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="98 款模型的推理档位、上下文与网关价。数据抓取日 2026-11-15。  ← 返回「模型情报」合集   覆盖 command-code 网关 Provider API 98 个端点 与 CLI 1.89.1 官方目录 98 款（抓取日 2026-11-15）。✅ 档位唯一口径 &#x3D; CLI 包内 models.md：在线 Provider API 只返回 ID &#x2F; cont">
+    <meta name="description" content="104 款模型的推理档位、上下文与网关价。数据抓取日 2026-11-22。  ← 返回「模型情报」合集   覆盖 command-code 网关 Provider API 104 个端点 与 CLI 1.93.0 官方目录 104 款（抓取日 2026-11-22）。✅ 档位唯一口径 &#x3D; CLI 包内 models.md：在线 Provider API 只返回 ID &#x2F; c">
 <meta property="og:type" content="website">
 <meta property="og:title" content="CommandCode 全模型推理档位速查">
 <meta property="og:url" content="https://wiki.wenyinos.com/model-intel/commandcode-models-reasoning/index.html">
 <meta property="og:site_name" content="玟茵开源社区知识库">
-<meta property="og:description" content="98 款模型的推理档位、上下文与网关价。数据抓取日 2026-11-15。  ← 返回「模型情报」合集   覆盖 command-code 网关 Provider API 98 个端点 与 CLI 1.89.1 官方目录 98 款（抓取日 2026-11-15）。✅ 档位唯一口径 &#x3D; CLI 包内 models.md：在线 Provider API 只返回 ID &#x2F; cont">
+<meta property="og:description" content="104 款模型的推理档位、上下文与网关价。数据抓取日 2026-11-22。  ← 返回「模型情报」合集   覆盖 command-code 网关 Provider API 104 个端点 与 CLI 1.93.0 官方目录 104 款（抓取日 2026-11-22）。✅ 档位唯一口径 &#x3D; CLI 包内 models.md：在线 Provider API 只返回 ID &#x2F; c">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-11-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-11-14T16:00:00.000Z">
+<meta property="article:published_time" content="2026-11-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-21T16:00:00.000Z">
 <meta property="article:author" content="WenYin Open Source Community">
 <meta property="article:tag" content="Open Source">
 <meta property="article:tag" content="WenYin">
@@ -163,7 +163,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%BA%90%E4%B8%8E%E5%88%B7%E6%96%B0%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">数据源与刷新方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%94%AF%E6%8C%81%E5%8F%AF%E9%80%89%E6%8E%A8%E7%90%86%E6%A1%A3%E4%BD%8D%EF%BC%8872-%E4%B8%AA%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">一、支持可选推理档位（72 个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BC%9A%E6%8E%A8%E7%90%86%E3%80%81%E6%B7%B1%E5%BA%A6%E7%94%B1-CommandCode-%E8%87%AA%E5%8A%A8%E9%80%89%E6%8B%A9%EF%BC%8826-%E4%B8%AA%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">二、会推理、深度由 CommandCode 自动选择（26 个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%8D%E8%B4%B9-%E9%9B%B6%E6%B6%88%E8%80%97%E7%AB%AF%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">三、免费 &#x2F; 零消耗端点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%80%E6%96%B0%E6%94%B6%E5%BD%95-%E9%80%80%E5%BD%B9%E7%AB%AF%E7%82%B9%E6%A1%A3%E4%BD%8D%EF%BC%88CLI-1-89-1-%E5%AE%98%E6%96%B9%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">四、最新收录 &#x2F; 退役端点档位（CLI 1.89.1 官方目录）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81CommandCode-%E5%A5%97%E9%A4%90%E7%9F%A9%E9%98%B5%E4%B8%8E-API%EF%BC%8811-04-%E5%A4%8D%E6%A0%B8%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">五、CommandCode 套餐矩阵与 API（11-04 复核）</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%BA%90%E4%B8%8E%E5%88%B7%E6%96%B0%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">数据源与刷新方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%94%AF%E6%8C%81%E5%8F%AF%E9%80%89%E6%8E%A8%E7%90%86%E6%A1%A3%E4%BD%8D%EF%BC%8877-%E4%B8%AA%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">一、支持可选推理档位（77 个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BC%9A%E6%8E%A8%E7%90%86%E3%80%81%E6%B7%B1%E5%BA%A6%E7%94%B1-CommandCode-%E8%87%AA%E5%8A%A8%E9%80%89%E6%8B%A9%EF%BC%8827-%E4%B8%AA%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">二、会推理、深度由 CommandCode 自动选择（27 个）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%8D%E8%B4%B9-%E9%9B%B6%E6%B6%88%E8%80%97%E7%AB%AF%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">三、免费 &#x2F; 零消耗端点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%80%E6%96%B0%E6%94%B6%E5%BD%95-%E9%80%80%E5%BD%B9%E7%AB%AF%E7%82%B9%E6%A1%A3%E4%BD%8D%EF%BC%88CLI-1-93-0-%E5%AE%98%E6%96%B9%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">四、最新收录 &#x2F; 退役端点档位（CLI 1.93.0 官方目录）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81CommandCode-%E5%A5%97%E9%A4%90%E7%9F%A9%E9%98%B5%E4%B8%8E-API%EF%BC%8811-04-%E5%A4%8D%E6%A0%B8%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">五、CommandCode 套餐矩阵与 API（11-04 复核）</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -235,12 +235,12 @@
       
       <div class="post-body">
           <blockquote>
-<p>98 款模型的推理档位、上下文与网关价。数据抓取日 <strong>2026-11-15</strong>。</p>
+<p>104 款模型的推理档位、上下文与网关价。数据抓取日 <strong>2026-11-22</strong>。</p>
 </blockquote>
 <p><a href="/model-intel/">← 返回「模型情报」合集</a></p>
 <hr>
 <blockquote>
-<p>覆盖 <strong>command-code 网关 Provider API 98 个端点</strong> 与 <strong>CLI 1.89.1 官方目录 98 款</strong>（抓取日 <strong>2026-11-15</strong>）。<br>✅ <strong>档位唯一口径 &#x3D; CLI 包内 <code>models.md</code></strong>：在线 Provider API 只返回 ID &#x2F; <code>context_length</code> &#x2F; <code>supported_endpoints</code>，<strong>不含价格与推理档位</strong>。<br>✅ <strong>两源已完全收敛</strong>：网关 API <strong>98 款 &#x3D; CLI 1.89.1 目录 98 款，差集 0</strong>（11-04 时的 2 款差集 <code>ling-3.1-flash-1019</code>、<code>crouton-alpha</code> 均已补齐&#x2F;下架）。逐 ID 一致，可任选一源。<br><strong>档位说明</strong>：① <code>deepseek/*</code> 全线含 <strong><code>off</code></strong>（可关闭思考）；② <code>claude-*</code> &#x2F; <code>gpt-*</code> 多为五档 <code>low, medium, high, xhigh, max</code>；③ <code>Qwen 3.8</code> 系为 <code>low, medium, xhigh</code>（<strong>无 high</strong>）；④ <code>zai-org/GLM-5.2</code> 仅 <code>high, max</code> 两档。<br>本文档为<strong>当前状态速查</strong>：档位、价格、套餐门槛全部取自 <code>command-code</code> <strong>CLI 1.89.1</strong> 包内官方目录与 Provider API（2026-11-15 抓取），不含历史版本对照。</p>
+<p>覆盖 <strong>command-code 网关 Provider API 104 个端点</strong> 与 <strong>CLI 1.93.0 官方目录 104 款</strong>（抓取日 <strong>2026-11-22</strong>）。<br>✅ <strong>档位唯一口径 &#x3D; CLI 包内 <code>models.md</code></strong>：在线 Provider API 只返回 ID &#x2F; <code>context_length</code> &#x2F; <code>supported_endpoints</code>，<strong>不含价格与推理档位</strong>。<br>✅ <strong>两源已完全收敛</strong>：网关 API <strong>104 款 &#x3D; CLI 1.93.0 目录 104 款，差集 0</strong>，逐 ID 一致，可任选一源。<br><strong>档位说明</strong>：① <code>deepseek/*</code> 全线含 <strong><code>off</code></strong>（可关闭思考）；② <code>claude-*</code> &#x2F; <code>gpt-*</code> 多为五档 <code>low, medium, high, xhigh, max</code>；③ <code>Qwen 3.8</code> 系为 <code>low, medium, xhigh</code>（<strong>无 high</strong>）；④ <code>zai-org/GLM-5.2</code> 仅 <code>high, max</code> 两档。<br>本文档为<strong>当前状态速查</strong>：档位、价格、套餐门槛全部取自 <code>command-code</code> <strong>CLI 1.93.0</strong> 包内官方目录与 Provider API（2026-11-22 抓取），不含历史版本对照。</p>
 </blockquote>
 <h2 id="数据源与刷新方法"><a href="#数据源与刷新方法" class="headerlink" title="数据源与刷新方法"></a>数据源与刷新方法</h2><table>
 <thead>
@@ -251,9 +251,9 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>在线模型全名单（<strong>98</strong>）</td>
+<td>在线模型全名单（<strong>104</strong>）</td>
 <td><code>GET https://api.commandcode.ai/provider/v1/models</code></td>
-<td>官方 Provider API，<strong>2026-11-15 匿名抓取</strong>；返回字段含 <code>context_length</code> &#x2F; <code>supported_endpoints</code>，<strong>不含价格与推理档位</strong>；与 CLI 1.88.2 目录差集 2 款（<code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code> 网关独有）</td>
+<td>官方 Provider API，<strong>2026-11-22 匿名抓取</strong>；返回字段含 <code>context_length</code> &#x2F; <code>supported_endpoints</code>，<strong>不含价格与推理档位</strong>；与 CLI 1.88.2 目录差集 2 款（<code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code> 网关独有）</td>
 </tr>
 <tr>
 <td>推理能力 &#x2F; 可选档位 &#x2F; 网关价 &#x2F; 套餐下限（<strong>权威</strong>）</td>
@@ -272,14 +272,14 @@
 </tr>
 </tbody></table>
 <p><strong>刷新方法</strong>：重新执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://api.commandcode.ai/provider/v1/models          <span class="comment"># 在线全模型名单（11-15 = 98 个 ID）</span></span><br><span class="line">npm view command-code version                                   <span class="comment"># CLI 最新版（11-15 = 1.89.1）</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://api.commandcode.ai/provider/v1/models          <span class="comment"># 在线全模型名单（11-22 = 104 个 ID）</span></span><br><span class="line">npm view command-code version                                   <span class="comment"># CLI 最新版（11-22 = 1.93.0）</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /tmp/cc &amp;&amp; <span class="built_in">cd</span> /tmp/cc &amp;&amp; npm pack command-code@latest &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">tar xzOf command-code-*.tgz package/dist/bundled/command-code-knowledge/reference/models.md &gt; m.md</span><br><span class="line">tar xzOf command-code-*.tgz package/CHANGELOG.md &gt; c.md</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>⚠️ <strong>沙箱注意</strong>：包体约 4.2 MB（1.89.1 实测 4,174,185 字节）且解压后远超 &#x2F;tmp 配额，<strong>禁止 <code>tar xzf</code> 全量解压</strong>（会报「设备上没有空间」）；必须用 <code>tar xzOf &lt;tgz&gt; &lt;包内路径&gt;</code> 直接流式取单个文件。先 <code>tar tzf | grep models.md</code> 确认路径。</p>
+<p>⚠️ <strong>沙箱注意</strong>：包体约 4.3 MB（1.93.0 实测 4,283,049 字节）且解压后远超 &#x2F;tmp 配额，<strong>禁止 <code>tar xzf</code> 全量解压</strong>（会报「设备上没有空间」）；必须用 <code>tar xzOf &lt;tgz&gt; &lt;包内路径&gt;</code> 直接流式取单个文件。先 <code>tar tzf | grep models.md</code> 确认路径。</p>
 </blockquote>
 <p><strong>新模型核实要求</strong>：先 diff Provider API 全名单与本文表内条目，新增端点<strong>直接读 CLI 包内 <code>models.md</code> 取档位与价格</strong>；<strong>禁止按同族模型外推</strong>。注意：<strong>未列入下表档位列的模型，不代表不推理</strong>——见第二节「自动档」。</p>
 <hr>
-<h2 id="一、支持可选推理档位（72-个）"><a href="#一、支持可选推理档位（72-个）" class="headerlink" title="一、支持可选推理档位（72 个）"></a>一、支持可选推理档位（72 个）</h2><p>档位值即网关上 <code>reasoning_effort</code> 参数接受的拼写（恒等直译）。<strong>价格为 CLI 目录公开的 input&#x2F;output · cache read（每 1M tokens）</strong>。</p>
+<h2 id="一、支持可选推理档位（77-个）"><a href="#一、支持可选推理档位（77-个）" class="headerlink" title="一、支持可选推理档位（77 个）"></a>一、支持可选推理档位（77 个）</h2><p>档位值即网关上 <code>reasoning_effort</code> 参数接受的拼写（恒等直译）。<strong>价格为 CLI 目录公开的 input&#x2F;output · cache read（每 1M tokens）</strong>。</p>
 <table>
 <thead>
 <tr>
@@ -796,11 +796,51 @@
 <td>Go and above</td>
 </tr>
 <tr>
-<td><code>thinkingmachines/inkling-2-small:free</code></td>
-<td><strong>Inkling 2 Small（免费）</strong></td>
+<td><code>Qwen/Qwen4-Max</code></td>
+<td><strong>Qwen 4 Max</strong></td>
+<td>1,000,000</td>
+<td>off, low, high, xhigh</td>
+<td><strong>$1.5&#x2F;$4.5 · $0.075（wr $1.875）</strong></td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>google/gemini-4-neon</code></td>
+<td><strong>Gemini 4 Neon</strong></td>
+<td>1,000,000</td>
+<td>low, medium, high, xhigh</td>
+<td><strong>$3&#x2F;$15 · $0.15</strong></td>
+<td><strong>Pro and above</strong></td>
+</tr>
+<tr>
+<td><code>gpt-6.2-astra</code></td>
+<td><strong>GPT-6.2 Astra</strong></td>
 <td>1,048,576</td>
 <td>low, medium, high, xhigh, max</td>
-<td><strong>免费（$0&#x2F;$0）</strong></td>
+<td><strong>$8&#x2F;$40 · $0.4（wr $10）</strong></td>
+<td><strong>Max</strong></td>
+</tr>
+<tr>
+<td><code>gpt-6.2-sol</code></td>
+<td><strong>GPT-6.2 Sol</strong></td>
+<td>1,048,576</td>
+<td>low, medium, high, xhigh, max</td>
+<td><strong>$2&#x2F;$10 · $0.1（wr $2.5）</strong></td>
+<td><strong>Pro and above</strong></td>
+</tr>
+<tr>
+<td><code>tencent/hy4</code></td>
+<td><strong>Tencent Hy4</strong></td>
+<td>1,020,000</td>
+<td>low, medium, high</td>
+<td><strong>$0.834&#x2F;$2.501 · $0.042</strong></td>
+<td>Go and above</td>
+</tr>
+<tr>
+<td><code>tencent/hy4-flash</code></td>
+<td><strong>Tencent Hy4 Flash</strong></td>
+<td>1,020,000</td>
+<td>off, high</td>
+<td><strong>$0.07&#x2F;$0.281 · $0.003</strong></td>
 <td>Go and above</td>
 </tr>
 <tr>
@@ -868,7 +908,7 @@
 <td>Go and above</td>
 </tr>
 </tbody></table>
-<h2 id="二、会推理、深度由-CommandCode-自动选择（26-个）"><a href="#二、会推理、深度由-CommandCode-自动选择（26-个）" class="headerlink" title="二、会推理、深度由 CommandCode 自动选择（26 个）"></a>二、会推理、深度由 CommandCode 自动选择（26 个）</h2><p>模型支持推理，但官方 CLI catalog <strong>未公布可选档位</strong>（<code>Efforts</code> 列为 <code>—</code>），不发送 <code>reasoning_effort</code>（发送反而会被网关拒绝）。</p>
+<h2 id="二、会推理、深度由-CommandCode-自动选择（27-个）"><a href="#二、会推理、深度由-CommandCode-自动选择（27-个）" class="headerlink" title="二、会推理、深度由 CommandCode 自动选择（27 个）"></a>二、会推理、深度由 CommandCode 自动选择（27 个）</h2><p>模型支持推理，但官方 CLI catalog <strong>未公布可选档位</strong>（<code>Efforts</code> 列为 <code>—</code>），不发送 <code>reasoning_effort</code>（发送反而会被网关拒绝）。</p>
 <table>
 <thead>
 <tr>
@@ -1073,6 +1113,14 @@
 <td>Go and above</td>
 </tr>
 <tr>
+<td><code>recursive/flint-v1.0:free</code></td>
+<td><strong>Flint（免费）</strong></td>
+<td>262,000</td>
+<td><em>自动（官方未公布档位）</em></td>
+<td>免费（$0&#x2F;$0）</td>
+<td>Go and above</td>
+</tr>
+<tr>
 <td><code>thinkingmachines/inkling-small</code></td>
 <td>Inkling Small</td>
 <td>1,000,000</td>
@@ -1090,7 +1138,7 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p>计数核对：<strong>72 + 26 &#x3D; 98</strong>，与 CLI <strong>1.89.1</strong> 官方目录 98 款一致（<code>Efforts</code> 列非 <code>—</code> 者 72 款、为 <code>—</code> 者 26 款）；<strong>Provider API 实测 98 个 ID，与目录逐 ID 一致（差集 0）</strong>。<br>⚠️ <strong>本表分档一律以 CLI <code>Efforts</code> 列为准</strong>：当前两个免费端点 <code>glyph-cluster:free</code> 与 <code>thinkingmachines/inkling-2-small:free</code> 官方均公布了可选档位。</p>
+<p>计数核对：<strong>77 + 27 &#x3D; 104</strong>，与 CLI <strong>1.93.0</strong> 官方目录 104 款一致（<code>Efforts</code> 列非 <code>—</code> 者 77 款、为 <code>—</code> 者 27 款）；<strong>Provider API 实测 104 个 ID，与目录逐 ID 一致（差集 0）</strong>。<br>⚠️ <strong>本表分档一律以 CLI <code>Efforts</code> 列为准</strong>：当前免费端点 <code>recursive/flint-v1.0:free</code> <strong>未公布可选档位</strong>（列于 §二），<code>glyph-cluster:free</code> 公布了档位。</p>
 </blockquote>
 <h2 id="三、免费-零消耗端点"><a href="#三、免费-零消耗端点" class="headerlink" title="三、免费 &#x2F; 零消耗端点"></a>三、免费 &#x2F; 零消耗端点</h2><table>
 <thead>
@@ -1115,9 +1163,9 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p><strong>当前在线免费端点共 2 款</strong>（Glyph Cluster + <strong>Inkling 2 Small</strong>）；<strong>GOAT 计划页页头计数 Free 2 与此一致</strong>。⚠️ <strong>Beam 1.0 已于 CLI 1.89.0 退役</strong>（CHANGELOG: <code>retire the free Beam 1.0 model</code>），Laguna S 2.1 与 Crouton Alpha 亦已下架。<br>⚠️ <strong>已退出免费清单（切勿再写进配置）</strong>：<strong><code>minimax/minimax-m3.1-flash:free</code></strong>（限时免费已结束，已自网关 API 与 CLI 1.87.3 目录移除；付费 slug <code>minimax/minimax-m3.1-flash</code> 仍在）、<strong><code>ornith/ornith-1.5-122b:free</code></strong>（免费截止 2026-10-21 23:00 PT，已自网关 API 与 CLI 目录移除；付费 slug <code>ornith/ornith-1.5-122b</code> 仍在）、<strong><code>stealth/cat-jam:free</code></strong>（已下架）、<code>stealth/pixel-canary</code>（2026-09-30 退役）、<code>stealth/space-bunny-alpha</code>（已自网关 API 与 CLI 目录移除）、<code>inclusionai/ling-3.0-flash-sante:free</code>（已移除）、<code>inclusionai/ling-3.1-flash:free</code>（<strong>已转付费 ID <code>ling-3.1-flash</code></strong>，$0.3&#x2F;$0.9 · $0.06，含 GOAT $100 &#x2F; Pro $110 加成额度）。OpenCode <strong>Zen 侧的 <code>ling-3.0-flash-fin-free</code> 与 OpenRouter 侧同名系列不受此影响（各自独立清单）</strong>。</p>
+<p><strong>当前在线免费端点共 2 款</strong>（<strong>Flint</strong> + Glyph Cluster）；<strong>GOAT 计划页页头计数 Free 2 与此一致</strong>。⚠️ <code>thinkingmachines/inkling-2-small:free</code> 免费档已退出 CC 网关（模型本体仍在），Beam 1.0 已于 CLI 1.89.0 退役。<br>⚠️ <strong>已退出免费清单（切勿再写进配置）</strong>：<strong><code>minimax/minimax-m3.1-flash:free</code></strong>（限时免费已结束，已自网关 API 与 CLI 1.87.3 目录移除；付费 slug <code>minimax/minimax-m3.1-flash</code> 仍在）、<strong><code>ornith/ornith-1.5-122b:free</code></strong>（免费截止 2026-10-21 23:00 PT，已自网关 API 与 CLI 目录移除；付费 slug <code>ornith/ornith-1.5-122b</code> 仍在）、<strong><code>stealth/cat-jam:free</code></strong>（已下架）、<code>stealth/pixel-canary</code>（2026-09-30 退役）、<code>stealth/space-bunny-alpha</code>（已自网关 API 与 CLI 目录移除）、<code>inclusionai/ling-3.0-flash-sante:free</code>（已移除）、<code>inclusionai/ling-3.1-flash:free</code>（<strong>已转付费 ID <code>ling-3.1-flash</code></strong>，$0.3&#x2F;$0.9 · $0.06，含 GOAT $100 &#x2F; Pro $110 加成额度）。OpenCode <strong>Zen 侧的 <code>ling-3.0-flash-fin-free</code> 与 OpenRouter 侧同名系列不受此影响（各自独立清单）</strong>。</p>
 </blockquote>
-<h2 id="四、最新收录-退役端点档位（CLI-1-89-1-官方目录）"><a href="#四、最新收录-退役端点档位（CLI-1-89-1-官方目录）" class="headerlink" title="四、最新收录 &#x2F; 退役端点档位（CLI 1.89.1 官方目录）"></a>四、最新收录 &#x2F; 退役端点档位（CLI 1.89.1 官方目录）</h2><p>来源：<code>command-code</code> <strong>CLI 1.89.1</strong> 包内 <code>dist/bundled/command-code-knowledge/reference/models.md</code>；「最早收录版本」由同包 <code>CHANGELOG.md</code> 逐条反查（取<strong>最早出现该模型的版本号</strong>），<strong>不是改动记录</strong>。</p>
+<h2 id="四、最新收录-退役端点档位（CLI-1-93-0-官方目录）"><a href="#四、最新收录-退役端点档位（CLI-1-93-0-官方目录）" class="headerlink" title="四、最新收录 &#x2F; 退役端点档位（CLI 1.93.0 官方目录）"></a>四、最新收录 &#x2F; 退役端点档位（CLI 1.93.0 官方目录）</h2><p>来源：<code>command-code</code> <strong>CLI 1.93.0</strong> 包内 <code>dist/bundled/command-code-knowledge/reference/models.md</code>；「最早收录版本」由同包 <code>CHANGELOG.md</code> 逐条反查（取<strong>最早出现该模型的版本号</strong>），<strong>不是改动记录</strong>。</p>
 <table>
 <thead>
 <tr>
@@ -1366,7 +1414,7 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p><strong>收录版本口径</strong>：表内版本号为 CHANGELOG 中<strong>最早出现该模型的条目</strong>。⚠️ CHANGELOG 只记 feature 行，<strong>未单列的模型不得倒推版本</strong>（如 <code>deepseek-v4-flash-fast</code>）。<strong>当前 CLI 1.89.1，官方目录共 98 款</strong>；Provider API 在线 98 端点，差集 2 款为网关独有的 <code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code>（CLI 目录未收录）。1.85.0 <strong>新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 <code>stealth/cat-jam:free</code></strong>；1.86.0 <strong>新增 Ornith 1.5 122B（含限时免费档）</strong>；1.87.x 为功能与修复版（<code>/btw</code> 侧问指令、permission mode aliases、BYOK 包更新）；<strong>1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 <code>xiaomi/mimo-v2.5</code> 系（目录 96 → 94 款）</strong>；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。</p>
+<p><strong>收录版本口径</strong>：表内版本号为 CHANGELOG 中<strong>最早出现该模型的条目</strong>。⚠️ CHANGELOG 只记 feature 行，<strong>未单列的模型不得倒推版本</strong>（如 <code>deepseek-v4-flash-fast</code>）。<strong>当前 CLI 1.93.0，官方目录共 104 款</strong>；Provider API 在线 104 端点，差集 2 款为网关独有的 <code>inclusionai/ling-3.1-flash-1019</code>、<code>stealth/crouton-alpha</code>（CLI 目录未收录）。1.85.0 <strong>新增 Beam 1.0 free 与 MiniMax M3.1 Flash（含限时免费档），同版移除 <code>stealth/cat-jam:free</code></strong>；1.86.0 <strong>新增 Ornith 1.5 122B（含限时免费档）</strong>；1.87.x 为功能与修复版（<code>/btw</code> 侧问指令、permission mode aliases、BYOK 包更新）；<strong>1.88.0 起新增 Kimi K3.1 Pro 与 GPT-6.1 Terra，同版移除 MiniMax M3.1 Flash 与 Ornith 1.5 122B 两个限时免费档及 <code>xiaomi/mimo-v2.5</code> 系（目录 96 → 94 款）</strong>；1.88.0–1.88.2 另有后台任务改用免费模型、更新器改进与安装目录替换不中断会话等修复。</p>
 </blockquote>
 <blockquote>
 <p><strong>档位口径补充</strong>：① <code>Min plan = Go and above</code> 指 **Command Code 自家 Go 档（$1&#x2F;月）**即可用（GOAT&#x2F;Pro&#x2F;Max 同样可用）——与本报告另一处「GOAT 独占」（指 OpenCode Go 未上架）口径不同，勿混用；② CLI 目录同时给出全部 94 款的网关价与套餐下限，<strong>可作 <a href="/model-intel/ai-subscription-tiers/">AI 订阅档位横向对比</a> 与价格对比文档的价格交叉校验源</strong>；③ <strong>未公布档位 ≠ 不推理</strong>，只是不让调用方指定 <code>reasoning_effort</code>；④ CLI 目录末注原文：「Rates are the advertised price list resolved from the billing source of truth (<strong>promos are already baked in</strong>)」——<strong>表内价格已含 Deals 折后价</strong>。</p>
