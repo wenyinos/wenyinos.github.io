@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文是《桌面环境与输入法合集》的续篇，记录 KDE 主题圆角、GTK 主题移植、Winamp 皮肤格式与 Plasma 壁纸组件的坑。  KDE 主题的窗口圆角：mask-* 不是外形改 Aurorae 窗口装饰时常会误以为 mask-* 是「窗口外形遮罩」，其实在 Plasma 6.8 &#x2F; KDecoration3 里：  mask-* 经 KSvg::FrameSvg::mask(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plasma 主题、壁纸与 Winamp 皮肤">
+<meta property="og:url" content="https://wiki.wenyinos.com/2023/06/27/plasma-theme-wallpaper-skins/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="本文是《桌面环境与输入法合集》的续篇，记录 KDE 主题圆角、GTK 主题移植、Winamp 皮肤格式与 Plasma 壁纸组件的坑。  KDE 主题的窗口圆角：mask-* 不是外形改 Aurorae 窗口装饰时常会误以为 mask-* 是「窗口外形遮罩」，其实在 Plasma 6.8 &#x2F; KDecoration3 里：  mask-* 经 KSvg::FrameSvg::mask(">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-06-26T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="desktop">
+<meta property="article:tag" content="kde">
+<meta property="article:tag" content="skin">
+<meta property="article:tag" content="theme">
+<meta property="article:tag" content="wallpaper">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2023/06/27/plasma-theme-wallpaper-skins/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2023/06/27/plasma-theme-wallpaper-skins/","path":"2023/06/27/plasma-theme-wallpaper-skins/","title":"Plasma 主题、壁纸与 Winamp 皮肤"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Plasma 主题、壁纸与 Winamp 皮肤 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#KDE-%E4%B8%BB%E9%A2%98%E7%9A%84%E7%AA%97%E5%8F%A3%E5%9C%86%E8%A7%92%EF%BC%9Amask-%E4%B8%8D%E6%98%AF%E5%A4%96%E5%BD%A2"><span class="nav-number">1.</span> <span class="nav-text">KDE 主题的窗口圆角：mask-* 不是外形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GTK-%E4%B8%BB%E9%A2%98%E5%9C%A8-FreeBSD-%E4%B8%8A%E7%9A%84%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">GTK 主题在 FreeBSD 上的安装脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Winamp-%E7%9A%AE%E8%82%A4%E6%A0%BC%E5%BC%8F%EF%BC%9A%E8%83%BD%E5%A1%9E%E4%BB%80%E4%B9%88%E3%80%81%E4%B8%8D%E8%83%BD%E5%A1%9E%E4%BB%80%E4%B9%88"><span class="nav-number">3.</span> <span class="nav-text">Winamp 皮肤格式：能塞什么、不能塞什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plasma-%E5%A3%81%E7%BA%B8%E7%BB%84%E4%BB%B6%EF%BC%9A%E5%BC%80%E6%9C%BA%E5%90%8E%E5%BD%93%E6%97%A5%E5%A3%81%E7%BA%B8%E4%B8%8D%E5%88%87%E6%8D%A2"><span class="nav-number">4.</span> <span class="nav-text">Plasma 壁纸组件：开机后当日壁纸不切换</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2023/06/27/plasma-theme-wallpaper-skins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Plasma 主题、壁纸与 Winamp 皮肤 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Plasma 主题、壁纸与 Winamp 皮肤
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-27 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-27T00:00:00+08:00">2023-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>本文是《<a href="/2023/06/27/desktop-environment-and-ime/">桌面环境与输入法合集</a>》的续篇，记录 KDE 主题圆角、GTK 主题移植、Winamp 皮肤格式与 Plasma 壁纸组件的坑。</p>
+</blockquote>
+<h2 id="KDE-主题的窗口圆角：mask-不是外形"><a href="#KDE-主题的窗口圆角：mask-不是外形" class="headerlink" title="KDE 主题的窗口圆角：mask-* 不是外形"></a>KDE 主题的窗口圆角：<code>mask-*</code> 不是外形</h2><p>改 Aurorae 窗口装饰时常会误以为 <code>mask-*</code> 是「窗口外形遮罩」，其实在 Plasma 6.8 &#x2F; KDecoration3 里：</p>
+<ul>
+<li><code>mask-*</code> 经 <code>KSvg::FrameSvg::mask()</code> 调用 <code>setBlurRegion()</code>，<strong>只定义模糊区域的形状</strong>；</li>
+<li>窗口外形和圆角由 <code>decoration-*</code> 角部元素决定（<code>decoration-topright</code> &#x2F; <code>right</code> &#x2F; <code>bottomright</code> 等）；缺的角靠 FrameSvg 镜像回退，实测正常；</li>
+<li><strong>最大化窗口本来就不绘制圆角</strong>，截最大化窗口无法验证圆角，必须用非最大化窗口实测；</li>
+<li>底部 4px 圆角肉眼看起来像直角，要用 XML 精确解析 + 高分辨率像素验证，不能靠截图目测。</li>
+</ul>
+<p>还有一个几何约束：<strong>圆角半径不能超过边框厚度</strong>。想把底角从 4px 加到 12px，必须同步把 <code>BorderBottom</code> 从 4 加到 12、<code>PaddingBottom</code> 相应减小、底边条加厚——否则窗口底部会多出一条深色边。改之前先想清楚视觉代价。</p>
+<p>另外，4 个 <code>look-and-feel/*/contents/defaults</code> 里的 <code>library=org.kde.kwin.aurorae</code> 在 Plasma 6.8 已过时，实际插件是 <code>org.kde.kwin.aurorae.v2</code>。因为本机 <code>kwinrc</code> 早已是 v2 值，所以<strong>不报错、静默失效</strong>，只有重装主题才会把旧值写回。</p>
+<h2 id="GTK-主题在-FreeBSD-上的安装脚本"><a href="#GTK-主题在-FreeBSD-上的安装脚本" class="headerlink" title="GTK 主题在 FreeBSD 上的安装脚本"></a>GTK 主题在 FreeBSD 上的安装脚本</h2><p>把 Linux 上的 <code>install.sh</code> 直接搬到 FreeBSD 会立刻失败：bash 数组、<code>[[ ]]</code>、<code>sed -i</code> 需要扩展名、<code>&amp;&gt;</code> 重定向，FreeBSD 的 sh 和 BSD sed 都不认。做法是另写一个 POSIX <code>sh</code> 脚本，自包含编译与安装：</p>
+<ul>
+<li><code>sassc</code> 只检测并提示 <code>pkg install sassc</code>，不代装依赖；</li>
+<li>默认用户级安装，<code>-s</code> 走系统级；</li>
+<li>没有 GNOME Shell 时跳过 Shell 主题，其余 GTK &#x2F; Metacity &#x2F; XFWM4 &#x2F; Plank &#x2F; Cinnamon 照常安装；</li>
+<li>GNOME 检测要放在参数解析之后，否则 <code>-h</code> &#x2F; <code>-u</code> 也会打印「未找到 gnome-shell」；</li>
+<li>卸载测试有破坏性（<code>-u</code> 会把已有的同名主题一起删掉），做之前先确认能重装恢复。</li>
+</ul>
+<h2 id="Winamp-皮肤格式：能塞什么、不能塞什么"><a href="#Winamp-皮肤格式：能塞什么、不能塞什么" class="headerlink" title="Winamp 皮肤格式：能塞什么、不能塞什么"></a>Winamp 皮肤格式：能塞什么、不能塞什么</h2><p>把千千静听（TTPlayer）的 <code>.skn</code> 转成 Audacious 能用的 <code>.wsz</code>，先要接受一个事实：<strong>这个格式对矢量图一无所知</strong>。</p>
+<ul>
+<li>插件只识别 <code>.bmp</code> &#x2F; <code>.png</code> &#x2F; <code>.xpm</code>（<code>skins_util.cc</code>），不支持 SVG，也没有 <code>@2x</code> 之类的倍率加载机制；</li>
+<li><code>double_size</code> 只是把整窗按整数倍放大，不是高清资源；</li>
+<li>主窗口固定按 275×116 绘制，<code>skin.hints</code> 里的多数位置项只解析、不生效。</li>
+</ul>
+<p>所以「BMP 转 SVG 以获得高分辨率」这条路在运行时收益为零。可行的做法是：<strong>生成 SVG 母版用做源资产，离线渲染 1x&#x2F;2x PNG 装进 <code>.wsz</code></strong>，布局保留原皮肤的绘制风格、控件位置重排到 Winamp 标准坐标。</p>
+<p>另一个容易误判的地方是「旧皮肤过时了」。Audacious 对缺失的位图有不少兜底：<code>balance</code> 可以由 <code>volume</code> 代替、<code>nums_ex</code> 由 <code>numbers</code> 代替、<code>eq_ex</code> 可选。先读加载器规则再决定清理，否则会把 95 个还能用的皮肤全删掉。转换完的验收也很直接：所有 PNG 能被 GdkPixbuf 解码、尺寸符合 Winamp 2.x 规范、日志里没有 <code>Skin does not contain</code> &#x2F; <code>Unable to load skin</code>。</p>
+<h2 id="Plasma-壁纸组件：开机后当日壁纸不切换"><a href="#Plasma-壁纸组件：开机后当日壁纸不切换" class="headerlink" title="Plasma 壁纸组件：开机后当日壁纸不切换"></a>Plasma 壁纸组件：开机后当日壁纸不切换</h2><p>一个 Bing 壁纸 plasmoid 的怪现象：开机后当日壁纸<strong>能自动下载</strong>，但桌面不切换，必须右键「刷新今日壁纸」；跨午夜&#x2F;开机时序下更明显。</p>
+<p><strong>根因有两层，第一层很隐蔽。</strong> <code>Plasma5Support.DataSource</code> 的 <code>executable</code> 引擎对<strong>相同命令的 source 去重</strong>：开机时第一次 <code>find</code> 还没返回，下载回调又去连 <code>listArchiveFiles()</code>，第二次连接被引擎静默吞掉——第二个 <code>find</code> 从未执行，文件列表永远缺今日文件。日志时序可以实锤：下载回调 12:04:28.059，首次 find 返回 12:04:28.076，第二次 find 从未出现。同一调用里的 <code>disconnect + connect</code> 也会被合并，别指望「断开再连」能绕过去。</p>
+<p>第二层是重试语义：开机瞬间网络未就绪导致下载失败后，<code>lastDownloadDate</code> 已经被置位，当天不再尝试——一次失败锁死一整天。</p>
+<p><strong>修复思路</strong>：</p>
+<ul>
+<li>发起下载时记录 <code>pendingDownloadFile</code>，回调不再用「回调时刻」重新拼日期（跨午夜安全）；</li>
+<li>下载成功<strong>立即把文件并入列表并选最新文件</strong>，不等可能被去重的第二次查询；</li>
+<li>下载失败清空当日标记，Timer 每分钟重试；</li>
+<li>不拿「系统日期 &#x3D;&#x3D; 文件名」当选择依据——文件名是保存时刻的日期，00:00 后 Bing 可能还没发布当日图，会出现「日期是今天、内容还是昨天」；改为选最新文件，并用 Bing API 的 <code>fullstartdate</code> 校验，未切到当天就限次重试。</li>
+</ul>
+<p><strong>验证时记住 QML 不会热更新</strong>：改完 <code>main.qml</code> 不重启 plasmashell 等于没改，运行中的进程加载的还是启动时的旧代码。验证前必须重启，并以进程启动时间确认加载的是新版本。诊断手段推荐两个：备份 <code>main.qml</code> 注入 <code>console.warn</code> 时序日志（仓库源码不动），以及用 plasmashell 的 D-Bus <code>evaluateScript</code> 做无副作用探测。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/desktop/" rel="tag"># desktop</a>
+              <a href="/tags/kde/" rel="tag"># kde</a>
+              <a href="/tags/theme/" rel="tag"># theme</a>
+              <a href="/tags/wallpaper/" rel="tag"># wallpaper</a>
+              <a href="/tags/skin/" rel="tag"># skin</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/17/virtualization-and-containers/" rel="prev" title="虚拟化与容器合集">
+                  <i class="fa fa-angle-left"></i> 虚拟化与容器合集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/06/27/desktop-environment-and-ime/" rel="next" title="桌面环境与输入法合集">
+                  桌面环境与输入法合集 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

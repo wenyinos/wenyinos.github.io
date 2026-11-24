@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="「笔记发出去没流量」是个被说烂的话题。与其再写一篇经验帖，不如做一个小工具：输入标题、正文、标签，直接给出评分、合规风险和改稿建议。 这次把它做成了一个能在两个 Skill 市场上架的完整作品。真正花时间的不是写代码，是把「好笔记」拆成可打分的维度，以及让建议具体到能直接抄。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="做一个垂直场景的 AI Skill：评分、合规与改稿">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/24/vertical-scenario-ai-skill/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="「笔记发出去没流量」是个被说烂的话题。与其再写一篇经验帖，不如做一个小工具：输入标题、正文、标签，直接给出评分、合规风险和改稿建议。 这次把它做成了一个能在两个 Skill 市场上架的完整作品。真正花时间的不是写代码，是把「好笔记」拆成可打分的维度，以及让建议具体到能直接抄。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-23T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="content">
+<meta property="article:tag" content="prompt">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="skill">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/24/vertical-scenario-ai-skill/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/24/vertical-scenario-ai-skill/","path":"2026/11/24/vertical-scenario-ai-skill/","title":"做一个垂直场景的 AI Skill：评分、合规与改稿"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>做一个垂直场景的 AI Skill：评分、合规与改稿 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%8A%8A%E4%BA%A4%E4%BB%98%E7%89%A9%E5%AE%9A%E6%AD%BB"><span class="nav-number">1.</span> <span class="nav-text">一、先把交付物定死</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AF%84%E5%88%86%E8%A6%81%E5%8F%AF%E8%A7%A3%E9%87%8A%EF%BC%8C%E4%B8%8D%E8%83%BD%E6%98%AF%E7%8E%84%E5%AD%A6"><span class="nav-number">2.</span> <span class="nav-text">二、评分要可解释，不能是玄学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%88%E8%A7%84%E6%89%AB%E6%8F%8F%EF%BC%9A%E5%AE%81%E5%8F%AF%E8%AF%AF%E6%8A%A5%EF%BC%8C%E4%B8%8D%E5%8F%AF%E6%BC%8F%E6%8A%A5"><span class="nav-number">3.</span> <span class="nav-text">三、合规扫描：宁可误报，不可漏报</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%94%B9%E7%A8%BF%E8%A6%81%E8%83%BD%E7%9B%B4%E6%8E%A5%E6%8A%84"><span class="nav-number">4.</span> <span class="nav-text">四、改稿要能直接抄</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%9B%B6%E4%BE%9D%E8%B5%96%EF%BC%8CCLI-%E5%92%8C-Agent-%E5%8F%8C%E7%94%A8%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">五、零依赖，CLI 和 Agent 双用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%8A%E6%9E%B6%E6%AF%94%E5%BC%80%E5%8F%91%E9%BA%BB%E7%83%A6"><span class="nav-number">6.</span> <span class="nav-text">六、上架比开发麻烦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/24/vertical-scenario-ai-skill/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="做一个垂直场景的 AI Skill：评分、合规与改稿 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          做一个垂直场景的 AI Skill：评分、合规与改稿
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-24 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-24T00:00:00+08:00">2026-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>「笔记发出去没流量」是个被说烂的话题。与其再写一篇经验帖，不如做一个小工具：输入标题、正文、标签，直接给出评分、合规风险和改稿建议。</p>
+<p>这次把它做成了一个能在两个 Skill 市场上架的完整作品。真正花时间的不是写代码，是<strong>把「好笔记」拆成可打分的维度</strong>，以及<strong>让建议具体到能直接抄</strong>。</p>
+<span id="more"></span>
+
+<h2 id="一、先把交付物定死"><a href="#一、先把交付物定死" class="headerlink" title="一、先把交付物定死"></a>一、先把交付物定死</h2><p>工具类 Skill 最容易做成一堆模糊的「建议」。所以一开始就把输出限定为三块：</p>
+<ol>
+<li><strong>五维评分</strong>：标题点击力 25、开头钩子 20、种草密度 25、可信感 15、互动引导 15，满分 100；</li>
+<li><strong>合规扫描</strong>：极限词、医疗功效、诱导交易三类风险，逐条标出命中位置；</li>
+<li><strong>改稿交付</strong>：3 组备选标题、3 个开头首句、结构建议、3–10 个标签、发布前清单。</li>
+</ol>
+<p>这三块必须同时存在——只评分不给改法，等于骂完人就走；只给改法不解释，用户不知道下次怎么自己判断。</p>
+<h2 id="二、评分要可解释，不能是玄学"><a href="#二、评分要可解释，不能是玄学" class="headerlink" title="二、评分要可解释，不能是玄学"></a>二、评分要可解释，不能是玄学</h2><p>每个维度都给明确的加减分项，而不是让模型「感觉一下」：</p>
+<ul>
+<li><strong>标题点击力</strong>：具体数字、悬念缺口、人群指向、长度（20 字内）、有没有堆砌关键词；</li>
+<li><strong>开头钩子</strong>：前两句有没有冲突&#x2F;数字&#x2F;反常识，有没有直接进入场景；</li>
+<li><strong>种草密度</strong>：卖点是否可验证（用了多久、什么场景、前后对比），有没有空洞形容词；</li>
+<li><strong>可信感</strong>：价格&#x2F;渠道&#x2F;身份是否交代，有没有「绝对」「第一」这类不可证实的表达；</li>
+<li><strong>互动引导</strong>：结尾有没有具体问题或选择，而不是「欢迎点赞关注」。</li>
+</ul>
+<p>实测校准：一个刻意写得「像广告」的样例得 72 分，按建议改稿后 94 分。<strong>分数不是目的，差距能复现才有用</strong>。</p>
+<h2 id="三、合规扫描：宁可误报，不可漏报"><a href="#三、合规扫描：宁可误报，不可漏报" class="headerlink" title="三、合规扫描：宁可误报，不可漏报"></a>三、合规扫描：宁可误报，不可漏报</h2><p>三类风险用词表 + 规则匹配：</p>
+<ul>
+<li>极限词：「最」「第一」「顶级」「永久」等绝对化表达；</li>
+<li>医疗功效：治疗、根治、消炎、减肥、降血压这类功效承诺；</li>
+<li>诱导交易：私下交易、加微信、绕过平台下单。</li>
+</ul>
+<p>规则匹配会误报（比如「最后一步」里的「最」），但在这个场景里<strong>误报的代价远小于漏报</strong>——用户看到高亮，自己判断要不要改。词表要能增量维护，别写死在代码里。</p>
+<h2 id="四、改稿要能直接抄"><a href="#四、改稿要能直接抄" class="headerlink" title="四、改稿要能直接抄"></a>四、改稿要能直接抄</h2><p>「建议标题更吸引人」这种话没有价值。交付物必须是可以直接替换的文本：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">标题备选（20 字内）：</span><br><span class="line">1. 我用了 30 天，把笔记打开率从 3% 拉到 11%</span><br><span class="line">2. 别再这样写开头了，平台真的不给流量</span><br><span class="line">3. 同一条笔记改 3 个地方，播放量差 8 倍</span><br></pre></td></tr></table></figure>
+
+<p>首句同理——给出三个不同钩子类型（冲突型、数字型、场景型），让用户挑一个符合自己人设的。标签给 3–10 个，按「品类词 + 场景词 + 人群词」分组，而不是堆一堆大词。</p>
+<h2 id="五、零依赖，CLI-和-Agent-双用法"><a href="#五、零依赖，CLI-和-Agent-双用法" class="headerlink" title="五、零依赖，CLI 和 Agent 双用法"></a>五、零依赖，CLI 和 Agent 双用法</h2><p>整个工具只用 Python 标准库：</p>
+<ul>
+<li>命令行：<code>python -m note_doctor --title ... --body ...</code>，输出 Markdown 报告，非法输入退出码 2；</li>
+<li>Agent 用法：同一套评分函数包成 Skill，模型调用时返回结构化 JSON。</li>
+</ul>
+<p>零依赖的好处是<strong>分发简单</strong>——一个 zip 解压即用，不需要用户装环境。包控制在 9 个文件、约 39KB，远低于平台的 40MB &#x2F; 30 文件限制。</p>
+<h2 id="六、上架比开发麻烦"><a href="#六、上架比开发麻烦" class="headerlink" title="六、上架比开发麻烦"></a>六、上架比开发麻烦</h2><p>两个市场的上架流程都踩了坑：</p>
+<ul>
+<li><strong>小红书 Skill 市场</strong>：CLI 发布连环失败——slug 超长、失败的提交会占用 Skill ID、编辑卡片又不改 frontmatter，换 ID 仍报「已被占用」。最后改 frontmatter 的 <code>name</code> 重打包、转网页端才成功；</li>
+<li><strong>华为云 Skill 市场</strong>：页面里的上传控件在跨域 iframe 里，自动化驱动不了。改先把 Skill 推到公开代码仓，再在云端开发环境里 clone 后提交；两个 PR（技能文件 + 索引条目）等待合并；</li>
+<li><strong>浏览器自动化的边界</strong>：附件上传被安全策略禁止（<code>Not allowed</code>），发布按钮在封闭 Shadow DOM 里点不到——最后一步只能人工完成。<strong>把「能自动化的部分」和「必须人工的部分」分开，比硬啃更有进度</strong>。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>做垂直场景的 Skill，经验可以压成三句：</p>
+<ul>
+<li><strong>交付物先定死</strong>：评分、合规、改稿三件套，缺一块都不成立；</li>
+<li><strong>评分要可解释</strong>：每个维度都有具体加减分项，改前改后能复现差距；</li>
+<li><strong>建议要能直接抄</strong>：给可替换的标题、首句、标签，而不是「再优化一下」。</li>
+</ul>
+<p>最后一句：<strong>上架流程也是产品的一部分</strong>。代码写完只是开始，能过审、能被搜到、能让人一键使用，才算做完。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ai/" rel="tag"># ai</a>
+              <a href="/tags/prompt/" rel="tag"># prompt</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/skill/" rel="tag"># skill</a>
+              <a href="/tags/content/" rel="tag"># content</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/22/headless-chrome-gpu-runaway/" rel="prev" title="headless Chrome 退不出去：GPU 子进程失控的排查与收尾">
+                  <i class="fa fa-angle-left"></i> headless Chrome 退不出去：GPU 子进程失控的排查与收尾
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="一个 agent 用的 headless Chrome 出现怪现象：找不到窗口、关掉上层应用也没用、CPU 持续被吃。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。 这篇记一遍完整排查：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。">
+    <meta name="description" content="一个 agent 用的 headless Chrome 出现怪现象：找不到窗口、关掉上层应用也没用、CPU 持续被吃。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。 下面是我从头查到尾的过程：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="headless Chrome 退不出去：GPU 子进程失控的排查与收尾">
 <meta property="og:url" content="https://wiki.wenyinos.com/2026/11/22/headless-chrome-gpu-runaway/index.html">
 <meta property="og:site_name" content="玟茵开源社区知识库">
-<meta property="og:description" content="一个 agent 用的 headless Chrome 出现怪现象：找不到窗口、关掉上层应用也没用、CPU 持续被吃。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。 这篇记一遍完整排查：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。">
+<meta property="og:description" content="一个 agent 用的 headless Chrome 出现怪现象：找不到窗口、关掉上层应用也没用、CPU 持续被吃。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。 下面是我从头查到尾的过程：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-11-21T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-11-21T16:00:00.000Z">
@@ -177,7 +177,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -188,7 +188,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-count">181</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -279,7 +279,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>一个 agent 用的 headless Chrome 出现怪现象：<strong>找不到窗口、关掉上层应用也没用、CPU 持续被吃</strong>。任务管理器里它的主进程才 0.1%——看起来一切正常，机器却越来越卡。</p>
-<p>这篇记一遍完整排查：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。</p>
+<p>下面是我从头查到尾的过程：真凶藏在进程树的第二层，而且「关闭」这个动作本身也是坏的。</p>
 <span id="more"></span>
 
 <h2 id="一、症状与第一层误判"><a href="#一、症状与第一层误判" class="headerlink" title="一、症状与第一层误判"></a>一、症状与第一层误判</h2><p>用户侧的观察是「agent-browser 退不出去且持续消耗 CPU」。直接看主进程：PID 95820 只有 0.1%，Chrome 主进程 95840 也才 0.4%——<strong>顶层进程的 CPU 数字会骗人</strong>。</p>
@@ -343,6 +343,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2026/11/24/vertical-scenario-ai-skill/" rel="next" title="做一个垂直场景的 AI Skill：评分、合规与改稿">
+                  做一个垂直场景的 AI Skill：评分、合规与改稿 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

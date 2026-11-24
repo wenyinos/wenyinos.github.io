@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="用 Rust + egui 重写一个 MarkText 风格的 Markdown 编辑器，功能本身不难——难的是三件事：输入法要能用中文、导出要能看、大文件要能不卡。 这三件事有个共同点：写完不报错，用起来才发现不行。输入法不接就是打不出字，导出不处理就是一堆方块，每帧哈希就是滚动条抖。这篇把这三个方向上的具体坑记下来，顺带记两处桌面集成的连带问题。">
+    <meta name="description" content="一开始我以为写个 Markdown 编辑器，最难的是渲染。真做下来发现渲染是最省心的——文本画出来就行，反而是输入法打不出中文、PDF 导出一堆方块、大文件滚动起来一顿一顿这三件事，占到八成时间。 它们的共同点是：写完不报错，用起来才发现不行。输入法不接就是打不出字，导出不处理就是方块，每帧哈希就是滚动条抖。这篇把这三个方向上踩过的坑记一遍，顺带记两处桌面集成的连带问题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自己写的编辑器卡在哪：输入法、导出与每帧性能">
 <meta property="og:url" content="https://wiki.wenyinos.com/2026/10/26/desktop-editor-ime-export-performance/index.html">
 <meta property="og:site_name" content="玟茵开源社区知识库">
-<meta property="og:description" content="用 Rust + egui 重写一个 MarkText 风格的 Markdown 编辑器，功能本身不难——难的是三件事：输入法要能用中文、导出要能看、大文件要能不卡。 这三件事有个共同点：写完不报错，用起来才发现不行。输入法不接就是打不出字，导出不处理就是一堆方块，每帧哈希就是滚动条抖。这篇把这三个方向上的具体坑记下来，顺带记两处桌面集成的连带问题。">
+<meta property="og:description" content="一开始我以为写个 Markdown 编辑器，最难的是渲染。真做下来发现渲染是最省心的——文本画出来就行，反而是输入法打不出中文、PDF 导出一堆方块、大文件滚动起来一顿一顿这三件事，占到八成时间。 它们的共同点是：写完不报错，用起来才发现不行。输入法不接就是打不出字，导出不处理就是方块，每帧哈希就是滚动条抖。这篇把这三个方向上踩过的坑记一遍，顺带记两处桌面集成的连带问题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-10-30T16:00:00.000Z">
@@ -163,7 +163,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%AE%9A%E3%80%8C%E8%83%BD%E7%94%A8%E3%80%8D%E7%9A%84%E5%9F%BA%E7%BA%BF"><span class="nav-number">1.</span> <span class="nav-text">一、先定「能用」的基线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%BE%93%E5%85%A5%E6%B3%95%E8%A6%81%E6%89%93%E9%80%9A%E4%B8%89%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">二、输入法要打通三层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81PDF-%E5%AF%BC%E5%87%BA%EF%BC%9A%E5%AD%97%E4%BD%93%E3%80%81%E6%96%AD%E8%A1%8C%E4%B8%8E%E7%BB%98%E5%88%B6%E7%8A%B6%E6%80%81"><span class="nav-number">3.</span> <span class="nav-text">三、PDF 导出：字体、断行与绘制状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%AF%8F%E5%B8%A7%E5%85%A8%E6%96%87%E5%93%88%E5%B8%8C%EF%BC%9A%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">四、每帧全文哈希：大文件为什么卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%90%AF%E5%8A%A8%E6%81%A2%E5%A4%8D%E7%9A%84%E4%B8%A4%E6%9D%A1%E8%B7%AF%E5%BE%84"><span class="nav-number">5.</span> <span class="nav-text">五、启动恢复的两条路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%EF%BC%9A%E6%A1%86%E6%9E%B6%E6%B2%A1%E7%BB%99%EF%BC%8C%E5%BE%97%E8%87%AA%E5%B7%B1%E6%8C%82"><span class="nav-number">6.</span> <span class="nav-text">六、右键菜单：框架没给，得自己挂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%B8%80%E4%B8%AA%E6%9E%B6%E6%9E%84%E6%80%A7%E7%9A%84%E5%88%A4%E6%96%AD%EF%BC%9A%E8%B7%A8%E5%9D%97%E9%80%89%E6%8B%A9%E4%B8%8D%E6%98%AF-bug"><span class="nav-number">7.</span> <span class="nav-text">七、一个架构性的判断：跨块选择不是 bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%89%93%E5%8C%85%E4%B8%8E-CI-%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%9D%91"><span class="nav-number">8.</span> <span class="nav-text">八、打包与 CI 的四个坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E9%99%84%EF%BC%9A%E6%A1%8C%E9%9D%A2%E9%9B%86%E6%88%90%E7%9A%84%E5%8F%A6%E5%A4%96%E4%B8%A4%E5%A4%84"><span class="nav-number">9.</span> <span class="nav-text">九、附：桌面集成的另外两处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E4%BB%8E%E3%80%8C%E8%83%BD%E7%94%A8%E3%80%8D%E5%88%B0%E3%80%8C%E8%80%90%E7%94%A8%E3%80%8D%EF%BC%9A0-5-%E5%88%B0-0-6-%E8%A1%A5%E7%9A%84%E5%87%A0%E9%81%93%E5%85%B3"><span class="nav-number">10.</span> <span class="nav-text">十、从「能用」到「耐用」：0.5 到 0.6 补的几道关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E8%B7%9F%E4%B8%8A%E6%B8%B8%E5%A4%A7%E7%89%88%E6%9C%AC%E5%90%8C%E6%AD%A5%EF%BC%9A%E4%B8%8D%E8%83%BD-merge%EF%BC%8C%E5%8F%AA%E8%83%BD%E6%8C%89%E8%A1%8C%E4%B8%BA%E9%87%8D%E5%86%99"><span class="nav-number">11.</span> <span class="nav-text">十一、跟上游大版本同步：不能 merge，只能按行为重写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">12.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%AE%9A%E3%80%8C%E8%83%BD%E7%94%A8%E3%80%8D%E7%9A%84%E5%9F%BA%E7%BA%BF"><span class="nav-number">1.</span> <span class="nav-text">一、先定「能用」的基线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%BE%93%E5%85%A5%E6%B3%95%E8%A6%81%E6%89%93%E9%80%9A%E4%B8%89%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">二、输入法要打通三层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81PDF-%E5%AF%BC%E5%87%BA%EF%BC%9A%E5%AD%97%E4%BD%93%E3%80%81%E6%96%AD%E8%A1%8C%E4%B8%8E%E7%BB%98%E5%88%B6%E7%8A%B6%E6%80%81"><span class="nav-number">3.</span> <span class="nav-text">三、PDF 导出：字体、断行与绘制状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%AF%8F%E5%B8%A7%E5%85%A8%E6%96%87%E5%93%88%E5%B8%8C%EF%BC%9A%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">四、每帧全文哈希：大文件为什么卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%90%AF%E5%8A%A8%E6%81%A2%E5%A4%8D%E7%9A%84%E4%B8%A4%E6%9D%A1%E8%B7%AF%E5%BE%84"><span class="nav-number">5.</span> <span class="nav-text">五、启动恢复的两条路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%EF%BC%9A%E6%A1%86%E6%9E%B6%E6%B2%A1%E7%BB%99%EF%BC%8C%E5%BE%97%E8%87%AA%E5%B7%B1%E6%8C%82"><span class="nav-number">6.</span> <span class="nav-text">六、右键菜单：框架没给，得自己挂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%B8%80%E4%B8%AA%E6%9E%B6%E6%9E%84%E6%80%A7%E7%9A%84%E5%88%A4%E6%96%AD%EF%BC%9A%E8%B7%A8%E5%9D%97%E9%80%89%E6%8B%A9%E4%B8%8D%E6%98%AF-bug"><span class="nav-number">7.</span> <span class="nav-text">七、一个架构性的判断：跨块选择不是 bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -178,7 +178,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,7 +189,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-count">181</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -286,8 +286,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>用 Rust + egui 重写一个 MarkText 风格的 Markdown 编辑器，功能本身不难——难的是三件事：<strong>输入法要能用中文、导出要能看、大文件要能不卡</strong>。</p>
-<p>这三件事有个共同点：<strong>写完不报错，用起来才发现不行</strong>。输入法不接就是打不出字，导出不处理就是一堆方块，每帧哈希就是滚动条抖。这篇把这三个方向上的具体坑记下来，顺带记两处桌面集成的连带问题。</p>
+    <div class="post-body" itemprop="articleBody"><p>一开始我以为写个 Markdown 编辑器，最难的是渲染。真做下来发现渲染是最省心的——文本画出来就行，反而是<strong>输入法打不出中文、PDF 导出一堆方块、大文件滚动起来一顿一顿</strong>这三件事，占到八成时间。</p>
+<p>它们的共同点是：写完不报错，用起来才发现不行。输入法不接就是打不出字，导出不处理就是方块，每帧哈希就是滚动条抖。这篇把这三个方向上踩过的坑记一遍，顺带记两处桌面集成的连带问题。</p>
 <span id="more"></span>
 
 <h2 id="一、先定「能用」的基线"><a href="#一、先定「能用」的基线" class="headerlink" title="一、先定「能用」的基线"></a>一、先定「能用」的基线</h2><p>动手改之前先明确验收标准，否则「看起来能用」会一直骗你：</p>
@@ -355,61 +355,11 @@
 <p>所以「跨块的文档级选区」这个状态<strong>在现有架构里根本不存在</strong>。要支持它，得引入文档级选区（块索引 + 块内字符区间）、跨块绘制选区矩形、复制时拼接块文本——会同时动到渲染、点击命中、复制和光标映射。</p>
 <p>结论是：这次<strong>不改造架构</strong>，改用「复制全部 &#x2F; 复制为 Markdown」覆盖”整篇复制”这个真实需求；真正的跨块拖选记进路线图，作为架构级改动。</p>
 <p><strong>判断「是 bug 还是架构代价」很关键</strong>：前者修一天，后者动全身。判断标准是「这个功能在现有架构里有没有对应的状态」——没有，就不是修 bug。</p>
-<h2 id="八、打包与-CI-的四个坑"><a href="#八、打包与-CI-的四个坑" class="headerlink" title="八、打包与 CI 的四个坑"></a>八、打包与 CI 的四个坑</h2><p><strong><code>Cargo.lock</code> 没提交，CI 直接失败。</strong> 功能提交只带了 <code>Cargo.toml</code> 和源码，CI 用 <code>cargo check --locked</code>，报 <code>the lock file needs to be updated but --locked was passed</code>。锁文件是仓库产物，必须一起提交；提交前本地先跑一次 <code>--locked</code> 验证自洽。</p>
-<p><strong>NSIS 的相对路径基准是「脚本所在目录」。</strong> 不是仓库根。<code>File</code>&#x2F;<code>OutFile</code> 写成 <code>target/release/mdoxide.exe</code> 会找不到，要写成 <code>..\..\target\release\mdoxide.exe</code>。</p>
-<p><strong>Windows runner 没有 <code>makensis</code>。</strong> release workflow 里要先装（Chocolatey），否则 Windows 包永远出不来。</p>
-<p><strong>Dependabot 会把「工具链版本的 ref」当成 action 版本升级。</strong> <code>dtolnay/rust-toolchain@1.92.0</code> 指的是 <strong>Rust 版本</strong>（由 <code>rust-toolchain.toml</code> 固定），Dependabot 却把它当 action 版本提到 <code>1.120.0</code>，必然失败 → 加 ignore 规则。</p>
-<p>另外一条经验：版本号从 tag 里取时别混入 <code>v</code> 前缀；本地残留的旧 tag 要先删再重新指向当前发布提交，否则 release workflow 一直是「没有新 tag」。</p>
-<h2 id="九、附：桌面集成的另外两处"><a href="#九、附：桌面集成的另外两处" class="headerlink" title="九、附：桌面集成的另外两处"></a>九、附：桌面集成的另外两处</h2><p>同一个月的两个桌面问题，性质类似，一起记。</p>
-<p><strong>Wayland 下窗口能力是空的。</strong> 想让小工具固定在角落、置顶、不在任务栏出现——在 winit 的 Wayland 后端里，<code>set_visible</code>、<code>set_outer_position</code>、<code>set_window_level</code> <strong>全是空实现</strong>（源码注释直接写 “Not possible on Wayland.”），<code>set_minimized(true)</code> 也无法取消。要做全功能得自己写 layer-shell 后端（估 800–1500 行新代码，且 GNOME 不实现该协议），实际选择是<strong>继续走 XWayland</strong>。</p>
-<p><strong>X11 下任务栏也不会自己让开。</strong> KWin 不会因为窗口是 Utility 就跳过任务栏，而 winit 的 X11 后端又没有 <code>skip_taskbar</code> 接口（只有 Windows 有）。只能自己发 EWMH 消息：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_NET_WM_STATE_SKIP_TASKBAR</span><br><span class="line">_NET_WM_STATE_SKIP_PAGER</span><br></pre></td></tr></table></figure>
-
-<p>要注意<strong>窗口还没被窗口管理器接管时，这两条消息会被丢弃</strong>——发送后要回读 <code>_NET_WM_STATE</code> 确认，失败就重试（实践里最多重试 10 次、约 5 秒）。</p>
-<p><strong>KDE 维护两套 MIME 关联文件。</strong> 系统设置里改默认应用，一切换页面就回滚、双击文件还是老程序打开。原因是：KCM 和右键菜单只写 <code>~/.config/mimeapps.list</code>，而<strong>运行时优先读 <code>~/.config/kde-mimeapps.list</code></strong>，系统级 <code>/usr/share/applications/kde-mimeapps.list</code> 又提供了默认值。三份文件叠在一起，只改 GUI 那份永远不生效。</p>
-<p>定位方法很实用：<strong>把默认指向一个无界面的测试应用，看谁被真正拉起</strong>——由此确定运行时到底读的是哪份配置。</p>
-<p>还有一层：<strong>「直接关联」优先于「父 MIME 继承」</strong>。一个 desktop 同时声明 <code>text/plain;text/markdown;text/x-markdown</code> 时，去重后目标 MIME 只剩继承关系，强度低于另一个直接声明它的应用——表现就是「设了默认却打不开」。</p>
-<h2 id="十、从「能用」到「耐用」：0-5-到-0-6-补的几道关"><a href="#十、从「能用」到「耐用」：0-5-到-0-6-补的几道关" class="headerlink" title="十、从「能用」到「耐用」：0.5 到 0.6 补的几道关"></a>十、从「能用」到「耐用」：0.5 到 0.6 补的几道关</h2><p>前九个方向解决的是「能不能用」，后面几个版本补的是「用久了会不会坏」。</p>
-<p><strong>重载入口只能有一个。</strong> 文件被外部修改时，编辑器有磁盘监听、窗口聚焦、手动刷新三个触发点。多个入口各自读盘，会互相覆盖未保存内容。做法是收敛成 <code>replace_from_disk</code> 单一入口，并用 <code>revision</code> 门控缓存：内容版本没变就不重建 AST。</p>
-<p><strong>启动恢复要收敛，写入要增量。</strong> 恢复流程原来会重建整份文档再比较，大文件下启动明显变慢；改成只回放差异，并给 AST 设 64 MB 上限，超限就退化为纯文本视图，避免恢复时把内存打满。</p>
-<p><strong>持久化要「耐久」而不是「写了」。</strong> 直接从内存写文件，进程在写一半时崩溃就是半个 JSON。做法是 tmp + rename 原子写、配置保留 <code>.bak</code>、<code>RecoveryWriter</code> 后台串行写；索引更新加 400 ms debounce 且只跑一个 worker，否则每次按键都触发一次索引重建。</p>
-<p><strong>正文所有权要收敛到 <code>Document</code>。</strong> 早期 <code>Tab</code> 直接持有 <code>content</code>，渲染、保存、恢复各自拿 <code>&amp;mut</code>，借用冲突只能靠拆字段绕。0.6.5 把正文收进 <code>Document</code>，<code>state.rs</code> 按职责拆分，<code>Tab</code> 只留 id 与元数据。</p>
-<p><strong>安全边界要显式写出来。</strong> 代码执行、HTML 预览、终端嵌入都是「能跑任意内容」的入口，默认关闭，开启时给出明确提示；AST 大小上限同时防住恶意深层嵌套。</p>
-<p><strong>主题要跟系统走，但不能每次启动都覆盖用户选择。</strong> 从本机 Zed 主题文件读出 <code>duskfox-blurred</code> 的色号，窗口 <code>with_transparent(true)</code> + 全透明 <code>clear_color</code>，再由 KWin 的模糊窗口规则补上背景模糊，观感接近 Zed。配置里加 <code>language_explicit</code>：旧配置没有该字段时每次启动跟随系统区域设置，用户手动选过语言后才固定。</p>
-<p>几个只在重构时才会遇到的坑：</p>
-<ul>
-<li><strong>egui 的 <code>allocate_rect</code> 在 RTL 布局里会反向推进父布局游标</strong>：右上角的模式切换分段各自调用它，父游标反向移动 52px，和字数统计重叠、还点不到。改用 <code>interact</code>，只命中不占位。</li>
-<li><strong>结构体尾部悬空的文档注释会触发 E0585，并「传染」整片类型推断</strong>：一个孤立的 <code>///</code> 让 rustc 把结构体恢复成错误类型，随后大量字段被推断成 <code>Option&lt;Path&gt;</code>&#x2F;<code>Option&lt;str&gt;</code>、出现 unsized 报错。删掉悬空注释、补齐初始化字段即可。</li>
-<li><strong><code>Deref</code> 之后 <code>&amp;mut tab.content</code> 会借用整个 <code>tab</code></strong>：渲染编辑器构造处改成用已保存的 <code>tab_id</code> 回查，避免整结构借用。</li>
-<li><strong>TextEdit 的状态会在右键菜单动作前被 move</strong>：菜单编辑后状态丢失。统一在菜单处理结束后再保存状态。</li>
-<li><strong>改了行高&#x2F;主题，测试还写死旧值</strong>：断言行高 20px、主题循环没包含 Duskfox，CI 直接红。测试要引用 <code>FIXED_LINE_HEIGHT</code> 常量，主题循环跟着枚举走。</li>
-</ul>
-<p><strong>构建策略也要认账</strong>：release 二进制 51 MB、xz 压到 18.3 MB，刚好达 ≤20 MB；15 MB &#x2F; 36 万行文档后台加载不阻塞 UI、峰值 RSS 约 564 MB。<code>cargo clean</code> 一次清掉 16121 个文件 &#x2F; 10.1 GiB 之后，规则改成「不在本机构建或跑测试，全部走 GitHub Actions」——本地只做 <code>cargo check</code> 与格式化。</p>
-<h2 id="十一、跟上游大版本同步：不能-merge，只能按行为重写"><a href="#十一、跟上游大版本同步：不能-merge，只能按行为重写" class="headerlink" title="十一、跟上游大版本同步：不能 merge，只能按行为重写"></a>十一、跟上游大版本同步：不能 merge，只能按行为重写</h2><p>编辑器后来对齐了一次上游（Ferrite v0.3.1）。两边从共同基点之后各走了 376 &#x2F; 397 个提交，src 差异 212 个文件、+145,476&#x2F;−21,054 行——<strong>直接 merge 或 cherry-pick 都不可行</strong>，只能挑选可移植的行为逐项重写。</p>
-<p>先写一份「可移植项清单」，按 P0&#x2F;P1&#x2F;P2 分级，每项标注「直接移植 &#x2F; 改造后移植 &#x2F; 只借鉴 &#x2F; 不移植」。红线项（视频 WebView、多窗口、多实例、LSP、拼写检查、各平台安装器）明确不碰，避免把上游的架构假设带进来。</p>
-<p><strong>P0 数据安全，9 项全做：</strong></p>
-<ul>
-<li>脏标签切换编码要弹 Save &#x2F; Don’t Save &#x2F; Cancel，原来 <code>set_encoding</code> 直接覆盖正文；</li>
-<li>有损编码保存要拒绝：<code>encode()</code> 忽略 <code>had_errors</code> 会把不可编码字符写成 <code>&amp;#NNNN;</code>，必须检查错误标志并提示另存 UTF-8；</li>
-<li>UTF-16 BOM 要先于 null-byte 二进制判定，否则带 BOM 的文档被当成二进制；</li>
-<li>CRLF 与混合行尾要保持：Enter 固定插 <code>\n</code> 会让行尾混杂，需要引入「每文档主导行尾」；</li>
-<li>Mermaid 半输入括号要统一安全切片，多处直接切片会 panic；</li>
-<li>引用块编辑前缀、Split 撤销交错、退出&#x2F;全关保存全部标签、恢复与自动保存清理。</li>
-</ul>
-<p><strong>P1 21 项，除「统一 Rope」外全做</strong>：Tab&#x2F;Shift+Tab 缩进、标签右键菜单、Alt+Z 换行、Ctrl+Shift+R 重载、Unicode 大小写折叠搜索、设置防抖落盘、连续输入合并撤销；frontmatter 属性卡片、预览锁定、渲染&#x2F;分屏查找滚动、系统 Emoji 回退、损坏配置改名备份、本地链接与图片按文档目录解析、剪贴板图片写入 <code>assets/</code>；<code>&lt;details&gt;/&lt;summary&gt;</code> 与 <code>&lt;div align&gt;</code> 的 AST&#x2F;渲染、可导航块注册表 + 块光标、设置搜索逐行匹配控件、渲染视图独立字体、文件树活动行高亮。</p>
-<p>还有一个打开策略的收口：<code>open_file_smart</code> 在创建标签前只读前 8KB，判定为二进制就交给系统默认应用并弹 toast，返回 <code>Result&lt;Option&lt;usize&gt;&gt;</code>；6 个调用点（打开&#x2F;拖放&#x2F;快速切换&#x2F;CLI&#x2F;文件树&#x2F;二次实例）全部跟着改。</p>
-<p><strong>P2 是锦上添花</strong>：Mermaid 第二波（<code>fa:fa-*</code>、多索引 <code>linkStyle</code>、<code>%% @pos</code>、<code>autonumber</code>）、图表 popup viewer（0.5–3.0×、双轴拖动）、完整 gitGraph（commit&#x2F;branch&#x2F;cherry-pick&#x2F;三种布局）、Nerd Font 私用区回退、Linux 主选区、原生系统标题栏、运行时统计模块。</p>
-<p>这一轮新增 24 个回归测试。几个只在「跨分支移植」时才会踩的坑：</p>
-<ul>
-<li><strong>旧依赖会在最新 stable 编译器上编译失败</strong>：CI 报 never-type 推断错误，源头是 <code>rfd 0.14 → ashpd 0.8.1</code>；升级 <code>rfd 0.17</code> 即解。</li>
-<li><strong>撤销合并的范围过宽会破坏历史语义</strong>：连续输入合并成一次撤销后，测试失败——合并逻辑覆盖到了非 Raw 编辑路径，必须限定作用域。</li>
-<li><strong>计划文档「勾选即完成」不是完成证据</strong>：两项被标已完成，实际一个仍直接返回二进制错误、另一个只有说明没有 fixture；校验器连续 13 次判未闭环，补实现才过。</li>
-<li><strong>tag 同名但指向不同提交</strong>：上游 <code>v0.2.7</code>–<code>v0.3.1</code> 与本项目同名，<code>git fetch --tags</code> 会拒绝覆盖；对比只用 <code>upstream/master</code>，或把上游 tag 抓到独立命名空间。</li>
-<li><strong>gitGraph 用 <code>split(&quot;id:&quot;)</code> 解析会错</strong>：带引号的值和重复 <code>tag:</code> 都解析不对，要重写属性解析器并补测试。</li>
-<li><strong>渲染字体复用编辑器字体族会串用</strong>：自定义渲染字体必须独立 <code>CustomRendered</code> 字体族，加载失败回退 Inter。</li>
-</ul>
-<p><strong>移植判断的经验</strong>：先问「这项改动依赖上游的哪层架构」，依赖 AST&#x2F;编辑器&#x2F;设置框架的一律「只借鉴」；能独立表达成「输入 → 输出」的行为，才值得重写。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>三个方向，一句话各一条：</p>
+<hr>
+<blockquote>
+<p>打包、桌面集成与「跟上游大版本同步」的部分已拆到：<a href="/2026/10/26/mdoxide-packaging-and-upstream/">自己的编辑器（续）：打包、桌面集成与跟上游同步</a>。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>三件事，各留一句能直接记住的：</p>
 <ul>
 <li><strong>输入法</strong>是分层问题，环境变量、应用允许、输入法状态、框架帧序，缺一层就全废；测试要按框架的真实时序写，别去改产品迁就测试。</li>
 <li><strong>导出</strong>是一次小型排版：字体覆盖、CJK 断行、全角宽度、绘制状态，一条条补，补完才算能用。</li>
@@ -437,8 +387,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2026/10/25/cli-tool-audit-integration-paths/" rel="prev" title="124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复">
-                  <i class="fa fa-angle-left"></i> 124 个测试全绿，集成路径却是坏的：一次 CLI 工具的审计与修复
+                <a href="/2026/10/26/mdoxide-packaging-and-upstream/" rel="prev" title="自己的编辑器（续）：打包、桌面集成与跟上游同步">
+                  <i class="fa fa-angle-left"></i> 自己的编辑器（续）：打包、桌面集成与跟上游同步
                 </a>
             </div>
             <div class="post-nav-item">

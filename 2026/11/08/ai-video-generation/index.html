@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="用 AI 生成一段 15 秒的动画短片，流程看起来很简单：写提示词、生成关键帧、图生视频、合成。实际做下来，提示词结构、台词时长、水印去除、模型能力边界每一环都有明确的坑，而且大多数不是”调参能解决”的。 这篇按两轮重制的实际过程记一遍，结论都可以直接拿去用。">
+    <meta name="description" content="用 AI 生成一段 15 秒的动画短片，流程看起来很简单：写提示词、生成关键帧、图生视频、合成。实际做下来，提示词结构、台词时长、水印去除、模型能力边界每一环都有明确的坑，而且大多数不是”调参能解决”的。 下面按两轮重制的顺序记，结论都可以直接拿去用。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AI 视频生成实战：分镜、水印与模型的能力边界">
 <meta property="og:url" content="https://wiki.wenyinos.com/2026/11/08/ai-video-generation/index.html">
 <meta property="og:site_name" content="玟茵开源社区知识库">
-<meta property="og:description" content="用 AI 生成一段 15 秒的动画短片，流程看起来很简单：写提示词、生成关键帧、图生视频、合成。实际做下来，提示词结构、台词时长、水印去除、模型能力边界每一环都有明确的坑，而且大多数不是”调参能解决”的。 这篇按两轮重制的实际过程记一遍，结论都可以直接拿去用。">
+<meta property="og:description" content="用 AI 生成一段 15 秒的动画短片，流程看起来很简单：写提示词、生成关键帧、图生视频、合成。实际做下来，提示词结构、台词时长、水印去除、模型能力边界每一环都有明确的坑，而且大多数不是”调参能解决”的。 下面按两轮重制的顺序记，结论都可以直接拿去用。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-11-07T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-11-07T16:00:00.000Z">
@@ -177,7 +177,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -188,7 +188,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-count">181</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -279,7 +279,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><p>用 AI 生成一段 15 秒的动画短片，流程看起来很简单：写提示词、生成关键帧、图生视频、合成。实际做下来，<strong>提示词结构、台词时长、水印去除、模型能力边界</strong>每一环都有明确的坑，而且大多数不是”调参能解决”的。</p>
-<p>这篇按两轮重制的实际过程记一遍，结论都可以直接拿去用。</p>
+<p>下面按两轮重制的顺序记，结论都可以直接拿去用。</p>
 <span id="more"></span>
 
 <h2 id="一、成本策略：两帧锁定-单次成片"><a href="#一、成本策略：两帧锁定-单次成片" class="headerlink" title="一、成本策略：两帧锁定 + 单次成片"></a>一、成本策略：两帧锁定 + 单次成片</h2><p>生成视频按条计费，720P 15 秒大约 150–300 积分&#x2F;条，图像约 5–10 积分&#x2F;张。多试几版的成本很快就超过素材本身。</p>

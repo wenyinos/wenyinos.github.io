@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="在多项目、长时间使用 AI 编程助手协作开发的过程中，一些同类型的坑反复出现——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 11 类问题，附具体现象、根因与修复方法。">
+    <meta name="description" content="这些坑我至少在八个项目里踩过同一种。最丢人的一次是 pkill -f &quot;node dist&#x2F;main.js&quot;，敲完命令终端直接没了——查了半小时才反应过来，这条命令把执行它的 shell 也一起杀了。 后来我干脆建了个清单，每开一个新项目就对照一遍。下面这 12 类，是按「重复次数」排的，不是按「严重程度」排。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AI 辅助开发踩坑录：跨项目反复出现的 11 类问题">
+<meta property="og:title" content="AI 辅助开发踩坑录：跨项目反复出现的 12 类问题">
 <meta property="og:url" content="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/index.html">
 <meta property="og:site_name" content="玟茵开源社区知识库">
-<meta property="og:description" content="在多项目、长时间使用 AI 编程助手协作开发的过程中，一些同类型的坑反复出现——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 11 类问题，附具体现象、根因与修复方法。">
+<meta property="og:description" content="这些坑我至少在八个项目里踩过同一种。最丢人的一次是 pkill -f &quot;node dist&#x2F;main.js&quot;，敲完命令终端直接没了——查了半小时才反应过来，这条命令把执行它的 shell 也一起杀了。 后来我干脆建了个清单，每开一个新项目就对照一遍。下面这 12 类，是按「重复次数」排的，不是按「严重程度」排。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-06-25T16:00:00.000Z">
@@ -41,10 +41,10 @@
 <link rel="canonical" href="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/","path":"2026/06/26/ai-assisted-development-pitfalls/","title":"AI 辅助开发踩坑录：跨项目反复出现的 11 类问题"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/","path":"2026/06/26/ai-assisted-development-pitfalls/","title":"AI 辅助开发踩坑录：跨项目反复出现的 12 类问题"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>AI 辅助开发踩坑录：跨项目反复出现的 11 类问题 | 玟茵开源社区知识库</title>
+<title>AI 辅助开发踩坑录：跨项目反复出现的 12 类问题 | 玟茵开源社区知识库</title>
   
 
 
@@ -162,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81pkill-f-%E4%BC%9A%E6%9D%80%E6%8E%89%E6%89%A7%E8%A1%8C%E5%AE%83%E7%9A%84-shell-%E8%87%AA%E8%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">一、pkill -f 会杀掉执行它的 shell 自身</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%B6%E5%8C%BA%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、时间与时区处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2-%E6%AD%A3%E5%88%99%E6%94%B9%E5%86%99%E5%BF%85%E9%A1%BB%E5%9B%9E%E5%A4%B4%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">三、批量替换 &#x2F; 正则改写必须回头验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%9D%99%E9%BB%98%E5%A4%B1%E8%B4%A5%E6%AF%94%E6%8A%A5%E9%94%99%E6%9B%B4%E5%8D%B1%E9%99%A9"><span class="nav-number">4.</span> <span class="nav-text">四、静默失败比报错更危险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E2%80%9D%E6%9E%84%E5%BB%BA%E9%80%9A%E8%BF%87-URL-%E5%8F%AF%E8%BE%BE%E2%80%9D%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%9F%E8%83%BD%E5%8F%AF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">五、”构建通过 &#x2F; URL 可达”不等于功能可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%BC%93%E5%AD%98%E9%80%A0%E6%88%90%E7%9A%84%E5%81%87%E8%B1%A1"><span class="nav-number">6.</span> <span class="nav-text">六、开发环境缓存造成的假象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81npm-%E6%96%B0%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5"><span class="nav-number">7.</span> <span class="nav-text">七、npm 新安装脚本安全策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B1%82%E9%AB%98%E9%A2%91%E9%99%B7%E9%98%B1"><span class="nav-number">8.</span> <span class="nav-text">八、数据库层高频陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%8D%B8%E8%BD%BD-agent-%E6%8F%92%E4%BB%B6%E5%90%8E%E7%9A%84%E8%BF%9E%E9%94%81%E5%A4%B1%E6%95%88"><span class="nav-number">9.</span> <span class="nav-text">九、卸载 agent 插件后的连锁失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E7%BB%99-agent-%E5%8A%A0%E3%80%8C%E5%85%A8%E5%B1%80%E6%8F%90%E7%A4%BA%E8%AF%8D%E3%80%8D%E6%97%B6%E7%9A%84%E6%A1%86%E6%9E%B6%E7%BA%A6%E6%9D%9F"><span class="nav-number">10.</span> <span class="nav-text">十、给 agent 加「全局提示词」时的框架约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%99%A8%E7%9A%84%E5%8D%B8%E8%BD%BD%E8%BE%B9%E7%95%8C"><span class="nav-number">11.</span> <span class="nav-text">十一、配置托管器的卸载边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">12.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81pkill-f-%E4%BC%9A%E6%9D%80%E6%8E%89%E6%89%A7%E8%A1%8C%E5%AE%83%E7%9A%84-shell-%E8%87%AA%E8%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">一、pkill -f 会杀掉执行它的 shell 自身</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%B6%E5%8C%BA%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、时间与时区处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2-%E6%AD%A3%E5%88%99%E6%94%B9%E5%86%99%E5%BF%85%E9%A1%BB%E5%9B%9E%E5%A4%B4%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">三、批量替换 &#x2F; 正则改写必须回头验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%9D%99%E9%BB%98%E5%A4%B1%E8%B4%A5%E6%AF%94%E6%8A%A5%E9%94%99%E6%9B%B4%E5%8D%B1%E9%99%A9"><span class="nav-number">4.</span> <span class="nav-text">四、静默失败比报错更危险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E2%80%9D%E6%9E%84%E5%BB%BA%E9%80%9A%E8%BF%87-URL-%E5%8F%AF%E8%BE%BE%E2%80%9D%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%9F%E8%83%BD%E5%8F%AF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">五、”构建通过 &#x2F; URL 可达”不等于功能可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%BC%93%E5%AD%98%E9%80%A0%E6%88%90%E7%9A%84%E5%81%87%E8%B1%A1"><span class="nav-number">6.</span> <span class="nav-text">六、开发环境缓存造成的假象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81npm-%E6%96%B0%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5"><span class="nav-number">7.</span> <span class="nav-text">七、npm 新安装脚本安全策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B1%82%E9%AB%98%E9%A2%91%E9%99%B7%E9%98%B1"><span class="nav-number">8.</span> <span class="nav-text">八、数据库层高频陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%8D%B8%E8%BD%BD-agent-%E6%8F%92%E4%BB%B6%E5%90%8E%E7%9A%84%E8%BF%9E%E9%94%81%E5%A4%B1%E6%95%88"><span class="nav-number">9.</span> <span class="nav-text">九、卸载 agent 插件后的连锁失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E7%BB%99-agent-%E5%8A%A0%E3%80%8C%E5%85%A8%E5%B1%80%E6%8F%90%E7%A4%BA%E8%AF%8D%E3%80%8D%E6%97%B6%E7%9A%84%E6%A1%86%E6%9E%B6%E7%BA%A6%E6%9D%9F"><span class="nav-number">10.</span> <span class="nav-text">十、给 agent 加「全局提示词」时的框架约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%99%A8%E7%9A%84%E5%8D%B8%E8%BD%BD%E8%BE%B9%E7%95%8C"><span class="nav-number">11.</span> <span class="nav-text">十一、配置托管器的卸载边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%92%8C%E4%B8%8A%E6%B8%B8%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E9%BD%90%EF%BC%9A%E5%88%AB%E9%9D%A0%E7%8C%9C"><span class="nav-number">12.</span> <span class="nav-text">十二、和上游客户端对齐：别靠猜</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">13.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,7 +177,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -188,7 +188,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-count">181</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -233,12 +233,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="AI 辅助开发踩坑录：跨项目反复出现的 11 类问题 | 玟茵开源社区知识库">
+      <meta itemprop="name" content="AI 辅助开发踩坑录：跨项目反复出现的 12 类问题 | 玟茵开源社区知识库">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          AI 辅助开发踩坑录：跨项目反复出现的 11 类问题
+          AI 辅助开发踩坑录：跨项目反复出现的 12 类问题
         </h1>
 
         <div class="post-meta-container">
@@ -278,7 +278,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>在多项目、长时间使用 AI 编程助手协作开发的过程中，一些<strong>同类型的坑反复出现</strong>——它们跨越技术栈与业务领域，几乎每个项目都要踩一遍。本文汇总其中最高频的 11 类问题，附具体现象、根因与修复方法。</p>
+    <div class="post-body" itemprop="articleBody"><p>这些坑我至少在八个项目里踩过同一种。最丢人的一次是 <code>pkill -f &quot;node dist/main.js&quot;</code>，敲完命令终端直接没了——查了半小时才反应过来，这条命令把执行它的 shell 也一起杀了。</p>
+<p>后来我干脆建了个清单，每开一个新项目就对照一遍。下面这 12 类，是按「重复次数」排的，不是按「严重程度」排。</p>
 <span id="more"></span>
 
 <h2 id="一、pkill-f-会杀掉执行它的-shell-自身"><a href="#一、pkill-f-会杀掉执行它的-shell-自身" class="headerlink" title="一、pkill -f 会杀掉执行它的 shell 自身"></a>一、<code>pkill -f</code> 会杀掉执行它的 shell 自身</h2><p><strong>现象</strong>：执行重启服务的命令后”没有任何输出”，命令像是被中断了，很容易误判为服务本身的问题。</p>
@@ -361,7 +362,12 @@
 <p><strong>被托管工具的故障，未必是托管器引起的。</strong> 卸载后复测 <code>codearts models</code> 仍然失败——真凶是 <code>~/.config/kioslaverc</code> 里的代理残留：CLI 的 KDE 分支在 <code>ProxyType=0</code> 时仍回退读取 <code>httpProxy</code>&#x2F;<code>httpsProxy</code> 等键，把所有请求塞进失效代理。清 GNOME 代理、卸载托管器都治不了它，必须逐个删键。<strong>排查顺序应该是「先定位真凶，再扩大卸载范围」</strong>，而不是反过来。</p>
 <p><strong>启动入口决定环境。</strong> 直接跑 <code>bin/&lt;cli&gt;</code> 会绕过安装器包装脚本的环境注入（<code>PLUGIN_ENV</code> 之类），切到错误的 data dir 并报「文件夹未被信任」。用包装入口启动，问题消失——「换个方式启动就好了」通常意味着环境变量在包装脚本里。</p>
 <p><strong>做法</strong>：卸载托管器前先列清单——它托管了哪些工具的什么（模型、登录、自启、指令注入）、每个被注入文件的清理方式；卸载后对每个被托管工具跑一次最小可用性验证；故障复现时先做根因定位，不要把「顺手全清」当成修复。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这 11 类问题的共同点：<strong>它们都不在”正常路径”上，跑通一次就不会再注意到，直到在生产环境以更难排查的形态暴露</strong>。把它们固化成检查清单，在代码审查与验收时逐条对照，比每次重新踩一遍划算得多。</p>
+<h2 id="十二、和上游客户端对齐：别靠猜"><a href="#十二、和上游客户端对齐：别靠猜" class="headerlink" title="十二、和上游客户端对齐：别靠猜"></a>十二、和上游客户端对齐：别靠猜</h2><p>给一个官方 CLI 写代理，最容易忽略的是<strong>请求头里的追踪与风控字段</strong>。不补，短期可能没事，长期有被封控的风险。</p>
+<p><strong>先从二进制字符串猜，一定不全。</strong> 早期只从 CLI 二进制里搜出 <code>x-ot-trace-id</code>、<code>x-ot-client-type</code> 几个头，以为够了。实际 CLI 还发送 <code>x-ot-span-id</code>、<code>x-snap-traceid</code>、<code>x-ot-client-version</code>、<code>x-ot-function</code>、<code>plugin-name/version</code>、<code>ide-name</code>、<code>user-msg-id</code>、<code>created-time</code>、<code>model-id/name</code>、<code>X-Language</code>、<code>x-session-affinity</code> 等一整套——<strong>字符串搜索只能看到常量，看不到运行时拼出来的值</strong>。</p>
+<p><strong>正确做法是实跑抓包。</strong> 以调试模式启动官方 CLI（<code>codearts run</code> 开 DEBUG），抓它真实发出的请求，逐项记录请求头与生成规则：trace&#x2F;span 每次请求新生成，<code>x-snap-traceid</code> 是 <code>&lt;trace&gt;_&lt;span&gt;</code> 的拼法，没有客户端 session 时用一个进程级兜底，UA 要带版本号。补齐之后还要把这些头<strong>纳入签名</strong>（HMAC-SHA256），否则签名对不上，头补了也白补。最后用真实上游请求验证，返回 <code>HEADERS_OK</code> 才算过。</p>
+<p><strong>另一个容易设计错的是「定时任务 + 一次性凭据」。</strong> 每日签到把「刷新 web 登录」当成硬前置，而 refresh token 是一次性的、已经被前一天的登录消费掉了——第二天必然报 <code>invalid refresh token: &#39;the refresh token has been used&#39;</code>，整个任务以退出码 1 结束。这里的选择题是：加容错（刷新失败但 Cookie 有效时继续），还是砍功能。用户选了后者——<strong>当一个功能的依赖前提本身不成立时，删掉比打补丁干净</strong>。</p>
+<p><strong>做法</strong>：这类「对齐上游」的工作不要靠静态推断，跑一遍真实客户端、抓一遍真实请求，比读十遍文档都准；一次性凭据不要放进定时任务的前置链路。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这 12 类问题有个共同点：它们都不在正常路径上，跑通一次就忘了，直到在生产环境用更难看的样子冒出来。清单放在那里，代码审查和验收时逐条对一遍，比每次重新踩划算——毕竟我已经替你们踩过了。</p>
 
     </div>
 

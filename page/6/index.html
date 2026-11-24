@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-count">181</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -207,6 +207,484 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2020/02/07/hi1620-permon-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/07/hi1620-permon-test/" class="post-title-link" itemprop="url">华为鲲鹏920（hi1620）服务器简易性能测试</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-02-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-07T00:00:00+08:00">2020-02-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>更新：以下为热心网友总结的i3-2120与本文中测试数据的对比：<br><img src="/images/v2-f58852fd5ee846e5e73163ea9ecc4cd6_hd.jpg"></p>
+<hr>
+<p>如图配置为4核心，16G内存，40G存储，租用的华为云KC1公测版虚拟机。<br><img src="/images/v2-6df62cfd2ece96d38dcaacec246dfa69_hd.jpg"><br><img src="/images/v2-3ea01ce930d69f4afb2b1bd7a5d833ed_hd.jpg"><br>编译环境及测试数据：<br><img src="/images/v2-88da4114edb28d70b49f708e53686d6a_hd.jpg"><br><img src="/images/v2-d150f20bf2f61d136c3fd2b0461ca529_hd.jpg"><br><strong>测试软件为Phoronix Test Suite</strong><br><img src="/images/v2-40a2e5b9ae11aabb93f8c1905f85ee5b_hd.jpg"><br>前文中数据不容易理解，以下为网站给出的对比：</p>
+<p><strong>（Aircrack-ng）</strong><br><img src="/images/v2-ecd335a8d0d0a8cdb612b3f28056af8d_hd.jpg"><br><strong>（Botan x5）</strong><br><img src="/images/v2-31383deea59ca2986bf6c8733ee98bd8_hd.jpg"><br><img src="/images/v2-779376f574d809abd5d6d5da878f7908_hd.jpg"><br><img src="/images/v2-1149852c1383d501386055520215583b_hd.jpg"><br><img src="/images/v2-5db1cb9f4505552eb75e8c334e7348a1_hd.jpg"><br><img src="/images/v2-e2fc3a1d15d35693419b94fe97258ad8_hd.jpg"><br><strong>（gnupg——软件加密测试）</strong><br><img src="/images/v2-dcf9f1edff1e762da9e377601c84b14f_hd.jpg"><br><strong>（n-queens）</strong><br><img src="/images/v2-590d352541d3c63926e954acbb8c9fd3_hd.jpg"><br><strong>(openSSL)</strong><br><img src="/images/v2-1f8a610c41834b11271b57d3c315d5bf_hd.jpg"><br><strong>（scimark）</strong><br><img src="/images/v2-28bbafbf254410507c3c315266b348a6_hd.jpg"><br><strong>（smallpt）</strong><br><img src="/images/v2-8e00ac6e3c490015e923af951a727a5e_hd.jpg"><br><strong>（sysbench）</strong><br><img src="/images/v2-6e600fd9080c58fe467b7f65621a6423_hd.jpg"><br>完整测试报告见：<a href="https://link.zhihu.com/?target=https://openbenchmarking.org/result/1909129-HV-HI1620KP910">https://openbenchmarking.org/result/1909129-HV-HI1620KP910</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/07/hi1620-permon-test/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/12/18/how-to-build-fuchsia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/12/18/how-to-build-fuchsia/" class="post-title-link" itemprop="url">（转）Fushsia编译指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-18T00:00:00+08:00">2018-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>来源：</p>
+<p><a href="http://link.zhihu.com/?target=http://locez.com/fuchsia/fuchsia-compile-tutorial/">http://locez.com/fuchsia/fuchsia-compile-tutorial/</a></p>
+<h2 id="Fuchsia-简介"><a href="#Fuchsia-简介" class="headerlink" title="Fuchsia 简介"></a><strong>Fuchsia 简介</strong></h2><p>在进入本文正文之前，有必要简单介绍一下 Fuchsia 是个什么东西。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/12/18/how-to-build-fuchsia/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/12/18/x86-arch-enter-your-iphone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/12/18/x86-arch-enter-your-iphone/" class="post-title-link" itemprop="url">x86架构进入你的iPhone</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-12-18T00:00:00+08:00">2018-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>来源：<a href="http://link.zhihu.com/?target=https://lcq2.github.io/x86_iphone/">https://lcq2.github.io/x86_iphone&#x2F;</a></p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>生活中，我是一名从事基带开发的漏洞研究员。正如每个漏洞研究人员都知道的那样，了解最新技术发展对于您的工作成功是至关重要的。当然，在Apple宣布其<strong>新的，闪亮的，大的，更大的和最大的</strong>iPhone智能手机系列之后，我从<a href="http://link.zhihu.com/?target=http://ipsw.me">http://ipsw.me</a>下载了一些OTA固件并开始研究新的基带固件。</p>
+<p>我发现的东西在我的脊椎上发出一阵惊骇，那种只在夜间玩Doom的恐怖，独自在你的房间，没有灯光，可以产生。忍受我，我会告诉你我发现了什么……</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/12/18/x86-arch-enter-your-iphone/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/10/11/xda-recover-huawei-magisk-support/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/10/11/xda-recover-huawei-magisk-support/" class="post-title-link" itemprop="url">XDA开发者已修复华为设备的Magisk支持</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-11 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-11T00:00:00+08:00">2018-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>原文：<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/huawei-update-broke-magisk-fix/">Huawei rolled out an update which broke Magisk, but it can be easily fixed</a></p>
+<p>尽管最近美国和澳大利亚市场出现了问题，但华为继续在全球范围内拓展业务。该公司迅速成长到主导中国市场，现在正在挑战苹果和三星等公司。他们的<a href="https://link.zhihu.com/?target=https://forum.xda-developers.com/huawei-p20">华为P20</a>旗舰产品阵容证明了他们的成功，评论家们对它的相机，产品质量和功能表示赞赏，并且他们必将于<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/huawei-mate-20-notch-render-specifications/">华为Mate 20</a>再次掀起波澜。该公司的子品牌荣耀提供 <a href="https://link.zhihu.com/?target=https://www.xda-developers.com/hands-on-with-the-honor-play/">Honor Play</a> 和<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/honor-10-mini-review-two-months-later/">Honor 10等设备，</a> 以在中端市场竞争。正是因为像这样的智能手机，许多XDA开发者都是华为和Honor设备的粉丝，但是很多人都知道，华为决定在令人惊讶的反消费者行动中<a href="https://link.zhihu.com/?target=https://www.xda-developers.com/huawei-honor-request-bootloader-unlock-code/">停止提供引导加载程序解锁代码</a>，可以有效阻止开发者对手机的大多数开发和修改。</p>
+<p><a href="https://link.zhihu.com/?target=https://www.xda-developers.com/xda-huawei-decision-stop-bootloader-unlocking/">我们之前已经在门户网站上解决了这个问题</a>，我们仍然对此决定感到非常失望。让像华为这样的巨头改变他们的决定或者至少提出妥协并不容易，虽然在这<a href="https://link.zhihu.com/?target=https://forum.xda-developers.com/honor-view-10/development/honor-bootloader-unlocking-limited-t3837880">方面取得了一些进展</a>，但对于爱好者来说情况依然严峻。最近的更新让人们对公司失去了更多的信心，因为更新导致使用**<a href="https://link.zhihu.com/?target=https://forum.xda-developers.com/apps/magisk">Magisk进行root的</a><strong>手机</strong>不再启动，除非重新刷入原始的ramdisk映像**。因此，华为和Honor设备所有者不仅无法解锁他们的bootloader，而且那些已经这样做的人变得无法root他们的设备。许多公司对这个似乎（又一个）反爱好者的举动<strong>感到震惊</strong>，但对更新的调查显示，软件变砖是<strong>更新的副作用，而不是故意阻止Magisk &#x2F; root</strong>。以下是我们对此更新的所有了解。</p>
+<h2 id="华为的“Patch01”更新阻止了Magisk-rooted手机的启动"><a href="#华为的“Patch01”更新阻止了Magisk-rooted手机的启动" class="headerlink" title="华为的“Patch01”更新阻止了Magisk-rooted手机的启动"></a>华为的“Patch01”更新阻止了Magisk-rooted手机的启动</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/11/xda-recover-huawei-magisk-support/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2018/03/30/mediatek-helio-p60-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/03/30/mediatek-helio-p60-analysis/" class="post-title-link" itemprop="url">MediaTek Helio P60一些详细参数的分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-03-30 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-30T00:00:00+08:00">2018-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E5%A4%87/" itemprop="url" rel="index"><span itemprop="name">硬件设备</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>以下内容来自：</p>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180327232950-300x250.png"></p>
+<p>芯片的总体结构 block diagram 图，首先确定是没有专用的神经网络 AI 单元，用什么部分跑 AI 暂时还不得而知。不过很奇怪为什么没有 CCI 总线用作 CPU 部分两个丛集之间的互联，这样同频可以节约成本吗？没有 CCI 确实可以降低簇间处理延迟。</p>
+<p><img src="/images/TIM%E5%9B%BE%E7%89%8720180327233406-300x223.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/30/mediatek-helio-p60-analysis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -687,198 +1165,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2017/03/04/the-way-and-advice-for-girls-to-learn-linux-faster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/03/04/the-way-and-advice-for-girls-to-learn-linux-faster/" class="post-title-link" itemprop="url">让女孩子更快学会Linux的方法与建议</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2017-03-04T00:00:00+08:00">2017-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>笔者作为一个有 3 年 Linux 使用经验的高中女生（年龄保密），以各种现身说法，为姐妹们准备了一篇 Linux 入门文章。</p>
-<h2 id="1-不要纠结于发行版的选择"><a href="#1-不要纠结于发行版的选择" class="headerlink" title="1. 不要纠结于发行版的选择"></a>1. 不要纠结于发行版的选择</h2><p>你可能会听说，Ubuntu 适合初学者，又听说 openSUSE 外观最漂亮，还听说 Linux Mint 配置最简单……那么究竟应该选择哪个呢？对于这种状况，笔者想说：不要听别人怎么说，适合自己的就是最好的！</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/03/04/the-way-and-advice-for-girls-to-learn-linux-faster/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2017/03/04/worship-toad-the-neglected-festival-of-the-mid-autumn-festival/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
-      <meta itemprop="name" content="WenYin Open Source Community">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="玟茵开源社区知识库">
-      <meta itemprop="description" content="Open source community for developing open software.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 玟茵开源社区知识库">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/03/04/worship-toad-the-neglected-festival-of-the-mid-autumn-festival/" class="post-title-link" itemprop="url">崇拜蟾蜍：被人忽视的中秋节习俗</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2017-03-04T00:00:00+08:00">2017-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%96%87%E5%8C%96%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">文化杂谈</span></a>
-        </span>
-    </span>
-
-  
-<span class="post-meta-item">
-  <span class="post-meta-item-icon">
-    <i class="far fa-user"></i>
-  </span>
-  <span class="post-meta-item-text">作者</span>
-  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
-</span>
-
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/images/v2-386474e425696b7b2017c9b47f4aad68_r.jpeg" alt="崇拜蟾蜍：被人忽视的中秋节习俗"></p>
-<p>嫦娥奔月的故事，在中国家喻户晓，哪怕是乡野村夫，在中秋节这天，也会对孩子说，月亮上住着嫦娥。但很少有人知道，嫦娥奔月之后，还有一段极其重要的典故。中秋节，理应是中国的法定节日——放七天假的那种。</p>
-<p>奔月之后，她变成了蟾蜍，或许有人觉得，这是癞蛤蟆想吃嫦娥肉，事实恰恰相反，是嫦娥高攀了。在中国古代，蟾蜍是广受膜拜的仙物，与它沾亲带故，都是有福之兆。嫦娥配蟾蜍，不是自我奋斗的结果，而是托庇祖荫。</p>
-<p>嫦娥奔月后变成蟾蜍，不是”癞蛤蟆想吃嫦娥肉”，而是嫦娥高攀了。在中秋节这一天膜拜蟾蜍，是因为月亮与蟾蜍关系密切。都是月亮惹的祸，这么说毫不为过。但需要指出的是，不是蟾蜍沾了中秋节的光，而是中秋节沾了蟾蜍的光。中秋节约起源于隋唐时期，北宋太宗年间，才正式定八月十五为中秋节，而蟾蜍与月亮结缘，远早于中秋节，上可追溯至战国。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/03/04/worship-toad-the-neglected-festival-of-the-mid-autumn-festival/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
