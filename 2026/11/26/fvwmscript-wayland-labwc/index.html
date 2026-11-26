@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#4a2c82" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2d2140" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/wenyin-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon.ico">
+  <link rel="mask-icon" href="/images/icon/wenyin-logo.png" color="#4a2c82">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wiki.wenyinos.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="NsCDE 是一套 CDE 风格的桌面，底座是 FVWM——一个 X11 时代的窗口管理器。它的交互面板、对话框、工具全靠 FvwmScript 写成：39 个脚本、26,724 行、660 个控件。想让这套东西活在 Wayland 上，直觉方案是「fork 合成器」或「Xwayland 转译」，但这次走了第三条路：换一个原生 Wayland 合成器当宿主，FvwmScript 的代码一行不改。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="把 FvwmScript 生态搬到 Wayland：不改旧代码的 labwc 兼容路线">
+<meta property="og:url" content="https://wiki.wenyinos.com/2026/11/26/fvwmscript-wayland-labwc/index.html">
+<meta property="og:site_name" content="玟茵开源社区知识库">
+<meta property="og:description" content="NsCDE 是一套 CDE 风格的桌面，底座是 FVWM——一个 X11 时代的窗口管理器。它的交互面板、对话框、工具全靠 FvwmScript 写成：39 个脚本、26,724 行、660 个控件。想让这套东西活在 Wayland 上，直觉方案是「fork 合成器」或「Xwayland 转译」，但这次走了第三条路：换一个原生 Wayland 合成器当宿主，FvwmScript 的代码一行不改。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-25T16:00:00.000Z">
+<meta property="article:author" content="WenYin Open Source Community">
+<meta property="article:tag" content="c">
+<meta property="article:tag" content="fvwm">
+<meta property="article:tag" content="labwc">
+<meta property="article:tag" content="migration">
+<meta property="article:tag" content="wayland">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://wiki.wenyinos.com/2026/11/26/fvwmscript-wayland-labwc/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/11/26/fvwmscript-wayland-labwc/","path":"2026/11/26/fvwmscript-wayland-labwc/","title":"把 FvwmScript 生态搬到 Wayland：不改旧代码的 labwc 兼容路线"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>把 FvwmScript 生态搬到 Wayland：不改旧代码的 labwc 兼容路线 | 玟茵开源社区知识库</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">玟茵开源社区知识库</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">WenYin Open Source Wiki</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-模型情报"><a href="/model-intel/" rel="section"><i class="fa fa-flask fa-fw"></i>模型情报</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-投稿"><a href="/submission/" rel="section"><i class="fa fa-paper-plane fa-fw"></i>投稿</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%83%B3%E6%B8%85%E6%A5%9A%E3%80%8C%E4%B8%8D%E6%94%B9%E6%97%A7%E4%BB%A3%E7%A0%81%E3%80%8D%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%90%AB%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">一、先想清楚「不改旧代码」的真实含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%90%88%E6%88%90%E5%99%A8%E9%80%89-labwc%EF%BC%8C%E8%80%8C%E4%B8%94%E8%A3%81%E5%86%B3%E5%AE%83%E9%9B%B6%E6%94%B9%E5%8A%A8"><span class="nav-number">2.</span> <span class="nav-text">二、合成器选 labwc，而且裁决它零改动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%97%A7%E4%BB%A3%E7%A0%81%E6%80%8E%E4%B9%88%E3%80%8C%E9%9B%B6%E6%94%B9%E5%8A%A8%E3%80%8D%E5%9C%B0%E6%8E%A5%E8%BF%9B%E6%9D%A5"><span class="nav-number">3.</span> <span class="nav-text">三、旧代码怎么「零改动」地接进来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81labwc-%E7%9A%84%E9%85%8D%E7%BD%AE%E9%99%B7%E9%98%B1%EF%BC%88%E9%83%BD%E6%98%AF%E9%9D%99%E9%BB%98%E5%A4%B1%E8%B4%A5%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">四、labwc 的配置陷阱（都是静默失败）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Wayland-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BF%85%E8%B8%A9%E7%82%B9"><span class="nav-number">5.</span> <span class="nav-text">五、Wayland 客户端开发的几个必踩点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%AA%8C%E8%AF%81%E7%9A%84%E4%B8%89%E5%B1%82%E9%80%92%E8%BF%9B"><span class="nav-number">6.</span> <span class="nav-text">六、验证的三层递进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%BF%98%E6%9C%89%E4%B8%80%E7%B1%BB%E5%9D%91%EF%BC%9A%E6%97%A7%E4%BB%93%E5%BA%93%E8%87%AA%E5%B7%B1%E5%B0%B1%E6%98%AF%E5%9D%8F%E7%9A%84"><span class="nav-number">7.</span> <span class="nav-text">七、还有一类坑：旧仓库自己就是坏的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="WenYin Open Source Community"
+      src="/images/icon/wenyin-logo.png">
+  <p class="site-author-name" itemprop="name">WenYin Open Source Community</p>
+  <div class="site-description" itemprop="description">Open source community for developing open software.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">184</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/WenYin-Community" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;WenYin-Community" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wiki.wenyinos.com/2026/11/26/fvwmscript-wayland-labwc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon/wenyin-logo.png">
+      <meta itemprop="name" content="WenYin Open Source Community">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="玟茵开源社区知识库">
+      <meta itemprop="description" content="Open source community for developing open software.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="把 FvwmScript 生态搬到 Wayland：不改旧代码的 labwc 兼容路线 | 玟茵开源社区知识库">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          把 FvwmScript 生态搬到 Wayland：不改旧代码的 labwc 兼容路线
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-26 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-26T00:00:00+08:00">2026-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+<span class="post-meta-item">
+  <span class="post-meta-item-icon">
+    <i class="far fa-user"></i>
+  </span>
+  <span class="post-meta-item-text">作者</span>
+  <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">学姐大人</span></span>
+</span>
+
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>NsCDE 是一套 CDE 风格的桌面，底座是 FVWM——一个 X11 时代的窗口管理器。它的交互面板、对话框、工具全靠 FvwmScript 写成：39 个脚本、26,724 行、660 个控件。想让这套东西活在 Wayland 上，直觉方案是「fork 合成器」或「Xwayland 转译」，但这次走了第三条路：<strong>换一个原生 Wayland 合成器当宿主，FvwmScript 的代码一行不改</strong>。</p>
+<p>这篇记的是方向判断和落地时踩的坑。X11 遗产迁移到 Wayland 的文章很多，但「怎么让一堆无法重写的旧脚本继续跑」这个角度，参考资料几乎没有。</p>
+<span id="more"></span>
+
+<h2 id="一、先想清楚「不改旧代码」的真实含义"><a href="#一、先想清楚「不改旧代码」的真实含义" class="headerlink" title="一、先想清楚「不改旧代码」的真实含义"></a>一、先想清楚「不改旧代码」的真实含义</h2><p>用户的需求约束是逐步收紧的，最后成型为四条：完整兼容 fvwm3 的 FvwmScript、原样式直接移植、Wayland 原生（不考虑 Xwayland）、不改和尽量少改旧代码。</p>
+<p>「Wayland 原生 + 不改旧代码」在模块层是物理上不可兼得的——FvwmScript 的窗口和绘制全是 Xlib，Xlib 在 Wayland 下没有宿主。所以「尽量少改」必须被精确定义：</p>
+<ul>
+<li><strong>改动的全部集中在窗口&#x2F;渲染后端</strong>：<code>FvwmScript.c</code> 的 1,480 行事件循环（Xlib → wayland-client + xdg-shell）和 <code>Widgets/*.c</code> 的 5,564 行绘制层（X → cairo）；</li>
+<li><strong>语言层与控件逻辑保持原文件不动</strong>：39 个脚本 26,724 行零改动，bison&#x2F;flex 源 1,051 行零改动。</li>
+</ul>
+<p>这个定义立住之后，工作量可以从「重写整个桌面」收敛到「换两个后端」：估算 11–16 周、净新增 8–10k 行 C。</p>
+<h2 id="二、合成器选-labwc，而且裁决它零改动"><a href="#二、合成器选-labwc，而且裁决它零改动" class="headerlink" title="二、合成器选 labwc，而且裁决它零改动"></a>二、合成器选 labwc，而且裁决它零改动</h2><p>选 labwc（Openbox 风格的堆叠合成器）是因为它能覆盖 FVWM 的窗口管理核心：堆叠、<code>windowRules</code>、键鼠绑定、嵌套菜单、虚拟桌面、Openbox 3 主题兼容。更关键的是把「要不要 fork labwc」做了一次分档裁决：</p>
+<table>
+<thead>
+<tr>
+<th>需求</th>
+<th>labwc 现状</th>
+<th>改动量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对话框类脚本</td>
+<td>交给 FvwmScript 兼容层</td>
+<td>0 行</td>
+</tr>
+<tr>
+<td>命令通道（列出&#x2F;激活&#x2F;移动窗口）</td>
+<td>foreign-toplevel + ext-workspace + SIGHUP 均已具备</td>
+<td>0 行</td>
+</tr>
+<tr>
+<td>面板宿主与 applet</td>
+<td>同一进程内 <code>wl_subsurface</code></td>
+<td>0 行</td>
+</tr>
+<tr>
+<td>真跨进程窗口嵌入</td>
+<td>需改 wlr_scene 图层</td>
+<td>唯一 fork 触发点</td>
+</tr>
+</tbody></table>
+<p>第四档被 subsurface 方案消解之后，labwc 的改动量锁定在 <strong>0 行、不 fork</strong>——跟上游的关系从「维护一个 fork」变成「纯使用者」，这是整个方案里最值钱的一个决定。</p>
+<p>顺带排除掉两条死路：fork fvwm3 给它换 Wayland 后端（上游 issue #970 官方判定 impossible）；用带 IPC 的年轻合成器（功能覆盖不够，且太年轻不敢押）。</p>
+<h2 id="三、旧代码怎么「零改动」地接进来"><a href="#三、旧代码怎么「零改动」地接进来" class="headerlink" title="三、旧代码怎么「零改动」地接进来"></a>三、旧代码怎么「零改动」地接进来</h2><p>两个关键机制：</p>
+<p><strong>1. 模块协议照抄。</strong> fvwm 侧的 <code>module_list.c</code> 建双向管道后 fork&#x2F;exec 子进程，fd 通过 <code>argv[1]</code>&#x2F;<code>argv[2]</code> 传递——不是环境变量。argv[3] 是配置路径、argv[4] 是 window context。兼容层（compatd）按同一协议与脚本进程对话，脚本侧的通信代码完全不用动。</p>
+<p><strong>2. 解析器直接 vendor。</strong> FvwmScript 的语法解析器是 bison&#x2F;flex 生成的 C 代码，把它连同一批头文件 vendor 进来，补一个 stub <code>config.h</code> 和 10 个符号 shim，就能在不改 fvwm3 源码的前提下获得与原版<strong>完全一致</strong>的语法解析。双解析对比（vendored vs 手写）39 个脚本 37 个完全匹配、1 个已知差异、1 个待修数据。</p>
+<h2 id="四、labwc-的配置陷阱（都是静默失败）"><a href="#四、labwc-的配置陷阱（都是静默失败）" class="headerlink" title="四、labwc 的配置陷阱（都是静默失败）"></a>四、labwc 的配置陷阱（都是静默失败）</h2><p>这套迁移里最磨人的不是写代码，是 labwc 的配置项<strong>错了不报错</strong>：</p>
+<ul>
+<li><code>&lt;desktops&gt;</code> 写在 <code>&lt;core&gt;</code> 里会被静默忽略——表现为 ext-workspace 只暴露 1 个桌面，我一度以为是协议限制，找了两天才发现是 XML 层级放错。必须放 <code>rc.xml</code> 根级；</li>
+<li><code>labwc -c</code> 是配置<strong>文件</strong>路径、<code>-C</code> 才是配置<strong>目录</strong>。把目录传给 <code>-c</code>，整个配置被静默忽略、回退默认主题——截图里的装饰一直是内置浅灰，我还以为主题引擎有 bug；</li>
+<li>标题栏布局不是 <code>&lt;titleLayout&gt;</code>，是 <code>&lt;theme&gt;&lt;titlebar&gt;&lt;layout&gt;</code> 嵌套元素。CDE 原版标题栏是 <code>menu:iconify,max</code>（没有 close），猜错配置层级就永远是三键。</li>
+</ul>
+<p><strong>教训：合成器的配置静默失败时，先怀疑 XML 层级，再怀疑功能不支持。</strong></p>
+<h2 id="五、Wayland-客户端开发的几个必踩点"><a href="#五、Wayland-客户端开发的几个必踩点" class="headerlink" title="五、Wayland 客户端开发的几个必踩点"></a>五、Wayland 客户端开发的几个必踩点</h2><p>兼容层本身是标准 wayland-client + xdg-shell，几个坑都值得单独记：</p>
+<p><strong>poll 前必须 <code>wl_display_flush</code>。</strong> Wayland 请求是先攒在客户端队列里的，主循环直接 <code>poll</code> fd 会把还没发出去的请求一起阻塞——表现是窗口纯黑或根本不创建。这个问题我在两个阶段各踩了一次（第一次是 bind 死等，第二次是 attach&#x2F;commit 没送达）。</p>
+<p><strong>subsurface 是父 surface 的双缓冲状态。</strong> 面板上的 applet 只 commit 自己的子 surface，父 surface 不再 commit，位置更新永远不生效。补一次父 commit 才可见。</p>
+<p><strong>xdg-shell v4 起的 <code>configure_bounds</code> 事件必须注册。</strong> 不处理新 opcode，libwayland 直接终止客户端——窗口刚建就断开，报错信息完全指向不了根因。</p>
+<p><strong>D-Bus 回调里不能同步创建代理。</strong> 托盘（SNI）注册的回调里同步建 TrayItem 会消息重入死锁；先 return、再 <code>idle_add</code> 里创建。而 <code>idle_add</code> 的回调返回 <code>True</code> 会被解释为「重复执行」——单核 100% CPU 的来源。</p>
+<h2 id="六、验证的三层递进"><a href="#六、验证的三层递进" class="headerlink" title="六、验证的三层递进"></a>六、验证的三层递进</h2><ul>
+<li><strong>headless</strong>：<code>WLR_BACKENDS=headless</code> 截图逐项比对——快，但合成器配置错误在这里最容易漏（默认配置也能出图）；</li>
+<li><strong>嵌套</strong>：跑在 KDE 窗口里，肉眼确认主题与桌面数；</li>
+<li><strong>独立 D-Bus + 最小环境</strong>：等价 SDDM 启动路径，只差物理显示器。</li>
+</ul>
+<p>最后是 <strong>39 脚本启动冒烟矩阵</strong>：每个脚本都拉起、渲染首帧、退出，39&#x2F;39 通过。这个矩阵比任何单项测试都能说明「兼容」到底到什么程度——单看功能列表会高估，单看失败样例会低估。</p>
+<h2 id="七、还有一类坑：旧仓库自己就是坏的"><a href="#七、还有一类坑：旧仓库自己就是坏的" class="headerlink" title="七、还有一类坑：旧仓库自己就是坏的"></a>七、还有一类坑：旧仓库自己就是坏的</h2><p>vendor NsCDE 的 Python 资产时发现 <code>MotifColors.py</code> 顶层 import 的两个模块在母仓库里根本不存在——旧的主题链从拆分那天起就 import 会失败。这不是要修的 bug，是要记录的证据：<strong>vendor 前先跑一遍 import，坏的就地淘汰，别把「能跑」当成默认前提。</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>把不可重写的旧生态搬到新平台，真正决定成败的是三个判断：</p>
+<ul>
+<li><strong>「少改」要被精确量化</strong>——锁定改动面（两个后端文件），其余全部零改动，工作量才可控、行为才可对齐；</li>
+<li><strong>宿主的改动量要单独裁决</strong>——合成器零改动、不 fork，长期维护成本直接归零；</li>
+<li><strong>静默失败优先查配置层级</strong>——合成器不报错的配置错误，比协议不支持更浪费时间。</li>
+</ul>
+<p>一句话：<strong>兼容旧生态的价值不在「能跑起来」，在于旧代码的每一行行为都还有人对账。</strong> 39&#x2F;39 的冒烟矩阵，就是这份对账单。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/wayland/" rel="tag"># wayland</a>
+              <a href="/tags/migration/" rel="tag"># migration</a>
+              <a href="/tags/labwc/" rel="tag"># labwc</a>
+              <a href="/tags/fvwm/" rel="tag"># fvwm</a>
+              <a href="/tags/c/" rel="tag"># c</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/24/vertical-scenario-ai-skill/" rel="prev" title="做一个垂直场景的 AI Skill：评分、合规与改稿">
+                  <i class="fa fa-angle-left"></i> 做一个垂直场景的 AI Skill：评分、合规与改稿
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">WenYin Open Source Community</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

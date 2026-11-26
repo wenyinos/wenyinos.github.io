@@ -22,7 +22,7 @@
 
     <meta name="description" content="这些坑我至少在八个项目里踩过同一种。最丢人的一次是 pkill -f &quot;node dist&#x2F;main.js&quot;，敲完命令终端直接没了——查了半小时才反应过来，这条命令把执行它的 shell 也一起杀了。 后来我干脆建了个清单，每开一个新项目就对照一遍。下面这 12 类，是按「重复次数」排的，不是按「严重程度」排。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AI 辅助开发踩坑录：跨项目反复出现的 12 类问题">
+<meta property="og:title" content="AI 辅助开发踩坑录：跨项目反复出现的 13 类问题">
 <meta property="og:url" content="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/index.html">
 <meta property="og:site_name" content="玟茵开源社区知识库">
 <meta property="og:description" content="这些坑我至少在八个项目里踩过同一种。最丢人的一次是 pkill -f &quot;node dist&#x2F;main.js&quot;，敲完命令终端直接没了——查了半小时才反应过来，这条命令把执行它的 shell 也一起杀了。 后来我干脆建了个清单，每开一个新项目就对照一遍。下面这 12 类，是按「重复次数」排的，不是按「严重程度」排。">
@@ -41,10 +41,10 @@
 <link rel="canonical" href="https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/","path":"2026/06/26/ai-assisted-development-pitfalls/","title":"AI 辅助开发踩坑录：跨项目反复出现的 12 类问题"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://wiki.wenyinos.com/2026/06/26/ai-assisted-development-pitfalls/","path":"2026/06/26/ai-assisted-development-pitfalls/","title":"AI 辅助开发踩坑录：跨项目反复出现的 13 类问题"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>AI 辅助开发踩坑录：跨项目反复出现的 12 类问题 | 玟茵开源社区知识库</title>
+<title>AI 辅助开发踩坑录：跨项目反复出现的 13 类问题 | 玟茵开源社区知识库</title>
   
 
 
@@ -162,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81pkill-f-%E4%BC%9A%E6%9D%80%E6%8E%89%E6%89%A7%E8%A1%8C%E5%AE%83%E7%9A%84-shell-%E8%87%AA%E8%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">一、pkill -f 会杀掉执行它的 shell 自身</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%B6%E5%8C%BA%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、时间与时区处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2-%E6%AD%A3%E5%88%99%E6%94%B9%E5%86%99%E5%BF%85%E9%A1%BB%E5%9B%9E%E5%A4%B4%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">三、批量替换 &#x2F; 正则改写必须回头验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%9D%99%E9%BB%98%E5%A4%B1%E8%B4%A5%E6%AF%94%E6%8A%A5%E9%94%99%E6%9B%B4%E5%8D%B1%E9%99%A9"><span class="nav-number">4.</span> <span class="nav-text">四、静默失败比报错更危险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E2%80%9D%E6%9E%84%E5%BB%BA%E9%80%9A%E8%BF%87-URL-%E5%8F%AF%E8%BE%BE%E2%80%9D%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%9F%E8%83%BD%E5%8F%AF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">五、”构建通过 &#x2F; URL 可达”不等于功能可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%BC%93%E5%AD%98%E9%80%A0%E6%88%90%E7%9A%84%E5%81%87%E8%B1%A1"><span class="nav-number">6.</span> <span class="nav-text">六、开发环境缓存造成的假象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81npm-%E6%96%B0%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5"><span class="nav-number">7.</span> <span class="nav-text">七、npm 新安装脚本安全策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B1%82%E9%AB%98%E9%A2%91%E9%99%B7%E9%98%B1"><span class="nav-number">8.</span> <span class="nav-text">八、数据库层高频陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%8D%B8%E8%BD%BD-agent-%E6%8F%92%E4%BB%B6%E5%90%8E%E7%9A%84%E8%BF%9E%E9%94%81%E5%A4%B1%E6%95%88"><span class="nav-number">9.</span> <span class="nav-text">九、卸载 agent 插件后的连锁失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E7%BB%99-agent-%E5%8A%A0%E3%80%8C%E5%85%A8%E5%B1%80%E6%8F%90%E7%A4%BA%E8%AF%8D%E3%80%8D%E6%97%B6%E7%9A%84%E6%A1%86%E6%9E%B6%E7%BA%A6%E6%9D%9F"><span class="nav-number">10.</span> <span class="nav-text">十、给 agent 加「全局提示词」时的框架约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%99%A8%E7%9A%84%E5%8D%B8%E8%BD%BD%E8%BE%B9%E7%95%8C"><span class="nav-number">11.</span> <span class="nav-text">十一、配置托管器的卸载边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%92%8C%E4%B8%8A%E6%B8%B8%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E9%BD%90%EF%BC%9A%E5%88%AB%E9%9D%A0%E7%8C%9C"><span class="nav-number">12.</span> <span class="nav-text">十二、和上游客户端对齐：别靠猜</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">13.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81pkill-f-%E4%BC%9A%E6%9D%80%E6%8E%89%E6%89%A7%E8%A1%8C%E5%AE%83%E7%9A%84-shell-%E8%87%AA%E8%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">一、pkill -f 会杀掉执行它的 shell 自身</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%97%B6%E9%97%B4%E4%B8%8E%E6%97%B6%E5%8C%BA%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、时间与时区处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2-%E6%AD%A3%E5%88%99%E6%94%B9%E5%86%99%E5%BF%85%E9%A1%BB%E5%9B%9E%E5%A4%B4%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">三、批量替换 &#x2F; 正则改写必须回头验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%9D%99%E9%BB%98%E5%A4%B1%E8%B4%A5%E6%AF%94%E6%8A%A5%E9%94%99%E6%9B%B4%E5%8D%B1%E9%99%A9"><span class="nav-number">4.</span> <span class="nav-text">四、静默失败比报错更危险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E2%80%9D%E6%9E%84%E5%BB%BA%E9%80%9A%E8%BF%87-URL-%E5%8F%AF%E8%BE%BE%E2%80%9D%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%8A%9F%E8%83%BD%E5%8F%AF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">五、”构建通过 &#x2F; URL 可达”不等于功能可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%BC%93%E5%AD%98%E9%80%A0%E6%88%90%E7%9A%84%E5%81%87%E8%B1%A1"><span class="nav-number">6.</span> <span class="nav-text">六、开发环境缓存造成的假象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81npm-%E6%96%B0%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5"><span class="nav-number">7.</span> <span class="nav-text">七、npm 新安装脚本安全策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B1%82%E9%AB%98%E9%A2%91%E9%99%B7%E9%98%B1"><span class="nav-number">8.</span> <span class="nav-text">八、数据库层高频陷阱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%8D%B8%E8%BD%BD-agent-%E6%8F%92%E4%BB%B6%E5%90%8E%E7%9A%84%E8%BF%9E%E9%94%81%E5%A4%B1%E6%95%88"><span class="nav-number">9.</span> <span class="nav-text">九、卸载 agent 插件后的连锁失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E7%BB%99-agent-%E5%8A%A0%E3%80%8C%E5%85%A8%E5%B1%80%E6%8F%90%E7%A4%BA%E8%AF%8D%E3%80%8D%E6%97%B6%E7%9A%84%E6%A1%86%E6%9E%B6%E7%BA%A6%E6%9D%9F"><span class="nav-number">10.</span> <span class="nav-text">十、给 agent 加「全局提示词」时的框架约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%89%98%E7%AE%A1%E5%99%A8%E7%9A%84%E5%8D%B8%E8%BD%BD%E8%BE%B9%E7%95%8C"><span class="nav-number">11.</span> <span class="nav-text">十一、配置托管器的卸载边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%92%8C%E4%B8%8A%E6%B8%B8%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E9%BD%90%EF%BC%9A%E5%88%AB%E9%9D%A0%E7%8C%9C"><span class="nav-number">12.</span> <span class="nav-text">十二、和上游客户端对齐：别靠猜</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E7%BB%99%E4%B8%8A%E6%B8%B8%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%86%99%E4%BB%A3%E7%90%86%EF%BC%9A%E5%8A%A0%E5%AF%86%E3%80%81%E9%99%90%E6%B5%81%E4%B8%8E%E7%8E%AF%E5%A2%83%E6%BC%82%E7%A7%BB"><span class="nav-number">13.</span> <span class="nav-text">十三、给上游客户端写代理：加密、限流与环境漂移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">14.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,7 +177,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -188,7 +188,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-count">184</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -233,12 +233,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="AI 辅助开发踩坑录：跨项目反复出现的 12 类问题 | 玟茵开源社区知识库">
+      <meta itemprop="name" content="AI 辅助开发踩坑录：跨项目反复出现的 13 类问题 | 玟茵开源社区知识库">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          AI 辅助开发踩坑录：跨项目反复出现的 12 类问题
+          AI 辅助开发踩坑录：跨项目反复出现的 13 类问题
         </h1>
 
         <div class="post-meta-container">
@@ -367,7 +367,12 @@
 <p><strong>正确做法是实跑抓包。</strong> 以调试模式启动官方 CLI（<code>codearts run</code> 开 DEBUG），抓它真实发出的请求，逐项记录请求头与生成规则：trace&#x2F;span 每次请求新生成，<code>x-snap-traceid</code> 是 <code>&lt;trace&gt;_&lt;span&gt;</code> 的拼法，没有客户端 session 时用一个进程级兜底，UA 要带版本号。补齐之后还要把这些头<strong>纳入签名</strong>（HMAC-SHA256），否则签名对不上，头补了也白补。最后用真实上游请求验证，返回 <code>HEADERS_OK</code> 才算过。</p>
 <p><strong>另一个容易设计错的是「定时任务 + 一次性凭据」。</strong> 每日签到把「刷新 web 登录」当成硬前置，而 refresh token 是一次性的、已经被前一天的登录消费掉了——第二天必然报 <code>invalid refresh token: &#39;the refresh token has been used&#39;</code>，整个任务以退出码 1 结束。这里的选择题是：加容错（刷新失败但 Cookie 有效时继续），还是砍功能。用户选了后者——<strong>当一个功能的依赖前提本身不成立时，删掉比打补丁干净</strong>。</p>
 <p><strong>做法</strong>：这类「对齐上游」的工作不要靠静态推断，跑一遍真实客户端、抓一遍真实请求，比读十遍文档都准；一次性凭据不要放进定时任务的前置链路。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这 12 类问题有个共同点：它们都不在正常路径上，跑通一次就忘了，直到在生产环境用更难看的样子冒出来。清单放在那里，代码审查和验收时逐条对一遍，比每次重新踩划算——毕竟我已经替你们踩过了。</p>
+<h2 id="十三、给上游客户端写代理：加密、限流与环境漂移"><a href="#十三、给上游客户端写代理：加密、限流与环境漂移" class="headerlink" title="十三、给上游客户端写代理：加密、限流与环境漂移"></a>十三、给上游客户端写代理：加密、限流与环境漂移</h2><p>代理类项目继续跟上游客户端版本走，又收了三个类型的坑。</p>
+<p><strong>「国密」未必是国密。</strong> 上游客户端宣称的 SM2 密钥协商，抓包看协议实际是 <strong>P-256 ECDH</strong>——共享密钥做 SHA-256 后取前 16 字节当 SM4 key。名字和实现对不上时，以实现为准；照着名字找库会找错。加密落地还有两个细节：请求体必须是 <strong>base64 文本</strong>（发原始二进制被上游 400 拒绝，它按文本解析密文）；加密 SSE 帧的字段顺序是 <code>iv:tag:ciphertext</code>——不是直觉的 <code>iv:ciphertext:tag</code>，按 CLI 调用参数顺序取，猜错了 tag 长度必报错。</p>
+<p><strong>上游的限流错误体别原样透传。</strong> 上游返回自家格式的 429，客户端读不出来 <code>retryable</code> 字段就当不可重试直接放弃。代理层要做归一化：识别上游限流错误码，改写为标准 <code>429 + Retry-After</code> + <code>rate_limit_error</code> 结构。<strong>「上游正常返回」和「客户端能正确处理」之间隔着格式翻译。</strong></p>
+<p><strong>打包环境自己会漂移。</strong> 一次 Windows 发布失败，看报错像合并冲突搞坏了代码——实际是 runner 的 PowerShell 7 上不存在 <code>Expand-Archive</code> 的 3 参数重载（半年前还是存在的）。环境类失败的特征是「错误位置与最近改动无关」；改用 .NET API 的 2 参数解压后通过。类似的还有 <code>cargo fix</code> 在 Linux 上把 Windows 专用变量改名、导致 Windows job 编译失败——<strong>跨平台项目里，自动修复工具的「修复」本身要按平台审查</strong>。</p>
+<p><strong>做法</strong>：跟上游版本升级后，把「二进制常量提取」和「真实运行抓包」各做一遍再改代码；限流、鉴权类上游错误在代理层统一翻译成标准结构；跨平台的自动修复加 <code>#[cfg_attr]</code> 白名单而不是改名。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这 13 类问题有个共同点：它们都不在正常路径上，跑通一次就忘了，直到在生产环境用更难看的样子冒出来。清单放在那里，代码审查和验收时逐条对一遍，比每次重新踩划算——毕竟我已经替你们踩过了。</p>
 
     </div>
 
